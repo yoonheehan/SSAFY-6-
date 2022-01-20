@@ -1,7 +1,13 @@
-import './app.css';
+import './App.css';
+import Detail from './components/detail/Detail';
+
 
 function App() {
-  return <div className="App">3팀 화이팅</div>;
+  return (
+      <div className="App">
+        <Detail />
+      </div>
+    );
 }
 
 export default App;
