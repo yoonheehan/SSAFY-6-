@@ -4,18 +4,20 @@ import styles from './login.module.css';
 const Login = props => (
   <>
     <section className={styles.section}>
-      <h1>로그인</h1>
-      <ul>
-        <li>
-          <button>Google</button>
-        </li>
-        <li>
-          <button>카카오</button>
-        </li>
-        <li>
-          <button>네이버</button>
-        </li>
-      </ul>
+      <div>
+        <h1>로그인</h1>
+        <ul>
+          <li>
+            <button>Google</button>
+          </li>
+          <li>
+            <button>카카오</button>
+          </li>
+          <li>
+            <button>네이버</button>
+          </li>
+        </ul>
+      </div>
     </section>
   </>
 );
