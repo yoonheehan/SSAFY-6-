@@ -74,7 +74,7 @@ function ContentDetail() {
     return (
         <Base>
             <Profile>
-                <ProfileThumnail src="img/tmpProfile.jpg" alt="프로필사진"/>
+                <ProfileThumnail src="../../../img/tmpProfile.jpg" alt="프로필사진"/>
                 <div>
                     <ProfileName>허영민</ProfileName>
                     <WriteTime>13분 전</WriteTime>
@@ -83,11 +83,11 @@ function ContentDetail() {
             <ContentContainer>
                 <Content>아 개배고픈데 치킨 피자 추천점여 ㅋ 2시반까지 마감받음 ㅋㅋ #음식#치킨#피자</Content>
                 <br />
-                <ContentImg src="img/1.jpg" alt="게시글이미지"/>
+                <ContentImg src="../../../img/1.jpg" alt="게시글이미지"/>
             </ContentContainer>
             <VersusWrapped>
                 <VersusLeft>치킨</VersusLeft>
-                <VersusImg src="img/VsImg.png" />
+                <VersusImg src="../../../img/VsImg.png" />
                 <VersusRight>피자</VersusRight>
             </VersusWrapped>
             <Progressbar 

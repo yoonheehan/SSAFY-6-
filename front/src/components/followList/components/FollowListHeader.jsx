@@ -43,13 +43,13 @@ function FollowListHeader() {
         <>
             <Base>
                 <LogoWrapped>
-                    <LogoImg src="img/해줘잉.png"/>
+                    <LogoImg src="../../../img/해줘잉.png"/>
                 </LogoWrapped>
                 <hr />
                 <MenuWrapped>
-                    <BackArrow src="img/backarrow.png"/>
+                    <BackArrow src="../../../img/backarrow.png"/>
                     <PageName>친구목록</PageName>
-                    <MenuBar src="img/menubar.png"/>
+                    <MenuBar src="../../../img/menubar.png"/>
                 </MenuWrapped>
             </Base>
         </>

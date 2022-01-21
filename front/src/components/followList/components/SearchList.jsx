@@ -63,7 +63,7 @@ export default function SearchList() {
             </SearchDiv>
             <FriendList>
                 <FriendProfile>
-                    <ProfileImg src="img/baseprofile.jpg" alt="프로필사진" />
+                    <ProfileImg src="../../../img/baseprofile.jpg" alt="프로필사진" />
                     <ProfileName>이름</ProfileName>
                 </FriendProfile>
             </FriendList>

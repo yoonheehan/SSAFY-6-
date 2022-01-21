@@ -24,13 +24,13 @@ const MenuWrapped = styled.div`
 const BackArrow = styled.img`
   width: 36px;
   height: 36px;
-  margin-left: 5px;
+  margin-left: 10px;
 `
 
 const MenuBar = styled.img`
   width:36px;
   height: 36px;
-  margin-right: 5px;
+  margin-right: 10px;
 `
 
 function DetailHeader() {
@@ -38,12 +38,12 @@ function DetailHeader() {
         <>
             <Base>
                 <LogoWrapped>
-                    <LogoImg src="img/해줘잉.png"/>
+                    <LogoImg src="../../../img/해줘잉.png"/>
                 </LogoWrapped>
                 <hr />
                 <MenuWrapped>
-                    <BackArrow src="img/backarrow.png"/>
-                    <MenuBar src="img/menubar.png"/>
+                    <BackArrow src="../../../img/backarrow.png"/>
+                    <MenuBar src="../../../img/menubar.png"/>
                 </MenuWrapped>
             </Base>
         </>

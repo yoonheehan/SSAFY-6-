@@ -36,7 +36,7 @@ function Comment() {
     return (
         <>
           <CommentWrapped>
-            <ProfileThumnail src="img/tmpprofile2.jpg" alt="프로필사진" />
+            <ProfileThumnail src="../../../img/tmpprofile2.jpg" alt="프로필사진" />
                 <CommentDiv>
                     <ProfileName>김아무개</ProfileName>
                     <WriteTime>3분전</WriteTime>
