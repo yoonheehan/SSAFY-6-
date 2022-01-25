@@ -21,7 +21,7 @@ const NavBar = () => {
 						<i className="h1 px-4 bi bi-house-door-fill"></i>
 						<i className="h1 px-4 bi bi-people-fill"></i>
 						<i className="h1 px-4 bi bi-person-fill"></i>
-						<Link to="alarm"><i className="link h1 px-4 bi bi-bell-fill"></i></Link>
+						<Link to="/alarm"><i className="link h1 px-4 bi bi-bell-fill"></i></Link>
 						<i data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation" className="h1 px-4 bi bi-x-lg"></i>
 					</div>
 				</div>
