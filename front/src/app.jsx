@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import './App.css';
 import Detail from './components/detail/Detail';
 import FollowList from './components/followList/FollowList'
@@ -15,6 +16,21 @@ function App() {
         </BrowserRouter>
       </div>
     );
+=======
+import './app.css';
+import Footer from './components/footer/footer';
+import Header from './components/header/header';
+import Login from './components/login/login';
+
+function App() {
+  return (
+    <div className="App">
+      <Header />
+      <Login />
+      <Footer />
+    </div>
+  );
+>>>>>>> 445ecf337884d4c6655c332219ce9ec9c227c16f
 }
 
 export default App;
