@@ -7,25 +7,22 @@ import {
   AiFillStar,
 } from 'react-icons/ai';
 import { BsPersonCircle } from 'react-icons/bs';
+import { useHistory } from 'react-router-dom';
 import styles from './profile.module.css';
 
 const Profile = props => {
   const now = 60;
-
   const progressInstance = (
     <ProgressBar className={styles.progress} now={now} label={`${now}%`} />
   );
+  const history = useHistory();
   return (
     <>
       <div className={styles.div1}>
-        <div className={styles.div2}>
-          <AiOutlineArrowLeft />
-        </div>
         <div className={styles.div3}>
-          <h4 className={styles.h4}>프로필</h4>
-        </div>
-        <div className={styles.div4}>
-          <AiOutlineMenu />
+          <h1 style={{ marginTop: '20px' }}>
+            <b>프로필</b>
+          </h1>
         </div>
       </div>
       <section className={styles.section}>
@@ -37,7 +34,13 @@ const Profile = props => {
             </div>
           </div>
           <div className={styles.box2}>
-            <Button className={styles.button} variant="outline-secondary">
+            <Button
+              className={styles.button}
+              variant="outline-secondary"
+              onClick={() => {
+                history.push('/mdProfile');
+              }}
+            >
               프로필 수정
             </Button>
           </div>
@@ -64,7 +67,13 @@ const Profile = props => {
               <Button variant="secondary" size="md">
                 친구관리
               </Button>
-              <Button variant="secondary" size="md">
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  history.push('/withdraw');
+                }}
+              >
                 회원탈퇴
               </Button>
             </div>

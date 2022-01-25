@@ -1,4 +1,5 @@
 .div2 {
   display: inline-block;
   font-size: 30px;
+  cursor: pointer;
 }
