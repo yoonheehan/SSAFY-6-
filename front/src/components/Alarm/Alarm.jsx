@@ -7,14 +7,29 @@ const Alarm = () => {
 	const state = useSelector( (state) => state )
 	const dispatch = useDispatch()
 
+	if( state.length <= 0) {
+		return (
+			<>
+				<br></br>
+				<h1><b>알림</b></h1>
+				<br></br>
+				<h5 align="left" className="p-2"><b>새로운 알림</b></h5>
+				<div>
+					새로운 알림이 없습니다.
+				</div>
+			</>
+		)
+	}
+
 	return (
 		<>
 			<br></br>
 			<h1><b>알림</b></h1>
 			<br></br>
 			<h5 align="left" className="p-2"><b>새로운 알림</b></h5>
+			
 			{state.map(({id, img, userName, content}) => (
-				<div key={id} className="card">
+				<div key={id} className="card my-2">
 					<div className="card-body">
 						<div className="d-flex align-items-center flex-row">
 							<div>

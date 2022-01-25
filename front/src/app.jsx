@@ -7,13 +7,17 @@ import { Route, Routes } from 'react-router-dom'
 
 function App() {
   return (
-    <div className="App">
+    <>
+      <div className="App">
       <NavBar/>
-      <Routes>
-        <Route path="/alarm" element={<Alarm/>} />
-        <Route path="/withdraw" element={<Withdraw/>} /> 
-      </Routes>
-    </div>
+      </div>
+      <div className="App container">
+        <Routes>
+          <Route path="/alarm" element={<Alarm/>} />
+          <Route path="/withdraw" element={<Withdraw/>} /> 
+        </Routes>
+      </div>
+    </>
   )
 }
 
