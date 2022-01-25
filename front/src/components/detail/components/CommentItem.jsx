@@ -41,7 +41,7 @@ function CommentItem({profilename, writetime, content}) {
     return (
         <>
           <CommentWrapped>
-            <ProfileThumnail src="../../../img/tmpprofile2.jpg" alt="프로필사진" />
+            <ProfileThumnail src="/images/tmpprofile2.jpg" alt="프로필사진" />
                 <CommentDiv>
                   <div style={{textAlign:'start'}}>
                     <ProfileName>{profilename}</ProfileName>

@@ -77,7 +77,7 @@ export default function SearchList() {
                     <ProfileImg src='' alt={follow.profileImg} />
                     <ProfileName>{follow.name}</ProfileName>
                 </FriendProfile>
-                 )}
+                )}
             </FriendList>
         </SearchForm>
         </>

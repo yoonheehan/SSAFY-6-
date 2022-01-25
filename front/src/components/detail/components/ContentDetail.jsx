@@ -74,7 +74,7 @@ function ContentDetail(props) {
     return (
         <Base>
             <Profile>
-                <ProfileThumnail src="../../../img/tmpProfile.jpg" alt="프로필사진"/>
+                <ProfileThumnail src="/images/tmpProfile.jpg" alt="프로필사진"/>
                 <div>
                     <ProfileName>{props.name}</ProfileName>
                     <WriteTime>13분 전</WriteTime>
@@ -83,11 +83,11 @@ function ContentDetail(props) {
             <ContentContainer>
                 <Content>{props.content}</Content>
                 <br />
-                <ContentImg src="../../../img/1.jpg" alt="게시글이미지"/>
+                <ContentImg src="/images/1.jpg" alt="게시글이미지"/>
             </ContentContainer>
             <VersusWrapped>
                 <VersusLeft>치킨</VersusLeft>
-                <VersusImg src="../../../img/VsImg.png" />
+                <VersusImg src="/images/VsImg.png" />
                 <VersusRight>피자</VersusRight>
             </VersusWrapped>
             <Progressbar 

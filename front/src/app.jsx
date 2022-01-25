@@ -11,16 +11,16 @@ import Profile from './components/profile/profile';
 import NavBar from "./components/NavBar/NavBar.jsx"
 import Withdraw from "./components/Withdraw/Withdraw.jsx";
 import Alarm from "./components/Alarm/Alarm.jsx"
+import Feed from "./components/Feed/Feed"
 
 function App() {
 
   return (
       <div className="App">
-        {/* <NavBar/> */}
-        {/* <Header /> */}
         <NavBar/>
           <BrowserRouter>
           <Switch>
+            <Route exact path="/feed" component={Feed} />
             <Route exact path="/" component={Login} />
             <Route exact path="/profile" component={Profile} />
             <Route exact path="/mdProfile" component={MdProfile} />

@@ -2,7 +2,7 @@ import React from 'react';
 import FollowListHeader from './components/FollowListHeader'
 import SearchList from './components/SearchList';
 
-export default function FollowList() {
+function FollowList() {
   return (
     <>
       {/* <FollowListHeader /> */}
@@ -10,3 +10,4 @@ export default function FollowList() {
     </>
   )
 }
+export default FollowList;
