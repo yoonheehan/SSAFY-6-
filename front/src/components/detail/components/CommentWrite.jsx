@@ -1,5 +1,6 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
+import Comments from './Comments'
 
 const CommentForm = styled.form`
     width: 90%;
@@ -19,10 +20,14 @@ const SubmitBtn = styled.input`
     background-color: white;
 `
 
+const CommentList = [
+    {profilename: '홍길동', writetime: 3, content: 'ㄹㅇㅋㅋ' },
+]
+
 function CommentWrite() {
 
     const [commentContent, setCommentContent] = useState("");
-
+    const [comments, setComments] = useState(CommentList)
 
     function getcomment(event) {
         const commentContent = event.target.value
@@ -31,21 +36,29 @@ function CommentWrite() {
     }
     
     function handleSubmit(event) {
-        alert(`작성한 댓글 comment는 ${commentContent} 입니다.`)
+        setComments((prevComments) => [
+            ...prevComments,
+            {profilename: '허영민', writetime: 3, content:`${commentContent}`}
+        ])
+        setCommentContent('')
         event.preventDefault()
     }
 
     return (
         <>
+            <Comments commentList={comments} />
+            <br />
             <CommentForm onSubmit={handleSubmit}>
                 <CommentBox 
                 type="text"
                 placeholder='댓글 달기...'
                 onChange={getcomment}
                 name='comment'
+                value={commentContent}
                 />
                 <SubmitBtn type='submit' value="작성" />
             </CommentForm>
+            <br />
         </>
   )
 }

@@ -70,18 +70,18 @@ const VersusRight = styled.b`
 `
 
 
-function ContentDetail() {
+function ContentDetail(props) {
     return (
         <Base>
             <Profile>
                 <ProfileThumnail src="../../../img/tmpProfile.jpg" alt="프로필사진"/>
                 <div>
-                    <ProfileName>허영민</ProfileName>
+                    <ProfileName>{props.name}</ProfileName>
                     <WriteTime>13분 전</WriteTime>
                 </div>
             </Profile>
             <ContentContainer>
-                <Content>아 개배고픈데 치킨 피자 추천점여 ㅋ 2시반까지 마감받음 ㅋㅋ #음식#치킨#피자</Content>
+                <Content>{props.content}</Content>
                 <br />
                 <ContentImg src="../../../img/1.jpg" alt="게시글이미지"/>
             </ContentContainer>
@@ -93,7 +93,7 @@ function ContentDetail() {
             <Progressbar 
             bgcolor="red" 
             bgcolor2="blue" 
-            progress="50" 
+            progress="30" 
             height={30}
             versus1='콜라' 
             versus2='피자' />
