@@ -2,6 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 import "./NavBar.css"
 // import Alarm from "../Alarm/Alarm.jsx"
+import { AiOutlineArrowLeft } from 'react-icons/ai';
+import styles from './NavBar.module.css';
 
 const NavBar = () => {
 	return (
@@ -9,6 +11,9 @@ const NavBar = () => {
 			<div>
 				<nav className="navbar navbar-light bg-light">
 					<div className="container-fluid">
+						<div className={styles.div2}>
+							<AiOutlineArrowLeft />
+						</div>
 						<img width="100px" height="auto" src="images/logo(2).png" alt="logo" />
 						<button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarToggleExternalContent" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
 							<span className="navbar-toggler-icon"></span>

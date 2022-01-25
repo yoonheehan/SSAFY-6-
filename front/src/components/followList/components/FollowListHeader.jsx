@@ -2,6 +2,7 @@ import React from 'react';
 
 import styled from 'styled-components';
 
+
 const Base = styled.header`
 
 `
@@ -42,7 +43,7 @@ function FollowListHeader() {
     return (
         <>
             <Base>
-                <LogoWrapped>
+                {/* <LogoWrapped>
                     <LogoImg src="../../../img/해줘잉.png"/>
                 </LogoWrapped>
                 <hr />
@@ -50,7 +51,7 @@ function FollowListHeader() {
                     <BackArrow src="../../../img/backarrow.png"/>
                     <PageName>친구목록</PageName>
                     <MenuBar src="../../../img/menubar.png"/>
-                </MenuWrapped>
+                </MenuWrapped> */}
             </Base>
         </>
     )

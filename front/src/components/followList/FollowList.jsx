@@ -5,7 +5,7 @@ import SearchList from './components/SearchList';
 export default function FollowList() {
   return (
     <>
-      <FollowListHeader />
+      {/* <FollowListHeader /> */}
       <SearchList />
     </>
   )

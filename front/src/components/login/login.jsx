@@ -6,6 +6,8 @@ import { RiKakaoTalkFill } from 'react-icons/ri';
 import GoogleLogin from 'react-google-login';
 import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-naver-login';
+import Footer from '../footer/footer';
+import Header from '../header/header'
 
 const Login = props => {
   const clientId =
@@ -25,6 +27,7 @@ const Login = props => {
 
   return (
     <>
+    <Header />
       <section className={styles.section}>
         <div className={styles.login}>
           <h1 className={styles.h1}>로그인</h1>
@@ -84,6 +87,7 @@ const Login = props => {
           </ul>
         </div>
       </section>
+        <Footer />
     </>
   );
 };

@@ -14,9 +14,6 @@ const MdProfile = props => {
   return (
     <>
       <div className={styles.div1}>
-        <div className={styles.div2}>
-          <AiOutlineArrowLeft />
-        </div>
         <div className={styles.div3}>
           <h4 className={styles.h4}>프로필 수정</h4>
         </div>
