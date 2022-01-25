@@ -8,8 +8,8 @@ export default function Feeds({feedList}) {
 
 
   return (
-      <div>
-          {feedList.map(feed =>
+    <div>
+        {feedList.map(feed =>
             <FeedItem
                 key={feed.id}
                 feedimg={feed.feedimg}
@@ -18,8 +18,8 @@ export default function Feeds({feedList}) {
                 profilename={feed.profilename}
                 writetime={feed.writetime}
                 // onClick={handleClick}
-                 />
+                />
             )}
-      </div>
+    </div>
   )
 }

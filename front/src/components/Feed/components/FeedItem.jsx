@@ -9,11 +9,15 @@ const FeedBox = styled.div`
 
 const ProfileBox = styled.div`
     display: flex;
+    margin-top: 5px;
+    margin-left: 5px;
+    align-items: center;
 `
 
-const ProfileName = styled.b`
-
+const ProfileName = styled.div`
+    margin-left: 5px;
     text-align: left;
+    font-weight: bold;
 `
 
 const ProfileImg = styled.img`
@@ -24,11 +28,12 @@ const ProfileImg = styled.img`
 
 const WriteTime = styled.div`
     font-size: 12px;
-    margin: auto 0 0 auto;
+    margin: auto 5px auto auto;
 `
 
 const ContentImgBox = styled.div`
-    width: 0.9rem;
+    width: 100%;
+    text-align: end;
 
 `
 
@@ -36,10 +41,13 @@ const ContentBox = styled.div`
 `
 
 const ContentImg = styled.img`
-    object-fit: contain;
+    width: inherit;
+
 `
 
 const Content = styled.div`
+    text-align: left;
+    margin: 0 10px 10px 10px; 
 `
 
 export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime}) {
@@ -55,6 +63,7 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
             <ContentImgBox>
                 <ContentImg src='/images/1.jpg' alt='글 사진' />
             </ContentImgBox>
+            <hr />
             <Content>{feedcontent}</Content>
           </ContentBox>
       </FeedBox>
