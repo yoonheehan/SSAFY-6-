@@ -70,7 +70,7 @@ const NavBar = () => {
             </Link>
             <i
               style={{ cursor: 'pointer' }}
-              className="bi px-4 bi-pencil-square"
+              className="link h1 px-4 bi bi-pencil-fill"
               onClick={() => {
                 history.push('/post');
               }}
