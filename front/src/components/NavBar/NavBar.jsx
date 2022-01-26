@@ -68,6 +68,13 @@ const NavBar = () => {
             <Link to="/alarm">
               <i className="link h1 px-4 bi bi-bell-fill"></i>
             </Link>
+            <i
+              style={{ cursor: 'pointer' }}
+              className="bi px-4 bi-pencil-square"
+              onClick={() => {
+                history.push('/post');
+              }}
+            ></i>
           </div>
         </div>
       </div>
