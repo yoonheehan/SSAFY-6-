@@ -13,6 +13,8 @@ const ProfileThumnail = styled.img`
   width: 35px;
   border: 3px black;
   border-radius: 70%;
+  margin-right: 5px;
+  margin-top: 5px;
 `
 
 const CommentDiv = styled.div`
@@ -20,18 +22,22 @@ const CommentDiv = styled.div`
   width: 85%;
 `
 
-const ProfileName = styled.b`
+const ProfileName = styled.div`
   margin-right: 20px;
   font-size: 15px;
+  font-weight: bold;
 ` 
 
-const WriteTime = styled.span`
+const WriteTime = styled.div`
   font-size: 12px;
 `
 
-const CommentContent = styled.p`
-  margin: 0;
+const CommentContent = styled.div`
   text-align: left;
+  white-space: pre-line;
+  width: 90%;
+  margin:0 5% 0 5%;
+  margin-bottom: 5px;
 `
 
 
@@ -45,13 +51,11 @@ function CommentItem({profilename, writetime, content}) {
                 <CommentDiv>
                   <div style={{textAlign:'start'}}>
                     <ProfileName>{profilename}</ProfileName>
-                  </div>
-                  <div>
-                    <CommentContent>{content}</CommentContent>
+                    <WriteTime>{writetime}분 전</WriteTime>
                   </div>
                 </CommentDiv>
-                    <WriteTime>{writetime}분 전</WriteTime>
           </CommentWrapped>
+            <CommentContent>{content}</CommentContent>
         </>
     )
 }

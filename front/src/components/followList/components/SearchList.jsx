@@ -21,11 +21,13 @@ const SearchBox = styled.input`
     background-color: rgba(100,100,100,0);
 `
 
-const FriendList = styled.div``
+const FriendList = styled.div`
+`
 
 const FriendProfile = styled.div`
     display: flex;
     align-items: center;
+    margin: 20px 0 20px 0;
 `
 
 const ProfileImg = styled.img`
@@ -39,12 +41,12 @@ const ProfileImg = styled.img`
 
 const ProfileName = styled.p`
     font-size: 25px;
-    margin-left: 20px;
+    margin: auto 0 auto 20px;
 `
 const firstFollowList = [
-    {profileImg:'/2', name:'gd'},
-    {profileImg:'/3', name:'gd3'},
-    {profileImg:'/4', name:'gd5'},
+    {profileImg:'', name:'정정채'},
+    {profileImg:'', name:'최성원'},
+    {profileImg:'', name:'허영민'},
 ]
 
 export default function SearchList() {
@@ -74,7 +76,8 @@ export default function SearchList() {
                 {followList.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
                 followList.map(follow => 
                     <FriendProfile>
-                    <ProfileImg src='' alt={follow.profileImg} />
+                    {follow.profileImg === '' ? 
+                    <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.profileImg} alt={follow.profileImg} />}
                     <ProfileName>{follow.name}</ProfileName>
                 </FriendProfile>
                 )}

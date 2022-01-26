@@ -1,6 +1,6 @@
-import React from 'react';
+import React, {Profiler} from 'react';
 import styled from 'styled-components';
-
+import {useHistory} from 'react-router-dom'
 
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
@@ -49,23 +49,39 @@ const Content = styled.div`
     text-align: left;
     margin: 0 10px 10px 10px; 
 `
-
 export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime}) {
+    const history = useHistory();
+  
+
+    function onRenderCallback(
+        id,
+        phase,
+        actualDuration,
+        baseDuration,
+        startTime,
+        commitTime,
+        interactions
+      ) {
+        console.log(`actualDuration(${id}:${actualDuration})`)
+      }
+
   return (
-      <FeedBox>
-          <ProfileBox>
-            <ProfileImg src='/images/baseprofile.jpg' alt='프사'/>
-            <ProfileName>{profilename}</ProfileName>
-            <WriteTime>{writetime}분 전</WriteTime>
-          </ProfileBox>
-          <hr />
-          <ContentBox>
-            <ContentImgBox>
-                <ContentImg src='/images/1.jpg' alt='글 사진' />
-            </ContentImgBox>
+      <Profiler id='profileItem' onRender={onRenderCallback} >
+        <FeedBox>
+            <ProfileBox onClick={() => history.push('/profile')}>
+                <ProfileImg src='/images/baseprofile.jpg' alt='프사'/>
+                <ProfileName>{profilename}</ProfileName>
+                <WriteTime>{writetime}분 전</WriteTime>
+            </ProfileBox>
             <hr />
-            <Content>{feedcontent}</Content>
-          </ContentBox>
-      </FeedBox>
+            <ContentBox onClick={() => history.push('/feed/:id')}>
+                <ContentImgBox>
+                    <ContentImg src='/images/1.jpg' alt='글 사진' />
+                </ContentImgBox>
+                <hr />
+                <Content>{feedcontent}</Content>
+            </ContentBox>
+        </FeedBox>
+        </ Profiler>
   )
 }
