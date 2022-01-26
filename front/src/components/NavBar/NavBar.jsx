@@ -26,7 +26,7 @@ const NavBar = () => {
               src="/images/logo(2).png"
               alt="logo"
               onClick={() => {
-                history.push('/');
+                history.push('/feed');
               }}
             />
             <button
@@ -48,10 +48,16 @@ const NavBar = () => {
               style={{ cursor: 'pointer' }}
               className="h1 px-4 bi bi-house-door-fill"
               onClick={() => {
-                history.push('/');
+                history.push('/feed');
               }}
             ></i>
-            <i className="h1 px-4 bi bi-people-fill"></i>
+            <i
+              style={{ cursor: 'pointer' }}
+              className="h1 px-4 bi bi-people-fill"
+              onClick={() => {
+                history.push('/user/1/followlist');
+              }}
+            ></i>
             <i
               style={{ cursor: 'pointer' }}
               className="h1 px-4 bi bi-person-fill"

@@ -18,13 +18,9 @@ const Profile = props => {
   const history = useHistory();
   return (
     <>
-      <div className={styles.div1}>
-        <div className={styles.div3}>
-          <h1 style={{ marginTop: '20px' }}>
-            <b>프로필</b>
-          </h1>
-        </div>
-      </div>
+      <h1 style={{ marginTop: '20px' }}>
+        <b>프로필</b>
+      </h1>
       <section className={styles.section}>
         <div className={styles.body}>
           <div className={styles.box1}>
@@ -61,11 +57,23 @@ const Profile = props => {
           </div>
           <div className={styles.box4}>
             <div className="d-grid gap-2">
-              <Button variant="secondary" size="md">
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  history.push('/postList');
+                }}
+              >
                 글 작성 목록
               </Button>
-              <Button variant="secondary" size="md">
-                친구관리
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  history.push('/user/1/followlist');
+                }}
+              >
+                친구 목록
               </Button>
               <Button
                 variant="secondary"

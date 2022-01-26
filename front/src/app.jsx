@@ -12,6 +12,7 @@ import NavBar from './components/NavBar/NavBar.jsx';
 import Withdraw from './components/Withdraw/Withdraw.jsx';
 import Alarm from './components/Alarm/Alarm.jsx';
 import Feed from './components/Feed/Feed';
+import PostList from './components/postList/postList';
 
 function App() {
   return (
@@ -28,6 +29,7 @@ function App() {
           <Route exact path="/feed/:id/" component={Detail} />
           <Route exact path="/alarm" component={Alarm} />
           <Route exact path="/withdraw" component={Withdraw} />
+          <Route exact path="/postList" component={PostList} />
         </Switch>
       </BrowserRouter>
     </div>
