@@ -1,9 +1,6 @@
 import React, {Profiler} from 'react';
 import styled from 'styled-components';
-<<<<<<< Updated upstream
 import {useHistory} from 'react-router-dom'
-=======
->>>>>>> Stashed changes
 
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
@@ -30,15 +27,9 @@ const ProfileImg = styled.img`
 `;
 
 const WriteTime = styled.div`
-<<<<<<< Updated upstream
     font-size: 12px;
     margin: auto 5px 0 auto;
 `
-=======
-  font-size: 12px;
-  margin: auto 5px auto auto;
-`;
->>>>>>> Stashed changes
 
 const ContentImgBox = styled.div`
   width: 100%;
@@ -52,7 +43,6 @@ const ContentImg = styled.img`
 `;
 
 const Content = styled.div`
-<<<<<<< Updated upstream
     text-align: left;
     margin: 0 10px 10px 10px; 
 `
@@ -91,34 +81,4 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
         </FeedBox>
         </ Profiler>
   )
-=======
-  text-align: left;
-  margin: 0 10px 10px 10px;
-`;
-
-export default function FeedItem({
-  feedimg,
-  feedcontent,
-  profileimg,
-  profilename,
-  writetime,
-}) {
-  return (
-    <FeedBox>
-      <ProfileBox>
-        <ProfileImg src="/images/baseprofile.jpg" alt="프사" />
-        <ProfileName>{profilename}</ProfileName>
-        <WriteTime>{writetime}분 전</WriteTime>
-      </ProfileBox>
-      <hr />
-      <ContentBox>
-        <ContentImgBox>
-          <ContentImg src="/images/1.jpg" alt="글 사진" />
-        </ContentImgBox>
-        <hr />
-        <Content>{feedcontent}</Content>
-      </ContentBox>
-    </FeedBox>
-  );
->>>>>>> Stashed changes
 }

@@ -45,7 +45,7 @@ const ProfileName = styled.p`
 `
 const firstFollowList = [
     {profileImg:'', name:'정정채'},
-    {profileImg:'', name:'최성원'},
+    {profileImg:'', name:'채성원'},
     {profileImg:'', name:'허영민'},
 ]
 
