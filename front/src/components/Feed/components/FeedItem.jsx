@@ -28,7 +28,7 @@ const ProfileImg = styled.img`
 
 const WriteTime = styled.div`
     font-size: 12px;
-    margin: auto 5px auto auto;
+    margin: auto 5px 0 auto;
 `
 
 const ContentImgBox = styled.div`
@@ -68,9 +68,9 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
   return (
       <Profiler id='profileItem' onRender={onRenderCallback} >
         <FeedBox>
-            <ProfileBox onClick={() => history.push('/profile')}>
-                <ProfileImg src='/images/baseprofile.jpg' alt='프사'/>
-                <ProfileName>{profilename}</ProfileName>
+            <ProfileBox>
+                <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
+                <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
                 <WriteTime>{writetime}분 전</WriteTime>
             </ProfileBox>
             <hr />
