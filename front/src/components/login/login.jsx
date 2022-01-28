@@ -18,7 +18,11 @@ const Login = props => {
   const onLoginSuccess = res => {
     console.log('구글 로그인:', res);
     URL = 'http://localhost:8080/jwt/google'
-    axios.POST(URL, {res})
+    axios({
+      method: 'post',
+      url: 'http://localhost:8080/jwt/google',
+      data:res
+    })
   };
   const onFailureSuccess = res => {
     console.log('Login Failed:', res);
