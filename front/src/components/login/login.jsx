@@ -8,12 +8,17 @@ import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-naver-login';
 import Footer from '../footer/footer';
 import Header from '../header/header'
+import axios from 'axios';
 
 const Login = props => {
+  const URL = 'http://localhost:8080/jwt/google'
+
   const clientId =
     '162813412572-93j68nvs116vi6qongc7re9o85glq28f.apps.googleusercontent.com';
   const onLoginSuccess = res => {
     console.log('구글 로그인:', res);
+    URL = 'http://localhost:8080/jwt/google'
+    axios.POST(URL, {res})
   };
   const onFailureSuccess = res => {
     console.log('Login Failed:', res);
