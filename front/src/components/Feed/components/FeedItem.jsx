@@ -73,7 +73,7 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
             <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>
                 <ContentImgBox>
-                    <ContentImg src='/images/1.jpg' alt='글 사진' />
+                    <ContentImg src={feedimg} alt='글 사진' />
                 </ContentImgBox>
                 <hr />
                 <Content>{feedcontent}</Content>

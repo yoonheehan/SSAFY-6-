@@ -4,9 +4,9 @@ import Feeds from './components/Feeds'
 
 
 const FeedList = [
-    {profilename: '홍길동', profileimg:'/' , writetime: 3, feedcontent: 'ㄹㅇㅋㅋ', feedimg:'/' },
-    {profilename: '홍길동', profileimg:'/' , writetime: 3, feedcontent: 'ㄹㅇㅋㅋ', feedimg:'/' },
-    {profilename: '홍길동', profileimg:'/' , writetime: 3, feedcontent: 'ㄹㅇㅋㅋ', feedimg:'/' },
+    {profilename: '허영민', profileimg:'/' , writetime: 3, feedcontent: 'ㅋㅋ치킨 피자 골라주세연', feedimg:'/images/1.jpg' },
+    {profilename: '정정채', profileimg:'/' , writetime: 5, feedcontent: '오늘 머하지...? 추천좀...', feedimg:'/images/2.png' },
+    {profilename: '채성원', profileimg:'/' , writetime: 10, feedcontent: 'ㄹㅇㅋㅋ', feedimg:'/' },
 ]
 
 const NewFeedList = [

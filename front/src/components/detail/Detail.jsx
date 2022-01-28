@@ -13,7 +13,7 @@ export default function Detail() {
         <ContentDetail
           name='허영민'
           content='머가 맛있을까요 추천해주세요 #치킨#피자'
-          selectType={3}
+          selectType={1}
         />
         <CommentWrite />
       </>
