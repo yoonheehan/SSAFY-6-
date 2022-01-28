@@ -1,5 +1,4 @@
 import React from 'react';
-import FollowListHeader from './components/FollowListHeader'
 import SearchList from './components/SearchList';
 import styles from './FollowList.module.css'
 
