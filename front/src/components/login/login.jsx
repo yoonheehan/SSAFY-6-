@@ -11,7 +11,7 @@ import Header from '../header/header'
 import axios from 'axios';
 
 const Login = props => {
-  const URL = 'http://localhost:8080/jwt/google'
+
 
   const clientId =
     '162813412572-93j68nvs116vi6qongc7re9o85glq28f.apps.googleusercontent.com';
