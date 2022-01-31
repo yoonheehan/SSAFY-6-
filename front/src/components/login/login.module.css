@@ -34,15 +34,12 @@
 }
 
 .google {
-  display: flex;
-  justify-content: center;
-  align-items: flex-end;
   width: 100%;
   height: 70px;
-}
-
-.google span {
   font-size: 1.2rem;
+  cursor: pointer;
+  border: none;
+  box-shadow: 2px 2px 2px 2px gray;
 }
 
 .naver {
@@ -53,6 +50,7 @@
   background-color: #2db400;
   color: white;
   border: none;
+  box-shadow: 2px 2px 2px 2px gray;
 }
 
 .kakao {
@@ -62,6 +60,7 @@
   cursor: pointer;
   background-color: #fee500;
   border: none;
+  box-shadow: 2px 2px 2px 2px gray;
 }
 
 .hr {

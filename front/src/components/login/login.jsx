@@ -7,25 +7,18 @@ import GoogleLogin from 'react-google-login';
 import KakaoLogin from 'react-kakao-login';
 import NaverLogin from 'react-naver-login';
 import Footer from '../footer/footer';
-import Header from '../header/header'
+import Header from '../header/header';
 import axios from 'axios';
 
 const Login = props => {
-
-
-  const clientId =
-    '162813412572-93j68nvs116vi6qongc7re9o85glq28f.apps.googleusercontent.com';
-  const onLoginSuccess = res => {
+  const _clickSnsLoginGoogle = res => {
     console.log('구글 로그인:', res);
-    URL = 'http://localhost:8080/jwt/google'
+    URL = 'http://localhost:8080/jwt/google';
     axios({
       method: 'post',
       url: 'http://localhost:8080/jwt/google',
-      data:res
-    })
-  };
-  const onFailureSuccess = res => {
-    console.log('Login Failed:', res);
+      data: res,
+    });
   };
   const _clickSnsLoginKakao = res => {
     console.log('카카오 로그인:', res);
@@ -36,24 +29,34 @@ const Login = props => {
 
   return (
     <>
-    <Header />
+      <Header />
       <section className={styles.section}>
         <div className={styles.login}>
           <h1 className={styles.h1}>로그인</h1>
           <ul className={styles.list}>
             <li className={styles.item}>
               <GoogleLogin
-                className={styles.google}
-                clientId={clientId}
+                clientId={process.env.REACT_APP_GOOGLE}
                 buttonText="Google 계정으로 로그인"
-                onSuccess={onLoginSuccess}
-                onFailure={onFailureSuccess}
-                cookiePolicy="single_host_origin"
+                render={renderProps => (
+                  <div
+                    onClick={renderProps.onClick}
+                    disabled={renderProps.disabled}
+                  >
+                    <button className={styles.google}>
+                      <FcGoogle className={styles.icon} />
+                      Google 계정으로 로그인
+                    </button>
+                  </div>
+                )}
+                onSuccess={e => _clickSnsLoginGoogle(e)}
+                onFailure={console.log}
+                cookiePolicy={'single_host_origin'}
               />
             </li>
             <li className={styles.item}>
               <NaverLogin
-                clientId="7dJ6XRg_9yMFTdRAvXEE"
+                clientId={process.env.REACT_APP_NAVER}
                 callbackUrl="http://localhost:3000/"
                 render={renderProps => (
                   <div
@@ -72,7 +75,7 @@ const Login = props => {
             </li>
             <li>
               <KakaoLogin
-                token={'b4d91f6b872ed9cc94673ef40c3cd88b'}
+                token={process.env.REACT_APP_KAKAO}
                 render={renderProps => (
                   <div
                     onClick={renderProps.onClick}
@@ -89,14 +92,10 @@ const Login = props => {
                 onLogout={console.info}
               />
             </li>
-            <hr className={styles.hr} />
-            <span>
-              해줘잉이 처음이신가요? <a href="#">회원가입</a>
-            </span>
           </ul>
         </div>
       </section>
-        <Footer />
+      <Footer />
     </>
   );
 };
