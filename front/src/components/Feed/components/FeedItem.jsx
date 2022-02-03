@@ -1,6 +1,7 @@
-import React, {Profiler} from 'react';
+import React, {Profiler, useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
+import "./FeedItem.css"
 
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
@@ -48,15 +49,26 @@ const Content = styled.div`
     margin: 0 10px 10px 10px; 
 `
 
-const FeedMenu = styled.div`
-  margin-left: auto;
-  margin-right: 10px;
-`
-
 export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime, feedUserId}) {
     const history = useHistory();
     const myId = 1
+    const [selected, setSelected] = useState(false)
 
+    const ref = useRef(null)
+
+    useEffect(() => {
+      const handleClickOutside = (event) => {
+        if (selected && ref.current && !ref.current.contains(event.target)) {
+          setSelected(false)
+        }
+      }
+  
+      document.addEventListener("mousedown", handleClickOutside)
+  
+      return () => {
+          document.removeEventListener("mousedown", handleClickOutside)
+      }
+    }, [selected])
 
     function onRenderCallback(
         id,
@@ -75,11 +87,18 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
         <FeedBox>
             <ProfileBox>
                 <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
-                <div>
-                  <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
-                  <WriteTime>{writetime}분 전</WriteTime>
-                </div>
-                {myId === feedUserId ? <FeedMenu>...</FeedMenu> : null}
+                <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
+                <WriteTime>{writetime}분 전</WriteTime>
+                {myId === feedUserId ? 
+                  <div ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
+                    <i className="bi bi-three-dots-vertical"></i>
+                    <div className={selected ? "feed_drop active" : "feed_drop" }>
+                      <div>글수정</div>
+                      <div>글삭제</div>
+                    </div>
+                  </div>
+                : null
+                }
             </ProfileBox>
             <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>
