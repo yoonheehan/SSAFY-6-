@@ -37,7 +37,7 @@ const Login = props => {
   return (
     <>
       <Portal >
-        <div style={{zIndex=9999}}>
+        <div style={{zIndex:9999, position:'fixed', width:'100%'}}>
         <Header />
         <section className={styles.section}>
           <div className={styles.login}>
@@ -104,8 +104,8 @@ const Login = props => {
             </ul>
           </div>
         </section>
-        </div>
         <Footer />
+        </div>
       </Portal>
     </>
   );
