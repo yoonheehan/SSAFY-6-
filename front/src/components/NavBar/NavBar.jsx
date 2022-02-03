@@ -4,37 +4,36 @@ import './NavBar.css';
 // import Alarm from "../Alarm/Alarm.jsx"
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
-
 const NavBar = () => {
-  const ref = useRef(null)
+  const ref = useRef(null);
 
   const history = useHistory();
 
-  const [clicked, setClicked] = useState(false)
+  const [clicked, setClicked] = useState(false);
 
   const handleClick = () => {
-      setClicked(!clicked)
-  }
+    setClicked(!clicked);
+  };
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
+    const handleClickOutside = event => {
       if (clicked && ref.current && !ref.current.contains(event.target)) {
-          setClicked(false)
+        setClicked(false);
       }
-    }
+    };
 
-    document.addEventListener("mousedown", handleClickOutside)
+    document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
-        document.removeEventListener("mousedown", handleClickOutside)
-    }
-  }, [clicked])
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [clicked]);
 
   return (
     <>
-      <nav className='Nav' ref={ref}>
+      <nav className="Nav" ref={ref}>
         <div className="NavbarItems">
-          <div className='navbar-arrow'>
+          <div className="navbar-arrow">
             <AiOutlineArrowLeft
               onClick={() => {
                 history.goBack();
@@ -50,11 +49,11 @@ const NavBar = () => {
             alt="logo"
             onClick={() => {
               history.push('/feed');
-              setClicked(false)
+              setClicked(false);
             }}
           />
           <div className="" onClick={handleClick}>
-            <i class="h1 bi bi-list navbar-hamburger"></i>
+            <i className="h1 bi bi-list navbar-hamburger"></i>
             {/* <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}></i> */}
           </div>
         </div>
@@ -64,7 +63,7 @@ const NavBar = () => {
             className="h1 px-4 bi bi-house-door-fill"
             onClick={() => {
               history.push('/feed');
-              setClicked(false)
+              setClicked(false);
             }}
           ></i>
           <i
@@ -72,7 +71,7 @@ const NavBar = () => {
             className="h1 px-4 bi bi-people-fill"
             onClick={() => {
               history.push('/user/1/followlist');
-              setClicked(false)
+              setClicked(false);
             }}
           ></i>
           <i
@@ -80,15 +79,15 @@ const NavBar = () => {
             className="h1 px-4 bi bi-person-fill"
             onClick={() => {
               history.push('/profile');
-              setClicked(false)
+              setClicked(false);
             }}
           ></i>
-          <i 
+          <i
             style={{ cursor: 'pointer' }}
             className="link h1 px-4 bi bi-bell-fill"
             onClick={() => {
               history.push('/alarm');
-              setClicked(false)
+              setClicked(false);
             }}
           ></i>
           <i
@@ -96,7 +95,7 @@ const NavBar = () => {
             className="link h1 px-4 bi bi-pencil-fill"
             onClick={() => {
               history.push('/post');
-              setClicked(false)
+              setClicked(false);
             }}
           ></i>
         </div>

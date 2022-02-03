@@ -15,7 +15,9 @@ const MdProfile = props => {
     <>
       <div className={styles.div1}>
         <div className={styles.div3}>
-          <h4 className={styles.h4}>프로필 수정</h4>
+          <h1 className={styles.h4}>
+            <b>프로필 수정</b>
+          </h1>
         </div>
       </div>
       <section className={styles.section}>
