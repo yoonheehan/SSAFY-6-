@@ -49,6 +49,12 @@ const Content = styled.div`
     margin: 0 10px 10px 10px; 
 `
 
+const FeedMenu = styled.div`
+  margin-left: auto;
+  margin-right: 10px;
+`
+
+
 export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime, feedUserId}) {
     const history = useHistory();
     const myId = 1
@@ -86,19 +92,23 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
       <Profiler id='profileItem' onRender={onRenderCallback} >
         <FeedBox>
             <ProfileBox>
-                <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
-                <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
-                <WriteTime>{writetime}분 전</WriteTime>
+            <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
+                <div>
+                  <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
+                  <WriteTime>{writetime}분 전</WriteTime>
+                </div>
                 {myId === feedUserId ? 
-                  <div ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
-                    <i className="bi bi-three-dots-vertical"></i>
-                    <div className={selected ? "feed_drop active" : "feed_drop" }>
-                      <div>글수정</div>
-                      <div>글삭제</div>
+                  <FeedMenu>
+                    <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
+                      <i className="bi bi-three-dots-vertical"></i>
+                      <div className={selected ? "feed_drop active" : "feed_drop" }>
+                        <div>글수정</div>
+                        <div>글삭제</div>
+                      </div>
                     </div>
-                  </div>
-                : null
-                }
+                    </FeedMenu>
+                  : null
+                  }
             </ProfileBox>
             <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>
