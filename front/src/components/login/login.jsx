@@ -9,13 +9,11 @@ import NaverLogin from 'react-naver-login';
 import Footer from '../footer/footer';
 import Header from '../header/header';
 import axios from 'axios';
-import {createPortal} from 'react-dom'
+import { createPortal } from 'react-dom';
 
-const Portal = (props) => {
-  return createPortal(props.children, document.getElementById("loginPortal"))
-}
-
-
+const Portal = props => {
+  return createPortal(props.children, document.getElementById('loginPortal'));
+};
 
 const Login = props => {
   const _clickSnsLoginGoogle = res => {
@@ -36,75 +34,77 @@ const Login = props => {
 
   return (
     <>
-      <Portal >
-        <div style={{zIndex:9999, position:'fixed', width:'100%'}}>
-        <Header />
-        <section className={styles.section}>
-          <div className={styles.login}>
-            <h1 className={styles.h1}>로그인</h1>
-            <ul className={styles.list}>
-              <li className={styles.item}>
-                <GoogleLogin
-                  clientId={process.env.REACT_APP_GOOGLE}
-                  buttonText="Google 계정으로 로그인"
-                  render={renderProps => (
-                    <div
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                    >
-                      <button className={styles.google}>
-                        <FcGoogle className={styles.icon} />
-                        Google 계정으로 로그인
-                      </button>
-                    </div>
-                  )}
-                  onSuccess={e => _clickSnsLoginGoogle(e)}
-                  onFailure={console.log}
-                  cookiePolicy={'single_host_origin'}
-                />
-              </li>
-              <li className={styles.item}>
-                <NaverLogin
-                  clientId={process.env.REACT_APP_NAVER}
-                  callbackUrl="http://localhost:3000/"
-                  render={renderProps => (
-                    <div
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                    >
-                      <button className={styles.naver}>
-                        <SiNaver className={styles.icon} />
-                        Naver 계정으로 로그인
-                      </button>
-                    </div>
-                  )}
-                  onSuccess={e => _clickSnsLoginNaver(e)}
-                  onFailure={result => console.error(result)}
-                />
-              </li>
-              <li>
-                <KakaoLogin
-                  token={process.env.REACT_APP_KAKAO}
-                  render={renderProps => (
-                    <div
-                      onClick={renderProps.onClick}
-                      disabled={renderProps.disabled}
-                    >
-                      <button className={styles.kakao}>
-                        <RiKakaoTalkFill className={styles.icon} />
-                        Kakao 계정으로 로그인
-                      </button>
-                    </div>
-                  )}
-                  onSuccess={e => _clickSnsLoginKakao(e)}
-                  onFail={console.error}
-                  onLogout={console.info}
-                />
-              </li>
-            </ul>
-          </div>
-        </section>
-        <Footer />
+      <Portal>
+        <div style={{ zIndex: 9999, position: 'fixed', width: '100%' }}>
+          <Header />
+          <section className={styles.section}>
+            <div className={styles.login}>
+              <h1 className={styles.h1}>로그인</h1>
+              <ul className={styles.list}>
+                <li className={styles.item}>
+                  <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE}
+                    buttonText="Google 계정으로 로그인"
+                    render={renderProps => (
+                      <div
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <button className={styles.google}>
+                          <FcGoogle className={styles.icon} />
+                          Google 계정으로 로그인
+                        </button>
+                      </div>
+                    )}
+                    onSuccess={e => _clickSnsLoginGoogle(e)}
+                    onFailure={console.log}
+                    cookiePolicy={'single_host_origin'}
+                    uxMode="redirect"
+                  />
+                </li>
+                <li className={styles.item}>
+                  <NaverLogin
+                    clientId={process.env.REACT_APP_NAVER}
+                    callbackUrl="http://localhost:3000/"
+                    render={renderProps => (
+                      <div
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <button className={styles.naver}>
+                          <SiNaver className={styles.icon} />
+                          Naver 계정으로 로그인
+                        </button>
+                      </div>
+                    )}
+                    onSuccess={e => _clickSnsLoginNaver(e)}
+                    onFailure={result => console.error(result)}
+                    uxMode="redirect"
+                  />
+                </li>
+                <li>
+                  <KakaoLogin
+                    token={process.env.REACT_APP_KAKAO}
+                    render={renderProps => (
+                      <div
+                        onClick={renderProps.onClick}
+                        disabled={renderProps.disabled}
+                      >
+                        <button className={styles.kakao}>
+                          <RiKakaoTalkFill className={styles.icon} />
+                          Kakao 계정으로 로그인
+                        </button>
+                      </div>
+                    )}
+                    onSuccess={e => _clickSnsLoginKakao(e)}
+                    onFail={console.error}
+                    onLogout={console.info}
+                  />
+                </li>
+              </ul>
+            </div>
+          </section>
+          <Footer />
         </div>
       </Portal>
     </>
