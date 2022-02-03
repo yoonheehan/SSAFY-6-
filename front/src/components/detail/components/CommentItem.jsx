@@ -19,7 +19,7 @@ const ProfileThumnail = styled.img`
 
 const CommentDiv = styled.div`
   margin-left: 5px;
-  width: 85%;
+  width: 80%;
 `
 
 const ProfileName = styled.div`
@@ -38,8 +38,12 @@ const CommentContent = styled.div`
   width: 90%;
   margin:0 5% 0 5%;
   margin-bottom: 5px;
+  word-break: break-all;
 `
 
+const CommentMenu = styled.div`
+  
+`
 
 function CommentItem({profilename, writetime, content}) {
 
@@ -54,6 +58,9 @@ function CommentItem({profilename, writetime, content}) {
                     <WriteTime>{writetime}분 전</WriteTime>
                   </div>
                 </CommentDiv>
+                  <CommentMenu>
+                    수정 삭제
+                  </CommentMenu>
           </CommentWrapped>
             <CommentContent>{content}</CommentContent>
         </>

@@ -43,24 +43,23 @@ const ProfileName = styled.p`
     font-size: 25px;
     margin: auto 0 auto 20px;
 `
-const firstFollowList = [
-    {profileImg:'', name:'정정채'},
-    {profileImg:'', name:'채성원'},
-    {profileImg:'', name:'허영민'},
-]
+const firstFollowList = []
 
-export default function SearchList() {
+export default function SearchList(props) {
+
+    const firstFriendList = props.friendList
 
     const [findName, setFindName] = useState("");
-    const [followList, setFollowList] = useState(firstFollowList)
+    const [friendList, setFriendList] = useState(firstFriendList)
+
 
     function getFriend (event) {
         const findName = event.target.value
         setFindName(event.target.value)
-        let result = firstFollowList.filter( data => {
+        let result = firstFriendList.filter( data => {
             return data.name.includes(findName)
         })
-        setFollowList(result)
+        setFriendList(result)
     }
 
     return (
@@ -73,8 +72,8 @@ export default function SearchList() {
                 />
             </SearchDiv>
             <FriendList>
-                {followList.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
-                followList.map(follow => 
+                {friendList.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
+                friendList.map(follow => 
                     <FriendProfile>
                     {follow.profileImg === '' ? 
                     <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.profileImg} alt={follow.profileImg} />}

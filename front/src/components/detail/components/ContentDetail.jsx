@@ -4,7 +4,7 @@ import Progressbar from './Progressbar'
 
 const Base = styled.div`
   width: 90%;
-  margin:0 5% 0 5%;
+  margin:80px 5% 0 5%;
   
 `
 

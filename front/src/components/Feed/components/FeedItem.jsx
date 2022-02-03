@@ -5,6 +5,7 @@ import {useHistory} from 'react-router-dom'
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
   margin: 5px;
+  margin-top: 70px;
 `;
 
 const ProfileBox = styled.div`
