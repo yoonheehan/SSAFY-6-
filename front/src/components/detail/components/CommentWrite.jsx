@@ -21,7 +21,9 @@ const SubmitBtn = styled.input`
 `
 
 const CommentList = [
-    {profilename: '홍길동', writetime: 3, content: 'ㄹㅇㅋㅋ' },
+    {profilename: '홍길동', writetime: 3, content: '치킨좋아 사주세여 치킨좋아 사주세여치킨좋아 사주세여치킨좋아 사주세여치킨좋아 사주세여', commentUserId:1 },
+    {profilename: '홍길동', writetime: 5, content: 'ㄹㅇㅋㅋ',commentUserId:2 },
+    {profilename: '홍길동', writetime: 2, content: 'ㄹㅇㅋㅋ', commentUserId:3 },
 ]
 
 function CommentWrite() {

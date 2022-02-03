@@ -42,11 +42,12 @@ const CommentContent = styled.div`
 `
 
 const CommentMenu = styled.div`
-  
+  margin-left: auto;
+  margin-right: 10px;
 `
 
-function CommentItem({profilename, writetime, content}) {
-
+function CommentItem({profilename, writetime, content,commentUserId}) {
+    const myId = 1;
 
     return (
         <>
@@ -54,13 +55,13 @@ function CommentItem({profilename, writetime, content}) {
             <ProfileThumnail src="/images/tmpprofile2.jpg" alt="프로필사진" />
                 <CommentDiv>
                   <div style={{textAlign:'start'}}>
-                    <ProfileName>{profilename}</ProfileName>
-                    <WriteTime>{writetime}분 전</WriteTime>
+                    <ProfileName>
+                      {profilename}
+                      <WriteTime>{writetime}분 전</WriteTime>
+                      </ProfileName>
                   </div>
                 </CommentDiv>
-                  <CommentMenu>
-                    수정 삭제
-                  </CommentMenu>
+                  {myId === commentUserId ? <CommentMenu>...</CommentMenu> : null}
           </CommentWrapped>
             <CommentContent>{content}</CommentContent>
         </>

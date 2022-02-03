@@ -5,12 +5,12 @@ import {useHistory} from 'react-router-dom'
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
   margin: 5px;
-  margin-top: 70px;
+  margin-top: 20px;
 `;
 
 const ProfileBox = styled.div`
   display: flex;
-  margin-top: 5px;
+  margin-top: 10px;
   margin-left: 5px;
   align-items: center;
 `;
@@ -47,9 +47,16 @@ const Content = styled.div`
     text-align: left;
     margin: 0 10px 10px 10px; 
 `
-export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime}) {
+
+const FeedMenu = styled.div`
+  margin-left: auto;
+  margin-right: 10px;
+`
+
+export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime, feedUserId}) {
     const history = useHistory();
-  
+    const myId = 1
+
 
     function onRenderCallback(
         id,
@@ -68,8 +75,11 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
         <FeedBox>
             <ProfileBox>
                 <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
-                <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
-                <WriteTime>{writetime}분 전</WriteTime>
+                <div>
+                  <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
+                  <WriteTime>{writetime}분 전</WriteTime>
+                </div>
+                {myId === feedUserId ? <FeedMenu>...</FeedMenu> : null}
             </ProfileBox>
             <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>

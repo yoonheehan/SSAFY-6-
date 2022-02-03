@@ -13,6 +13,7 @@ export default function Comments({commentList}) {
             profilename={comment.profilename}
             content={comment.content}
             writetime={comment.writetime}
+            commentUserId={comment.commentUserId}
             onClick={handleClick}
         />)}
       </div>

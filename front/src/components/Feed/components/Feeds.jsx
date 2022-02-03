@@ -14,6 +14,7 @@ export default function Feeds({feedList}) {
               profileimg={feed.profileimg}
               profilename={feed.profilename}
               writetime={feed.writetime}
+              feedUserId={feed.feedUserId}
             />
             )}
     </div>
