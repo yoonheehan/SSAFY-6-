@@ -9,7 +9,7 @@ const Alarm = () => {
   if (state.length <= 0) {
     return (
       <>
-        <h1 style={{ marginTop: '20px' }}>
+        <h1 style={{marginTop: 100}}>
           <b>알림</b>
         </h1>
         <br></br>
@@ -33,26 +33,30 @@ const Alarm = () => {
         </h5>
 
         {state.map(({ id, img, userName, content }) => (
-          <div key={id} className="card my-2" style={{zIndex:-1}}>
-            <div className="card-body" style={{zIndex:-1}}>
-              <div className="d-flex align-items-center flex-row">
-                <div>
-                  <img src={img} alt="Avatar" className="avatar"></img>
-                </div>
-                <div className="px-1">{userName}</div>
-                <div className="ms-auto">
-                  <button
+          <>
+            <div key={id}>
+              <div className='box'>
+                <div className='box_top'>
+                  <div className='box_top'>
+                    <div>
+                      <img src={img} alt="Avatar" className="avatar"></img>
+                    </div>
+                    <div className="px-1">{userName}</div>
+                  </div>
+                  <div className="ms-auto">
+                    <i className="h4 bi bi-x-lg"
                     onClick={() => {
                       dispatch({ type: 'delete', id });
-                    }}
-                    type="button"
-                    className="btn-close"
-                  ></button>
+                    }} style={{ cursor: 'pointer' }}></i>
+                  </div>
+                </div>
+                <div className='box_content'>
+                  {content}
                 </div>
               </div>
-              <div align="left">{content}</div>
             </div>
-          </div>
+          </>
+          
         ))}
       </div>
       

@@ -1,7 +1,8 @@
 .Nav {
   position: fixed;
   top: 0;
-  width: 100%
+  width: 100%;
+  z-index: 1000;
 }
 
 .NavbarItems {
@@ -12,7 +13,7 @@
   align-items: center;
   font-size: 1.2rem;
   position: relative;
-  z-index: 2;
+  z-index: 1000;
 }
 
 .nav-menu {
@@ -26,7 +27,7 @@
   left: 0;
   opacity: 1;
   transition: all 1s ease;
-  z-index: 1;
+  z-index: 999;
 }
 
 .nav-menu.active {
@@ -41,7 +42,7 @@
   left: 0;
   opacity: 1;
   transition: all 1s ease;
-  z-index: 1;
+  z-index: 999;
 }
 
 .menu-icon {

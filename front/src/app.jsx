@@ -19,7 +19,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
+        <NavBar/>
         <Switch>
           <Route exact path="/feed" component={Feed} />
           <Route exact path="/" component={Login} />

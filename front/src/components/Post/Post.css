@@ -44,11 +44,13 @@
 }
 
 .chevron {
+    position: relative;
     transform: rotate(0deg);
     transition: all 0.2s ease;
 }
 
 .chevron.active {
+    position: relative;
     transform: rotate(-180deg);
     transition: all 0.2s ease;
 }
