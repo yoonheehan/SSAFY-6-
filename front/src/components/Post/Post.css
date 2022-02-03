@@ -3,3 +3,88 @@
     border-color: Transparent; 
     overflow: auto;  
 }
+
+.my_accordion {
+    background-color: #ffffff;
+}
+
+.title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    margin-bottom: 5px;
+    padding: 10px 20px;
+    height: 50px;
+    transition: all 0.2s ease;
+}
+
+.title.active {
+    background-color: #e2e0e0;
+    transition: all 0.2s ease;
+}
+
+.content {
+    display: flex;
+    height: 0px;
+    flex-direction: column;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.content.show {
+    height: 100px;
+    border-bottom: 1px solid #eeecec;
+    transition: all 0.4s ease;
+}
+
+.content__radio {
+    margin: 10px 40px;
+    text-align: left;
+}
+
+.chevron {
+    transform: rotate(0deg);
+    transition: all 0.2s ease;
+}
+
+.chevron.active {
+    transform: rotate(-180deg);
+    transition: all 0.2s ease;
+}
+
+.vote_content {
+    max-height: 0px;
+    overflow: hidden;
+    transition: all 0.4s ease;
+}
+
+.vote_content.show {
+    max-height: 1000px;
+    border-bottom: 1px solid #eeecec;
+    transition: max-height 0.4s ease;
+}
+
+.vs_content {
+    height: 0px;
+    overflow: hidden;
+    transition: all 0.4s ease;   
+}
+
+.vs_content.show {
+    height: 250px;
+    border-bottom: 1px solid #eeecec;
+    transition: all 0.4s ease;
+}
+
+.ox_content {
+    height: 0px;
+    overflow: hidden;
+    transition: all 0.4s ease;   
+}
+
+.ox_content.show {
+    height: 250px;
+    border-bottom: 1px solid #eeecec;
+    transition: all 0.4s ease;
+}
