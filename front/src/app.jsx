@@ -1,6 +1,7 @@
 import './App.css';
 import Detail from './components/detail/Detail';
 import FollowList from './components/followList/FollowList';
+import FollowerList from './components/followList/FollowerList';
 import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import Login from './components/login/login';
@@ -26,11 +27,12 @@ function App() {
           <Route exact path="/mdProfile" component={MdProfile} />
           <Route exact path="/newProfile" component={NewProfile} />
           <Route exact path="/user/:id/followList" component={FollowList} />
+          <Route exact path="/user/:id/followerList" component={FollowerList} />
           <Route exact path="/feed/:id/" component={Detail} />
           <Route exact path="/alarm" component={Alarm} />
           <Route exact path="/withdraw" component={Withdraw} />
           <Route exact path="/postList" component={PostList} />
-          <Route exact path="/post" component={Post} />         
+          <Route exact path="/post" component={Post} />        
         </Switch>
       </BrowserRouter>
     </div>
