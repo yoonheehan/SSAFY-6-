@@ -11,7 +11,7 @@ const Post = () => {
 	const state = useSelector(state => state);
 	const userData = state[0]
 	//
-
+	
 	const inputPlus = () => {
 		return (
 			<input type="text" size="30" placeholder="투표항목을 입력하세요"></input>

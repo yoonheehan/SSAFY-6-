@@ -1,0 +1,13 @@
+.feed_drop {
+    display: none;
+    position: absolute;
+    background-color: #bdcbdd;
+    right: 10px;
+    width: 80px;
+    padding: 8px;
+    border-radius: 5%;
+}
+
+.feed_drop.active {
+    display: block;
+}

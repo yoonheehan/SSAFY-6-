@@ -55,7 +55,7 @@ const FeedMenu = styled.div`
 `
 
 
-export default function FeedItem({feedimg, feedcontent, profileimg, profilename, writetime, feedUserId}) {
+export default function FeedItem({feed, onRemove}) {
     const history = useHistory();
     const myId = 1
     const [selected, setSelected] = useState(false)
@@ -94,16 +94,16 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
             <ProfileBox>
             <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
                 <div>
-                  <ProfileName onClick={() => history.push('/profile')}>{profilename}</ProfileName>
-                  <WriteTime>{writetime}분 전</WriteTime>
+                  <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName>
+                  <WriteTime>{feed.writetime}분 전</WriteTime>
                 </div>
-                {myId === feedUserId ? 
+                {myId === feed.feedUserId ? 
                   <FeedMenu>
                     <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
                       <i className="bi bi-three-dots-vertical"></i>
                       <div className={selected ? "feed_drop active" : "feed_drop" }>
                         <div>글수정</div>
-                        <div>글삭제</div>
+                        <div onClick={() => onRemove(feed.id)}>글삭제</div>
                       </div>
                     </div>
                     </FeedMenu>
@@ -113,10 +113,10 @@ export default function FeedItem({feedimg, feedcontent, profileimg, profilename,
             <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>
                 <ContentImgBox>
-                    <ContentImg src={feedimg} alt='글 사진' />
+                    <ContentImg src={feed.feedimg} alt='글 사진' />
                 </ContentImgBox>
                 <hr />
-                <Content>{feedcontent}</Content>
+                <Content>{feed.feedcontent}</Content>
             </ContentBox>
         </FeedBox>
         </ Profiler>

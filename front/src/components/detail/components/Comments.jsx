@@ -1,20 +1,25 @@
-import React, {useCallback} from 'react';
+import React, {useCallback, useState, useEffect} from 'react';
 import CommentItem from './CommentItem'
 
-export default function Comments({commentList}) {
+export default function Comments({commentList, onRemove, clickLike}) {
     const handleClick = useCallback(() => {
         console.log('눌림')
       }, [])
+
+    
+
+
+
+              
   return (
       <div>
         {commentList.map(comment => 
         <CommentItem 
             key={comment.id}
-            profilename={comment.profilename}
-            content={comment.content}
-            writetime={comment.writetime}
-            commentUserId={comment.commentUserId}
+            comment={comment}
+            onRemove={onRemove}
             onClick={handleClick}
+            clickLike={clickLike}
         />)}
       </div>
   )
