@@ -13,17 +13,30 @@ import Withdraw from './components/Withdraw/Withdraw.jsx';
 import Alarm from './components/Alarm/Alarm.jsx';
 import Feed from './components/Feed/Feed';
 import PostList from './components/postList/postList';
-import Post from './components/Post/Post.jsx'
+import Post from './components/Post/Post.jsx';
+import { useEffect, useState } from 'react';
 
 function App() {
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {}, []);
+
+  const loginCallback = login => {
+    setIsLogin(login);
+  };
+
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar/>
+        <NavBar />
         <Switch>
-          <Route exact path="/feed" component={Feed} />
-          <Route exact path="/" component={Login} />
-          <Route exact path="/profile" component={Profile} />
+          <Route
+            exact
+            path="/"
+            render={props => <Login {...props} loginCallback={loginCallback} />}
+          />
+          <Route exact path="/feed" isLogin={isLogin} component={Feed} />
+          <Route exact path="/profile" isLogin={isLogin} component={Profile} />
           <Route exact path="/mdProfile" component={MdProfile} />
           <Route exact path="/newProfile" component={NewProfile} />
           <Route exact path="/user/:id/followList" component={FollowList} />
@@ -32,7 +45,7 @@ function App() {
           <Route exact path="/alarm" component={Alarm} />
           <Route exact path="/withdraw" component={Withdraw} />
           <Route exact path="/postList" component={PostList} />
-          <Route exact path="/post" component={Post} />        
+          <Route exact path="/post" component={Post} />
         </Switch>
       </BrowserRouter>
     </div>

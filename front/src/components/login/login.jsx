@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styles from './login.module.css';
 import { FcGoogle } from 'react-icons/fc';
 import { SiNaver } from 'react-icons/si';
@@ -10,20 +10,38 @@ import Footer from '../footer/footer';
 import Header from '../header/header';
 import axios from 'axios';
 import { createPortal } from 'react-dom';
+import { useHistory } from 'react-router-dom';
 
 const Portal = props => {
   return createPortal(props.children, document.getElementById('loginPortal'));
 };
 
 const Login = props => {
+  const histroy = useHistory();
   const _clickSnsLoginGoogle = res => {
     console.log('구글 로그인:', res);
-    URL = 'http://localhost:8080/jwt/google';
-    axios({
-      method: 'post',
-      url: 'http://localhost:8080/jwt/google',
-      data: res,
-    });
+    try {
+      axios({
+        method: 'post',
+        url: 'http://localhost:8080/jwt/google',
+        data: res,
+      })
+        .then(response => {
+          console.log('response.data.accessToken : ' + response.data);
+          axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + response.data;
+          props.loginCallback(true);
+          histroy.push('/feed');
+        })
+        .catch(error => {
+          console.log('login requset fail : ' + error);
+        })
+        .finally(() => {
+          console.log('login request end');
+        });
+    } catch (e) {
+      console.log(e);
+    }
   };
   const _clickSnsLoginKakao = res => {
     console.log('카카오 로그인:', res);
@@ -31,6 +49,10 @@ const Login = props => {
   const _clickSnsLoginNaver = res => {
     console.log('네이버 로그인:', res);
   };
+
+  useEffect(() => {
+    console.log('Login Render...');
+  });
 
   return (
     <>
@@ -59,7 +81,6 @@ const Login = props => {
                     onSuccess={e => _clickSnsLoginGoogle(e)}
                     onFailure={console.log}
                     cookiePolicy={'single_host_origin'}
-                    uxMode="redirect"
                   />
                 </li>
                 <li className={styles.item}>
@@ -79,7 +100,7 @@ const Login = props => {
                     )}
                     onSuccess={e => _clickSnsLoginNaver(e)}
                     onFailure={result => console.error(result)}
-                    uxMode="redirect"
+                    isPopUp={false}
                   />
                 </li>
                 <li>
