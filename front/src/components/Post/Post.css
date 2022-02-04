@@ -181,3 +181,27 @@
     top: -10px;
     left: 28px;
 }
+
+.img_box {
+    display: flex;
+    align-items: center;
+}
+
+.thumbnail {
+    height: 150px;
+    width: auto;
+}
+
+.imgDelete {
+    display:none;
+}
+
+.imgDelete.show {
+    display:flex;
+}
+
+.button2 {
+    width:auto;
+    height:auto;
+    background-color:rgb(185, 185, 185) ;
+}

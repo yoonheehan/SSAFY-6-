@@ -17,12 +17,13 @@ const Post = () => {
 			<input type="text" size="30" placeholder="투표항목을 입력하세요"></input>
 		)
 	}
-	// {id: 1, value: inputPlus()}
+
 	const [selected, setSelected] = useState(false)
 	const [keySelected, setKeySelected] = useState(null)
 	const [hashtag, setHashtag] = useState('')
 	const [isErrored, setIsErrored] = useState(false)
 	const [hashArr, setHashArr] = useState([])
+	const [img, setImg] = useState("")
 	const [votes, setVote] = useState([{id: 0, value: inputPlus()}])
 	const nextId = useRef(1)
 	const ref = useRef(null)
@@ -35,7 +36,6 @@ const Post = () => {
 			event.preventDefault()
 		},
 		[votes]
-		
 	)
 
 	const removeEvent = (event, props) => {
@@ -95,6 +95,15 @@ const Post = () => {
 		return (
 			setHashArr(tempArr)
 		)
+	}
+
+	const saveImg = (event) => {
+		setImg(URL.createObjectURL(event.target.files[0]))
+	}
+
+	const deleteImg = (event) => {
+		URL.revokeObjectURL(img)
+		setImg(null)
 	}
 
 	return (
@@ -167,7 +176,20 @@ const Post = () => {
 										</div>	
 									</div>
 								</form>
-								<input type="file" />
+								<div className={img ? "imgDelete show" : "imgDelete"}>
+									<button onClick={deleteImg}>x</button>
+								</div>
+								<div className="img_box">
+									<div>
+										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
+									</div>
+									<div style={{ marginLeft: "10px" }}>
+										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<label className="button2" for="imgFile">
+											사진 업로드
+										</label>
+									</div>
+								</div>
 							</div>
 						</div>
 						<div className="my_accordion">
