@@ -42,7 +42,6 @@ function CommentWrite() {
             ...prevComments,
             {profilename: '허영민',id:(lastValue+1), writetime: 3, content:`${commentContent}`, likes:0, clickedLike:false, commentUserId:4}
         ])
-
         setCommentContent('')
         event.preventDefault()
     }
