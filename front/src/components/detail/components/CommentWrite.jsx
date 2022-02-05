@@ -64,14 +64,15 @@ function CommentWrite() {
                     comment.id === id  && comment.clickedLike === true ? {...comment,clickedLike: !comment.clickedLike, likes: comment.likes - 1} : comment)
             )
         }
-
     }
 
-    
-    
     return (
         <>
-            <Comments commentList={comments} onRemove={onRemove} clickLike={clickLike} />
+            <Comments 
+            commentList={comments} 
+            onRemove={onRemove} 
+            clickLike={clickLike}
+             />
             <br />
             <CommentForm onSubmit={handleSubmit}>
                 <CommentBox 

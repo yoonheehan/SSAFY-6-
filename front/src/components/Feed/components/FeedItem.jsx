@@ -11,9 +11,9 @@ const FeedBox = styled.div`
 
 const ProfileBox = styled.div`
   display: flex;
-  margin-top: 10px;
-  margin-left: 5px;
+  padding: 5px 5px 5px 5px;
   align-items: center;
+  border: 1px solid #d3d3d3;
 `;
 
 const ProfileName = styled.div`
@@ -36,9 +36,12 @@ const WriteTime = styled.div`
 const ContentImgBox = styled.div`
   width: 100%;
   text-align: end;
+  margin : 10px 0 10px 0;
 `;
 
-const ContentBox = styled.div``;
+const ContentBox = styled.div`
+  
+`;
 
 const ContentImg = styled.img`
   width: inherit;
@@ -46,7 +49,8 @@ const ContentImg = styled.img`
 
 const Content = styled.div`
     text-align: left;
-    margin: 0 10px 10px 10px; 
+    padding: 5px 5px 5px 5px;
+    border: 1px solid #d3d3d3;
 `
 
 const FeedMenu = styled.div`
@@ -110,12 +114,10 @@ export default function FeedItem({feed, onRemove}) {
                   : null
                   }
             </ProfileBox>
-            <hr />
             <ContentBox onClick={() => history.push('/feed/:id')}>
                 <ContentImgBox>
                     <ContentImg src={feed.feedimg} alt='글 사진' />
                 </ContentImgBox>
-                <hr />
                 <Content>{feed.feedcontent}</Content>
             </ContentBox>
         </FeedBox>
