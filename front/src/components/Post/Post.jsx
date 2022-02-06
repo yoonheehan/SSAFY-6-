@@ -1,10 +1,11 @@
 import React, {useState, useRef, useCallback, useEffect} from "react"
 import { useSelector } from 'react-redux';
-
-import 'bootstrap/dist/css/bootstrap.min.css';
+import DatePicker from "react-datepicker"
+import axios from 'axios'
 import {Button} from "react-bootstrap";
 import "./Post.css"
-
+import 'bootstrap/dist/css/bootstrap.min.css';
+import "react-datepicker/dist/react-datepicker.css";
 
 const Post = () => {
 	// 
@@ -18,20 +19,53 @@ const Post = () => {
 		)
 	}
 
+	//axios post 데이터
+	const [userId, setUserId] = useState(1) // 유저 id
+	const [type, setType] = useState(1)
+	const [revealType, setRevealType] = useState(null) // 공개범위
+	const [voteContent, setVoteContent] = useState("") // 내용
+	const [voteItems, setVoteItems] = useState([""]) // 투표항목
+	const [img, setImg] = useState("") // 이미지
+	const [hashArr, setHashArr] = useState([]) // 해시태그
+	const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
+	//
+
+	// axios.post
+	function postAPI() {
+		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+		axios.post(url, {
+			// userId: userId,
+			type: type,
+			view_range: revealType,
+			content: voteContent,
+			vote_contents: voteItems,
+			board_image: img,
+			// hashArr: hashArr,
+			due_date: dueDate,
+		})
+		.then(function (response) {
+			console.log(response.config.data)
+		})
+		.catch(function(error) {
+			console.log(error)
+		})
+	}
+	//
+
+
 	const [selected, setSelected] = useState(false)
 	const [keySelected, setKeySelected] = useState(null)
 	const [hashtag, setHashtag] = useState('')
 	const [isErrored, setIsErrored] = useState(false)
-	const [hashArr, setHashArr] = useState([])
-	const [img, setImg] = useState("")
 	const [votes, setVote] = useState([{id: 0, value: inputPlus()}])
+	
 	const nextId = useRef(1)
 	const ref = useRef(null)
 
 	const addEvent = useCallback(
 		(event) => {
 			const vote = { id: nextId.current, value: inputPlus() }
-			setVote(votes.concat(vote))
+			setVote(votes.concat(vote))	
 			nextId.current += 1
 			event.preventDefault()
 		},
@@ -48,6 +82,32 @@ const Post = () => {
 			setHashtag(event.target.value)
 		)
 	} 
+
+	const inputTextArea = (event) => {
+		return (
+			setVoteContent(event.target.value),
+			console.log(event.target.value)
+		)
+	}
+
+	const getVoteItems = (event, idx) => {
+		const items = voteItems
+		items[idx] = event.target.value
+		setVoteItems(items)
+		console.log(voteItems)
+	}
+
+	const addVoteList = () => {
+		setVoteItems(oldArray => [...oldArray, ""])
+		console.log(voteItems)
+	}
+
+	const removeVoteList = (event, idx) => {
+		const items = voteItems
+		items.splice(idx, 1)
+		setVoteItems(items)
+		console.log(voteItems)
+	}
 
 	const inputHashtag = (event) => {
 		if (event.keyCode === 13 || event.type === 'click') {
@@ -106,6 +166,16 @@ const Post = () => {
 		setImg(null)
 	}
 
+	// 마감 시간
+    const filterPassedTime = (time) => {
+        const currentDate = new Date();
+        const selectedDate = new Date(time);
+    
+        return currentDate.getTime() < selectedDate.getTime();
+    };
+	//
+
+	
 	return (
 		<>
 			<div className="container" style={{zIndex: '-100'}} >
@@ -129,7 +199,7 @@ const Post = () => {
 							<div className={selected ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
 						</div>
 						<div className={selected ? 'content show' : 'content'}>
-							<div className='content__radio'>
+							<div className='content__radio' onClick={() => setRevealType("전체공개")}>
 								<input
 									type="radio"
 									id="reveal_all"
@@ -138,7 +208,7 @@ const Post = () => {
 								/>
 								<label style={{marginLeft: "5px"}} for="reveal_all">전체공개</label>
 							</div>
-							<div className="content__radio">
+							<div className="content__radio" onClick={() => setRevealType("친구공개")}>
 								<input
 									type="radio"
 									id="reveal_friend"
@@ -157,18 +227,20 @@ const Post = () => {
 							</div>
 							<div className={keySelected === '1' ? "vote_content show" : "vote_content"}>
 								<form action="">
-									<textarea className="textarea" name="" id="" cols="40" rows="5" placeholder="내용을 입력하세요"></textarea>
+									<textarea className="textarea" name="" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 									<div className="d-flex flex-row">
 										<div className="mx-2">
-											<button type="button" className="btn btn-primary btn-sm" onClick={(event) => addEvent(event)}>
+											<button type="button" className="btn btn-primary btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
 												<i className="bi bi-plus-lg"></i>
 											</button>
 										</div>
 										<div>
-											{votes.map((props) => (
-												<div className="mb-2" key={props.id}>
-													{props.value}
-													<button type="button" className="m-1 btn btn-sm btn-danger" onClick={(event) => {removeEvent(event, props)}}>
+											{votes.map((props, idx) => (
+												<div className="vote_box mb-2" key={props.id}>
+													<div onChange={(event) => {getVoteItems(event, idx)}}>
+														{props.value}
+													</div>
+													<button type="button" className="m-1 btn btn-sm btn-danger" onClick={(event) => {removeEvent(event, props); removeVoteList(event, idx)}}>
 														<i className="bi bi-x-lg"></i>
 													</button>
 												</div>
@@ -250,9 +322,19 @@ const Post = () => {
 						<li>최대 5개의 태그를 입력할 수 있습니다.</li>
 					</ul>
 				</div>
+				<div style={{marginTop: "30px"}}>마감시간</div>
+				<div>
+					<DatePicker
+						selected={dueDate}
+						onChange={(date) => setDueDate(date)}
+						showTimeSelect
+						filterTime={filterPassedTime}
+						dateFormat="MMMM d, yyyy h:mm aa"
+				/>
+				</div>
 				<div className="mt-4" align="right">
 					<form action="">
-						<Button variant="primary">작성</Button>
+						<Button variant="primary" onClick={postAPI}>작성</Button>
 					</form>
 				</div>
 			</div>
