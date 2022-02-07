@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import Progressbar from './Progressbar'
+import ImgSlide from '../../ImgSlide/ImgSlide';
 
 const Base = styled.div`
   width: 90%;
@@ -103,7 +104,7 @@ function ContentDetail(props) {
             <ContentContainer>
                 <Content>{props.content}</Content>
                 <br />
-                <ContentImg src="/images/1.jpg" alt="게시글이미지"/>
+                <ImgSlide props={props.imgUrl} />
             </ContentContainer>
             
             {props.selectType === 1 &&

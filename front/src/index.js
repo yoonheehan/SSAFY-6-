@@ -5,6 +5,7 @@ import App from './app.jsx';
 import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
+
 const initState = {
 	alarmData: [
     { id: 0,

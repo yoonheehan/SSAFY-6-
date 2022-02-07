@@ -2,6 +2,9 @@ import React, {Profiler, useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
 import "./FeedItem.css"
+import FeedEditModal from './FeedEditModal'; 
+import ImgSlide from '../../ImgSlide/ImgSlide';
+
 
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
@@ -59,12 +62,23 @@ const FeedMenu = styled.div`
 `
 
 
+
+
 export default function FeedItem({feed, onRemove}) {
     const history = useHistory();
     const myId = 1
     const [selected, setSelected] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
 
     const ref = useRef(null)
+
+    const [feedItem, setFeedItem] = useState(feed)
+
+    const EditFeed = (content) => {
+      feedItem.feedcontent = content;
+
+      setFeedItem(feedItem)
+    }
 
     useEffect(() => {
       const handleClickOutside = (event) => {
@@ -79,6 +93,10 @@ export default function FeedItem({feed, onRemove}) {
           document.removeEventListener("mousedown", handleClickOutside)
       }
     }, [selected])
+
+    const handleEditClick = (event) => {
+      setModalIsOpen(!modalIsOpen)
+    }
 
     function onRenderCallback(
         id,
@@ -95,32 +113,38 @@ export default function FeedItem({feed, onRemove}) {
   return (
       <Profiler id='profileItem' onRender={onRenderCallback} >
         <FeedBox>
-            <ProfileBox>
-            <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
-                <div>
-                  <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName>
-                  <WriteTime>{feed.writetime}분 전</WriteTime>
-                </div>
-                {myId === feed.feedUserId ? 
-                  <FeedMenu>
-                    <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
-                      <i className="bi bi-three-dots-vertical"></i>
-                      <div className={selected ? "feed_drop active" : "feed_drop" }>
-                        <div>글수정</div>
-                        <div onClick={() => onRemove(feed.id)}>글삭제</div>
-                      </div>
+          <ProfileBox>
+          <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
+              <div>
+                <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName>
+                <WriteTime>{feed.writetime}분 전</WriteTime>
+              </div>
+              {myId === feed.feedUserId ? 
+                <FeedMenu>
+                  <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
+                    <i className="bi bi-three-dots-vertical"></i>
+                    <div className={selected ? "feed_drop active" : "feed_drop" }>
+                      <div onClick={handleEditClick}>글수정</div>
+                      <div onClick={() => onRemove(feed.id)}>글삭제</div>
                     </div>
-                    </FeedMenu>
-                  : null
-                  }
-            </ProfileBox>
-            <ContentBox onClick={() => history.push('/feed/:id')}>
-                <ContentImgBox>
-                    <ContentImg src={feed.feedimg} alt='글 사진' />
-                </ContentImgBox>
-                <Content>{feed.feedcontent}</Content>
-            </ContentBox>
+                  </div>
+                  </FeedMenu>
+                : null
+                }
+          </ProfileBox>
+          <ContentBox>
+              <ContentImgBox>
+                <ImgSlide imgUrl={feed.feedimg}/>
+                {/* <ContentImg src={feed.feedimg} alt='글 사진' /> */}
+              </ContentImgBox>
+              <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content>
+          </ContentBox>
         </FeedBox>
+        {modalIsOpen && <FeedEditModal 
+        onClose={handleEditClick} 
+        feed={feed} 
+        EditFeed={EditFeed}
+        />}
         </ Profiler>
   )
 }
