@@ -6,7 +6,11 @@ import { Provider } from 'react-redux'
 import { createStore } from 'redux'
 
 
-const initState = {
+const initialState = {
+  loginedData: {
+    isLogined: false,
+    loginedId : -1,
+  },
 	alarmData: [
     { id: 0,
       img: 'images/img_avatar.png', 
@@ -26,14 +30,30 @@ const initState = {
   ] 
 }
 
+const LOGIN = "LOGIN";
+const LOGOUT = "LOGOUT"
 
-function reducer(state=initState.alarmData, action){
-  if (action.type === "delete") {
-    state = state.filter((alarm) => alarm.id !== action.id)   
-    return state
-  } else {
-    return state
-  }
+function login() {
+  return {
+    type: LOGIN
+  };
+}
+function logout() {
+  return {
+    type: LOGOUT
+  };
+}
+
+function reducer(state=initialState, action){
+  switch (action.type) {
+    case 'delete':
+      state.alarmData = state.alarmData.filter((alarm) => alarm.id !== action.id)   
+      return state.alarmData
+    case LOGIN:
+      state.loginedData.isLogined = !state.loginedData.isLogined
+      state.loginedData.loginedId = action.id
+      return state
+  } 
 }
 
 let store = createStore(reducer)

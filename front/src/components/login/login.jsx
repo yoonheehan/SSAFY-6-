@@ -11,13 +11,17 @@ import Header from '../header/header';
 import axios from 'axios';
 import { createPortal } from 'react-dom';
 import { useHistory } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 
 const Portal = props => {
   return createPortal(props.children, document.getElementById('loginPortal'));
 };
 
 const Login = props => {
-  const histroy = useHistory();
+  const LOGIN = "LOGIN";
+  const state = useSelector(state => state);
+  const dispatch = useDispatch();
+  const history = useHistory();
   const _clickSnsLoginGoogle = res => {
     console.log('구글 로그인:', res);
     try {
@@ -27,11 +31,23 @@ const Login = props => {
         data: res,
       })
         .then(response => {
-          console.log('response.data.accessToken : ' + response.data);
+          if(response.data.check === false){
+            history.push({
+              pathname:"/newprofile",
+              props:{useremail:response.data.email}
+            })
+          }else {
+            console.log(response.data.id)
+            let id = response.data.id
+            // redux state에 유저 id 데이터 저장
+            dispatch({ type: 'LOGIN', id})
+            history.push("/feed")
+          }
+
+          console.log('response.data.accessToken : ' + response.data.email);
           axios.defaults.headers.common['Authorization'] =
             'Bearer ' + response.data;
-          props.loginCallback(true);
-          histroy.push('/feed');
+          // histroy.push('/feed');
         })
         .catch(error => {
           console.log('login requset fail : ' + error);
@@ -64,7 +80,7 @@ const Login = props => {
               <h1 className={styles.h1}>로그인</h1>
               <ul className={styles.list}>
                 <li className={styles.item}>
-                  <GoogleLogin
+                <GoogleLogin
                     clientId={process.env.REACT_APP_GOOGLE}
                     buttonText="Google 계정으로 로그인"
                     render={renderProps => (
