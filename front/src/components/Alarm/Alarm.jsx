@@ -6,7 +6,8 @@ const Alarm = () => {
   const state = useSelector(state => state);
   const dispatch = useDispatch();
 
-  if (state.length <= 0) {
+
+  if (state.alarmData.length <= 0) {
     return (
       <>
         <h1 style={{marginTop: 100}}>
@@ -32,7 +33,7 @@ const Alarm = () => {
           <b>새로운 알림</b>
         </h5>
 
-        {state.map(({ id, img, userName, content }) => (
+        {state.alarmData.map(({ id, img, userName, content }) => (
           <>
             <div key={id}>
               <div className='box'>

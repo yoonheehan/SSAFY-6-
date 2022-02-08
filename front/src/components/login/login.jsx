@@ -11,7 +11,7 @@ import Header from '../header/header';
 import axios from 'axios';
 import { createPortal } from 'react-dom';
 import { useHistory } from 'react-router-dom';
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch, connect } from 'react-redux';
 
 const Portal = props => {
   return createPortal(props.children, document.getElementById('loginPortal'));
@@ -19,11 +19,12 @@ const Portal = props => {
 
 const Login = props => {
   const LOGIN = "LOGIN";
-  const state = useSelector(state => state);
+  const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
   const _clickSnsLoginGoogle = res => {
     console.log('구글 로그인:', res);
+    console.log(state.loginedData);
     try {
       axios({
         method: 'post',
@@ -41,7 +42,7 @@ const Login = props => {
             let id = response.data.id
             // redux state에 유저 id 데이터 저장
             dispatch({ type: 'LOGIN', id})
-            console.log(store.getState());
+            console.log(state);
             history.push("/feed")
           }
 

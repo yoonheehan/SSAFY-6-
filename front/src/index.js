@@ -33,30 +33,22 @@ const initialState = {
 const LOGIN = "LOGIN";
 const LOGOUT = "LOGOUT"
 
-function login() {
-  return {
-    type: LOGIN
-  };
-}
-function logout() {
-  return {
-    type: LOGOUT
-  };
-}
 
-function reducer(state=initialState, action){
+function reducers(state=initialState, action){
   switch (action.type) {
     case 'delete':
       state.alarmData = state.alarmData.filter((alarm) => alarm.id !== action.id)   
-      return state.alarmData
+
+      return state
     case LOGIN:
       state.loginedData.isLogined = !state.loginedData.isLogined
       state.loginedData.loginedId = action.id
       return state
-  } 
+  }
+  return state
 }
 
-let store = createStore(reducer)
+let store = createStore(reducers)
 
 ReactDOM.render(
     <Provider store={store}>
