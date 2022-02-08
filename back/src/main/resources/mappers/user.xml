@@ -1,8 +1,35 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.UserMapper">
-    <insert id="join" parameterType="User">
-        insert into user(email, password, nickname, gender, birth, image)
-        values(#{email}, #{password}, #{nickname}, #{gender}, #{birth}, #{image})
+    <insert id="insertUser" parameterType="User">
+        insert into user(nickname, email, gender, role)
+        values (#{nickname}, #{email}, #{gender}, #{role})
     </insert>
+
+    <insert id="setPoint" parameterType="String">
+        insert into point(email) values (#{email})
+    </insert>
+
+    <select id="searchByEmail" parameterType="String" resultType="User">
+        select * from user
+        where email = #{email}
+    </select>
+
+    <select id="listAllUser" resultType="map">
+        select nickname, email, gender, birth, image, role
+        from user
+    </select>
+
+    <update id="withdrawUser" parameterType="String">
+        update user
+        set user_status = 0
+        where email like #{email}
+    </update>
+
+    <select id="listFollower" parameterType="String" resultType="map">
+        select from_user
+        from follower
+        where follower.to_user like #{email}
+    </select>
 </mapper>

@@ -1,19 +1,16 @@
 package com.haejwoing.back.model.service;
 
 import com.haejwoing.back.model.dto.User;
-import com.haejwoing.back.model.mapper.UserMapper;
-import org.apache.ibatis.session.SqlSession;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-@Service
-public class UserService {
+import java.util.List;
 
-    @Autowired
-    private SqlSession sqlSession;
 
-    public boolean join(User user){
+public interface UserService {
+    void insertUser(User user);
+    List<User> listAllUser();
+    User searchByEmail(String email);
+    void withdrawUser(String email);
+    void setPoint(String email);
+    List<User> listFollower(String email);
 
-        return sqlSession.getMapper(UserMapper.class).join(user) == 1;
-    }
 }

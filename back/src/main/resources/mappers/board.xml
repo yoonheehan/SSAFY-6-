@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haejwoing.back.model.mapper.BoardMapper">
+    <select id = 'getList' parameterType="com.haejwoing.back.model.dto.Board" resultType="com.haejwoing.back.model.dto.Board">
+        SELECT * FROM BOARD
+
+    </select>
+
+    <select id="get" parameterType="int" resultType="com.haejwoing.back.model.dto.Board">
+
+        SELECT * FROM BOARD WHERE idboard=#{idboard}
+
+
+    </select>
+
+    <insert id="save" parameterType="com.haejwoing.back.model.dto.Board" >
+
+
+    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, vote_users)
+    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, now(), #{due_date} , #{vote_contents}, #{vote_users})
+
+    </insert>
+
+    <update id="update" parameterType="Board">
+
+    UPDATE BOARD SET view_range=#{view_range}, content=#{content}, updated_at= now()
+    WHERE idboard = #{idboard}
+
+    </update>
+
+    <delete id="delete" parameterType="Board">
+
+    DELETE FROM BOARD
+    WHERE idboard = #{idboard}
+
+    </delete>
+
+
+</mapper>

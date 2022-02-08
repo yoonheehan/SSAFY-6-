@@ -1,11 +1,19 @@
 server:
   port: 8080
+#  servlet:
+#    context-path: /haejwoing
+
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/haejwoing
     username: root
     password: root
+  servlet:
+    multipart:
+      location: C:\Users\multicampus\Desktop\공통프로젝트\branch\backend\S06P12C103\back\src\main\resources
+
 mybatis:
-  type-aliases-package: com/haejwoing/back/model/dto
+  type-aliases-package: com.haejwoing.back.model.dto
   mapper-locations: classpath:mappers/*.xml
+

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
+    <select id = 'getList' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
+        SELECT * FROM COMMENT
+
+    </select>
+
+    <select id = 'ge' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
+        SELECT * FROM COMMENT
+        WHERE idcomment=#{commentId}
+
+    </select>
+
+    <insert id="save" parameterType="com.haejwoing.back.model.dto.Comment">
+
+        INSERT INTO COMMENT(idComment, content, created_at, updated_at, board_idboard, user_id)
+        VALUES (#{idComment}, #{content}, now(), now(), #{board_idboard}, #{user_id})
+
+    </insert>
+
+    <update id="update" parameterType="comment">
+
+        UPDATE COMMENT SET content=#{content}, updated_at=#{now()}
+        WHERE idcomment = #{commentId}
+
+    </update>
+
+    <delete id="delete" parameterType="comment">
+
+        DELETE FROM COMMENT
+        WHERE idcomment = #{commentId}
+
+    </delete>
+
+</mapper>
