@@ -15,4 +15,6 @@ public interface BoardService {
     boolean update(Board board);
 
     boolean delete(int boardSeq);
+
+
 }

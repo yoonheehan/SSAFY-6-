@@ -12,10 +12,11 @@ public interface BoardMapper {
 
     Board get(int boardSeq);
 
-    int save(Board board);
+    boolean save(Board board);
 
     boolean update(Board board);
 
     boolean delete(int boardSeq);
+
 
 }

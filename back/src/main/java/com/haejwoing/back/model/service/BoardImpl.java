@@ -27,10 +27,13 @@ public class BoardImpl implements BoardService{
 
     @Override
     public boolean save(Board board) throws Exception{
+
         if(board.getContent() == null){
             throw new Exception();
         }
-        return sqlSession.getMapper(BoardMapper.class).save(board)==1;
+
+
+        return sqlSession.getMapper(BoardMapper.class).save(board);
     }
 
     @Override

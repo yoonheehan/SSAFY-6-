@@ -31,5 +31,9 @@ public class Board {
     private String due_date;
     private String vote_contents;
     private String vote_users;
+    private String hashArr;
+    private List hasArrList;
+
+    private String recent_id;
 
 }

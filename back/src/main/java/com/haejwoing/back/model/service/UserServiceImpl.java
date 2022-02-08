@@ -48,4 +48,8 @@ public class UserServiceImpl implements UserService{
         sqlSession.getMapper(UserMapper.class).setPoint(email);
     }
 
+    @Override
+    public int getUserId(String email) {
+        return sqlSession.getMapper(UserMapper.class).getUserId(email);
+    }
 }
