@@ -41,6 +41,7 @@ const Login = props => {
             let id = response.data.id
             // redux state에 유저 id 데이터 저장
             dispatch({ type: 'LOGIN', id})
+            console.log(store.getState());
             history.push("/feed")
           }
 
