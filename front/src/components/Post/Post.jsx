@@ -15,33 +15,40 @@ const Post = () => {
 	
 	const inputPlus = () => {
 		return (
-			<input type="text" size="30" placeholder="투표항목을 입력하세요"></input>
+			<input type="text" name="input_area" size="30" placeholder="투표항목을 입력하세요"></input>
 		)
 	}
 
 	//axios post 데이터
 	const [userId, setUserId] = useState(1) // 유저 id
-	const [type, setType] = useState(1)
+	const [type, setType] = useState(null)
 	const [revealType, setRevealType] = useState(null) // 공개범위
 	const [voteContent, setVoteContent] = useState("") // 내용
-	const [voteItems, setVoteItems] = useState([""]) // 투표항목
-	const [img, setImg] = useState("") // 이미지
+	const [voteItems, setVoteItems] = useState(["", ""]) // 투표항목
+	const [img, setImg] = useState(null) // 이미지
 	const [hashArr, setHashArr] = useState([]) // 해시태그
 	const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
 	//
 
+
 	// axios.post
 	function postAPI() {
 		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
-		axios.post(url, {
-			// userId: userId,
-			type: type,
-			view_range: revealType,
-			content: voteContent,
-			vote_contents: voteItems,
-			board_image: img,
-			// hashArr: hashArr,
-			due_date: dueDate,
+		const vote_contents = JSON.stringify(voteItems)
+		
+		axios({
+			method: "post",
+			url: "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post",
+			data: {
+				// userId: userId,
+				type: type,
+				view_range: revealType,
+				content: voteContent,
+				vote_contents: vote_contents,
+				board_image: img,
+				hashArr: hashArr,
+				due_date: dueDate,
+			},
 		})
 		.then(function (response) {
 			console.log(response.config.data)
@@ -52,6 +59,22 @@ const Post = () => {
 	}
 	//
 
+	function getAPI() {
+		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+
+		axios({
+			method: 'get',
+			url: url
+		})
+		.then(function (response) {
+			console.log(response)
+		})
+		.catch(function(error) {
+			console.log(error)
+		})
+	}
+
+	//
 
 	const [selected, setSelected] = useState(false)
 	const [keySelected, setKeySelected] = useState(null)
@@ -157,12 +180,41 @@ const Post = () => {
 		)
 	}
 
+	// const saveImg = (event) => {
+	// 	setImg(URL.createObjectURL(event.target.files[0]))
+	// }
+
+	// 이미지 업로드 테스트
 	const saveImg = (event) => {
-		setImg(URL.createObjectURL(event.target.files[0]))
+		event.preventDefault();
+
+		if(event.target.files) {
+			const uploadFile = event.target.files[0]
+			const formData = new FormData()
+			formData.append('uploadFile', uploadFile)
+			for (let value of formData.values()) {
+				console.log(value);
+			}
+			const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+			
+			axios({
+				method: "post",
+				url: url,
+				data: formData,
+				headers: { "Content-Type": "multipart/form-data" },
+			})
+			.then(function (response) {
+				console.log(response)
+			})
+			.catch(function(error) {
+				console.log(error)
+			})
+		}
 	}
+	//
 
 	const deleteImg = (event) => {
-		URL.revokeObjectURL(img)
+		// URL.revokeObjectURL(img)
 		setImg(null)
 	}
 
@@ -174,6 +226,28 @@ const Post = () => {
         return currentDate.getTime() < selectedDate.getTime();
     };
 	//
+
+	const contentReset = (key) => {
+		if (key !== keySelected) {
+			setKeySelected(key)
+			setVoteContent("")
+			setVoteItems(["", ""])
+			setVote([{id: 0, value: inputPlus()}])
+			setImg(null)
+			const allTextArea = document.getElementsByName("text_area")
+			const allInputArea = document.getElementsByName("input_area")
+			console.log(allInputArea)
+
+			for (var i = 0; i < 3; i++) {
+				allTextArea[i].value = ''
+			}
+
+			for (var j = 0; j < allInputArea.length; j++) {
+				allInputArea[j].value = ''
+			}
+			
+		} 
+	}
 
 	
 	return (
@@ -220,34 +294,48 @@ const Post = () => {
 						</div>
 					</div>
 					<div className="mt-4">
+						{/* 예쁘게 만들기? */}
+						{/* <div className="button_group">
+							<div className="button_vote">
+								<div><i class="bi bi-card-checklist"></i></div>
+								<div>투표</div>
+							</div>
+							<div className="button_ox">
+								<div><i class="h6 bi bi-circle"></i><i class="h6 bi bi-x-lg"></i></div>
+								<div>찬반</div>
+							</div>
+							<div className="button_ox">
+								<div>VS</div>
+								<div>대결</div>
+							</div>
+						</div> */}
+						{/* 투표 */}
 						<div className="my_accordion"> 
-							<div className={keySelected === '1' ? "title active" : "title"} onClick={() => setKeySelected("1")}>
+							<div className={keySelected === '1' ? "title active" : "title"} onClick={() => {setType(1); contentReset("1")}}>
 								<div>투표</div>
 								<div className={keySelected === '1' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
 							</div>
 							<div className={keySelected === '1' ? "vote_content show" : "vote_content"}>
-								<form action="">
-									<textarea className="textarea" name="" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
-									<div className="d-flex flex-row">
-										<div className="mx-2">
-											<button type="button" className="btn btn-primary btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
-												<i className="bi bi-plus-lg"></i>
-											</button>
-										</div>
-										<div>
-											{votes.map((props, idx) => (
-												<div className="vote_box mb-2" key={props.id}>
-													<div onChange={(event) => {getVoteItems(event, idx)}}>
-														{props.value}
-													</div>
-													<button type="button" className="m-1 btn btn-sm btn-danger" onClick={(event) => {removeEvent(event, props); removeVoteList(event, idx)}}>
-														<i className="bi bi-x-lg"></i>
-													</button>
-												</div>
-											))}
-										</div>	
+								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+								<div className="d-flex flex-row">
+									<div className="mx-2">
+										<button type="button" className="btn btn-primary btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
+											<i className="bi bi-plus-lg"></i>
+										</button>
 									</div>
-								</form>
+									<div>
+										{votes.map((props, idx) => (
+											<div className="vote_box mb-2" key={props.id}>
+												<div onChange={(event) => {getVoteItems(event, idx)}}>
+													{props.value}
+												</div>
+												<button type="button" className="m-1 btn btn-sm btn-danger" onClick={(event) => {removeEvent(event, props); removeVoteList(event, idx)}}>
+													<i className="bi bi-x-lg"></i>
+												</button>
+											</div>
+										))}
+									</div>	
+								</div>
 								<div className={img ? "imgDelete show" : "imgDelete"}>
 									<button onClick={deleteImg}>x</button>
 								</div>
@@ -264,22 +352,67 @@ const Post = () => {
 								</div>
 							</div>
 						</div>
+
+						{/* OX */}
 						<div className="my_accordion">
-							<div className={keySelected === '2' ? "title active" : "title"} onClick={() => setKeySelected("2")}>
+							<div className={keySelected === '2' ? "title active" : "title"} onClick={() => {contentReset("2"); setVoteItems(["", ""]); setType(2)}}>
 								<div>OX</div>
 								<div className={keySelected === '2' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
 							</div>
-							<div className={keySelected === '2' ? "ox_content show" : "ox_content"}>
-								test
+							<div className={keySelected === '2' ? "vote_content show" : "ox_content"}>
+								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+								<div className={img ? "imgDelete show" : "imgDelete"}>
+									<button onClick={deleteImg}>x</button>
+								</div>
+								<div className="img_box">
+									<div>
+										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
+									</div>
+									<div style={{ marginLeft: "10px" }}>
+										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<label className="button2" for="imgFile">
+											사진 업로드
+										</label>
+									</div>
+								</div>
 							</div>
 						</div>
+
+						{/* VS */}
 						<div className="my_accordion">
-							<div className={keySelected === '3' ? "title active" : "title"} onClick={() => setKeySelected("3")}>
+							<div className={keySelected === '3' ? "title active" : "title"} onClick={() => {contentReset("3"); setVoteItems(["", ""]); setType(3)}}>
 								<div>VS</div>
 								<div className={keySelected === '3' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
 							</div>
 							<div className={keySelected === '3' ? "vs_content show" : "vs_content"}>
-								test
+								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+								<div className={img ? "imgDelete show" : "imgDelete"}>
+									<button onClick={deleteImg}>x</button>
+								</div>
+								<input type="text" name="input_area" size="30" placeholder="항목을 입력하세요" onChange={(event) => {getVoteItems(event, 0)}}></input>
+								<div className="img_box">
+									<div>
+										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
+									</div>
+									<div style={{ marginLeft: "10px" }}>
+										<input id="imgFile1" name="imgUpload1" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<label className="button2" for="imgFile1">
+											사진 업로드
+										</label>
+									</div>
+								</div>
+								<input type="text" size="30" name="input_area" placeholder="항목을 입력하세요." onChange={(event) => {getVoteItems(event, 1)}}></input>
+								<div className="img_box">
+									<div>
+										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
+									</div>
+									<div style={{ marginLeft: "10px" }}>
+										<input id="imgFile2" name="imgUpload2" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<label className="button2" for="imgFile2">
+											사진 업로드
+										</label>
+									</div>
+								</div>
 							</div>
 						</div>
 					</div>				
@@ -336,6 +469,10 @@ const Post = () => {
 					<form action="">
 						<Button variant="primary" onClick={postAPI}>작성</Button>
 					</form>
+				</div>
+
+				<div>
+					<button onClick={getAPI}>++++</button>
 				</div>
 			</div>
 		</>
