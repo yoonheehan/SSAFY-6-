@@ -4,7 +4,7 @@ import {useHistory} from 'react-router-dom'
 import "./FeedItem.css"
 import FeedEditModal from './FeedEditModal'; 
 import ImgSlide from '../../ImgSlide/ImgSlide';
-
+import CommentWrite from '../comments/CommentWrite';
 
 const FeedBox = styled.div`
   border: 3px solid #d3d3d3;
@@ -16,7 +16,7 @@ const ProfileBox = styled.div`
   display: flex;
   padding: 5px 5px 5px 5px;
   align-items: center;
-  border: 1px solid #d3d3d3;
+  border-bottom: 1px solid #d3d3d3;
 `;
 
 const ProfileName = styled.div`
@@ -51,9 +51,14 @@ const ContentImg = styled.img`
 `;
 
 const Content = styled.div`
-    text-align: left;
-    padding: 5px 5px 5px 5px;
-    border: 1px solid #d3d3d3;
+  text-align: left;
+  padding: 5px 5px 5px 5px;
+  text-align: left;
+  white-space: pre-line;
+  width: 90%;
+  margin-bottom: 5px;
+  word-break: break-all;
+
 `
 
 const FeedMenu = styled.div`
@@ -61,14 +66,29 @@ const FeedMenu = styled.div`
   margin-right: 10px;
 `
 
+const HashCommentBox = styled.div`
+  margin: 25px 10px 10px 10px;
+  display: flex;
+  justify-content: space-between;
+`
 
+const HashTagBox = styled.div`
+`
+const HashTag = styled.div`
+  background-color: yellow;
+  border-radius: 30%;
+`
 
+const Comments = styled.div`
+  color: grey;
+`
 
 export default function FeedItem({feed, onRemove}) {
     const history = useHistory();
     const myId = 1
     const [selected, setSelected] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [commentModalOpen, setCommentModalOpen] = useState(false)
 
     const ref = useRef(null)
 
@@ -76,7 +96,6 @@ export default function FeedItem({feed, onRemove}) {
 
     const EditFeed = (content) => {
       feedItem.feedcontent = content;
-
       setFeedItem(feedItem)
     }
 
@@ -93,6 +112,11 @@ export default function FeedItem({feed, onRemove}) {
           document.removeEventListener("mousedown", handleClickOutside)
       }
     }, [selected])
+
+    const handleCommentClick = (event) => {
+      setCommentModalOpen(!commentModalOpen)
+      console.log(commentModalOpen)
+    }
 
     const handleEditClick = (event) => {
       setModalIsOpen(!modalIsOpen)
@@ -133,15 +157,26 @@ export default function FeedItem({feed, onRemove}) {
                 }
           </ProfileBox>
           <ContentBox>
+              <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content>
               <ContentImgBox>
                 <ImgSlide imgUrl={feed.feedimg}/>
                 {/* <ContentImg src={feed.feedimg} alt='글 사진' /> */}
               </ContentImgBox>
-              <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content>
           </ContentBox>
+          <HashCommentBox>
+            <HashTagBox>
+              <HashTag>gd</HashTag>
+            </HashTagBox>
+            <Comments onClick={handleCommentClick}>22개</Comments>
+          </HashCommentBox>
         </FeedBox>
         {modalIsOpen && <FeedEditModal 
         onClose={handleEditClick} 
+        feed={feed} 
+        EditFeed={EditFeed}
+        />}
+        {commentModalOpen && <CommentWrite 
+        onClose={handleCommentClick} 
         feed={feed} 
         EditFeed={EditFeed}
         />}

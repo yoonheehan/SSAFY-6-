@@ -44,7 +44,7 @@ const Editbtn = styled.input`
 `
 
 const Portal = props => {
-  return createPortal(props.children, document.getElementById('Modal'));
+  return createPortal(props.children, document.getElementById('commentModal'));
 };
 
 const FeedEditModal = ({onClose, feed, EditFeed}) => {

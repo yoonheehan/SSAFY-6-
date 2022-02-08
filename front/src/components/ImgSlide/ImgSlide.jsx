@@ -6,7 +6,7 @@ import "slick-carousel/slick/slick-theme.css";
 export default function ImgSlide(props) {
 
     const settings = {
-
+    dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
@@ -16,21 +16,21 @@ export default function ImgSlide(props) {
     console.log(props)
   return (
     <div>
-        {props.imgUrl.map(url => {
+        {/* {props.imgUrl.map(url => {
             <div>
               {url}
               <img style={{width: 'inherit'}} src={url} />
             </div>
-          })}
+          })} */}
         <Slider {...settings}>
           
-          {props.imgUrl.map(url => {
+          {/* {props.imgUrl.map(url => {
             <div>
               {url}
               <img style={{width: 'inherit'}} src={url} />
             </div>
-          })}
-          {/* <div>
+          })} */}
+          <div>
               <img style={{width: 'inherit'}} src="/images/1.jpg" />
           </div>
           <div>
@@ -38,7 +38,7 @@ export default function ImgSlide(props) {
           </div>
           <div>
               <img style={{width: 'inherit'}} src="/images/logo.png" />
-          </div> */}
+          </div>
 
         </Slider>
     </div>
