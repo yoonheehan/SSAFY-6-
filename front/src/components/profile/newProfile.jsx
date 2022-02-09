@@ -67,6 +67,8 @@ function submitData() {
     })
       .then(response => {
         console.log(response.data);
+        const loginUser = { userId : response.data.id}
+        window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
         histroy.push('/feed');
       })
       .catch(error => {

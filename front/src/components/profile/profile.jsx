@@ -11,6 +11,9 @@ import { useHistory } from 'react-router-dom';
 import styles from './profile.module.css';
 
 const Profile = props => {
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/')
+  }
   const now = 60;
   const progressInstance = (
     <ProgressBar className={styles.progress} now={now} label={`${now}%`} />

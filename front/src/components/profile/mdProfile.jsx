@@ -10,6 +10,7 @@ import {
 import styles from './mdProfile.module.css';
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useHistory } from 'react-router-dom';
 
 const MdProfile = props => {
   const inputRef = useRef();
@@ -47,6 +48,10 @@ const MdProfile = props => {
       }
     );
   };
+  const history = useHistory();
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/')
+  }
   return (
     <>
       <div className={styles.div1}>

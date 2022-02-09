@@ -82,19 +82,21 @@ const NavBar = () => {
               setClicked(false);
             }}
           ></i>
-          <i
-            style={{ cursor: 'pointer' }}
-            className="link h1 px-4 bi bi-bell-fill"
-            onClick={() => {
-              history.push('/alarm');
-              setClicked(false);
-            }}
-          ></i>
+
           <i
             style={{ cursor: 'pointer' }}
             className="link h1 px-4 bi bi-pencil-fill"
             onClick={() => {
               history.push('/post');
+              setClicked(false);
+            }}
+          ></i>
+          <i
+            style={{ cursor: 'pointer' }}
+            className="link h1 px-4 bi bi-box-arrow-in-right"
+            onClick={() => {
+              localStorage.clear('loginedUser')
+              history.push('/');
               setClicked(false);
             }}
           ></i>

@@ -6,10 +6,17 @@ import {Button} from "react-bootstrap";
 import "./Post.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
+import { useHistory } from 'react-router-dom';
 
 const Post = () => {
 	//
 	const state = useSelector(state => state.alarmData);
+	const history = useHistory();
+	if (localStorage.getItem('loginedUser') === null) {
+        history.push('/')
+    }
+	// 
+
 	const userData = state[0]
 	//
 	
@@ -260,10 +267,10 @@ const Post = () => {
 				</div>
 				<div className="mb-3 d-flex flex-row align-items-center">
 					<div>
-						<img src={userData.img} alt="Avatar" className="avatar"></img>
+						<img src='' alt="Avatar" className="avatar"></img>
 					</div>
 					<div className="m-1">
-						{userData.userName}
+						dfg
 					</div>
 				</div>
 				<div>

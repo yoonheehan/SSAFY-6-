@@ -1,8 +1,13 @@
 import React from "react"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {Button, Form} from "react-bootstrap";
+import { useHistory } from 'react-router-dom';
 
 const Withdraw = () => {
+	const history = useHistory();
+	if (localStorage.getItem('loginedUser') === null) {
+        history.push('/')
+    }
 	return (
 		<>
 			<div>

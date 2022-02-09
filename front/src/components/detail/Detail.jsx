@@ -1,10 +1,14 @@
 import React from 'react';
 import ContentDetail from './components/ContentDetail';
 import CommentWrite from './components/CommentWrite'
-
+import { useHistory } from 'react-router-dom';
 
 
 export default function Detail() {
+  const history = useHistory();
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/')
+  }
   return (
       <>
         <ContentDetail

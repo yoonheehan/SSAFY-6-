@@ -1,6 +1,7 @@
 import React from 'react';
 import SearchList from './components/SearchList';
 import styles from './FollowList.module.css'
+import { useHistory } from 'react-router-dom';
 
 const followerList = [
   {profileImg:'', name:'정정채'},
@@ -9,6 +10,10 @@ const followerList = [
 ]
 
 function FollowerList() {
+  const history = useHistory();
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/')
+  }
   return (
     <>
       {/* <FollowListHeader /> */}

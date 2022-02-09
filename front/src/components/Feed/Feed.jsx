@@ -1,6 +1,6 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import Feeds from './components/Feeds'
-
+import { useHistory } from 'react-router-dom';
 
 
 const FeedList = [
@@ -16,6 +16,10 @@ const NewFeedList = [
 ]
 
 export default function Feed() {
+    const history = useHistory();
+    if (localStorage.getItem('loginedUser') === null) {
+        history.push('/')
+    }
     const [feeds, setFeeds] = useState(FeedList)
 
     const scrollEvent = () => {

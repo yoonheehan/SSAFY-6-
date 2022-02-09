@@ -23,9 +23,9 @@ const Login = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   const _clickSnsLoginGoogle = res => {
+    console.log(localStorage.getItem('loginedUser'))
     console.log('구글 로그인:', res);
-    console.log(state.loginedData);
-    try {
+    if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
         // url: 'http://localhost:8080/jwt/google',
@@ -40,17 +40,14 @@ const Login = props => {
             })
           }else {
             console.log(response.data.id)
-            let id = response.data.id
-            // redux state에 유저 id 데이터 저장
-            dispatch({ type: 'LOGIN', id})
-            console.log(state);
+            const loginUser = { userId : response.data.id}
+            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
             history.push("/feed")
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
           axios.defaults.headers.common['Authorization'] =
             'Bearer ' + response.data;
-          // histroy.push('/feed');
         })
         .catch(error => {
           console.log('login requset fail : ' + error);
@@ -58,8 +55,8 @@ const Login = props => {
         .finally(() => {
           console.log('login request end');
         });
-    } catch (e) {
-      console.log(e);
+    } else {
+      history.push("/feed")
     }
   };
   const _clickSnsLoginKakao = res => {

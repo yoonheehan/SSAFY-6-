@@ -5,6 +5,7 @@ import { FaRegComment } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
 import Data from './data.js';
 import PostItem from './postItem';
+import { useHistory } from 'react-router-dom';
 
 const NewPostList = [
   {
@@ -34,6 +35,10 @@ const NewPostList = [
 ];
 
 const PostList = props => {
+  const history = useHistory();
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/')
+  }
   let [post, setPost] = useState([...Data]);
   let [commentBedge, setCommentBedge] = useState(true);
   let [redDateBedge, setRegDateBedge] = useState(true);
