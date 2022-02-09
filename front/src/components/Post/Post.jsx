@@ -53,7 +53,7 @@ const Post = () => {
 				content: voteContent,
 				vote_contents: vote_contents,
 				// board_image: img,
-				hashArr: hashArr,
+				hashArr: JSON.stringify(hashArr),
 				due_date: dueDate,
 			},
 		})
