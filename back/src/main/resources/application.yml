@@ -1,7 +1,7 @@
 server:
   port: 8080
   servlet:
-    context-path: i6c103.p.ssafy.io/api
+    context-path: /api
 
 spring:
   datasource:
