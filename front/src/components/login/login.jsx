@@ -28,7 +28,8 @@ const Login = props => {
     try {
       axios({
         method: 'post',
-        url: 'http://localhost:8080/jwt/google',
+        // url: 'http://localhost:8080/jwt/google',
+        url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         data: res,
       })
         .then(response => {

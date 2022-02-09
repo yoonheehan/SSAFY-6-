@@ -40,7 +40,7 @@ const Post = () => {
 			method: "post",
 			url: "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post",
 			data: {
-				// userId: userId,
+				userId: userId,
 				type: type,
 				view_range: revealType,
 				content: voteContent,
