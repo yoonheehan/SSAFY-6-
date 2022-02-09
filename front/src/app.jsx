@@ -36,8 +36,8 @@ function App() {
             render={props => <Login {...props} loginCallback={loginCallback} />}
           />
           <Route exact path="/feed" isLogin={isLogin} component={Feed} />
-          <Route exact path="/profile" isLogin={isLogin} component={Profile} />
-          <Route exact path="/mdProfile" component={MdProfile} />
+          <Route exact path="/user/:id/profile" isLogin={isLogin} component={Profile} />
+          <Route exact path="/user/:id/mdProfile" component={MdProfile} />
           <Route exact path="/newProfile" component={NewProfile} />
           <Route exact path="/user/:id/followList" component={FollowList} />
           <Route exact path="/user/:id/followerList" component={FollowerList} />

@@ -10,21 +10,25 @@ import {
 import { BsPersonCircle } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import styles from './profile.module.css';
+import {useParams} from "react-router-dom";
 
 const Profile = props => {
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/')
   }
-  const [userData, setUserData] = useState({})
+  let { id } = useParams();
+  
+  const [userData, setUserData] = useState(null)
   const userId = JSON.parse(localStorage.getItem('loginedUser')).userId
-  if (userData === {}) {
+  if (userData === null) {
+    console.log(id)
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${userId}`,
+      url: `http://localhost:8080/user/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
-        console.log(userId)
+        console.log(id)
         console.log(response)
         setUserData(response.data)
       })

@@ -5,6 +5,8 @@ import './NavBar.css';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const NavBar = () => {
+  const userId = JSON.parse(localStorage.getItem('loginedUser')).userId
+
   const ref = useRef(null);
 
   const history = useHistory();
@@ -70,7 +72,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             className="h1 px-4 bi bi-people-fill"
             onClick={() => {
-              history.push('/user/1/followlist');
+              history.push(`/user/${userId}/followlist`);
               setClicked(false);
             }}
           ></i>
@@ -78,7 +80,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             className="h1 px-4 bi bi-person-fill"
             onClick={() => {
-              history.push('/profile');
+              history.push(`/user/${userId}/profile`);
               setClicked(false);
             }}
           ></i>

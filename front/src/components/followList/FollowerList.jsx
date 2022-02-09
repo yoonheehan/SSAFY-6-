@@ -1,7 +1,9 @@
-import React from 'react';
+import React, {useState} from 'react';
 import SearchList from './components/SearchList';
 import styles from './FollowList.module.css'
 import { useHistory } from 'react-router-dom';
+import axios from 'axios'
+import {useParams} from "react-router-dom";
 
 const followerList = [
   {profileImg:'', name:'정정채'},
@@ -14,6 +16,32 @@ function FollowerList() {
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/')
   }
+  let { id } = useParams();
+  console.log(id)
+  
+  const [followerData, setFollowerData] = useState(null)
+
+  if (followerData === null) {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/follower/${id}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+    })
+      .then(response => {
+        console.log(response)
+        setFollowerData(response.data)
+      })
+      .catch(error => {
+        console.log('profile requset fail : ' + error);
+      })
+      .finally(() => {
+        console.log('profile request end');
+      });
+  }
+  console.log(followerData)
+
+
+
   return (
     <>
       {/* <FollowListHeader /> */}
