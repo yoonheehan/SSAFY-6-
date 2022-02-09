@@ -45,7 +45,7 @@ public class FileServiceImpl implements FileService{
 
         if(!file[0].isEmpty()){
             for(int i=0; i<file.length; i++){
-                log.info("파일 원본 이름 : {}",file[i]);
+                log.info("파일 원본 이름 : {}",file[i].toString());
                 // 파일의 고유 아이디로 파일명 중복 피하기
                 String uuid = UUID.randomUUID().toString();
                 String saveFileName = uuid + file[i].getOriginalFilename();

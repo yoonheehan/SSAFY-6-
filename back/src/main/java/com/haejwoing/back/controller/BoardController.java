@@ -2,7 +2,9 @@ package com.haejwoing.back.controller;
 
 
 import com.haejwoing.back.model.dto.Board;
+import com.haejwoing.back.model.dto.HashTag;
 import com.haejwoing.back.model.service.BoardService;
+import com.haejwoing.back.model.service.HashTagService;
 import com.sun.net.httpserver.Authenticator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +22,9 @@ public class BoardController {
     @Autowired
     private BoardService boardService;
 
+    @Autowired
+    private HashTagService hashTagService;
+
     @GetMapping("")
     public ResponseEntity<List<Board>> BoardList(Board board){
 
@@ -35,9 +40,14 @@ public class BoardController {
 
     @PostMapping("/save")
    public ResponseEntity<String> save(@RequestBody Board board) throws Exception {
-        System.out.println(board);
+
         if(boardService.save(board)){
-            return new ResponseEntity<String>(HttpStatus.OK);
+
+            if(hashTagService.save(board)) {
+
+                return new ResponseEntity<String>(HttpStatus.OK);
+            }
+            return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
         }
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }

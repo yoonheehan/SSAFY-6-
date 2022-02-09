@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haejwoing.back.model.mapper.HashTagMapper">
+
+    <select id="recent_id" parameterType="Board" resultType="String">
+
+        SELECT idboard FROM BOARD ORDER BY idboard DESC LIMIT 1
+
+    </select>
+
+
+    <insert id="savearray" parameterType="HashMap">
+
+    INSERT INTO TAG(tag_name, idBoard) VALUES (#{tag_name}, #{idBoard})
+
+    </insert>
+
+
+    <select id="findtagname" parameterType="String" resultType="int">
+
+    SELECT EXISTS(SELECT * FROM TAG WHERE tag_name=#{tag_name} LIMIT 1);
+
+    </select>
+
+
+    <select id="getout" parameterType="String" resultType="String">
+
+        SELECT idBoard FROM TAG WHERE tag_name=#{tag_name} LIMIT 1;
+
+    </select>
+
+    <update id="updateit" parameterType="HashMap">
+
+        UPDATE TAG SET idBoard = #{idBoard} WHERE tag_name=#{tag_name}
+
+    </update>
+
+
+</mapper>

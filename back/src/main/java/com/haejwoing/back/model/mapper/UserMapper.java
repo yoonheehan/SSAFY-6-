@@ -14,4 +14,5 @@ public interface UserMapper {
     void withdrawUser(String email);
     void setPoint(String email);
     List<User> listFollower(String email);
+    int getUserId(String email);
 }
