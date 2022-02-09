@@ -57,7 +57,7 @@ function submitData() {
 
     axios({
       method: 'post',
-      url: 'http://localhost:8080/user',
+      url: 'http://i6c103.p.ssafy.io/api/user',
       data: {
         gender: radioValue,
         nickname: nickName,
