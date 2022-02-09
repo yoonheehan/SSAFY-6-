@@ -1,3 +1,4 @@
+import axios, {useState} from 'axios';
 import React from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import {
@@ -14,6 +15,27 @@ const Profile = props => {
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/')
   }
+  const [userData, setUserData] = useState({})
+  const userId = JSON.parse(localStorage.getItem('loginedUser')).userId
+  if (userData === {}) {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/user/${userId}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+    })
+      .then(response => {
+        console.log(userId)
+        console.log(response)
+        setUserData(response.data)
+      })
+      .catch(error => {
+        console.log('profile requset fail : ' + error);
+      })
+      .finally(() => {
+        console.log('profile request end');
+      });
+  }
+  console.log(userData)
   const now = 60;
   const progressInstance = (
     <ProgressBar className={styles.progress} now={now} label={`${now}%`} />
