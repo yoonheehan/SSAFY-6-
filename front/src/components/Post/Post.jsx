@@ -199,23 +199,22 @@ const Post = () => {
 			const uploadFile = event.target.files[0]
 			const formData = new FormData()
 			formData.append('uploadFile', uploadFile)
-			for (let value of formData.values()) {
-				console.log(value);
-			}
-			const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
 			
-			axios({
-				method: "post",
-				url: url,
-				data: formData,
-				headers: { "Content-Type": "multipart/form-data" },
-			})
-			.then(function (response) {
-				console.log(response)
-			})
-			.catch(function(error) {
-				console.log(error)
-			})
+			setImg(formData)
+			// const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+			
+			// axios({
+			// 	method: "post",
+			// 	url: url,
+			// 	data: formData,
+			// 	headers: { "Content-Type": "multipart/form-data" },
+			// })
+			// .then(function (response) {
+			// 	console.log(response)
+			// })
+			// .catch(function(error) {
+			// 	console.log(error)
+			// })
 		}
 	}
 	//
@@ -229,7 +228,6 @@ const Post = () => {
     const filterPassedTime = (time) => {
         const currentDate = new Date();
         const selectedDate = new Date(time);
-    
         return currentDate.getTime() < selectedDate.getTime();
     };
 	//
@@ -256,7 +254,6 @@ const Post = () => {
 		} 
 	}
 
-	
 	return (
 		<>
 			<div className="container" style={{zIndex: '-100'}} >
