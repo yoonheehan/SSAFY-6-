@@ -1,5 +1,5 @@
-import axios, {useState} from 'axios';
-import React from 'react';
+import axios from 'axios';
+import React, {useState} from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import {
   AiOutlineArrowLeft,
@@ -42,7 +42,7 @@ const Profile = props => {
   console.log(userData)
   const now = 60;
   const progressInstance = (
-    <ProgressBar className={styles.progress} now={now} label={`${now}%`} />
+    <ProgressBar className={styles.progress} now={userData.info.point} label={`${userData.info.point}%`} />
   );
   const history = useHistory();
   return (
@@ -55,7 +55,7 @@ const Profile = props => {
           <div className={styles.box1}>
             <BsPersonCircle className={styles.avatar} />
             <div>
-              <div className={styles.nickName}>3팀 화이팅(닉네임)</div>
+              <div className={styles.nickName}>{userData.info.nickname}</div>
             </div>
           </div>
           <div className={styles.box2}>

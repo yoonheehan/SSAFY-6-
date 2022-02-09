@@ -5,7 +5,12 @@ import './NavBar.css';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
 
 const NavBar = () => {
-  const userId = JSON.parse(localStorage.getItem('loginedUser')).userId
+  
+  let userId = -1
+  if (JSON.parse(localStorage.getItem('loginedUser')).userId != null) {
+    userId = JSON.parse(localStorage.getItem('loginedUser')).userId
+  }
+  console.log(userId)
 
   const ref = useRef(null);
 

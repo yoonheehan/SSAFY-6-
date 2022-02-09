@@ -57,7 +57,7 @@ function submitData() {
 
     axios({
       method: 'post',
-      url: 'http://i6c103.p.ssafy.io/api/user',
+      url: `${process.env.REACT_APP_LOCALURL}user`,
       data: {
         gender: radioValue,
         nickname: nickName,
@@ -72,10 +72,10 @@ function submitData() {
         histroy.push('/feed');
       })
       .catch(error => {
-        console.log('login requset fail : ' + error);
+        console.log('signup requset fail : ' + error);
       })
       .finally(() => {
-        console.log('login request end');
+        console.log('signup request end');
       });
   }
 

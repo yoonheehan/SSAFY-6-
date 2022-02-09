@@ -22,14 +22,19 @@ const Login = props => {
   const state = useSelector((state) => state);
   const dispatch = useDispatch();
   const history = useHistory();
+  
+  if (localStorage.getItem('loginedUser') != null) {
+    history.push('/feed')
+  } 
   const _clickSnsLoginGoogle = res => {
     console.log(localStorage.getItem('loginedUser'))
     console.log('구글 로그인:', res);
+    console.log(`${process.env.REACT_APP_LOCALURL}/jwt/google`);
     if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        // url: 'http://localhost:8080/jwt/google',
-        url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+        url: `${process.env.REACT_APP_LOCALURL}jwt/google`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         data: res,
       })
         .then(response => {
@@ -61,9 +66,75 @@ const Login = props => {
   };
   const _clickSnsLoginKakao = res => {
     console.log('카카오 로그인:', res);
+    if (localStorage.getItem('loginedUser') === null) {
+      axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_LOCALURL}/jwt/kakao`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/kakao',
+        data: res,
+      })
+        .then(response => {
+          if(response.data.check === false){
+            history.push({
+              pathname:"/newprofile",
+              props:{useremail:response.data.email}
+            })
+          }else {
+            console.log(response.data.id)
+            const loginUser = { userId : response.data.id}
+            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
+            history.push("/feed")
+          }
+
+          console.log('response.data.accessToken : ' + response.data.email);
+          axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + response.data;
+        })
+        .catch(error => {
+          console.log('login requset fail : ' + error);
+        })
+        .finally(() => {
+          console.log('login request end');
+        });
+    } else {
+      history.push("/feed")
+    }
   };
   const _clickSnsLoginNaver = res => {
     console.log('네이버 로그인:', res);
+    if (localStorage.getItem('loginedUser') === null) {
+      axios({
+        method: 'post',
+        url: `${process.env.REACT_APP_LOCALURL}/jwt/naver`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/naver',
+        data: res,
+      })
+        .then(response => {
+          if(response.data.check === false){
+            history.push({
+              pathname:"/newprofile",
+              props:{useremail:response.data.email}
+            })
+          }else {
+            console.log(response.data.id)
+            const loginUser = { userId : response.data.id}
+            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
+            history.push("/feed")
+          }
+
+          console.log('response.data.accessToken : ' + response.data.email);
+          axios.defaults.headers.common['Authorization'] =
+            'Bearer ' + response.data;
+        })
+        .catch(error => {
+          console.log('login requset fail : ' + error);
+        })
+        .finally(() => {
+          console.log('login request end');
+        });
+    } else {
+      history.push("/feed")
+    }
   };
 
   useEffect(() => {

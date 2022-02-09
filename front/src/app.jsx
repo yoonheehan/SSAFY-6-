@@ -19,7 +19,12 @@ import { useEffect, useState } from 'react';
 function App() {
   const [isLogin, setIsLogin] = useState(false);
 
-  useEffect(() => {}, []);
+ 
+  useEffect(() => {
+    if (localStorage.hasOwnProperty('loginedUser') === true) {
+      setIsLogin(true)
+    }
+  }, []);
 
   const loginCallback = login => {
     setIsLogin(login);
@@ -28,7 +33,7 @@ function App() {
   return (
     <div className="App">
       <BrowserRouter>
-        <NavBar />
+        {isLogin ? <NavBar /> : null}
         <Switch>
           <Route
             exact
