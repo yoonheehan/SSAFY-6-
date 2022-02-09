@@ -40,19 +40,19 @@ const Post = () => {
 
 	// axios.post
 	function postAPI() {
-		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+		const url = "http://localhost:8080/board/save"
 		const vote_contents = JSON.stringify(voteItems)
 		
 		axios({
 			method: "post",
-			url: "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post",
+			url: url,
 			data: {
-				userId: userId,
+				// userId: userId,
 				type: type,
 				view_range: revealType,
 				content: voteContent,
 				vote_contents: vote_contents,
-				board_image: img,
+				// board_image: img,
 				hashArr: hashArr,
 				due_date: dueDate,
 			},
