@@ -175,11 +175,21 @@ export default function FeedItem({feed, onRemove}) {
         feed={feed} 
         EditFeed={EditFeed}
         />}
-        {commentModalOpen && <CommentWrite 
-        onClose={handleCommentClick} 
-        feed={feed} 
-        EditFeed={EditFeed}
-        />}
+        {/* {commentModalOpen && 
+          <CommentWrite
+          onClose={handleCommentClick}
+          feed={feed} 
+          EditFeed={EditFeed}
+        />} */}
+
+        <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>
+          <CommentWrite
+            onClose={handleCommentClick}
+            feed={feed} 
+            EditFeed={EditFeed}
+          />
+        </div>
+        
         </ Profiler>
   )
 }

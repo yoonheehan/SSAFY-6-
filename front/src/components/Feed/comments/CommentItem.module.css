@@ -11,3 +11,16 @@
 .feed_drop.active {
     display: block;
 }
+
+.comment_box {
+    margin: 0, 5%, 10%, 5%;
+}
+
+.update_area {
+    display: flex;
+}
+
+.update_input {
+    margin-top: 10px;
+    width: 100%;
+}

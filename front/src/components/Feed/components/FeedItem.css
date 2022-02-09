@@ -11,3 +11,25 @@
 .feed_drop.active {
     display: block;
 }
+
+.comments_modal {
+    height: 0;
+    width: 100%;
+    overflow: hidden;
+    align-items: center;
+    justify-content: center;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    text-align: center;
+    background-color: white;
+    z-index: 1000;
+    transition: all ease 0.25s;
+    visibility: hidden;
+}
+
+.comments_modal.active {
+    visibility: visible;
+    height: 100%;
+    transition: all ease 0.25s;
+}

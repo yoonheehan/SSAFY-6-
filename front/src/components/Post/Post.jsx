@@ -59,20 +59,20 @@ const Post = () => {
 	}
 	//
 
-	function getAPI() {
-		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
+	// function getAPI() {
+	// 	const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
 
-		axios({
-			method: 'get',
-			url: url
-		})
-		.then(function (response) {
-			console.log(response)
-		})
-		.catch(function(error) {
-			console.log(error)
-		})
-	}
+	// 	axios({
+	// 		method: 'get',
+	// 		url: url
+	// 	})
+	// 	.then(function (response) {
+	// 		console.log(response)
+	// 	})
+	// 	.catch(function(error) {
+	// 		console.log(error)
+	// 	})
+	// }
 
 	//
 
@@ -268,11 +268,10 @@ const Post = () => {
 				</div>
 				<div>
 					<div className="my_accordion">
-						<div className={selected ? "title active" : "title"} onClick={() => setSelected(!selected)}>
+						<div className="title active" onClick={() => setSelected(!selected)}>
 							<div>공개범위</div>
-							<div className={selected ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
 						</div>
-						<div className={selected ? 'content show' : 'content'}>
+						<div className='content show'>
 							<div className='content__radio' onClick={() => setRevealType("전체공개")}>
 								<input
 									type="radio"
@@ -294,29 +293,32 @@ const Post = () => {
 						</div>
 					</div>
 					<div className="mt-4">
-						{/* 예쁘게 만들기? */}
-						{/* <div className="button_group">
-							<div className="button_vote">
+						<div className="title active" onClick={() => setSelected(!selected)}>
+							<div>글종류</div>
+						</div>
+						<div className="button_group">
+							<div className="button_vote" onClick={() => {setType(1); contentReset("1")}}>
 								<div><i class="bi bi-card-checklist"></i></div>
 								<div>투표</div>
 							</div>
-							<div className="button_ox">
+							<div className="button_ox" onClick={() => {setType(2); contentReset("2")}}>
 								<div><i class="h6 bi bi-circle"></i><i class="h6 bi bi-x-lg"></i></div>
 								<div>찬반</div>
 							</div>
-							<div className="button_ox">
+							<div className="button_ox" onClick={() => {setType(3); contentReset("3")}}> 
 								<div>VS</div>
 								<div>대결</div>
 							</div>
-						</div> */}
+						</div>
+
 						{/* 투표 */}
 						<div className="my_accordion"> 
-							<div className={keySelected === '1' ? "title active" : "title"} onClick={() => {setType(1); contentReset("1")}}>
+							{/* <div className={keySelected === '1' ? "title active" : "title"} onClick={() => {setType(1); contentReset("1")}}>
 								<div>투표</div>
 								<div className={keySelected === '1' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div>
+							</div> */}
 							<div className={keySelected === '1' ? "vote_content show" : "vote_content"}>
-								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+								<textarea className="textarea" name="text_area" id="" cols="40" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className="d-flex flex-row">
 									<div className="mx-2">
 										<button type="button" className="btn btn-primary btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
@@ -355,12 +357,12 @@ const Post = () => {
 
 						{/* OX */}
 						<div className="my_accordion">
-							<div className={keySelected === '2' ? "title active" : "title"} onClick={() => {contentReset("2"); setVoteItems(["", ""]); setType(2)}}>
+							{/* <div className={keySelected === '2' ? "title active" : "title"} onClick={() => {contentReset("2"); setVoteItems(["", ""]); setType(2)}}>
 								<div>OX</div>
 								<div className={keySelected === '2' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div>
-							<div className={keySelected === '2' ? "vote_content show" : "ox_content"}>
-								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+							</div> */}
+							<div className={keySelected === '2' ? "vote_content show" : "vote_content"}>
+								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className={img ? "imgDelete show" : "imgDelete"}>
 									<button onClick={deleteImg}>x</button>
 								</div>
@@ -380,12 +382,12 @@ const Post = () => {
 
 						{/* VS */}
 						<div className="my_accordion">
-							<div className={keySelected === '3' ? "title active" : "title"} onClick={() => {contentReset("3"); setVoteItems(["", ""]); setType(3)}}>
+							{/* <div className={keySelected === '3' ? "title active" : "title"} onClick={() => {contentReset("3"); setVoteItems(["", ""]); setType(3)}}>
 								<div>VS</div>
 								<div className={keySelected === '3' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div>
-							<div className={keySelected === '3' ? "vs_content show" : "vs_content"}>
-								<textarea className="textarea" name="text_area" id="" cols="40" rows="5" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
+							</div> */}
+							<div className={keySelected === '3' ? "vote_content show" : "vote_content"}>
+								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className={img ? "imgDelete show" : "imgDelete"}>
 									<button onClick={deleteImg}>x</button>
 								</div>
@@ -417,7 +419,7 @@ const Post = () => {
 						</div>
 					</div>				
 				</div>
-				<div className="title mt-4">
+				<div className="title active mt-4 ">
 					<div>#태그 입력</div>
 				</div>
 				<div className="hashtag_outer">
@@ -471,9 +473,9 @@ const Post = () => {
 					</form>
 				</div>
 
-				<div>
+				{/* <div>
 					<button onClick={getAPI}>++++</button>
-				</div>
+				</div> */}
 			</div>
 		</>
 	)

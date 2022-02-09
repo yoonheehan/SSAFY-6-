@@ -1,37 +1,26 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import Comments from './Comments'
-import { createPortal } from 'react-dom';
+import "./CommentItem.module.css"
 
-const Modal = styled.div`
-    height: 100%;
-    width: 100%;
-    align-items: center;
-    justify-content: center;
-    position: fixed;
-    left: 0;
-    top: 0;
-    text-align: center;
-    background-color: white;
-    z-index: 1000;
-`
 
 const CommentForm = styled.form`
     width: 90%;
-    margin:0 5% 0 5%;
-    
+    margin: 5%;
+    bottom: 0;
+    position: fixed;
 `
 
-const CommentBox = styled.input`
+const CommentInput = styled.input`
     width: 88%;
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid rgb(190, 190, 190);
 `
 
 const SubmitBtn = styled.input`
     width: 10%;
     border: none;
-    border-bottom: 2px solid black;
+    border-bottom: 1px solid rgb(190, 190, 190);
     background-color: white;
 `
 
@@ -41,16 +30,11 @@ const CommentList = [
     {id: 3, profilename: '홍길동', writetime: 2, content: 'ㄹㅇㅋㅋ', commentUserId:3 ,likes:5, clickedLike: false},
 ]
 
-const Portal = props => {
-    return createPortal(props.children, document.getElementById('Modal'));
-  };
-
-
-
 function CommentWrite({onClose}) {
 
     const [commentContent, setCommentContent] = useState("");
     const [comments, setComments] = useState(CommentList)
+    
     function getcomment(event) {
         const commentContent = event.target.value
         setCommentContent(event.target.value)
@@ -70,7 +54,7 @@ function CommentWrite({onClose}) {
     const onRemove = (id) => {
         setComments(comments.filter(comment => comment.id !== id));
         
-      };
+    };
 
     const clickLike = (id) => {
 
@@ -88,31 +72,31 @@ function CommentWrite({onClose}) {
     }
 
     return (
-        <>
-            <Portal>
-                <Modal>
-                    <div onClick={onClose}>back</div>
-                    <div>
-                        <Comments 
-                        commentList={comments} 
-                        onRemove={onRemove} 
-                        clickLike={clickLike}
-                        />
-                    </div>
-                    <CommentForm onSubmit={handleSubmit}>
-                        <CommentBox 
-                        type="text"
-                        placeholder='댓글 달기...'
-                        onChange={getcomment}
-                        name='comment'
-                        value={commentContent}
-                        />
-                        <SubmitBtn type='submit' value="작성" />
-                    </CommentForm>
-                </Modal>
-            </Portal>
+        <>  
+            <div>
+                <div className="mt-2 mb-4" style={{ textAlign: "right" }}>
+                    <i onClick={onClose} className="m-2 h4 bi bi-x-lg" style={{ cursor: 'pointer' }}></i>          
+                </div>
+                <div className="comment_box">
+                    <Comments 
+                    commentList={comments} 
+                    onRemove={onRemove} 
+                    clickLike={clickLike}
+                    />
+                </div>
+                <CommentForm onSubmit={handleSubmit}>
+                    <CommentInput 
+                    type="text"
+                    placeholder='댓글 달기...'
+                    onChange={getcomment}
+                    name='comment'
+                    value={commentContent}
+                    />
+                    <SubmitBtn type='submit' value="작성" />
+                </CommentForm>
+            </div>
         </>
-  )
+    )
 }
 
 export default CommentWrite

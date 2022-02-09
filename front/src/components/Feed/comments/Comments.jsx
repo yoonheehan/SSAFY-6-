@@ -6,11 +6,6 @@ export default function Comments({commentList, onRemove, clickLike}) {
         console.log('눌림')
       }, [])
 
-    
-
-
-
-              
   return (
       <div>
         {commentList.map(comment => 
