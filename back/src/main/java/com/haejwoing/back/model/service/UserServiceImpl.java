@@ -52,4 +52,9 @@ public class UserServiceImpl implements UserService{
     public int getUserId(String email) {
         return sqlSession.getMapper(UserMapper.class).getUserId(email);
     }
+
+    @Override
+    public User searchById(int id) {
+        return sqlSession.getMapper(UserMapper.class).userInfo(id);
+    }
 }

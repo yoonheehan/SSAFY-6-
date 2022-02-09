@@ -15,4 +15,5 @@ public interface UserMapper {
     void setPoint(String email);
     List<User> listFollower(String email);
     int getUserId(String email);
+    User userInfo(int id);
 }

@@ -7,9 +7,9 @@
         values (#{nickname}, #{email}, #{gender}, #{role}, #{birth}, #{userStatus}, #{point}, #{image})
     </insert>
 
-    <insert id="setPoint" parameterType="String">
-        insert into point(email) values (#{email})
-    </insert>
+<!--    <insert id="setPoint" parameterType="String">-->
+<!--        insert into point(email) values (#{email})-->
+<!--    </insert>-->
 
     <select id="searchByEmail" parameterType="String" resultType="User">
         select * from user
@@ -37,5 +37,9 @@
         select id
         from haejwoing.user
         where email = #{email}
+    </select>
+
+    <select id="userInfo" parameterType="int" resultType="User">
+        select * from user where id = #{id};
     </select>
 </mapper>

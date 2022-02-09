@@ -13,4 +13,5 @@ public interface UserService {
     void setPoint(String email);
     List<User> listFollower(String email);
     int getUserId(String email);
+    User searchById(int id);
 }
