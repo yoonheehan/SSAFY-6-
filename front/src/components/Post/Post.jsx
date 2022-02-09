@@ -8,8 +8,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 
 const Post = () => {
-	// 
-	const state = useSelector(state => state);
+	//
+	const state = useSelector(state => state.alarmData);
 	const userData = state[0]
 	//
 	
