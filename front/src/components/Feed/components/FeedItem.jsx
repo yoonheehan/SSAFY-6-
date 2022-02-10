@@ -5,9 +5,10 @@ import "./FeedItem.css"
 import FeedEditModal from './FeedEditModal'; 
 import ImgSlide from '../../ImgSlide/ImgSlide';
 import CommentWrite from '../comments/CommentWrite';
+import DetailContent from './DetailContent';
 
 const FeedBox = styled.div`
-  border: 3px solid #d3d3d3;
+  border: 1px solid #bdcbdd;
   margin: 5px;
   margin-top: 20px;
 `;
@@ -32,8 +33,8 @@ const ProfileImg = styled.img`
 `;
 
 const WriteTime = styled.div`
-    font-size: 12px;
-    margin: auto 5px 0 auto;
+  font-size: 12px;
+  margin: auto 5px 0 auto;
 `
 
 const ContentImgBox = styled.div`
@@ -75,8 +76,18 @@ const HashCommentBox = styled.div`
 const HashTagBox = styled.div`
 `
 const HashTag = styled.div`
-  background-color: yellow;
-  border-radius: 30%;
+  margin-top: 5px;
+  background: #FFB73B;
+  border-radius: 56px;
+  padding: 5px 9px;
+  color: #ffffff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bold;
+  font-size: 0.9rem;
+  line-height: 20px;
+  margin-right: 5px;
 `
 
 const Comments = styled.div`
@@ -91,6 +102,7 @@ export default function FeedItem({feed, onRemove}) {
     const [commentModalOpen, setCommentModalOpen] = useState(false)
 
     const ref = useRef(null)
+    const ref2 = useRef(null)
 
     const [feedItem, setFeedItem] = useState(feed)
 
@@ -100,9 +112,15 @@ export default function FeedItem({feed, onRemove}) {
     }
 
     useEffect(() => {
+      console.log(ref.current, "ref1")
+      console.log(ref2.current, "ref2")
       const handleClickOutside = (event) => {
         if (selected && ref.current && !ref.current.contains(event.target)) {
           setSelected(false)
+        }
+
+        if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
+          setModalIsOpen(false)
         }
       }
   
@@ -111,7 +129,7 @@ export default function FeedItem({feed, onRemove}) {
       return () => {
           document.removeEventListener("mousedown", handleClickOutside)
       }
-    }, [selected])
+    }, [selected, modalIsOpen])
 
     const handleCommentClick = (event) => {
       setCommentModalOpen(!commentModalOpen)
@@ -128,26 +146,27 @@ export default function FeedItem({feed, onRemove}) {
       <>
         <FeedBox>
           <ProfileBox>
-          <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
-              <div>
-                <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName>
-                <WriteTime>{feed.writetime}분 전</WriteTime>
-              </div>
-              {myId === feed.feedUserId ? 
-                <FeedMenu>
-                  <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
-                    <i className="bi bi-three-dots-vertical"></i>
-                    <div className={selected ? "feed_drop active" : "feed_drop" }>
-                      <div onClick={handleEditClick}>글수정</div>
-                      <div onClick={() => onRemove(feed.id)}>글삭제</div>
-                    </div>
+            <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
+            <div>
+              <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName>
+              <WriteTime>{feed.writetime}분 전</WriteTime>
+            </div>
+            {myId === feed.feedUserId ? 
+              <FeedMenu>
+                <div style={{marginLeft:'auto', cursor: "pointer" }} ref={ref} onClick={() => setSelected(!selected)}>
+                  <i className="bi bi-three-dots-vertical"></i>
+                  <div className={selected ? "feed_drop active" : "feed_drop" }>
+                    <div onClick={handleEditClick}>글수정</div>
+                    <div onClick={() => onRemove(feed.id)}>글삭제</div>
                   </div>
-                  </FeedMenu>
-                : null
-                }
+                </div>
+              </FeedMenu>
+              : null
+            }
           </ProfileBox>
           <ContentBox>
               <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content>
+              <button onClick={() => history.push(`/feed/${feed.id}`)}>ddd</button>
               <ContentImgBox>
                 <ImgSlide imgUrl={feed.feedimg}/>
                 {/* <ContentImg src={feed.feedimg} alt='글 사진' /> */}
@@ -155,22 +174,22 @@ export default function FeedItem({feed, onRemove}) {
           </ContentBox>
           <HashCommentBox>
             <HashTagBox>
-              <HashTag>gd</HashTag>
+              <HashTag>닭갈비</HashTag>
             </HashTagBox>
             <Comments onClick={handleCommentClick}>22개</Comments>
           </HashCommentBox>
         </FeedBox>
-        {modalIsOpen && <FeedEditModal 
-        onClose={handleEditClick} 
-        feed={feed} 
-        EditFeed={EditFeed}
-        />}
-        {/* {commentModalOpen && 
-          <CommentWrite
-          onClose={handleCommentClick}
+        <div ref={ref2} className={modalIsOpen ? 'edit_drop active' : 'edit_drop'}>
+          <FeedEditModal
+          onClose={handleEditClick} 
           feed={feed} 
           EditFeed={EditFeed}
-        />} */}
+          />
+        </div>
+
+        <div>
+          <DetailContent/>
+        </div>
 
         <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>
           <CommentWrite

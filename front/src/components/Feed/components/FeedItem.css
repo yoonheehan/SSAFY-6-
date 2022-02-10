@@ -6,6 +6,7 @@
     width: 80px;
     padding: 8px;
     border-radius: 5%;
+    z-index: 1000
 }
 
 .feed_drop.active {
@@ -32,4 +33,12 @@
     visibility: visible;
     height: 100%;
     transition: all ease 0.25s;
+}
+
+.edit_drop {
+    visibility: hidden;
+}
+
+.edit_drop.active {
+    visibility: visible;
 }

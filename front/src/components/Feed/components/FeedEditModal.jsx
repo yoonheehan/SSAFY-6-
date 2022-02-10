@@ -2,50 +2,47 @@ import React, {useState, useCallback} from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
 
-const Background = styled.div`
-  height: 100%;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: fixed;
-  left: 0;
-  top: 0;
-  text-align: center;
-`;
-
 const ModalContent = styled.div`
   box-sizing: border-box;
-  position: relative;
-  box-shadow: 0 0 6px 0 rgba(0, 0, 0, 0.5);
-  background-color: #fff;
+  position: fixed;
+  box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
+  background-color: #ffffff;
   border-radius: 10px;
-  width: 360px;
+  width: 400px;
   max-width: 480px;
-  top: 30%;
-  transform: translateY(-50%);
   margin: 0 auto;
-  padding: 20px 20px;
-`;
+  left: 0;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  padding: 8px 20px 20px 20px;
+  z-index: 1000;
+`
 
 const Header = styled.div`
   font-weight: bold;
-  font-size: 30px;
+  font-size: 20px;
 `
 
 const EditContent = styled.textarea`
   margin-top: 20px;
-  width: 95%;
+  width: 100%;
   height: 15em;
-  border: 1px solid gray;
+  border: 1px solid #bdcbdd;
   resize: none;
 `
 const Editbtn = styled.input`
+  width: 100%;
+  background-color: #4F7DDF;
+  border-radius: 5px;
+  border: 0.08rem solid #4F71DF;
+  font-weight: bold;
+  color: #ffffff;
 `
 
-const Portal = props => {
-  return createPortal(props.children, document.getElementById('commentModal'));
-};
+// const Portal = props => {
+//   return createPortal(props.children, document.getElementById('commentModal'));
+// };
 
 const FeedEditModal = ({onClose, feed, EditFeed}) => {
   const [value, setValue] = useState(feed.feedcontent)
@@ -64,23 +61,23 @@ const FeedEditModal = ({onClose, feed, EditFeed}) => {
 
 
   return (
-      <Portal>
-          <Background>
-            <ModalContent>
-              <div style={{borderBottom:'3px solid grey'}}>
-                <Header>게시글 수정</Header>
-              </div>
-              <form onSubmit={handleSubmit}>
-                <EditContent 
-                  placeholder='내용을 입력해주세요.'
-                  type='text' 
-                  value={value} 
-                  onChange={onChange} />
-                <Editbtn type='submit' value="수정"/>
-              </form>
-            </ModalContent>
-          </Background>
-      </Portal>
+    <ModalContent>
+      <div style={{ textAlign: "right" }}>
+        <i onClick={onClose} className="h5 bi bi-x-lg" style={{ cursor: 'pointer' }}></i> 
+      </div>
+      <div style={{borderBottom:'0.1rem solid #bdcbdd'}}>
+        <Header>게시글 수정</Header>
+      </div>
+      <div></div>
+      <form onSubmit={handleSubmit}>
+        <EditContent 
+          placeholder='내용을 입력해주세요.'
+          type='text' 
+          value={value} 
+          onChange={onChange} />
+        <Editbtn type='submit' value="수정"/>
+      </form>
+    </ModalContent>
   );
 }
 

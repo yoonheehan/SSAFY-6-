@@ -31,11 +31,13 @@ const Post = () => {
 	const [imgUrl, setImgUrl] = useState(null) // 이미지 url
 	const [hashArr, setHashArr] = useState([]) // 해시태그
 	const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
+	const [dueDateSec, SetDueDateSec] = useState(null)
 	//
 
 	// axios.post
 	function postAPI() {
-		const url = "http://i6c103.p.ssafy.io/api/board/save"
+		// const url = "http://i6c103.p.ssafy.io/api/board/save"
+		const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
 		const vote_contents = JSON.stringify(voteItems)
 		
 		for (let i = 0; i < img.length; i++) {
@@ -69,11 +71,12 @@ const Post = () => {
 				vote_contents: vote_contents,
 				board_image: JSON.stringify(imgUrl),
 				hashArr: JSON.stringify(hashArr),
-				due_date: dueDate,
+				due_date: dueDateSec,
+				// due_date: dueDate
 			},
 		})
 		.then(function (response) {
-			console.log(response)
+			console.log(response.config.data)
 		})
 		.catch(function(error) {
 			console.log(error)
@@ -268,6 +271,11 @@ const Post = () => {
 			}
 			
 		} 
+	}
+
+	const dateFormat = (data) => {
+		var due = Math.ceil(data / 1000)
+		SetDueDateSec(due)
 	}
 
 	return (
@@ -476,7 +484,7 @@ const Post = () => {
 				<div>
 					<DatePicker
 						selected={dueDate}
-						onChange={(date) => setDueDate(date)}
+						onChange={(data) => dateFormat(data)}
 						showTimeSelect
 						filterTime={filterPassedTime}
 						dateFormat="MMMM d, yyyy h:mm aa"
