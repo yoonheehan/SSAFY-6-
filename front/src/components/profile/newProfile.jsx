@@ -93,7 +93,7 @@ const NewProfile = props => {
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_LOCALURL}/user`,
+      url: `${process.env.REACT_APP_LOCALURL}user`,
       data: {
         image: img,
         gender: radioValue,

@@ -10,8 +10,12 @@ import {
 import styles from './mdProfile.module.css';
 import { BsPersonCircle } from 'react-icons/bs';
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const MdProfile = props => {
+  const history = useHistory();
   const inputRef = useRef();
   const [img, setImg] = useState('');
   const imgRef = useRef(null);
@@ -21,11 +25,24 @@ const MdProfile = props => {
       IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
     }),
   });
+  const [userData, setUserData] = useState({
+    info: {
+      image: '',
+      nickname: '',
+    },
+  });
   const handleFileInput = e => {
     // input 태그를 통해 선택한 파일 객체
     const file = e.target.files[0];
+    console.log('파일');
     console.log(file);
-    setImg(file.name);
+    setUserData(pre => ({
+      ...pre,
+      info: {
+        ...pre.nickname,
+        image: file.name,
+      },
+    }));
 
     // S3 SDK에 내장된 업로드 함수
     const upload = new AWS.S3.ManagedUpload({
@@ -47,6 +64,52 @@ const MdProfile = props => {
       }
     );
   };
+  const { id } = useParams();
+
+  if (localStorage.getItem('loginedUser') === null) {
+    history.push('/');
+  }
+
+  useEffect(() => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/user/${id}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+    })
+      .then(res => {
+        console.log(res);
+        setUserData(res.data);
+      })
+      .catch(err => {
+        console.log('에러났어요');
+      })
+      .finally(() => {
+        console.log('profile request end');
+      });
+  }, []);
+
+  AWS.config.update({
+    region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+    }),
+  });
+
+  const onChangeNickName = e => {
+    setUserData(pre => ({
+      ...pre,
+      info: {
+        image: userData.info.image,
+        nickname: e.target.value,
+      },
+    }));
+  };
+
+  const submitData = () => {
+    console.log('보내지는 데이터');
+    console.log(userData);
+  };
+
   return (
     <>
       <div className={styles.div1}>
@@ -94,7 +157,7 @@ const MdProfile = props => {
                     ref={imgRef}
                     src={
                       'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-                      img +
+                      userData.info.image +
                       '.jpg'
                     }
                     alt="ㅇ"
@@ -110,8 +173,12 @@ const MdProfile = props => {
               <FormControl
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
-                placeholder="3팀 화이팅(닉네임)"
+                value={userData.info.nickname}
+                onChange={onChangeNickName}
               />
+              <Button variant="secondary" onClick={submitData}>
+                중복확인
+              </Button>
             </InputGroup>
           </div>
         </div>
