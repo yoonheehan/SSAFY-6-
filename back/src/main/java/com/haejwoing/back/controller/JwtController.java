@@ -117,9 +117,11 @@ public class JwtController {
         Map<String, Object> kakaoMap = new HashMap<>();
         kakaoMap = (Map<String, Object>) data.get("profile");
         log.info("kakao_account {}", kakaoMap.get("kakao_account"));
-//        System.out.println(kakaoMap.get("kakao_account"));
-//        String email = kakaoMap.get("kakao_account");
-//      log.info("Auth : {}", Auth);
+
+        Map<String, Object> str = new HashMap<>();
+        str = (Map<String, Object>) kakaoMap.get("kakao_account");
+
+        System.out.println(str.get("email"));
 
         User userEntity = userServiceImpl.searchByEmail((String) data.get("email"));
 
