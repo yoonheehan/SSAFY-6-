@@ -39,8 +39,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public List<User> listFollower(String email) {
-        return sqlSession.getMapper(UserMapper.class).listFollower(email);
+    public List<User> listFollower(int id) {
+        return sqlSession.getMapper(UserMapper.class).listFollower(id);
     }
 
     @Override

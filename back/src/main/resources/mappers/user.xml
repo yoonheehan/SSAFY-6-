@@ -27,10 +27,10 @@
         where email like #{email}
     </update>
 
-    <select id="listFollower" parameterType="String" resultType="map">
-        select from_user
-        from follower
-        where follower.to_user like #{email}
+    <select id="listFollower" parameterType="int" resultType="map">
+        select id, nickname, image from user where id in (
+            select from_user
+            from follower where to_user=#{id});
     </select>
 
     <select id="getUserId" parameterType="String" resultType="int">
