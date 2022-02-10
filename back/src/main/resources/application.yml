@@ -12,9 +12,7 @@ spring:
 #    url: jdbc:mysql://i6c103.p.ssafy.io/haejwoing
 #    username: haejwoing
 #    password: 1234
-  servlet:
-    multipart:
-      location: C:\Users\multicampus\Desktop\공통프로젝트\branch\backend\S06P12C103\back\src\main\resources
+
 
 mybatis:
   type-aliases-package: com.haejwoing.back.model.dto
