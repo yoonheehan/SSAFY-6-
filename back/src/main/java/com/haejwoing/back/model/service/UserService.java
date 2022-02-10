@@ -11,7 +11,7 @@ public interface UserService {
     User searchByEmail(String email);
     void withdrawUser(String email);
     void setPoint(String email);
-    List<User> listFollower(String email);
+    List<User> listFollower(int id);
     int getUserId(String email);
     User searchById(int id);
 }

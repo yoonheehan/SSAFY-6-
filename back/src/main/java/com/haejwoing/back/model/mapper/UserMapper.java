@@ -13,7 +13,7 @@ public interface UserMapper {
     List<User> listAllUser();
     void withdrawUser(String email);
     void setPoint(String email);
-    List<User> listFollower(String email);
+    List<User> listFollower(int id);
     int getUserId(String email);
     User userInfo(int id);
 }

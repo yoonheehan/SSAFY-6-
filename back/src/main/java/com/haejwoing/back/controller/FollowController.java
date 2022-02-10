@@ -16,24 +16,22 @@ import java.util.Map;
 
 @Slf4j
 @RestController
-@RequestMapping("/follow")
+@RequestMapping("/follower")
 public class FollowController {
 
     @Autowired
     private UserService userService;
 
     @ApiOperation(value = "팔로워 목록 불러오기")
-    @GetMapping("/{email}")
-    public ResponseEntity<Map<String, Object>> listFollower(@PathVariable @ApiParam(value = "해당 이메일의 팔로워들을 가져온다." ) String email){
-        log.info("검색 대상 : ");
-        log.info("{}", email);
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> listFollower(@PathVariable @ApiParam(value = "해당 이메일의 팔로워들을 가져온다." ) int id){
+        log.info("검색 대상 id : {}", id);
 
         Map<String, Object> result = new HashMap<>();
+        List<User> user = userService.listFollower(id);
+        result.put("followerInfo", user);
 
-        List<User> user = userService.listFollower(email);
-        result.put("followerInfo",user);
-        log.info("followerInfo");
-        log.info("{}", result.get("followerInfo"));
+        log.info("followerInfo {}", result.get("followerInfo"));
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
