@@ -19,14 +19,11 @@ import { useEffect, useState } from 'react';
 function App() {
   const [isLogin, setIsLogin] = useState(localStorage.hasOwnProperty('loginedUser'));
 
-<<<<<<< Updated upstream
   useEffect(() => {
     if (localStorage.hasOwnProperty('loginedUser') === false) {
       setIsLogin(false);
     }
   });
-=======
->>>>>>> Stashed changes
 
 
   
@@ -45,7 +42,6 @@ function App() {
             path="/"
             render={props => <Login {...props} setIsLogin={setIsLogin} loginCallback={loginCallback} />}
           />
-<<<<<<< Updated upstream
           <Route exact path="/feed" isLogin={isLogin} component={Feed} />
           <Route
             exact
@@ -53,14 +49,6 @@ function App() {
             isLogin={isLogin}
             component={Profile}
           />
-=======
-          <Route 
-            exact 
-            path="/newProfile" 
-            render={() => <NewProfile setIsLogin={setIsLogin} />} />
-          <Route exact path="/feed" component={Feed} />
-          <Route exact path="/user/:id/profile" component={Profile} />
->>>>>>> Stashed changes
           <Route exact path="/user/:id/mdProfile" component={MdProfile} />
           <Route exact path="/user/:id/followList" component={FollowList} />
           <Route exact path="/user/:id/followerList" component={FollowerList} />
