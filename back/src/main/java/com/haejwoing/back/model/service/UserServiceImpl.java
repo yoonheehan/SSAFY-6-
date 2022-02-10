@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
+    public List<User> listFollow(int id) {
+        return sqlSession.getMapper(UserMapper.class).listFollow(id);
+    }
+
+    @Override
     public void setPoint(String email) {
         sqlSession.getMapper(UserMapper.class).setPoint(email);
     }
@@ -56,5 +61,15 @@ public class UserServiceImpl implements UserService{
     @Override
     public User searchById(int id) {
         return sqlSession.getMapper(UserMapper.class).userInfo(id);
+    }
+
+    @Override
+    public void updateProfile(User user) {
+        sqlSession.getMapper(UserMapper.class).updateProfile(user);
+    }
+
+    @Override
+    public Boolean checkNickname(String nickname) {
+        return sqlSession.getMapper(UserMapper.class).checkNickname(nickname)==1;
     }
 }

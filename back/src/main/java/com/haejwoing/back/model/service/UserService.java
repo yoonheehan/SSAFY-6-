@@ -12,6 +12,9 @@ public interface UserService {
     void withdrawUser(String email);
     void setPoint(String email);
     List<User> listFollower(int id);
+    List<User> listFollow(int id);
     int getUserId(String email);
     User searchById(int id);
+    void updateProfile(User user);
+    Boolean checkNickname(String nickname);
 }

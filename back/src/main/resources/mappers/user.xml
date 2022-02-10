@@ -33,6 +33,12 @@
             from follower where to_user=#{id});
     </select>
 
+    <select id="listFollow" parameterType="int" resultType="map">
+        select id, nickname, image from user where id in (
+            select to_user
+            from follower where from_user=#{id});
+    </select>
+
     <select id="getUserId" parameterType="String" resultType="int">
         select id
         from haejwoing.user
@@ -42,4 +48,15 @@
     <select id="userInfo" parameterType="int" resultType="User">
         select * from user where id = #{id};
     </select>
+
+    <update id="updateProfile" parameterType="User">
+        update user
+        set nickname=#{nickname}, image=#{image}
+        where id=#{id}
+    </update>
+
+    <select id="checkNickname" parameterType="String" resultType="int">
+        select EXISTS(select id from user where nickname like #{nickname})
+    </select>
+
 </mapper>

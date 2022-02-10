@@ -26,10 +26,6 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
     @ApiOperation(value = "회원 가입")
     @PostMapping()
@@ -107,4 +103,31 @@ public class UserController {
 
     }
 
+    @ApiOperation(value = "프로필 수정")
+    @PutMapping("/{id}")
+    public ResponseEntity<String> updateProfile(@PathVariable int id, @RequestBody @ApiParam(value = "해당 정보로 프로필 수정요청") User user){
+        log.info("프로필 수정할 id : {}" , id);
+        user.setId(id);
+        log.info("프로필 수정할 정보 : {}", user);
+
+        userService.updateProfile(user);
+
+        return new ResponseEntity<>("회원수정 완료", HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "nickname 중복검사")
+    @GetMapping("/check/{nickname}")
+    public ResponseEntity<Boolean> checkNickname(@PathVariable @ApiParam(value = "해당 닉네임 중복검사") String nickname){
+        log.info("중복검사할 닉네임 : {}", nickname);
+
+        // 해당 닉네임 있으면 true
+        if(userService.checkNickname(nickname)){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        } else return new ResponseEntity<>(false, HttpStatus.OK); // 없으면 false
+
+//        if(userService.checkNickname(nickname)){
+//            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
+//        }else return new ResponseEntity<>(false, HttpStatus.OK);
+
+    }
 }
