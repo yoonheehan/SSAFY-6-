@@ -24,6 +24,7 @@ public class FollowController {
 
     @ApiOperation(value = "팔로워 목록 불러오기")
     @GetMapping("/{id}")
+<<<<<<< Updated upstream
     public ResponseEntity<Map<String, Object>> listFollower(@PathVariable @ApiParam(value = "해당 이메일의 팔로워들을 가져온다." ) int id){
         log.info("검색 대상 id : {}", id);
 
@@ -34,6 +35,25 @@ public class FollowController {
         log.info("followerInfo {}", result.get("followerInfo"));
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
+=======
+    public class FollowController {
+
+        @Autowired
+        private UserService userService;
+
+        @ApiOperation(value = "팔로워 목록 불러오기")
+        @GetMapping("/{id}")
+        public ResponseEntity<Map<String, Object>> listFollower(@PathVariable @ApiParam(value = "해당 이메일의 팔로워들을 가져온다." ) int id){
+            log.info("검색 대상 id : {}", id);
+
+            Map<String, Object> result = new HashMap<>();
+            List<User> user = userService.listFollower(id);
+            result.put("followerInfo", user);
+
+            log.info("followerInfo {}", result.get("followerInfo"));
+            return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
+        }
+>>>>>>> Stashed changes
 
 //    @ApiOperation(value = "팔로우 하기")
 //    @PostMapping("/{email}")

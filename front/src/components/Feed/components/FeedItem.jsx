@@ -1,4 +1,4 @@
-import React, {Profiler, useState, useRef, useEffect} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
 import {useHistory} from 'react-router-dom'
 import "./FeedItem.css"
@@ -122,20 +122,10 @@ export default function FeedItem({feed, onRemove}) {
       setModalIsOpen(!modalIsOpen)
     }
 
-    function onRenderCallback(
-        id,
-        phase,
-        actualDuration,
-        baseDuration,
-        startTime,
-        commitTime,
-        interactions
-      ) {
-        console.log(`actualDuration(${id}:${actualDuration})`)
-      }
+
 
   return (
-      <Profiler id='profileItem' onRender={onRenderCallback} >
+      <>
         <FeedBox>
           <ProfileBox>
           <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
@@ -189,7 +179,6 @@ export default function FeedItem({feed, onRemove}) {
             EditFeed={EditFeed}
           />
         </div>
-        
-        </ Profiler>
+      </>
   )
 }

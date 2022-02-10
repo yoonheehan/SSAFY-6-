@@ -17,14 +17,14 @@ import Post from './components/Post/Post.jsx';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
  
   useEffect(() => {
-    if (localStorage.hasOwnProperty('loginedUser') === true) {
-      setIsLogin(true)
+    if (localStorage.hasOwnProperty('loginedUser') === false) {
+      setIsLogin(false)
     }
-  }, []);
+  });
 
   const loginCallback = login => {
     setIsLogin(login);

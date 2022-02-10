@@ -4,6 +4,7 @@ import styles from './FollowList.module.css'
 import { useHistory } from 'react-router-dom';
 import axios from 'axios'
 import {useParams} from "react-router-dom";
+import { useEffect } from 'react';
 
 const followerList = [
   {profileImg:'', name:'정정채'},
@@ -19,9 +20,10 @@ function FollowerList() {
   let { id } = useParams();
   console.log(id)
   
-  const [followerData, setFollowerData] = useState(null)
+  const [followerData, setFollowerData] = useState([])
 
-  if (followerData === null) {
+  useEffect(() => {
+
     axios({
       method: 'get',
       url: `http://localhost:8080/follower/${id}`,
@@ -37,7 +39,7 @@ function FollowerList() {
       .finally(() => {
         console.log('profile request end');
       });
-  }
+  })
   console.log(followerData)
 
 

@@ -1,5 +1,6 @@
 import React, { useState, useRef, useEffect} from 'react';
 import styled from 'styled-components';
+import { useHistory } from 'react-router-dom';
 
 const FriendProfile = styled.div`
     display: flex;
@@ -30,42 +31,14 @@ const FriendMenu = styled.div`
 
 export default function FriendItem({follow}) {
 
-  const [selected, setSelected] = useState(false)
+  const history = useHistory();
 
-    const ref = useRef(null)
-
-    useEffect(() => {
-      const handleClickOutside = (event) => {
-        if (selected && ref.current && !ref.current.contains(event.target)) {
-          setSelected(false)
-        }
-      }
-  
-      document.addEventListener("mousedown", handleClickOutside)
-  
-      return () => {
-          document.removeEventListener("mousedown", handleClickOutside)
-      }
-    }, [selected])
-  
-  const onFollow = true
 
   return (
-    <FriendProfile>
+    <FriendProfile >
         {follow.profileImg === '' ? 
         <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.profileImg} alt={follow.profileImg} />}
         <ProfileName>{follow.name}</ProfileName>
-        <FriendMenu>
-          <div style={{marginLeft:'auto'}} ref={ref} style={{ cursor: "pointer" }} onClick={() => setSelected(!selected)}>
-            <i className="bi bi-three-dots-vertical"></i>
-            <div className={selected ? "feed_drop active" : "feed_drop" } style={{width:'100px'}}>
-              {onFollow ?
-                <div style={{}}>팔로워끊기</div> 
-                :
-                <div style={{}}>팔로워맺기</div>}
-            </div>
-          </div>
-        </FriendMenu>
     </FriendProfile>
   )
 }

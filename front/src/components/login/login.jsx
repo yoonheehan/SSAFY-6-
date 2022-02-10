@@ -33,7 +33,7 @@ const Login = props => {
     if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `${process.env.REACT_APP_LOCALURL}jwt/google`,
+        url: `http://localhost:8080/jwt/google`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         data: res,
       })

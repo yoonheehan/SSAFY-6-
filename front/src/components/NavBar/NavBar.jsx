@@ -7,7 +7,7 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 const NavBar = () => {
   
   let userId = -1
-  if (JSON.parse(localStorage.getItem('loginedUser')).userId != null) {
+  if (localStorage.hasOwnProperty('loginedUser') === true) {
     userId = JSON.parse(localStorage.getItem('loginedUser')).userId
   }
   console.log(userId)

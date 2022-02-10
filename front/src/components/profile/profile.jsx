@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import {
   AiOutlineArrowLeft,
@@ -18,18 +18,19 @@ const Profile = props => {
   }
   let { id } = useParams();
   
-  const [userData, setUserData] = useState(null)
-  const userId = JSON.parse(localStorage.getItem('loginedUser')).userId
-  if (userData === null) {
-    console.log(id)
+  const [userData, setUserData] = useState({info: {
+    point : 0,
+    nickname: 'tmp',
+  }})
+
+  useEffect(() => {
     axios({
       method: 'get',
       url: `http://localhost:8080/user/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
-        console.log(id)
-        console.log(response)
+        console.log(response.data)
         setUserData(response.data)
       })
       .catch(error => {
@@ -38,7 +39,10 @@ const Profile = props => {
       .finally(() => {
         console.log('profile request end');
       });
-  }
+
+  },[])
+
+
   console.log(userData)
   const now = 60;
   const progressInstance = (
@@ -63,7 +67,7 @@ const Profile = props => {
               className={styles.button}
               variant="outline-secondary"
               onClick={() => {
-                history.push('/mdProfile');
+                history.push(`/user/${id}/mdProfile`);
               }}
             >
               프로필 수정
@@ -99,16 +103,25 @@ const Profile = props => {
                 variant="secondary"
                 size="md"
                 onClick={() => {
-                  history.push('/user/1/followlist');
+                  history.push(`/user/${id}/followList`);
                 }}
               >
-                친구 목록
+                팔로우 목록
               </Button>
               <Button
                 variant="secondary"
                 size="md"
                 onClick={() => {
-                  history.push('/withdraw');
+                  history.push(`/user/${id}/followerList`);
+                }}
+              >
+                팔로워 목록
+              </Button>
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  history.push(`/withdraw`);
                 }}
               >
                 회원탈퇴
