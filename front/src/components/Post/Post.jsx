@@ -1,5 +1,4 @@
 import React, {useState, useRef, useCallback, useEffect} from "react"
-import { useSelector } from 'react-redux';
 import DatePicker from "react-datepicker"
 import axios from 'axios'
 import {Button} from "react-bootstrap";
@@ -7,18 +6,14 @@ import "./Post.css"
 import 'bootstrap/dist/css/bootstrap.min.css';
 import "react-datepicker/dist/react-datepicker.css";
 import { useHistory } from 'react-router-dom';
+import AWS from 'aws-sdk';
 
 const Post = () => {
 	//
-	const state = useSelector(state => state.alarmData);
 	const history = useHistory();
 	if (localStorage.getItem('loginedUser') === null) {
         history.push('/')
     }
-	// 
-
-	const userData = state[0]
-	//
 	
 	const inputPlus = () => {
 		return (
@@ -33,16 +28,36 @@ const Post = () => {
 	const [voteContent, setVoteContent] = useState("") // 내용
 	const [voteItems, setVoteItems] = useState(["", ""]) // 투표항목
 	const [img, setImg] = useState(null) // 이미지
+	const [imgUrl, setImgUrl] = useState(null) // 이미지 url
 	const [hashArr, setHashArr] = useState([]) // 해시태그
 	const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
 	//
 
-
 	// axios.post
 	function postAPI() {
-		const url = "http://localhost:8080/board/save"
+		const url = "http://i6c103.p.ssafy.io/api/board/save"
 		const vote_contents = JSON.stringify(voteItems)
 		
+		for (let i = 0; i < img.length; i++) {
+			const upload = new AWS.S3.ManagedUpload({
+				params: {
+				  Bucket: 'haejwoing', // 업로드할 대상 버킷명
+				  Key: img[i].name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+				  Body: img[i], // 업로드할 파일 객체
+				},
+			});
+			
+			const promise = upload.promise();
+	
+			promise.then(
+			function (data) {
+				alert('이미지 업로드에 성공했습니다.');
+			},
+			function (err) {
+				return alert('오류가 발생했습니다: ', err.message);
+			});
+		}
+
 		axios({
 			method: "post",
 			url: url,
@@ -52,48 +67,31 @@ const Post = () => {
 				view_range: revealType,
 				content: voteContent,
 				vote_contents: vote_contents,
-				// board_image: img,
+				board_image: JSON.stringify(imgUrl),
 				hashArr: JSON.stringify(hashArr),
 				due_date: dueDate,
 			},
 		})
 		.then(function (response) {
-			console.log(response.config.data)
+			console.log(response)
 		})
 		.catch(function(error) {
 			console.log(error)
 		})
 	}
-	//
-
-	// function getAPI() {
-	// 	const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
-
-	// 	axios({
-	// 		method: 'get',
-	// 		url: url
-	// 	})
-	// 	.then(function (response) {
-	// 		console.log(response)
-	// 	})
-	// 	.catch(function(error) {
-	// 		console.log(error)
-	// 	})
-	// }
-
-	//
 
 	const [selected, setSelected] = useState(false)
 	const [keySelected, setKeySelected] = useState(null)
 	const [hashtag, setHashtag] = useState('')
 	const [isErrored, setIsErrored] = useState(false)
-	const [votes, setVote] = useState([{id: 0, value: inputPlus()}])
-	
-	const nextId = useRef(1)
+	const [votes, setVote] = useState([{id: 0, value: inputPlus()}, {id: 1, value: inputPlus()}])
+	const [previewImg, setPreviewImg] = useState(null)
+	const nextId = useRef(2)
 	const ref = useRef(null)
 
 	const addEvent = useCallback(
 		(event) => {
+			console.log(votes)
 			const vote = { id: nextId.current, value: inputPlus() }
 			setVote(votes.concat(vote))	
 			nextId.current += 1
@@ -187,41 +185,58 @@ const Post = () => {
 		)
 	}
 
-	// const saveImg = (event) => {
-	// 	setImg(URL.createObjectURL(event.target.files[0]))
-	// }
+	//
+	AWS.config.update({
+		region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+		credentials: new AWS.CognitoIdentityCredentials({
+		  IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+		}),
+	});
+	//
 
-	// 이미지 업로드 테스트
+	// 이미지 업로드
 	const saveImg = (event) => {
-		event.preventDefault();
+		const file = Array.from(event.target.files);
+		
+		setImg(file);
 
-		if(event.target.files) {
-			const uploadFile = event.target.files[0]
-			const formData = new FormData()
-			formData.append('uploadFile', uploadFile)
-			
-			setImg(formData)
-			// const url = "https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/post"
-			
-			// axios({
-			// 	method: "post",
-			// 	url: url,
-			// 	data: formData,
-			// 	headers: { "Content-Type": "multipart/form-data" },
-			// })
-			// .then(function (response) {
-			// 	console.log(response)
-			// })
-			// .catch(function(error) {
-			// 	console.log(error)
-			// })
+		const PreviewImgArray = []
+
+		for (let i = 0; i < file.length ; i++) {
+			PreviewImgArray.push(URL.createObjectURL(file[i]))
 		}
+
+		setPreviewImg(PreviewImgArray)
+
+		const tempUrlArray = []
+
+		for (let i = 0; i < file.length ; i++) {
+			const tempUrl = `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name + '.jpg'
+			tempUrlArray.push(tempUrl)
+		}
+		setImgUrl(tempUrlArray)
 	}
 	//
 
-	const deleteImg = (event) => {
-		// URL.revokeObjectURL(img)
-		setImg(null)
+	const deleteImg = (event, key) => {
+		URL.revokeObjectURL(previewImg[key])
+		const imgTemp = []
+		const imgUrlTemp = []
+		const previewImgTemp = []
+
+		for (let i = 0; i < img.length; i++) {
+			imgTemp.push(img[i])
+			imgUrlTemp.push(imgUrl[i])
+			previewImgTemp.push(previewImg[i])
+		}
+		
+		imgTemp.splice(key, 1)
+		imgUrlTemp.splice(key, 1)
+		previewImgTemp.splice(key, 1)
+
+		setImg(imgTemp)	
+		setImgUrl(imgUrlTemp)
+		setPreviewImg(previewImgTemp)
 	}
 
 	// 마감 시간
@@ -237,8 +252,9 @@ const Post = () => {
 			setKeySelected(key)
 			setVoteContent("")
 			setVoteItems(["", ""])
-			setVote([{id: 0, value: inputPlus()}])
+			setVote([{id: 0, value: inputPlus()}, {id: 1, value: inputPlus()}])
 			setImg(null)
+			setImgUrl(null)
 			const allTextArea = document.getElementsByName("text_area")
 			const allInputArea = document.getElementsByName("input_area")
 			console.log(allInputArea)
@@ -342,15 +358,17 @@ const Post = () => {
 										))}
 									</div>	
 								</div>
-								<div className={img ? "imgDelete show" : "imgDelete"}>
-									<button onClick={deleteImg}>x</button>
-								</div>
 								<div className="img_box">
-									<div>
-										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
-									</div>
+									{img && previewImg.map((props, key) => (
+										<div key={key}>
+											<button onClick={(event) => deleteImg(event, key)}>x</button>
+											<img alt="sample"
+											src={props}
+											className="thumbnail"/> 
+										</div>
+									))}		
 									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
 										<label className="button2" for="imgFile">
 											사진 업로드
 										</label>
@@ -367,15 +385,17 @@ const Post = () => {
 							</div> */}
 							<div className={keySelected === '2' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
-								<div className={img ? "imgDelete show" : "imgDelete"}>
-									<button onClick={deleteImg}>x</button>
-								</div>
 								<div className="img_box">
-									<div>
-										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
-									</div>
+									{img && previewImg.map((props, key) => (
+										<div key={key}>
+											<button onClick={(event) => deleteImg(event, key)}>x</button>
+											<img alt="sample"
+											src={props}
+											className="thumbnail"/> 
+										</div>
+									))}		
 									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
+										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
 										<label className="button2" for="imgFile">
 											사진 업로드
 										</label>
@@ -392,29 +412,20 @@ const Post = () => {
 							</div> */}
 							<div className={keySelected === '3' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
-								<div className={img ? "imgDelete show" : "imgDelete"}>
-									<button onClick={deleteImg}>x</button>
-								</div>
 								<input type="text" name="input_area" size="30" placeholder="항목을 입력하세요" onChange={(event) => {getVoteItems(event, 0)}}></input>
-								<div className="img_box">
-									<div>
-										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
-									</div>
-									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile1" name="imgUpload1" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
-										<label className="button2" for="imgFile1">
-											사진 업로드
-										</label>
-									</div>
-								</div>
 								<input type="text" size="30" name="input_area" placeholder="항목을 입력하세요." onChange={(event) => {getVoteItems(event, 1)}}></input>
 								<div className="img_box">
-									<div>
-										{img && ( <img alt="sample" src={img} className="thumbnail" /> )}
-									</div>
+									{img && previewImg.map((props, key) => (
+										<div key={key}>
+											<button onClick={(event) => deleteImg(event, key)}>x</button>
+											<img alt="sample"
+											src={props}
+											className="thumbnail"/> 
+										</div>
+									))}		
 									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile2" name="imgUpload2" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}}/>
-										<label className="button2" for="imgFile2">
+										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
+										<label className="button2" for="imgFile">
 											사진 업로드
 										</label>
 									</div>
@@ -476,10 +487,6 @@ const Post = () => {
 						<Button variant="primary" onClick={postAPI}>작성</Button>
 					</form>
 				</div>
-
-				{/* <div>
-					<button onClick={getAPI}>++++</button>
-				</div> */}
 			</div>
 		</>
 	)
