@@ -105,9 +105,37 @@ const MdProfile = props => {
     }));
   };
 
-  const submitData = () => {
+  const checkData = () => {
     console.log('보내지는 데이터');
     console.log(userData);
+    axios
+      .get(`http://localhost:8080/user/check/${userData.info.nickname}`)
+      .then(res => {
+        console.log(res);
+        if (res.data === false) {
+          alert('사용가능한 닉네임입니다.');
+        } else {
+          alert('중복된 닉네임입니다.');
+        }
+      });
+  };
+
+  const submitData = () => {
+    console.log('데이터를 보내자');
+    axios
+      .put(`http://localhost:8080/user/${id}`, {
+        image: userData.info.image,
+        nickname: userData.info.nickname,
+      })
+      .then(res => {
+        console.log('메메롤로');
+        console.log(res);
+        history.goBack();
+      })
+      .catch(err => {
+        console.log('에러났어요');
+        console.log(err);
+      });
   };
 
   return (
@@ -176,14 +204,18 @@ const MdProfile = props => {
                 value={userData.info.nickname}
                 onChange={onChangeNickName}
               />
-              <Button variant="secondary" onClick={submitData}>
+              <Button variant="secondary" onClick={checkData}>
                 중복확인
               </Button>
             </InputGroup>
           </div>
         </div>
       </section>
-      <Button className={styles.button} variant="secondary">
+      <Button
+        className={styles.button}
+        variant="secondary"
+        onClick={submitData}
+      >
         완료
       </Button>
     </>

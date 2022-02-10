@@ -101,7 +101,7 @@ const Profile = props => {
               className={styles.button}
               variant="outline-secondary"
               onClick={() => {
-                history.push(`user/${id}/mdProfile`);
+                history.push(`/user/${id}/mdProfile`);
               }}
             >
               프로필 수정
