@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
+import AWS from 'aws-sdk';
 import styles from './newProfile.module.css';
 import { BsPersonCircle } from 'react-icons/bs';
 import {
@@ -17,6 +18,7 @@ import getYear from 'date-fns/getYear';
 import getMonth from 'date-fns/getMonth';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
+import { useEffect } from 'react';
 
 const _ = require('lodash');
 
@@ -45,30 +47,65 @@ const NewProfile = props => {
     '11',
     '12',
   ];
+  const inputRef = useRef();
+  const [img, setImg] = useState('');
+  const imgRef = useRef(null);
+  AWS.config.update({
+    region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+    }),
+  });
+  const handleFileInput = e => {
+    const file = e.target.files[0];
+    console.log(file);
+    setImg(file.name);
+
+    // S3 SDK에 내장된 업로드 함수
+    const upload = new AWS.S3.ManagedUpload({
+      params: {
+        Bucket: 'haejwoing', // 업로드할 대상 버킷명
+        Key: file.name + '.jpg', // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+        Body: file, // 업로드할 파일 객체
+      },
+    });
+
+    const promise = upload.promise();
+
+    promise.then(
+      function (data) {
+        alert('이미지 업로드에 성공했습니다.');
+      },
+      function (err) {
+        return alert('오류가 발생했습니다: ', err.message);
+      }
+    );
+  };
+
   function getNickName(event) {
-    const commentContent = event.target.value
-    setNickName(event.target.value)
+    const commentContent = event.target.value;
+    setNickName(event.target.value);
+  }
 
-}
-
-function submitData() {
-    console.log(radioValue, nickName, startDate.toLocaleDateString())
-    console.log(props.location.props.useremail)
+  function submitData() {
+    console.log(img, radioValue, nickName, startDate.toLocaleDateString());
+    console.log(props.location.props.useremail);
 
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_LOCALURL}user`,
+      url: `${process.env.REACT_APP_LOCALURL}/user`,
       data: {
+        image: img,
         gender: radioValue,
         nickname: nickName,
         birth: startDate.toLocaleDateString(),
-        email:props.location.props.useremail
+        email: props.location.props.useremail,
       },
     })
       .then(response => {
         console.log(response.data);
-        const loginUser = { userId : response.data.id}
-        window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
+        const loginUser = { userId: response.data.id };
+        window.localStorage.setItem('loginedUser', JSON.stringify(loginUser));
         histroy.push('/feed');
       })
       .catch(error => {
@@ -84,7 +121,35 @@ function submitData() {
       <section className={styles.section}>
         <div className={styles.body}>
           <h1 className={styles.h1}>추가정보</h1>
-          <BsPersonCircle className={styles.icon} />
+          <div className={styles.profileBody}>
+            <div className={styles.profileUpload}>
+              <input
+                type="file"
+                id="upload"
+                style={{ display: 'none' }}
+                onChange={handleFileInput}
+              />
+              <label
+                htmlFor="upload"
+                style={{ width: '100%', height: '100%', cursor: 'pointer' }}
+              >
+                <img
+                  style={{ width: '100%', height: '100%', borderRadius: '50%' }}
+                  ref={imgRef}
+                  src={
+                    'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+                    img +
+                    '.jpg'
+                  }
+                  alt=""
+                  onError={() => {
+                    return (imgRef.current.src =
+                      'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png');
+                  }}
+                />
+              </label>
+            </div>
+          </div>
           <div className={styles.data}>
             <InputGroup className={styles.inputGroup}>
               <FormControl
@@ -175,9 +240,11 @@ function submitData() {
           </div>
         </div>
       </section>
-      <Button 
-      onClick={submitData}
-      className={styles.button} variant="secondary">
+      <Button
+        onClick={submitData}
+        className={styles.button}
+        variant="secondary"
+      >
         완료
       </Button>
     </>
