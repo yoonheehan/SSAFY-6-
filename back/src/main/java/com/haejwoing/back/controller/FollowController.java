@@ -5,6 +5,7 @@ import com.haejwoing.back.model.service.UserService;
 import io.swagger.annotations.ApiParam;
 import io.swagger.models.Response;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -21,10 +22,10 @@ import java.util.Map;
 @RequestMapping("/follow")
 public class FollowController {
 
+    @Autowired
     private UserService userService;
 
     @GetMapping("/{id}")
-
     public ResponseEntity<Map<String, Object>> listFollow(@PathVariable @ApiParam(value = "해당 id의 팔로워 가져온다." ) int id){
 
         log.info("검색 대상 id : {}", id);
