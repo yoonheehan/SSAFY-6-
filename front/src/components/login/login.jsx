@@ -78,6 +78,7 @@ const Login = props => {
         .then(response => {
           console.log('kakao:' ,response)
           if(response.data.check === false){
+            
             history.push({
               pathname:"/newprofile",
               props:{useremail:response.data.email}

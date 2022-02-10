@@ -33,6 +33,7 @@ export default function SearchList(props) {
     const [findName, setFindName] = useState("");
     const [friendList, setFriendList] = useState(firstFriendList)
 
+    console.log('props: ', props)
     useEffect(() => {
         setFriendList(firstFriendList)
         console.log(firstFriendList)

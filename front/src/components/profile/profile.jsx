@@ -137,10 +137,19 @@ const Profile = props => {
                 variant="secondary"
                 size="md"
                 onClick={() => {
-                  history.push('/user/1/followlist');
+                  history.push(`/user/${id}/followlist`);
                 }}
               >
-                친구 목록
+                팔로우 목록
+              </Button>
+              <Button
+                variant="secondary"
+                size="md"
+                onClick={() => {
+                  history.push(`/user/${id}/followerlist`);
+                }}
+              >
+                팔로워 목록
               </Button>
               <Button
                 variant="secondary"

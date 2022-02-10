@@ -6,11 +6,6 @@ import axios from 'axios'
 import {useParams} from "react-router-dom";
 import { useEffect } from 'react';
 
-const followerList = [
-  {profileImg:'', name:'정정채'},
-  {profileImg:'', name:'채성원'},
-  {profileImg:'', name:'허영민'},
-]
 
 function FollowerList() {
   const history = useHistory();
