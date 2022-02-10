@@ -20,13 +20,8 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
-<<<<<<< Updated upstream
-    if (localStorage.hasOwnProperty('loginedUser') === false) {
-      setIsLogin(false)
-=======
     if (localStorage.hasOwnProperty('loginedUser') === true) {
       setIsLogin(true);
->>>>>>> Stashed changes
     }
   });
 
