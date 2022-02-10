@@ -21,26 +21,46 @@ function FollowerList() {
   console.log(id)
   
   const [followerData, setFollowerData] = useState([])
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      try {
+        const response = await axios.get(
+          `http://localhost:8080/follower/${id}`
+        );
+        setFollowerData(response.data);
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    };
+    //async를 사용하는 함수 따로 선언
+    fetchData();
+  }, []);
 
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/follower/${id}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-    })
-      .then(response => {
-        console.log(response)
-        setFollowerData(response.data)
-      })
-      .catch(error => {
-        console.log('profile requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('profile request end');
-      });
-  })
-  console.log(followerData)
+  console.log('followerData : ', followerData)
+
+  // useEffect(() => {
+
+  //   axios({
+  //     method: 'get',
+  //     url: `http://localhost:8080/follower/${id}`,
+  //     // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+  //   })
+  //     .then(response => {
+  //       console.log(response)
+  //       setFollowerData(response.data)
+  //     })
+  //     .catch(error => {
+  //       console.log('profile requset fail : ' + error);
+  //     })
+  //     .finally(() => {
+  //       console.log('profile request end');
+  //     });
+  // }, [])
+  // console.log('followerData : ',followerData)
 
 
 
@@ -48,7 +68,7 @@ function FollowerList() {
     <>
       {/* <FollowListHeader /> */}
       <h1 align="left" className={styles.center} ><b>팔로워 목록</b></h1>
-      <SearchList friendList={followerList}/>
+      <SearchList friendList={followerData}/>
     </>
   )
 }

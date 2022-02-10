@@ -37,8 +37,8 @@ export default function FriendItem({follow}) {
   return (
     <FriendProfile >
         {follow.profileImg === '' ? 
-        <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.profileImg} alt={follow.profileImg} />}
-        <ProfileName>{follow.name}</ProfileName>
+        <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.image} alt={follow.image} />}
+        <ProfileName>{follow.nickname}</ProfileName>
     </FriendProfile>
   )
 }

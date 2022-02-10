@@ -10,7 +10,7 @@ const NavBar = () => {
   if (localStorage.hasOwnProperty('loginedUser') === true) {
     userId = JSON.parse(localStorage.getItem('loginedUser')).userId
   }
-  console.log(userId)
+
 
   const ref = useRef(null);
 

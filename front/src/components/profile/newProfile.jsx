@@ -106,7 +106,7 @@ const NewProfile = props => {
         console.log(response.data);
         const loginUser = { userId: response.data.id };
         window.localStorage.setItem('loginedUser', JSON.stringify(loginUser));
-        histroy.push('/feed');
+        window.location.replace("/feed")
       })
       .catch(error => {
         console.log('signup requset fail : ' + error);

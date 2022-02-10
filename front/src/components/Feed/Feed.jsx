@@ -16,6 +16,7 @@ const NewFeedList = [
 ]
 
 export default function Feed() {
+    
     const history = useHistory();
     if (localStorage.getItem('loginedUser') === null) {
         history.push('/')

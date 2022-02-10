@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import styled from 'styled-components';
 import FriendItem from './FriendItem';
 
@@ -30,19 +30,26 @@ const FriendList = styled.div`
 export default function SearchList(props) {
 
     const firstFriendList = props.friendList
-
     const [findName, setFindName] = useState("");
     const [friendList, setFriendList] = useState(firstFriendList)
+
+    useEffect(() => {
+        setFriendList(firstFriendList)
+        console.log(firstFriendList)
+    }, [firstFriendList])
+    
 
 
     function getFriend (event) {
         const findName = event.target.value
         setFindName(event.target.value)
-        let result = firstFriendList.filter( data => {
-            return data.name.includes(findName)
-        })
+        let result = { followerInfo : firstFriendList.followerInfo.filter( data => {
+            console.log('data: ' , data)
+            return data.nickname.includes(findName)
+        })}
         setFriendList(result)
     }
+  
 
     return (
         <>
@@ -54,9 +61,10 @@ export default function SearchList(props) {
                 />
             </SearchDiv>
             <FriendList>
-                {friendList.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
-                friendList.map(follow => 
+                {!friendList.followerInfo || friendList.followerInfo.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
+                friendList.followerInfo && friendList.followerInfo.map((follow, index) => 
                     <FriendItem 
+                        key={index}
                         follow={follow}
                     />
                 )}

@@ -26,8 +26,13 @@ public class FollowController {
     private UserService userService;
 
     @GetMapping("/{id}")
+<<<<<<< Updated upstream
     public ResponseEntity<Map<String, Object>> listFollow(@PathVariable @ApiParam(value = "해당 id의 팔로워 가져온다." ) int id){
 
+=======
+
+    public ResponseEntity<Map<String, Object>> listFollower(@PathVariable @ApiParam(value = "해당 이메일의 팔로워들을 가져온다." ) int id){
+>>>>>>> Stashed changes
         log.info("검색 대상 id : {}", id);
 
         Map<String, Object> result = new HashMap<>();
@@ -37,5 +42,10 @@ public class FollowController {
         log.info("followInfo {}", result.get("followInfo"));
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
 
 }

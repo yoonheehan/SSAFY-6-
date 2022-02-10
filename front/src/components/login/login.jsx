@@ -23,13 +23,15 @@ const Login = props => {
   const dispatch = useDispatch();
   const history = useHistory();
   
+
+
+
   if (localStorage.getItem('loginedUser') != null) {
     history.push('/feed')
   } 
   const _clickSnsLoginGoogle = res => {
     console.log(localStorage.getItem('loginedUser'))
     console.log('구글 로그인:', res);
-    console.log(`${process.env.REACT_APP_LOCALURL}/jwt/google`);
     if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
@@ -47,7 +49,7 @@ const Login = props => {
             console.log(response.data.id)
             const loginUser = { userId : response.data.id}
             window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            history.push("/feed")
+            window.location.replace("/feed")
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
@@ -69,11 +71,12 @@ const Login = props => {
     if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `${process.env.REACT_APP_LOCALURL}/jwt/kakao`,
+        url: `http://localhost:8080/jwt/kakao`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/kakao',
         data: res,
       })
         .then(response => {
+          console.log('kakao:' ,response)
           if(response.data.check === false){
             history.push({
               pathname:"/newprofile",
@@ -83,7 +86,7 @@ const Login = props => {
             console.log(response.data.id)
             const loginUser = { userId : response.data.id}
             window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            history.push("/feed")
+            window.location.replace("/feed")
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
@@ -105,7 +108,7 @@ const Login = props => {
     if (localStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `${process.env.REACT_APP_LOCALURL}/jwt/naver`,
+        url: `http://localhost:8080/jwt/naver`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/naver',
         data: res,
       })
@@ -119,7 +122,7 @@ const Login = props => {
             console.log(response.data.id)
             const loginUser = { userId : response.data.id}
             window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            history.push("/feed")
+            window.location.replace("/feed")
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
