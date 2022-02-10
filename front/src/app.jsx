@@ -20,8 +20,8 @@ function App() {
   const [isLogin, setIsLogin] = useState(true);
 
   useEffect(() => {
-    if (localStorage.hasOwnProperty('loginedUser') === true) {
-      setIsLogin(true);
+    if (localStorage.hasOwnProperty('loginedUser') === false) {
+      setIsLogin(false);
     }
   });
 
