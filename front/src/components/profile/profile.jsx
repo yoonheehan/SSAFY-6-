@@ -1,9 +1,5 @@
 import axios from 'axios';
-<<<<<<< Updated upstream
-import React, {useState, useEffect} from 'react';
-=======
 import React, { useState, useEffect } from 'react';
->>>>>>> Stashed changes
 import { Button, ProgressBar } from 'react-bootstrap';
 import AWS from 'aws-sdk';
 import {
@@ -23,13 +19,6 @@ const Profile = props => {
     history.push('/');
   }
   let { id } = useParams();
-<<<<<<< Updated upstream
-  
-  const [userData, setUserData] = useState({info: {
-    point : 0,
-    nickname: 'tmp',
-  }})
-=======
 
   const [userData, setUserData] = useState({
     info: {
@@ -37,7 +26,6 @@ const Profile = props => {
       nickname: 'tmp',
     },
   });
->>>>>>> Stashed changes
 
   useEffect(() => {
     axios({
@@ -46,13 +34,8 @@ const Profile = props => {
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
-<<<<<<< Updated upstream
-        console.log(response.data)
-        setUserData(response.data)
-=======
         console.log(response.data);
         setUserData(response.data);
->>>>>>> Stashed changes
       })
       .catch(error => {
         console.log('profile requset fail : ' + error);
@@ -60,13 +43,6 @@ const Profile = props => {
       .finally(() => {
         console.log('profile request end');
       });
-<<<<<<< Updated upstream
-
-  },[])
-
-
-  console.log(userData)
-=======
   }, []);
 
   AWS.config.update({
@@ -77,7 +53,6 @@ const Profile = props => {
   });
 
   console.log(userData);
->>>>>>> Stashed changes
   const now = 60;
   const progressInstance = (
     <ProgressBar
@@ -126,7 +101,7 @@ const Profile = props => {
               className={styles.button}
               variant="outline-secondary"
               onClick={() => {
-                history.push(`/user/${id}/mdProfile`);
+                history.push(`user/${id}/mdProfile`);
               }}
             >
               프로필 수정
@@ -162,25 +137,16 @@ const Profile = props => {
                 variant="secondary"
                 size="md"
                 onClick={() => {
-                  history.push(`/user/${id}/followList`);
+                  history.push('/user/1/followlist');
                 }}
               >
-                팔로우 목록
+                친구 목록
               </Button>
               <Button
                 variant="secondary"
                 size="md"
                 onClick={() => {
-                  history.push(`/user/${id}/followerList`);
-                }}
-              >
-                팔로워 목록
-              </Button>
-              <Button
-                variant="secondary"
-                size="md"
-                onClick={() => {
-                  history.push(`/withdraw`);
+                  history.push('/withdraw');
                 }}
               >
                 회원탈퇴
