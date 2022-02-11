@@ -44,6 +44,7 @@ public class UserController {
                 .nickname(user.getNickname())
                 .role("ROLE_USER")
                 .point(0)
+                .userStatus(1)
                 .image(user.getImage())
                 .build();
 
