@@ -1,12 +1,14 @@
 import React from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Button, Form } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { useState } from 'react';
+import axios from 'axios';
 
 const Withdraw = () => {
   const history = useHistory();
   const [check, setCheck] = useState(true);
+  const { id } = useParams();
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
@@ -47,6 +49,12 @@ const Withdraw = () => {
             } else {
               console.log('회원탈퇴 가능');
               console.log(localStorage.getItem('loginedUser'));
+              axios
+                .put(`http://localhost:8080/user/withdraw/${id}`)
+                .then(res => {
+                  localStorage.clear('loginedUser');
+                  history.push('/');
+                });
             }
           }}
         >

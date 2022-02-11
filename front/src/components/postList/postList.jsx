@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { Badge, Button, Card, Figure, ListGroup } from 'react-bootstrap';
 import styles from './postList.module.css';
 import { FaRegComment } from 'react-icons/fa';
 import { FcLike } from 'react-icons/fc';
 import Data from './data.js';
 import PostItem from './postItem';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
+import axios from 'axios';
 
 const NewPostList = [
   {
@@ -37,12 +38,14 @@ const NewPostList = [
 const PostList = props => {
   const history = useHistory();
   if (localStorage.getItem('loginedUser') === null) {
-    history.push('/')
+    history.push('/');
   }
   let [post, setPost] = useState([...Data]);
+  const [data, setData] = useState([]);
   let [commentBedge, setCommentBedge] = useState(true);
   let [redDateBedge, setRegDateBedge] = useState(true);
   let [exDateBedge, setExDateBedge] = useState(true);
+  const { id } = useParams();
 
   const scrollEvent = () => {
     const scrollHeight = document.documentElement.scrollHeight;
@@ -60,6 +63,23 @@ const PostList = props => {
   useEffect(() => {
     window.addEventListener('scroll', scrollEvent);
   }, [scrollEvent]);
+
+  useEffect(() => {
+    axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+      console.log('???');
+      console.log(res);
+      console.log(res.data.length);
+      const temp = [];
+      res.data.forEach(value => {
+        temp.push(value);
+      });
+      setData(temp);
+    });
+  }, []);
+
+  useEffect(() => {
+    console.log(data);
+  });
 
   return (
     <>
@@ -165,8 +185,8 @@ const PostList = props => {
       </div>
       <div className={styles.body}>
         <ListGroup as="ol" numbered>
-          {post.map((data, index) => {
-            return <PostItem key={data.id} post={post[index]} />;
+          {data.map((item, index) => {
+            return <PostItem post={data[index]} />;
           })}
         </ListGroup>
       </div>

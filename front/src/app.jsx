@@ -17,7 +17,9 @@ import Post from './components/Post/Post.jsx';
 import { useEffect, useState } from 'react';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(localStorage.hasOwnProperty('loginedUser'));
+  const [isLogin, setIsLogin] = useState(
+    localStorage.hasOwnProperty('loginedUser')
+  );
 
   useEffect(() => {
     if (localStorage.hasOwnProperty('loginedUser') === false) {
@@ -25,9 +27,6 @@ function App() {
     }
   });
 
-
-  
-  
   const loginCallback = login => {
     setIsLogin(login);
   };
@@ -40,18 +39,24 @@ function App() {
           <Route
             exact
             path="/"
-            render={props => <Login {...props} setIsLogin={setIsLogin} loginCallback={loginCallback} />}
+            render={props => (
+              <Login
+                {...props}
+                setIsLogin={setIsLogin}
+                loginCallback={loginCallback}
+              />
+            )}
           />
           <Route exact path="/feed" isLogin={isLogin} component={Feed} />
-          <Route exact path="/user/:id/profile" component={Profile}/>
-          <Route exact path="/NewProfile" component={NewProfile}/>
+          <Route exact path="/user/:id/profile" component={Profile} />
+          <Route exact path="/NewProfile" component={NewProfile} />
           <Route exact path="/user/:id/mdProfile" component={MdProfile} />
           <Route exact path="/user/:id/followList" component={FollowList} />
           <Route exact path="/user/:id/followerList" component={FollowerList} />
           <Route exact path="/feed/:id/" component={Detail} />
           <Route exact path="/alarm" component={Alarm} />
-          <Route exact path="/withdraw" component={Withdraw} />
-          <Route exact path="/postList" component={PostList} />
+          <Route exact path="/user/:id/withdraw" component={Withdraw} />
+          <Route exact path="/board/user/:id/postList" component={PostList} />
           <Route exact path="/post" component={Post} />
         </Switch>
       </BrowserRouter>

@@ -5,6 +5,8 @@ import { FcLike } from 'react-icons/fc';
 import styles from './postList.module.css';
 
 const PostItem = ({ post }) => {
+  const createDate = new Intl.DateTimeFormat('ko-KR').format(post.created_at);
+  const dueDate = new Intl.DateTimeFormat('ko-KR').format(post.due_date);
   return (
     <>
       <ListGroup.Item
@@ -12,11 +14,19 @@ const PostItem = ({ post }) => {
         className="d-flex justify-content-between align-items-start"
       >
         <div className={styles.figure}>
-          <img className={styles.img} src="/images/1.jpg" alt="" />
+          <img
+            className={styles.img}
+            src={
+              'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+              post.board_image +
+              '.jpg'
+            }
+            alt=""
+          />
         </div>
         <div className="ms-3 me-auto">
           <div className={styles.title}>
-            {post.title}{' '}
+            {post.content}
             <span style={{ marginRight: '10px' }}>
               <FaRegComment /> <span>{post.comments}</span>
             </span>
@@ -29,8 +39,8 @@ const PostItem = ({ post }) => {
             fontSize: '15px',
           }}
         >
-          <div>작성일 : {post.regDate}</div>
-          <div>마감일 : {post.exDate}</div>
+          <div>작성일 : {createDate}</div>
+          <div>마감일 : {dueDate}</div>
         </div>
       </ListGroup.Item>
     </>
