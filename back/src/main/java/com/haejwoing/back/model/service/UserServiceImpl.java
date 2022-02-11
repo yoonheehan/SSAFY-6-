@@ -72,4 +72,9 @@ public class UserServiceImpl implements UserService{
     public Boolean checkNickname(String nickname) {
         return sqlSession.getMapper(UserMapper.class).checkNickname(nickname)==1;
     }
+
+    @Override
+    public Boolean addFollow(int id, int toUser) {
+        return sqlSession.getMapper(UserMapper.class).addFollow(id, toUser) == 1;
+    }
 }

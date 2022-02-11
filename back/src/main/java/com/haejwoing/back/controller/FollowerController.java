@@ -35,7 +35,4 @@ public class FollowerController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
-//    @ApiOperation(value = "팔로우 하기")
-//    @PostMapping("/{email}")
-//    public ResponseEntity<String> doFollow
 }

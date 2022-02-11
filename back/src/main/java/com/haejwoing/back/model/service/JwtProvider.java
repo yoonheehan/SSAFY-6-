@@ -4,21 +4,16 @@ package com.haejwoing.back.model.service;
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.haejwoing.back.config.jwt.JwtProperties;
 import com.haejwoing.back.model.dto.User;
 
 
-import com.nimbusds.oauth2.sdk.util.MapUtils;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import org.springframework.stereotype.Component;
 
-import java.util.Base64;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.Map;
 
 @Component
