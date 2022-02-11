@@ -53,6 +53,7 @@ public class FollowController {
         log.info("팔로우 신청 id : {}", data.get("loginedId"));
         log.info("팔로우 할 id : {}", data.get("followId"));
 
+
         int id = Integer.parseInt(String.valueOf(data.get("followId")));
         int toUser = Integer.parseInt(String.valueOf(data.get("loginedId")));
 

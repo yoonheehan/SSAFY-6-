@@ -48,7 +48,7 @@ const Profile = props => {
       .finally(() => {
         console.log('profile request end');
       });
-<<<<<<< Updated upstream
+
       axios({
         method: 'get',
         url: `http://localhost:8080/follow/check/${id}`,
@@ -57,6 +57,7 @@ const Profile = props => {
       })
         .then(response => {
           console.log(response.data);
+          setFollowCheck(response.data)
         })
         .catch(error => {
           console.log('profile requset fail : ' + error);
@@ -64,24 +65,27 @@ const Profile = props => {
         .finally(() => {
           console.log('profile request end');
         });
-=======
+  }, []);
+  
+  const doFollow = () =>{
     axios({
-      method: 'get',
-      url: `http://localhost:8080/follow/check/${id}`,
+      method: 'post',
+      url: `http://localhost:8080/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-      params: {'loginedId' : loginedId},
+      data: {'loginedId' : loginedId, 'followId' : id},
     })
       .then(response => {
         console.log(response.data);
+
       })
       .catch(error => {
-        console.log('profile requset fail : ' + error);
+        console.log('follow requset fail : ' + error);
       })
       .finally(() => {
-        console.log('profile request end');
-      });
->>>>>>> Stashed changes
-  }, []);
+        console.log('follow request end');
+      });  
+  }
+
 
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -148,15 +152,16 @@ const Profile = props => {
             >
               프로필 수정
             </Button>);
-            else if (Number(id) !== loginedId && loginedId === 16)
+            else if (Number(id) !== loginedId && followCheck === false)
             return (
               <Button
               className={styles.button}
               variant="outline-secondary"
+              onClick={doFollow}
               >
               팔로우 맺기
             </Button>);
-            else if (Number(id) !== loginedId && loginedId !== 16)
+            else if (Number(id) !== loginedId && followCheck == true)
             return (
               <Button
               className={styles.button}
