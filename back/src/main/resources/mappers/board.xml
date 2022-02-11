@@ -16,7 +16,7 @@
 
     <select id="getUser" parameterType="int" resultType="com.haejwoing.back.model.dto.Board">
 
-        SELECT * FROM BOARD WHERE idboard=#{userId}
+        SELECT * FROM BOARD WHERE userId=#{userId} ORDER BY created_at DESC
 
 
     </select>

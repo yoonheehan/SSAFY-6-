@@ -12,7 +12,7 @@ public interface BoardMapper {
 
     Board get(int boardSeq);
 
-    Board getUser(int userId);
+    List<Board> getUser(int userId);
 
     boolean save(Board board);
 

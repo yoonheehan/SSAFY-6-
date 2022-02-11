@@ -26,7 +26,7 @@ public class BoardImpl implements BoardService{
     }
 
     @Override
-    public Board getUser(int userId) {
+    public List<Board> getUser(int userId) {
 
         return sqlSession.getMapper(BoardMapper.class).getUser(userId);
     }
