@@ -15,6 +15,8 @@ import { useParams } from 'react-router-dom';
 
 const Profile = props => {
   const history = useHistory();
+  const [followCheck, setFollowCheck] = useState(false)
+  
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
@@ -34,7 +36,6 @@ const Profile = props => {
     axios({
       method: 'get',
       url: `http://localhost:8080/user/${id}`,
-      data: {'loginedId' : loginedId},
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
@@ -47,6 +48,7 @@ const Profile = props => {
       .finally(() => {
         console.log('profile request end');
       });
+<<<<<<< Updated upstream
       axios({
         method: 'get',
         url: `http://localhost:8080/follow/check/${id}`,
@@ -62,6 +64,23 @@ const Profile = props => {
         .finally(() => {
           console.log('profile request end');
         });
+=======
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/follow/check/${id}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      params: {'loginedId' : loginedId},
+    })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.log('profile requset fail : ' + error);
+      })
+      .finally(() => {
+        console.log('profile request end');
+      });
+>>>>>>> Stashed changes
   }, []);
 
   AWS.config.update({
