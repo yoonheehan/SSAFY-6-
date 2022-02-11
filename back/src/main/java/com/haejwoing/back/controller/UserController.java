@@ -96,7 +96,7 @@ public class UserController {
     @PutMapping("/withdraw/{id}")
     public ResponseEntity<String> withdrawUser(@PathVariable @ApiParam int id){
         // 인증 작업 필요
-
+        
         userService.withdrawUser(id);
 
         return new ResponseEntity<>("회원탈퇴 완료", HttpStatus.OK);
