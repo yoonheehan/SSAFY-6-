@@ -38,8 +38,8 @@ public class BoardController {
     }
 
     @GetMapping("/user/{userId}")
-    public ResponseEntity<Board> getUser(@PathVariable int userId){
-        return new ResponseEntity<Board>(boardService.getUser(userId), HttpStatus.OK);
+    public ResponseEntity<List<Board>> getUser(@PathVariable int userId){
+        return new ResponseEntity<List<Board>>(boardService.getUser(userId), HttpStatus.OK);
     }
 
 
