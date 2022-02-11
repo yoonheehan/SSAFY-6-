@@ -1,5 +1,5 @@
 import axios from 'axios';
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Button, ProgressBar } from 'react-bootstrap';
 import AWS from 'aws-sdk';
 import {
@@ -16,7 +16,7 @@ import { useParams } from 'react-router-dom';
 const Profile = props => {
   const history = useHistory();
   const [followCheck, setFollowCheck] = useState(false)
-  
+  const imgRef = useRef(null); 
   if (localStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
@@ -76,7 +76,7 @@ const Profile = props => {
     })
       .then(response => {
         console.log(response.data);
-
+        setFollowCheck(true)
       })
       .catch(error => {
         console.log('follow requset fail : ' + error);
@@ -86,6 +86,24 @@ const Profile = props => {
       });  
   }
 
+  const unFollow = () =>{
+    axios({
+      method: 'delete',
+      url: `http://localhost:8080/follow`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      params: {'loginedId' : loginedId, 'followId' : id},
+    })
+      .then(response => {
+        console.log(response.data);
+        setFollowCheck(false)
+      })
+      .catch(error => {
+        console.log('follow requset fail : ' + error);
+      })
+      .finally(() => {
+        console.log('follow request end');
+      });  
+  }
 
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -132,6 +150,10 @@ const Profile = props => {
                   '.jpg'
                 }
                 alt=""
+                onError={() => {
+                  return (imgRef.current.src =
+                    'https://upload.wikimedia.org/wikipedia/commons/8/89/Portrait_Placeholder.png%27');
+                }}
               />
             </div>
             <div style={{ marginTop: '10px' }}>
@@ -166,6 +188,7 @@ const Profile = props => {
               <Button
               className={styles.button}
               variant="outline-secondary"
+              onClick={unFollow}
               >
               팔로우 끊기
             </Button>

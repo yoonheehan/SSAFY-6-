@@ -18,7 +18,9 @@ const MdProfile = props => {
   const history = useHistory();
   const inputRef = useRef();
   const [img, setImg] = useState('');
-  const imgRef = useRef(null);
+  const [duplicateCheck, setDuplicateCheck] = useState(false)
+  const [firstNickName, setFirstNickName] = useState('')
+  const imgRef = useRef(null); 
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
     credentials: new AWS.CognitoIdentityCredentials({
@@ -79,6 +81,7 @@ const MdProfile = props => {
       .then(res => {
         console.log(res);
         setUserData(res.data);
+        setFirstNickName(res.data.info.nickname)
       })
       .catch(err => {
         console.log('에러났어요');
@@ -103,21 +106,29 @@ const MdProfile = props => {
         nickname: e.target.value,
       },
     }));
+    setDuplicateCheck(false)
   };
 
   const checkData = () => {
     console.log('보내지는 데이터');
     console.log(userData);
-    axios
-      .get(`http://localhost:8080/user/check/${userData.info.nickname}`)
-      .then(res => {
-        console.log(res);
-        if (res.data === false) {
-          alert('사용가능한 닉네임입니다.');
-        } else {
-          alert('중복된 닉네임입니다.');
-        }
-      });
+    if (firstNickName === userData.info.nickname) {
+      alert('사용가능한 닉네임입니다.')
+      setDuplicateCheck(true)
+    } else {
+      axios
+        .get(`http://localhost:8080/user/check/${userData.info.nickname}`)
+        .then(res => {
+          console.log(res);
+          if (res.data === false) {
+            alert('사용가능한 닉네임입니다.');
+            setDuplicateCheck(true)
+          } else {
+            alert('중복된 닉네임입니다.');
+            setDuplicateCheck(false)
+          }
+        });
+    }
   };
 
   const submitData = () => {
@@ -211,13 +222,17 @@ const MdProfile = props => {
           </div>
         </div>
       </section>
+      {!duplicateCheck ?
       <Button
+        disabled
         className={styles.button}
         variant="secondary"
-        onClick={submitData}
-      >
-        완료
-      </Button>
+        onClick={submitData}>완료</Button> :
+        <Button
+        className={styles.button}
+        variant="secondary"
+        onClick={submitData}>완료</Button>
+        }
     </>
   );
 };
