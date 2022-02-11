@@ -95,9 +95,7 @@ public class HashTagImpl implements HashTagService{
 
         List get_board_list_from_hashtag = sqlSession.getMapper(HashTagMapper.class).getHashList(tag_name);
 
-        List<String> new_string_list = new ArrayList<String>();
-
-        System.out.println(get_board_list_from_hashtag.get(0));
+        System.out.println(get_board_list_from_hashtag.get(0).equals("idBoard"));
 
         return get_board_list_from_hashtag;
     }
