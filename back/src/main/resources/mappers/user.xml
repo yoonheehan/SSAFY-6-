@@ -21,10 +21,10 @@
         from user
     </select>
 
-    <update id="withdrawUser" parameterType="String">
+    <update id="withdrawUser" parameterType="int">
         update user
         set user_status = 0
-        where email like #{email}
+        where id=#{id}
     </update>
 
     <select id="listFollower" parameterType="int" resultType="map">
