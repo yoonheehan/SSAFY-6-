@@ -19,4 +19,7 @@ public interface BoardService {
     boolean delete(int boardSeq);
 
 
+
+
+
 }

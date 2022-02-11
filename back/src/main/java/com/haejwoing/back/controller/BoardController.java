@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.nio.file.Path;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/board")
@@ -40,6 +41,13 @@ public class BoardController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Board>> getUser(@PathVariable int userId){
         return new ResponseEntity<List<Board>>(boardService.getUser(userId), HttpStatus.OK);
+    }
+
+
+    @GetMapping("/hashtagsearch")
+    public ResponseEntity<List<HashTag>> HashTagList(@RequestBody Map<String, String> import_tag_name){
+
+        return new ResponseEntity<List<HashTag>>(hashTagService.getList_hashtag(import_tag_name.get("tag_name")), HttpStatus.OK);
     }
 
 

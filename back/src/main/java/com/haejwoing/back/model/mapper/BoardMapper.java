@@ -20,5 +20,5 @@ public interface BoardMapper {
 
     boolean delete(int boardSeq);
 
-
+    int due_date_id(int due_date_id);
 }
