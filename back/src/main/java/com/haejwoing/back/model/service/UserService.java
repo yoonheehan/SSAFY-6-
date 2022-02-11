@@ -18,4 +18,5 @@ public interface UserService {
     void updateProfile(User user);
     Boolean checkNickname(String nickname);
     Boolean addFollow(int id, int toUser);
+    Boolean checkFollow(int id, int loginedId);
 }

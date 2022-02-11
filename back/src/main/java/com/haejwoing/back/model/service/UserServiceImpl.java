@@ -77,4 +77,9 @@ public class UserServiceImpl implements UserService{
     public Boolean addFollow(int id, int toUser) {
         return sqlSession.getMapper(UserMapper.class).addFollow(id, toUser) == 1;
     }
+
+    @Override
+    public Boolean checkFollow(int id, int loginedId) {
+        return sqlSession.getMapper(UserMapper.class).checkFollow(id, loginedId) == 1;
+    }
 }

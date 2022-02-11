@@ -35,6 +35,20 @@ public class FollowController {
         return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
+    @ApiOperation(value = "팔로우 체크")
+    @GetMapping("/check/{id}")
+    public ResponseEntity<Boolean> checkFollow(@PathVariable int id, Map<String, Object> data){
+        log.info("검색 대상 id : {}", id);
+        log.info("로그인한 유저 id : {}", data.get("loginedId"));
+        System.out.println(data);
+        int loginedId = (int) data.get("loginedId");
+
+        // 서로 팔로우 되있으면 true
+        if(userService.checkFollow(id, loginedId)){
+            return new ResponseEntity<>(true, HttpStatus.OK);
+        }else return new ResponseEntity<>(false, HttpStatus.OK); // 아니면 false
+    }
+
     @ApiOperation(value = "팔로우 하기")
     @PostMapping("/{id}")
     public ResponseEntity<Boolean> doFollow(@PathVariable @ApiParam(value = "해당 아이디의 팔로 추가") int id, int toUser){

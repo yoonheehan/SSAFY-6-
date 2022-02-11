@@ -26,6 +26,7 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+
     @ApiOperation(value = "회원 가입")
     @PostMapping()
     public ResponseEntity<Map<String, Object>> userRegister(@RequestBody User user) throws IOException {

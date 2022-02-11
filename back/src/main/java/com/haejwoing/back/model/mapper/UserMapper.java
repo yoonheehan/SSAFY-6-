@@ -20,4 +20,5 @@ public interface UserMapper {
     void updateProfile(User user);
     int checkNickname(String nickname);
     int addFollow(int id, int toUser);
+    int checkFollow(int id, int loginedId);
 }

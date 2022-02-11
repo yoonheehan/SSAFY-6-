@@ -63,4 +63,8 @@
         insert into follower(from_user, to_user) VALUES (#{id}, #{toUser})
     </insert>
 
+    <select id="checkFollow" parameterType="int">
+        select EXISTS(select * from follower where from_user=#{loginedId} and to_user=#{id})
+    </select>
+
 </mapper>

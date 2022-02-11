@@ -19,6 +19,7 @@ const Profile = props => {
     history.push('/');
   }
   let { id } = useParams();
+  const loginedId = JSON.parse(localStorage.getItem('loginedUser')).userId
 
   const [userData, setUserData] = useState({
     info: {
@@ -30,8 +31,9 @@ const Profile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://localhost:8080/follow/check/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      data: {'loginedId' : loginedId},
     })
       .then(response => {
         console.log(response.data);
