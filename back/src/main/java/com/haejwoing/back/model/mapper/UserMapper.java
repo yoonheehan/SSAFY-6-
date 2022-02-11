@@ -21,4 +21,5 @@ public interface UserMapper {
     int checkNickname(String nickname);
     int addFollow(int id, int toUser);
     int checkFollow(int id, int loginedId);
+    int unFollow(int toUser, int fromUser);
 }

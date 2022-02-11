@@ -19,4 +19,5 @@ public interface UserService {
     Boolean checkNickname(String nickname);
     Boolean addFollow(int id, int toUser);
     Boolean checkFollow(int id, int loginedId);
+    Boolean unFollow(int toUser, int fromUser);
 }

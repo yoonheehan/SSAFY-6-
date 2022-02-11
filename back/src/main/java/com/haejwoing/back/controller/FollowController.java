@@ -48,12 +48,29 @@ public class FollowController {
     }
 
     @ApiOperation(value = "팔로우 하기")
-    @PostMapping("/{id}")
-    public ResponseEntity<Boolean> doFollow(@PathVariable @ApiParam(value = "해당 아이디의 팔로 추가") int id, int toUser){
-        log.info("팔로우 신청 id : {}", id);
-        log.info("팔로우 할 id : {}", toUser);
+    @PostMapping()
+    public ResponseEntity<Boolean> doFollow(@RequestBody Map<String, Object> data){
+        log.info("팔로우 신청 id : {}", data.get("loginedId"));
+        log.info("팔로우 할 id : {}", data.get("followId"));
 
-        if(userService.addFollow(id, toUser)){
+        int id = Integer.parseInt(String.valueOf(data.get("followId")));
+        int toUser = Integer.parseInt(String.valueOf(data.get("loginedId")));
+
+        if(userService.addFollow(toUser, id)){
+            return new ResponseEntity<>(true,HttpStatus.OK);
+        }else return new ResponseEntity<>(false, HttpStatus.OK);
+    }
+
+    @ApiOperation(value = "팔로우 끊기")
+    @DeleteMapping()
+    public ResponseEntity<Boolean> unFollow(@RequestBody Map<String, Object> data){
+        log.info("un팔로우 신청 id : {}", data.get("loginedId"));
+        log.info("un팔로우 할 id : {}", data.get("followId"));
+
+        int toUser = Integer.parseInt(String.valueOf(data.get("followId")));
+        int fromUser = Integer.parseInt(String.valueOf(data.get("loginedId")));
+
+        if(userService.unFollow(toUser, fromUser)){
             return new ResponseEntity<>(true,HttpStatus.OK);
         }else return new ResponseEntity<>(false, HttpStatus.OK);
     }

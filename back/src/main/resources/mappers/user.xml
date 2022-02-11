@@ -67,4 +67,7 @@
         select EXISTS(select * from follower where from_user=#{loginedId} and to_user=#{id})
     </select>
 
+    <delete id="unFollow" parameterType="int">
+        delete from follower where to_user=#{toUser} and from_user=#{fromUser}
+    </delete>
 </mapper>
