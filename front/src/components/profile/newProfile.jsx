@@ -24,7 +24,7 @@ const _ = require('lodash');
 
 const NewProfile = props => {
   const histroy = useHistory();
-  const [nickName, setNickName] = useState('');
+  const [nickName, setNickName] = useState('3팀 화이팅');
   const [radioValue, setRadioValue] = useState('1');
   const radios = [
     { name: '남자', value: '1' },
@@ -82,11 +82,6 @@ const NewProfile = props => {
     );
   };
 
-  function getNickName(event) {
-    const commentContent = event.target.value;
-    setNickName(event.target.value);
-  }
-
   function submitData() {
     console.log(img, radioValue, nickName, startDate.toLocaleDateString());
     console.log(props.location.props.useremail);
@@ -106,7 +101,7 @@ const NewProfile = props => {
         console.log(response.data);
         const loginUser = { userId: response.data.id };
         window.localStorage.setItem('loginedUser', JSON.stringify(loginUser));
-        window.location.replace("/feed")
+        window.location.replace('/feed');
       })
       .catch(error => {
         console.log('signup requset fail : ' + error);
@@ -115,6 +110,10 @@ const NewProfile = props => {
         console.log('signup request end');
       });
   }
+
+  const onChangeNickName = e => {
+    setNickName(e.target.value);
+  };
 
   return (
     <>
@@ -153,11 +152,30 @@ const NewProfile = props => {
           <div className={styles.data}>
             <InputGroup className={styles.inputGroup}>
               <FormControl
-                onChange={getNickName}
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
-                placeholder="3팀 화이팅(닉네임)"
+                value={nickName}
+                onChange={onChangeNickName}
               />
+              <Button
+                variant="secondary"
+                onClick={() => {
+                  console.log('닉네임 중복 확인');
+                  console.log(nickName);
+                  axios
+                    .get(`http://localhost:8080/user/check/${nickName}`)
+                    .then(res => {
+                      console.log(res);
+                      if (res.data === false) {
+                        alert('사용가능한 닉네임입니다.');
+                      } else {
+                        alert('중복된 닉네임입니다.');
+                      }
+                    });
+                }}
+              >
+                중복확인
+              </Button>
             </InputGroup>
             <ButtonGroup className={styles.buttonGroup}>
               {radios.map((radio, idx) => (

@@ -18,19 +18,16 @@ const Portal = props => {
 };
 
 const Login = props => {
-  const LOGIN = "LOGIN";
-  const state = useSelector((state) => state);
+  const LOGIN = 'LOGIN';
+  const state = useSelector(state => state);
   const dispatch = useDispatch();
   const history = useHistory();
-  
-
-
 
   if (localStorage.getItem('loginedUser') != null) {
-    history.push('/feed')
-  } 
+    history.push('/feed');
+  }
   const _clickSnsLoginGoogle = res => {
-    console.log(localStorage.getItem('loginedUser'))
+    console.log(localStorage.getItem('loginedUser'));
     console.log('구글 로그인:', res);
     if (localStorage.getItem('loginedUser') === null) {
       axios({
@@ -40,16 +37,19 @@ const Login = props => {
         data: res,
       })
         .then(response => {
-          if(response.data.check === false){
+          if (response.data.check === false) {
             history.push({
-              pathname:"/newprofile",
-              props:{useremail:response.data.email}
-            })
-          }else {
-            console.log(response.data.id)
-            const loginUser = { userId : response.data.id}
-            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            window.location.replace("/feed")
+              pathname: '/newprofile',
+              props: { useremail: response.data.email },
+            });
+          } else {
+            console.log(response.data.id);
+            const loginUser = { userId: response.data.id };
+            window.localStorage.setItem(
+              'loginedUser',
+              JSON.stringify(loginUser)
+            );
+            window.location.replace('/feed');
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
@@ -63,7 +63,7 @@ const Login = props => {
           console.log('login request end');
         });
     } else {
-      history.push("/feed")
+      history.push('/feed');
     }
   };
   const _clickSnsLoginKakao = res => {
@@ -76,18 +76,20 @@ const Login = props => {
         data: res,
       })
         .then(response => {
-          console.log('kakao:' ,response)
-          if(response.data.check === false){
-            
+          console.log('kakao:', response);
+          if (response.data.check === false) {
             history.push({
-              pathname:"/newprofile",
-              props:{useremail:response.data.email}
-            })
-          }else {
-            console.log(response.data.id)
-            const loginUser = { userId : response.data.id}
-            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            window.location.replace("/feed")
+              pathname: '/newprofile',
+              props: { useremail: response.data.email },
+            });
+          } else {
+            console.log(response.data.id);
+            const loginUser = { userId: response.data.id };
+            window.localStorage.setItem(
+              'loginedUser',
+              JSON.stringify(loginUser)
+            );
+            window.location.replace('/feed');
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
@@ -101,7 +103,7 @@ const Login = props => {
           console.log('login request end');
         });
     } else {
-      history.push("/feed")
+      history.push('/feed');
     }
   };
   const _clickSnsLoginNaver = res => {
@@ -114,16 +116,19 @@ const Login = props => {
         data: res,
       })
         .then(response => {
-          if(response.data.check === false){
+          if (response.data.check === false) {
             history.push({
-              pathname:"/newprofile",
-              props:{useremail:response.data.email}
-            })
-          }else {
-            console.log(response.data.id)
-            const loginUser = { userId : response.data.id}
-            window.localStorage.setItem("loginedUser" , JSON.stringify(loginUser))
-            window.location.replace("/feed")
+              pathname: '/newprofile',
+              props: { useremail: response.data.email },
+            });
+          } else {
+            console.log(response.data.id);
+            const loginUser = { userId: response.data.id };
+            window.localStorage.setItem(
+              'loginedUser',
+              JSON.stringify(loginUser)
+            );
+            window.location.replace('/feed');
           }
 
           console.log('response.data.accessToken : ' + response.data.email);
@@ -137,7 +142,7 @@ const Login = props => {
           console.log('login request end');
         });
     } else {
-      history.push("/feed")
+      history.push('/feed');
     }
   };
 
@@ -155,7 +160,7 @@ const Login = props => {
               <h1 className={styles.h1}>로그인</h1>
               <ul className={styles.list}>
                 <li className={styles.item}>
-                <GoogleLogin
+                  <GoogleLogin
                     clientId={process.env.REACT_APP_GOOGLE}
                     buttonText="Google 계정으로 로그인"
                     render={renderProps => (
@@ -191,7 +196,6 @@ const Login = props => {
                     )}
                     onSuccess={e => _clickSnsLoginNaver(e)}
                     onFailure={result => console.error(result)}
-                    isPopUp={false}
                   />
                 </li>
                 <li>
