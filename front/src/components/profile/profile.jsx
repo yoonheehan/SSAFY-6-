@@ -47,6 +47,21 @@ const Profile = props => {
       .finally(() => {
         console.log('profile request end');
       });
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/follow/check/${id}`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+        params: {'loginedId' : loginedId},
+      })
+        .then(response => {
+          console.log(response.data);
+        })
+        .catch(error => {
+          console.log('profile requset fail : ' + error);
+        })
+        .finally(() => {
+          console.log('profile request end');
+        });
   }, []);
 
   AWS.config.update({

@@ -34,8 +34,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void withdrawUser(String email) {
-        sqlSession.getMapper(UserMapper.class).withdrawUser(email);
+    public void withdrawUser(int id) {
+        sqlSession.getMapper(UserMapper.class).withdrawUser(id);
     }
 
     @Override

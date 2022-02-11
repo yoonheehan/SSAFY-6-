@@ -11,7 +11,7 @@ public interface UserMapper {
     void insertUser(User user);
     User searchByEmail(String email);
     List<User> listAllUser();
-    void withdrawUser(String email);
+    void withdrawUser(int id);
     void setPoint(String email);
     List<User> listFollower(int id);
     List<User> listFollow(int id);

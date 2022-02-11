@@ -9,7 +9,7 @@ public interface UserService {
     void insertUser(User user);
     List<User> listAllUser();
     User searchByEmail(String email);
-    void withdrawUser(String email);
+    void withdrawUser(int id);
     void setPoint(String email);
     List<User> listFollower(int id);
     List<User> listFollow(int id);

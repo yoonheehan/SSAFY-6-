@@ -37,16 +37,14 @@ public class FollowController {
 
     @ApiOperation(value = "팔로우 체크")
     @GetMapping("/check/{id}")
-    public ResponseEntity<Boolean> checkFollow(@PathVariable int id, Map<String, Object> data){
+    public ResponseEntity<Boolean> checkFollow(@PathVariable int id, @RequestParam int loginedId) {
         log.info("검색 대상 id : {}", id);
-        log.info("로그인한 유저 id : {}", data.get("loginedId"));
-        System.out.println(data);
-        int loginedId = (int) data.get("loginedId");
+        log.info("로그인한 유저 id : {}", loginedId);
 
         // 서로 팔로우 되있으면 true
-        if(userService.checkFollow(id, loginedId)){
+        if (userService.checkFollow(id, loginedId)) {
             return new ResponseEntity<>(true, HttpStatus.OK);
-        }else return new ResponseEntity<>(false, HttpStatus.OK); // 아니면 false
+        } else return new ResponseEntity<>(false, HttpStatus.OK); // 아니면 false
     }
 
     @ApiOperation(value = "팔로우 하기")
