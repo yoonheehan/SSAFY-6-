@@ -13,7 +13,7 @@ import java.util.Map;
 @Mapper
 public interface HashTagMapper {
 
-    List<HashTag> getHashList();
+    List<HashTag> getHashList(String tag_name);
 
     boolean save(Board board);
 

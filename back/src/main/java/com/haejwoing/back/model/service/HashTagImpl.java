@@ -34,10 +34,12 @@ public class HashTagImpl implements HashTagService{
         // due_date 리스트 꺼내기
         String want_due_date_list =sqlSession.getMapper(HashTagMapper.class).get_due_date_from_tag(tag_name);
 
-
         String want_due_date_list_first = want_due_date_list.substring(1,want_due_date_list.length()-1);
 
-        String[] want_due_date_array = want_due_date_list_first.split(",");
+
+        String want_due_date_list_second = want_due_date_list_first.replace(" ", "");
+
+        String[] want_due_date_array = want_due_date_list_second.split(",");
 
 
         List<String> want_due_date_list_made = new ArrayList<>();
@@ -51,36 +53,36 @@ public class HashTagImpl implements HashTagService{
         String want_board_list =sqlSession.getMapper(HashTagMapper.class).get_board_from_tag(tag_name);
 
 
-
         String want_board_list_first = want_board_list.substring(1,want_board_list.length()-1);
 
-        String[] want_board_array = want_board_list_first.split(",");
+        String want_board_list_second = want_board_list_first.replace(" ", "");
+
+        String[] want_board_array = want_board_list_second.split(",");
 
 
         List<String> want_board_list_made = new ArrayList<>();
 
         for (int i=0; i<want_board_array.length; i++){
-            want_board_list_made.add(want_due_date_array[i]);
+            want_board_list_made.add(want_board_array[i]);
         }
 
 
         // 마감 시간 넘은것들은 거르는 프로그램
         LocalDateTime localDateTime = LocalDateTime.now();
-        int timestamp2 = (int) Timestamp.valueOf(localDateTime).getTime();
+
+
+        int timestamp2 = Math.round((Timestamp.valueOf(localDateTime).getTime()/1000));
         List<String> new_board_list = new ArrayList<>();
         List<Integer> new_due_date_list = new ArrayList<>();
         HashMap<String, String> mapitem3 = new HashMap<String, String>();
 
 
+
         for(int i=0; i<want_due_date_list_made.size(); i++){
             if(Integer.parseInt(want_due_date_list_made.get(i))-timestamp2 > 0) {
 
-
                 new_board_list.add(want_board_list_made.get(i));
                 new_due_date_list.add(Integer.parseInt(want_due_date_list_made.get(i)));
-
-            }else{
-                continue;
             }
 
         mapitem3.put("tag_name", tag_name);
@@ -91,7 +93,13 @@ public class HashTagImpl implements HashTagService{
 
         }
 
-        return sqlSession.getMapper(HashTagMapper.class).getHashList();
+        List get_board_list_from_hashtag = sqlSession.getMapper(HashTagMapper.class).getHashList(tag_name);
+
+        List<String> new_string_list = new ArrayList<String>();
+
+        System.out.println(get_board_list_from_hashtag.get(0));
+
+        return get_board_list_from_hashtag;
     }
 
 
@@ -142,8 +150,9 @@ public class HashTagImpl implements HashTagService{
                     // board id 받아오는곳
                     String textout = out.substring(1,out.length()-1);
 
+                    String str = textout.replace(" ","");
 
-                    String[] abcd = textout.split(",");
+                    String[] abcd = str.split(",");
 
 
                     List<String> cdef = new ArrayList<>();
@@ -158,9 +167,9 @@ public class HashTagImpl implements HashTagService{
                     // due_date 받아오는곳
                     String textout1 = out1.substring(1,out1.length()-1);
 
-                    System.out.println("textout " + textout1);
+                    String str1 = textout1.replace(" ","");
 
-                    String[] abcde = textout1.split(",");
+                    String[] abcde = str1.split(",");
                     System.out.println("abcde " + Arrays.toString(abcde));
 
 
@@ -169,9 +178,9 @@ public class HashTagImpl implements HashTagService{
                     for (int j=0; j<abcde.length; j++){
                         cdefg.add(abcde[j]);
                     }
-
+                    System.out.println("cdefg에 추가전 " + cdefg);
                     cdefg.add(value3);
-
+                    System.out.println("cdefg에 추가한후 " + cdefg);
 
                     // update 하는 부분
                     String newarraystring1 = cdef.toString();
