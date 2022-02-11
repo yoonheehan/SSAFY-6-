@@ -45,9 +45,9 @@ public class BoardController {
 
 
     @GetMapping("/hashtagsearch")
-    public ResponseEntity<List<HashTag>> HashTagList(@RequestBody Map<String, String> import_tag_name){
+    public ResponseEntity<List<Board>> HashTagList(@RequestBody Map<String, String> import_tag_name){
 
-        return new ResponseEntity<List<HashTag>>(hashTagService.getList_hashtag(import_tag_name.get("tag_name")), HttpStatus.OK);
+        return new ResponseEntity<List<Board>>(hashTagService.getList_hashtag(import_tag_name.get("tag_name")), HttpStatus.OK);
     }
 
 

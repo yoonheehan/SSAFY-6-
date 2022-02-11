@@ -28,7 +28,7 @@ public class HashTagImpl implements HashTagService{
 
 
     @Override
-    public List<HashTag> getList_hashtag(String tag_name) {
+    public List<Board> getList_hashtag(String tag_name) {
 
 
         // due_date 리스트 꺼내기
@@ -93,11 +93,28 @@ public class HashTagImpl implements HashTagService{
 
         }
 
-        List get_board_list_from_hashtag = sqlSession.getMapper(HashTagMapper.class).getHashList(tag_name);
+        String get_board_list_from_hashtag = sqlSession.getMapper(HashTagMapper.class).getHashList(tag_name);
 
-        System.out.println(get_board_list_from_hashtag.get(0).equals("idBoard"));
 
-        return get_board_list_from_hashtag;
+
+        String measure_text = get_board_list_from_hashtag.substring(1,get_board_list_from_hashtag.length()-1);
+
+        String middle_measure_text = measure_text.replace(" ", "");
+
+        String[] got_text = middle_measure_text.split(",");
+
+        List<Board> final_board_list = new ArrayList<>();
+
+        for(int i=0; i<got_text.length; i++){
+            int idboard = Integer.parseInt(got_text[i]);
+
+            Board board_list = sqlSession.getMapper(HashTagMapper.class).get_raw_data(idboard);
+            final_board_list.add(board_list);
+
+        }
+
+
+        return final_board_list;
     }
 
 

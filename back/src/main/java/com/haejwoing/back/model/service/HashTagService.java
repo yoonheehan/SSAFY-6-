@@ -9,7 +9,7 @@ import java.util.List;
 public interface HashTagService {
 
 
-    List<HashTag> getList_hashtag(String tag_name);
+    List<Board> getList_hashtag(String tag_name);
 
     boolean save(Board board);
 

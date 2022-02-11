@@ -13,7 +13,7 @@ import java.util.Map;
 @Mapper
 public interface HashTagMapper {
 
-    List<HashTag> getHashList(String tag_name);
+    String getHashList(String tag_name);
 
     boolean save(Board board);
 
@@ -36,5 +36,8 @@ public interface HashTagMapper {
     String get_due_date_from_tag(String tag_name);
 
     String get_board_from_tag(String tag_name);
+
+    Board get_raw_data(int idboard);
+
 
 }
