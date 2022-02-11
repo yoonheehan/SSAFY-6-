@@ -37,6 +37,11 @@ public class BoardController {
         return new ResponseEntity<Board>(boardService.get(idboard), HttpStatus.OK);
     }
 
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<Board> getUser(@PathVariable int userId){
+        return new ResponseEntity<Board>(boardService.getUser(userId), HttpStatus.OK);
+    }
+
 
     @PostMapping("/save")
    public ResponseEntity<String> save(@RequestBody Board board) throws Exception {

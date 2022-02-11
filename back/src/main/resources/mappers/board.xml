@@ -14,13 +14,19 @@
 
     </select>
 
+    <select id="getUser" parameterType="int" resultType="com.haejwoing.back.model.dto.Board">
+
+        SELECT * FROM BOARD WHERE idboard=#{userId}
+
+
+    </select>
 
 
     <insert id="save" parameterType="com.haejwoing.back.model.dto.Board" >
 
 
-    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, vote_users)
-    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, now(6), #{due_date} , #{vote_contents}, #{vote_users})
+    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, vote_users, userId)
+    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, unix_timestamp(now()), #{due_date} , #{vote_contents}, #{vote_users}, #{userId})
 
     </insert>
 

@@ -12,6 +12,8 @@ public interface BoardMapper {
 
     Board get(int boardSeq);
 
+    Board getUser(int userId);
+
     boolean save(Board board);
 
     boolean update(Board board);

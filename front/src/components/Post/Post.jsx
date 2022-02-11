@@ -64,7 +64,7 @@ const Post = () => {
          method: "post",
          url: url,
          data: {
-            // userId: userId,
+            userId: userId,
             type: type,
             view_range: revealType,
             content: voteContent,
