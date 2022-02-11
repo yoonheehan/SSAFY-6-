@@ -13,7 +13,7 @@ export default function ImgSlide(props) {
     slidesToScroll: 1,
     vertical : false,
     };
-    console.log(props)
+
   return (
     <div>
         {/* {props.imgUrl.map(url => {
@@ -23,23 +23,11 @@ export default function ImgSlide(props) {
             </div>
           })} */}
         <Slider {...settings}>
-          
-          {/* {props.imgUrl.map(url => {
-            <div>
-              {url}
-              <img style={{width: 'inherit'}} src={url} />
+          {props.imgUrl.map(url => 
+            <div >
+              <img alt="" style={{maxHeight: "300px", margin: "auto"}} src={url} />
             </div>
-          })} */}
-          <div>
-              <img style={{width: 'inherit'}} src="/images/1.jpg" />
-          </div>
-          <div>
-              <img style={{width: 'inherit'}} src="/images/2.png"  />
-          </div>
-          <div>
-              <img style={{width: 'inherit'}} src="/images/logo.png" />
-          </div>
-
+          )}
         </Slider>
     </div>
   )

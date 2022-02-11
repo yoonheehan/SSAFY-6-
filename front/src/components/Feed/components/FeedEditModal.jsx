@@ -8,7 +8,7 @@ const ModalContent = styled.div`
   box-shadow: 0 0 5px 0 rgba(0, 0, 0, 0.5);
   background-color: #ffffff;
   border-radius: 10px;
-  width: 400px;
+  width: 85%;
   max-width: 480px;
   margin: 0 auto;
   left: 0;
@@ -44,10 +44,10 @@ const Editbtn = styled.input`
 //   return createPortal(props.children, document.getElementById('commentModal'));
 // };
 
-const FeedEditModal = ({onClose, feed, EditFeed}) => {
-  const [value, setValue] = useState(feed.feedcontent)
+const FeedEditModal = ({onClose, content, EditFeed}) => {
+  const [value, setValue] = useState(content)
 
-
+  
   const onChange = useCallback((e) => {
     setValue(e.target.value);
   }, [])

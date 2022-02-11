@@ -1,0 +1,45 @@
+.detail_title {
+    background-color: white;
+    padding: 15px 15px;
+    height: auto;
+    width: 100%;
+    max-height: 500px;
+    word-break: break-all;
+}
+
+.detail_content {
+    height: 100%;
+}
+
+.detail_vote {
+    background-color: #F0F0F0;
+    margin: 20px 0;
+    min-height: 50px;
+    display: flex;
+    align-items: center;
+    padding: 0 15px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.detail_vote.active {
+    background-color: #c2c2c2;
+}
+
+.detail_close {
+    position: absolute;
+    top: 3%;
+    right: 6%;
+    color: white;
+    z-index: 100;
+}
+
+.detail_button {
+    background-color: rgb(41, 116, 255);
+    color: white;
+    font-weight: bold;
+    padding: 5px;
+    border-radius: 3px;
+    margin-top: 50px;
+    cursor: pointer;
+}
