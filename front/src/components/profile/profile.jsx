@@ -21,6 +21,8 @@ const Profile = props => {
   let { id } = useParams();
   const loginedId = JSON.parse(localStorage.getItem('loginedUser')).userId
 
+  console.log('profile : ', id , 'loginedId : ', loginedId)
+
   const [userData, setUserData] = useState({
     info: {
       point: 0,
@@ -31,9 +33,9 @@ const Profile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/follow/check/${id}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      url: `http://localhost:8080/user/${id}`,
       data: {'loginedId' : loginedId},
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
         console.log(response.data);
@@ -99,7 +101,11 @@ const Profile = props => {
             </div>
           </div>
           <div className={styles.box2}>
-            <Button
+            {
+            (() => {
+              if (Number(id) === loginedId)
+              return (
+              <Button
               className={styles.button}
               variant="outline-secondary"
               onClick={() => {
@@ -107,7 +113,26 @@ const Profile = props => {
               }}
             >
               프로필 수정
+            </Button>);
+            else if (Number(id) !== loginedId && loginedId === 16)
+            return (
+              <Button
+              className={styles.button}
+              variant="outline-secondary"
+              >
+              팔로우 맺기
+            </Button>);
+            else if (Number(id) !== loginedId && loginedId !== 16)
+            return (
+              <Button
+              className={styles.button}
+              variant="outline-secondary"
+              >
+              팔로우 끊기
             </Button>
+            )
+          })()
+          }
           </div>
           <div className={styles.box3}>
             <div>
@@ -153,6 +178,7 @@ const Profile = props => {
               >
                 팔로워 목록
               </Button>
+              {Number(id) === loginedId ?
               <Button
                 variant="secondary"
                 size="md"
@@ -161,7 +187,7 @@ const Profile = props => {
                 }}
               >
                 회원탈퇴
-              </Button>
+              </Button> : null}
             </div>
           </div>
         </div>

@@ -32,14 +32,19 @@ const FriendMenu = styled.div`
 export default function FriendItem({follow}) {
 
   const history = useHistory();
+  console.log(follow.id)
+  console.log(JSON.parse(localStorage.getItem('loginedUser')).userId)
 
+  function clickProfile (ID) {
+    
+    window.location.replace(`/user/${ID}/profile`)
+  }
 
   return (
-    <FriendProfile >
+    <FriendProfile onClick={() => clickProfile(follow.id)}>
         {follow.profileImg === '' ? 
         <ProfileImg src='/images/img_avatar.png' alt='기본이미지' /> : <ProfileImg src={follow.image} alt={follow.image} />}
         <ProfileName>{follow.nickname}</ProfileName>
     </FriendProfile>
   )
 }
-

@@ -11,7 +11,7 @@ const NavBar = () => {
     userId = JSON.parse(localStorage.getItem('loginedUser')).userId
   }
 
-
+  
   const ref = useRef(null);
 
   const history = useHistory();
@@ -77,7 +77,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             className="h1 px-4 bi bi-people-fill"
             onClick={() => {
-              history.push(`/user/${userId}/followlist`);
+              window.location.replace(`/user/${userId}/followlist`);
               setClicked(false);
             }}
           ></i>
@@ -85,7 +85,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             className="h1 px-4 bi bi-person-fill"
             onClick={() => {
-              history.push(`/user/${userId}/profile`);
+              window.location.replace(`/user/${userId}/profile`);
               setClicked(false);
             }}
           ></i>

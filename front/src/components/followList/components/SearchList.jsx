@@ -50,7 +50,7 @@ export default function SearchList(props) {
         })}
         setFriendList(result)
     }
-  
+    
 
     return (
         <>
