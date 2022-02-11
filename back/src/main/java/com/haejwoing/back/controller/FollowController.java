@@ -64,9 +64,11 @@ public class FollowController {
 
     @ApiOperation(value = "팔로우 끊기")
     @DeleteMapping()
-    public ResponseEntity<Boolean> unFollow(@RequestParam int touser, @RequestParam int fromuser){
-//        log.info("un팔로우 신청 id : {}", data.get("loginedId"));
-//        log.info("un팔로우 할 id : {}", data.get("followId"));
+
+    public ResponseEntity<Boolean> unFollow(@RequestParam("followId") int touser, @RequestParam("loginedId") int fromuser){
+        log.info("un팔로우 신청 id : {}", touser);
+        log.info("un팔로우 할 id : {}", fromuser);
+
 
         int toUser = touser;
         int fromUser = fromuser;

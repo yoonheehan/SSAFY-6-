@@ -7,7 +7,7 @@
 
     </select>
 
-    <select id = 'ge' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
+    <select id = 'get' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
         SELECT * FROM COMMENT
         WHERE idcomment=#{commentId}
 
@@ -15,14 +15,14 @@
 
     <insert id="save" parameterType="com.haejwoing.back.model.dto.Comment">
 
-        INSERT INTO COMMENT(content, created_at)
-        VALUES (#{content}, now())
+        INSERT INTO COMMENT(content, created_at, board_idboard, user_id)
+        VALUES (#{content}, now(), #{board_idboard}, #{user_id})
 
     </insert>
 
     <update id="update" parameterType="comment">
 
-        UPDATE COMMENT SET content=#{content}, updated_at=#{now()}
+        UPDATE COMMENT SET content=#{content}, updated_at=now()
         WHERE idcomment = #{commentId}
 
     </update>

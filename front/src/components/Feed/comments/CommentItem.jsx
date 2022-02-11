@@ -35,7 +35,7 @@ const CommentContent = styled.div`
   text-align: left;
   background-color: #dedee7;
   border-radius: 6px;
-  padding: 7px
+  padding: 7px;
 `
 
 const CommentMenu = styled.div`
