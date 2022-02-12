@@ -23,7 +23,7 @@ public interface HashTagMapper {
 
     void savearray(Map mapitem);
 
-    String getout(String tag_name);
+    String getout_board(String tag_name);
 
     String getout_due_date(String tag_name);
 
@@ -38,6 +38,8 @@ public interface HashTagMapper {
     String get_board_from_tag(String tag_name);
 
     Board get_raw_data(int idboard);
+
+    void delete_hash(String tag_name);
 
 
 }

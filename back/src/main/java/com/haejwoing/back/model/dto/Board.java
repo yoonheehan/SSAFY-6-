@@ -38,4 +38,5 @@ public class Board {
 
     private String recent_id;
 
+    private String error_message;
 }

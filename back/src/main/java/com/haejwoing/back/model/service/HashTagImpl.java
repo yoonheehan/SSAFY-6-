@@ -23,6 +23,19 @@ import java.util.*;
 @Service
 public class HashTagImpl implements HashTagService{
 
+    // 문자화된 배열을 일반 배열로 변환시켜주는 함수
+    public List<String> string_change_to_list(String putin){
+
+        String putin_change = putin.substring(1,putin.length()-1);
+
+        String putin_change_replace = putin_change.replace(" ", "");
+
+        List<String> put_in_array_in = List.of(putin_change_replace.split(","));
+
+        return put_in_array_in;
+    }
+
+
     @Autowired
     private SqlSession sqlSession;
 
@@ -30,89 +43,76 @@ public class HashTagImpl implements HashTagService{
     @Override
     public List<Board> getList_hashtag(String tag_name) {
 
-
         // due_date 리스트 꺼내기
         String want_due_date_list =sqlSession.getMapper(HashTagMapper.class).get_due_date_from_tag(tag_name);
 
-        String want_due_date_list_first = want_due_date_list.substring(1,want_due_date_list.length()-1);
+        if(want_due_date_list==null){
 
+            sqlSession.getMapper(HashTagMapper.class).delete_hash(tag_name);
 
-        String want_due_date_list_second = want_due_date_list_first.replace(" ", "");
+            List<Board> board = new ArrayList<>();
 
-        String[] want_due_date_array = want_due_date_list_second.split(",");
-
-
-        List<String> want_due_date_list_made = new ArrayList<>();
-
-        for (int i=0; i<want_due_date_array.length; i++){
-            want_due_date_list_made.add(want_due_date_array[i]);
+            return board;
         }
+
+
+        List<String> want_due_date_array = string_change_to_list(want_due_date_list);
+
 
         // board 리스트 꺼내기
-
         String want_board_list =sqlSession.getMapper(HashTagMapper.class).get_board_from_tag(tag_name);
 
-
-        String want_board_list_first = want_board_list.substring(1,want_board_list.length()-1);
-
-        String want_board_list_second = want_board_list_first.replace(" ", "");
-
-        String[] want_board_array = want_board_list_second.split(",");
-
-
-        List<String> want_board_list_made = new ArrayList<>();
-
-        for (int i=0; i<want_board_array.length; i++){
-            want_board_list_made.add(want_board_array[i]);
-        }
+        List<String> want_board_array = string_change_to_list(want_board_list);
 
 
         // 마감 시간 넘은것들은 거르는 프로그램
         LocalDateTime localDateTime = LocalDateTime.now();
 
-
         int timestamp2 = Math.round((Timestamp.valueOf(localDateTime).getTime()/1000));
         List<String> new_board_list = new ArrayList<>();
         List<Integer> new_due_date_list = new ArrayList<>();
-        HashMap<String, String> mapitem3 = new HashMap<String, String>();
+        HashMap<String, String> mapitem_raw_data = new HashMap<String, String>();
 
+        // 검색할때 마다 update시키기
+        for(int i=0; i<want_due_date_array.size(); i++){
+            if(Integer.parseInt(want_due_date_array.get(i))-timestamp2 > 0) {
 
-
-        for(int i=0; i<want_due_date_list_made.size(); i++){
-            if(Integer.parseInt(want_due_date_list_made.get(i))-timestamp2 > 0) {
-
-                new_board_list.add(want_board_list_made.get(i));
-                new_due_date_list.add(Integer.parseInt(want_due_date_list_made.get(i)));
+                new_board_list.add(want_board_array.get(i));
+                new_due_date_list.add(Integer.parseInt(want_due_date_array.get(i)));
             }
-
-        mapitem3.put("tag_name", tag_name);
-        mapitem3.put("idBoard", new_board_list.toString());
-        mapitem3.put("due_date", new_due_date_list.toString());
-
-        sqlSession.getMapper(HashTagMapper.class).update_new(mapitem3);
-
         }
 
+        mapitem_raw_data.put("tag_name", tag_name);
+        mapitem_raw_data.put("idBoard", new_board_list.toString());
+        mapitem_raw_data.put("due_date", new_due_date_list.toString());
+
+        sqlSession.getMapper(HashTagMapper.class).update_new(mapitem_raw_data);
+
+
+        // 해당 태그가 들어있는 board raw 데이터 꺼내기
         String get_board_list_from_hashtag = sqlSession.getMapper(HashTagMapper.class).getHashList(tag_name);
 
 
+        if(get_board_list_from_hashtag.equals("[]")){
 
-        String measure_text = get_board_list_from_hashtag.substring(1,get_board_list_from_hashtag.length()-1);
+            sqlSession.getMapper(HashTagMapper.class).delete_hash(tag_name);
 
-        String middle_measure_text = measure_text.replace(" ", "");
+            List<Board> board = new ArrayList<>();
 
-        String[] got_text = middle_measure_text.split(",");
+
+            return board;
+        }
+
+        List<String> got_text = string_change_to_list(get_board_list_from_hashtag);
 
         List<Board> final_board_list = new ArrayList<>();
 
-        for(int i=0; i<got_text.length; i++){
-            int idboard = Integer.parseInt(got_text[i]);
+        for(int i=0; i<got_text.size(); i++){
+            int idboard = Integer.parseInt(got_text.get(i));
 
             Board board_list = sqlSession.getMapper(HashTagMapper.class).get_raw_data(idboard);
             final_board_list.add(board_list);
-
         }
-
 
         return final_board_list;
     }
@@ -123,17 +123,9 @@ public class HashTagImpl implements HashTagService{
 
         String text = board.getHashArr().substring(1,board.getHashArr().length()-1);
 
-        String[] abc = text.split(",");
+        List<String> list_of_arr_string = List.of(text.split(","));
 
-
-        List<String> cde = new ArrayList<>();
-
-        for (int i=0; i<abc.length; i++){
-            cde.add(abc[i]);
-        }
-
-        board.setHasArrList(cde);
-
+        board.setHasArrList(list_of_arr_string);
 
         String recent_id = sqlSession.getMapper(HashTagMapper.class).recent_id(board.getRecent_id());
 
@@ -142,93 +134,78 @@ public class HashTagImpl implements HashTagService{
         int due_date_id = sqlSession.getMapper(BoardMapper.class).due_date_id(board.getDue_date());
 
 
-        if(cde.isEmpty()) {
+        // 빈리스트면
+        if(list_of_arr_string.isEmpty()) {
 
             return true;
 
         }else{
 
+            for (int i = 0; i < list_of_arr_string.size(); i++) {
 
-            for (int i = 0; i < cde.size(); i++) {
+                String tag_name = list_of_arr_string.get(i).substring(1,list_of_arr_string.get(i).length()-1);
+                String get_due_date = Integer.toString(due_date_id);
 
-                String tag_name = cde.get(i).substring(1,cde.get(i).length()-1);
-
-                String value2 = recent_id;
-                String value3 = Integer.toString(due_date_id);
-
-
+                // 해쉬태그가 처음이 아니라면(리스트 안에 있다면)
                 if(sqlSession.getMapper(HashTagMapper.class).findtagname(tag_name)==1){
 
-                    String out = sqlSession.getMapper(HashTagMapper.class).getout(tag_name);
-                    String out1 = sqlSession.getMapper(HashTagMapper.class).getout_due_date(tag_name);
+                    String out_board = sqlSession.getMapper(HashTagMapper.class).getout_board(tag_name);
+                    String out_due_date = sqlSession.getMapper(HashTagMapper.class).getout_due_date(tag_name);
 
                     // board id 받아오는곳
-                    String textout = out.substring(1,out.length()-1);
+                    List<String> out_board_list = string_change_to_list(out_board);
 
-                    String str = textout.replace(" ","");
+                    List<String> new_out_board_list = new ArrayList<>();
 
-                    String[] abcd = str.split(",");
-
-
-                    List<String> cdef = new ArrayList<>();
-
-                    for (int j=0; j<abcd.length; j++){
-                        cdef.add(abcd[j]);
+                    for (int j=0; j<out_board_list.size(); j++){
+                        new_out_board_list.add(out_board_list.get(j));
                     }
 
-                    cdef.add(value2);
+                    new_out_board_list.add(recent_id);
 
 
                     // due_date 받아오는곳
-                    String textout1 = out1.substring(1,out1.length()-1);
+                    List<String> out_due_date_list = string_change_to_list(out_due_date);
 
-                    String str1 = textout1.replace(" ","");
+                    List<String> new_out_due_date_list = new ArrayList<>();
 
-                    String[] abcde = str1.split(",");
-                    System.out.println("abcde " + Arrays.toString(abcde));
-
-
-                    List<String> cdefg = new ArrayList<>();
-
-                    for (int j=0; j<abcde.length; j++){
-                        cdefg.add(abcde[j]);
+                    for (int j=0; j<out_due_date_list.size(); j++){
+                        new_out_due_date_list.add(out_due_date_list.get(j));
                     }
-                    System.out.println("cdefg에 추가전 " + cdefg);
-                    cdefg.add(value3);
-                    System.out.println("cdefg에 추가한후 " + cdefg);
+
+                    new_out_due_date_list.add(get_due_date);
+
 
                     // update 하는 부분
-                    String newarraystring1 = cdef.toString();
+                    String newarraystring_board = new_out_board_list.toString();
 
-                    String newarraystring1_due_date = cdefg.toString();
+                    String newarraystring_due_date = new_out_due_date_list.toString();
 
 
-                    HashMap<String, String> mapitem1 = new HashMap<String, String>();
-                    mapitem1.put("tag_name", tag_name);
-                    mapitem1.put("idBoard",newarraystring1);
-                    mapitem1.put("due_date",newarraystring1_due_date);
+                    HashMap<String, String> mapitem_if_not_first = new HashMap<String, String>();
+                    mapitem_if_not_first.put("tag_name", tag_name);
+                    mapitem_if_not_first.put("idBoard",newarraystring_board);
+                    mapitem_if_not_first.put("due_date",newarraystring_due_date);
 
-                    sqlSession.getMapper(HashTagMapper.class).updateit(mapitem1);
+                    sqlSession.getMapper(HashTagMapper.class).updateit(mapitem_if_not_first);
 
                 }   else{
                     List<String> newarray = new ArrayList<>();
-                    newarray.add(value2);
+                    newarray.add(recent_id);
 
 
                     List<String> newarray_due_date = new ArrayList<>();
-                    newarray_due_date.add(value3);
-
+                    newarray_due_date.add(get_due_date);
 
                     String newarraystring = newarray.toString();
                     String newarraystring_due_date = newarray_due_date.toString();
 
-                    HashMap<String, String> mapitem = new HashMap<String, String>();
-                    mapitem.put("tag_name", tag_name);
-                    mapitem.put("idBoard",newarraystring);
-                    mapitem.put("due_date",newarraystring_due_date);
+                    HashMap<String, String> mapitem_if_first = new HashMap<String, String>();
+                    mapitem_if_first.put("tag_name", tag_name);
+                    mapitem_if_first.put("idBoard",newarraystring);
+                    mapitem_if_first.put("due_date",newarraystring_due_date);
 
-
-                    sqlSession.getMapper(HashTagMapper.class).savearray(mapitem);
+                    sqlSession.getMapper(HashTagMapper.class).savearray(mapitem_if_first);
 
                 }
 

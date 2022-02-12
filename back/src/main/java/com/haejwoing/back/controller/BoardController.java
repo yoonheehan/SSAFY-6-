@@ -52,7 +52,6 @@ public class BoardController {
 
 
 
-
     @PostMapping("/save")
    public ResponseEntity<String> save(@RequestBody Board board) throws Exception {
 
