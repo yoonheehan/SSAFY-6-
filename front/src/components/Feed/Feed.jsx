@@ -29,7 +29,7 @@ const NewFeedList = [
 export default function Feed() {
     
     const history = useHistory();
-    if (localStorage.getItem('loginedUser') === null) {
+    if (sessionStorage.getItem('loginedUser') === null) {
         history.push('/')
     }
     const [feeds, setFeeds] = useState(exampleList)

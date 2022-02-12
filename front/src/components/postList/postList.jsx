@@ -37,8 +37,8 @@ const NewPostList = [
 
 const PostList = props => {
   const history = useHistory();
-  if (localStorage.getItem('loginedUser') === null) {
-    history.push('/');
+  if (sessionStorage.getItem('loginedUser') === null) {
+    history.push('/')
   }
   let [post, setPost] = useState([...Data]);
   const [data, setData] = useState([]);

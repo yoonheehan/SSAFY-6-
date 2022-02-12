@@ -16,13 +16,13 @@ import PostList from './components/postList/postList';
 import Post from './components/Post/Post.jsx';
 import { useEffect, useState } from 'react';
 
+import FeedTest from './components/TestFeed'
+
 function App() {
-  const [isLogin, setIsLogin] = useState(
-    localStorage.hasOwnProperty('loginedUser')
-  );
+  const [isLogin, setIsLogin] = useState(sessionStorage.hasOwnProperty('loginedUser'));
 
   useEffect(() => {
-    if (localStorage.hasOwnProperty('loginedUser') === false) {
+    if (sessionStorage.hasOwnProperty('loginedUser') === false) {
       setIsLogin(false);
     }
   });
@@ -58,6 +58,7 @@ function App() {
           <Route exact path="/user/:id/withdraw" component={Withdraw} />
           <Route exact path="/board/user/:id/postList" component={PostList} />
           <Route exact path="/post" component={Post} />
+          <Route exact path="/feedtest" component={FeedTest} />
         </Switch>
       </BrowserRouter>
     </div>

@@ -11,7 +11,7 @@ import AWS from 'aws-sdk';
 const Post = () => {
    //
    const history = useHistory();
-   if (localStorage.getItem('loginedUser') === null) {
+   if (sessionStorage.getItem('loginedUser') === null) {
       history.push('/')
    }
    

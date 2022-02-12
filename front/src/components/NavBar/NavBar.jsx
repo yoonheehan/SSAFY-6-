@@ -7,8 +7,8 @@ import { AiOutlineArrowLeft } from 'react-icons/ai';
 const NavBar = () => {
   
   let userId = -1
-  if (localStorage.hasOwnProperty('loginedUser') === true) {
-    userId = JSON.parse(localStorage.getItem('loginedUser')).userId
+  if (sessionStorage.hasOwnProperty('loginedUser') === true) {
+    userId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
   }
 
   
@@ -102,7 +102,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             className="link h1 px-4 bi bi-box-arrow-in-right"
             onClick={() => {
-              localStorage.clear('loginedUser')
+              sessionStorage.clear('loginedUser')
               history.push('/');
               setClicked(false);
             }}

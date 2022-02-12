@@ -15,18 +15,17 @@ import { useParams } from 'react-router-dom';
 
 const Profile = props => {
   const history = useHistory();
-<<<<<<< Updated upstream
+
   const [followCheck, setFollowCheck] = useState(false)
   const imgRef = useRef(null); 
-=======
-  const [followCheck, setFollowCheck] = useState(false);
 
->>>>>>> Stashed changes
-  if (localStorage.getItem('loginedUser') === null) {
+
+  if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
   let { id } = useParams();
-  const loginedId = JSON.parse(localStorage.getItem('loginedUser')).userId;
+  const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
+
 
   console.log('profile : ', id, 'loginedId : ', loginedId);
 
@@ -81,17 +80,13 @@ const Profile = props => {
     })
       .then(response => {
         console.log(response.data);
-<<<<<<< Updated upstream
         setFollowCheck(true)
-=======
->>>>>>> Stashed changes
       })
       .catch(error => {
         console.log('follow requset fail : ' + error);
       })
       .finally(() => {
         console.log('follow request end');
-<<<<<<< Updated upstream
       });  
   }
 
@@ -113,10 +108,6 @@ const Profile = props => {
         console.log('follow request end');
       });  
   }
-=======
-      });
-  };
->>>>>>> Stashed changes
 
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -176,7 +167,6 @@ const Profile = props => {
           <div className={styles.box2}>
             {(() => {
               if (Number(id) === loginedId)
-<<<<<<< Updated upstream
               return (
               <Button
               className={styles.button}
@@ -208,36 +198,6 @@ const Profile = props => {
             )
           })()
           }
-=======
-                return (
-                  <Button
-                    className={styles.button}
-                    variant="outline-secondary"
-                    onClick={() => {
-                      history.push(`/user/${id}/mdProfile`);
-                    }}
-                  >
-                    프로필 수정
-                  </Button>
-                );
-              else if (Number(id) !== loginedId && followCheck === false)
-                return (
-                  <Button
-                    className={styles.button}
-                    variant="outline-secondary"
-                    onClick={doFollow}
-                  >
-                    팔로우 맺기
-                  </Button>
-                );
-              else if (Number(id) !== loginedId && followCheck == true)
-                return (
-                  <Button className={styles.button} variant="outline-secondary">
-                    팔로우 끊기
-                  </Button>
-                );
-            })()}
->>>>>>> Stashed changes
           </div>
           <div className={styles.box3}>
             <div>

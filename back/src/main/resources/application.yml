@@ -6,13 +6,10 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/haejwoing?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3307/haejwoing?serverTimezone=Asia/Seoul
     username: root
-<<<<<<< Updated upstream
     password: root
-=======
-    password: chae6343!@#
->>>>>>> Stashed changes
+
 #    url: jdbc:mysql://i6c103.p.ssafy.io/haejwoing
 #    username: haejwoing
 #    password: 1234

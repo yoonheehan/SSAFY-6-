@@ -68,7 +68,7 @@ const MdProfile = props => {
   };
   const { id } = useParams();
 
-  if (localStorage.getItem('loginedUser') === null) {
+  if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
 

@@ -100,7 +100,7 @@ const NewProfile = props => {
       .then(response => {
         console.log(response.data);
         const loginUser = { userId: response.data.id };
-        window.localStorage.setItem('loginedUser', JSON.stringify(loginUser));
+        window.sessionStorage.setItem('loginedUser', JSON.stringify(loginUser));
         window.location.replace('/feed');
       })
       .catch(error => {

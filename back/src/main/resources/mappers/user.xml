@@ -24,11 +24,9 @@
     <update id="withdrawUser" parameterType="int">
         update user
         set user_status = 0
-<<<<<<< Updated upstream
+
         where id=#{id}
-=======
-        where id like #{id}
->>>>>>> Stashed changes
+
     </update>
 
     <select id="listFollower" parameterType="int" resultType="map">

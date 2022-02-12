@@ -23,13 +23,13 @@ const Login = props => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  if (localStorage.getItem('loginedUser') != null) {
+  if (sessionStorage.getItem('loginedUser') != null) {
     history.push('/feed');
   }
   const _clickSnsLoginGoogle = res => {
-    console.log(localStorage.getItem('loginedUser'));
+    console.log(sessionStorage.getItem('loginedUser'));
     console.log('구글 로그인:', res);
-    if (localStorage.getItem('loginedUser') === null) {
+    if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
         url: `http://localhost:8080/jwt/google`,
@@ -45,7 +45,7 @@ const Login = props => {
           } else {
             console.log(response.data.id);
             const loginUser = { userId: response.data.id };
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
             );
@@ -68,7 +68,7 @@ const Login = props => {
   };
   const _clickSnsLoginKakao = res => {
     console.log('카카오 로그인:', res);
-    if (localStorage.getItem('loginedUser') === null) {
+    if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
         url: `http://localhost:8080/jwt/kakao`,
@@ -85,7 +85,7 @@ const Login = props => {
           } else {
             console.log(response.data.id);
             const loginUser = { userId: response.data.id };
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
             );
@@ -108,7 +108,7 @@ const Login = props => {
   };
   const _clickSnsLoginNaver = res => {
     console.log('네이버 로그인:', res);
-    if (localStorage.getItem('loginedUser') === null) {
+    if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
         url: `http://localhost:8080/jwt/naver`,
@@ -124,7 +124,7 @@ const Login = props => {
           } else {
             console.log(response.data.id);
             const loginUser = { userId: response.data.id };
-            window.localStorage.setItem(
+            window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
             );

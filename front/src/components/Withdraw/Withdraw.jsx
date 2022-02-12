@@ -9,7 +9,7 @@ const Withdraw = () => {
   const history = useHistory();
   const [check, setCheck] = useState(true);
   const { id } = useParams();
-  if (localStorage.getItem('loginedUser') === null) {
+  if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
   return (
@@ -48,11 +48,11 @@ const Withdraw = () => {
               alert('체크해주세요');
             } else {
               console.log('회원탈퇴 가능');
-              console.log(localStorage.getItem('loginedUser'));
+              console.log(sessionStorage.getItem('loginedUser'));
               axios
                 .put(`http://localhost:8080/user/withdraw/${id}`)
                 .then(res => {
-                  localStorage.clear('loginedUser');
+                  sessionStorage.clear('loginedUser');
                   history.push('/');
                 });
             }

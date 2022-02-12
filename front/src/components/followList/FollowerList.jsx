@@ -9,7 +9,7 @@ import { useEffect } from 'react';
 
 function FollowerList() {
   const history = useHistory();
-  if (localStorage.getItem('loginedUser') === null) {
+  if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/')
   }
   let { id } = useParams();

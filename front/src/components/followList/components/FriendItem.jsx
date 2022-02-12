@@ -33,7 +33,7 @@ export default function FriendItem({follow}) {
 
   const history = useHistory();
   console.log(follow.id)
-  console.log(JSON.parse(localStorage.getItem('loginedUser')).userId)
+  console.log(JSON.parse(sessionStorage.getItem('loginedUser')).userId)
 
   function clickProfile (ID) {
     
