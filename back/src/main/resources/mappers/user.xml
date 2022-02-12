@@ -24,7 +24,6 @@
     <update id="withdrawUser" parameterType="int">
         update user
         set user_status = 0
-
         where id=#{id}
 
     </update>

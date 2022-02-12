@@ -23,7 +23,7 @@
     <update id="update" parameterType="comment">
 
         UPDATE COMMENT SET content=#{content}, updated_at=now()
-        WHERE idComment = #{idComment}
+        WHERE idcomment = #{commentId}
 
     </update>
 
