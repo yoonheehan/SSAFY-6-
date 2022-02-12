@@ -6,9 +6,11 @@ import java.util.List;
 
 public interface CommentService {
 
-    List<Comment> getList();
+//    List<Comment> getList();
 
-    Comment get(int idcomment);
+//    Comment get(int idcomment);
+
+    List<Comment> getLike();
 
     boolean save(Comment comment) throws Exception;
 

@@ -3,6 +3,7 @@ package com.haejwoing.back.model.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class Comment {
@@ -10,6 +11,8 @@ public class Comment {
     private String content;
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
+    private List like_users;
+
     private int board_idboard;
     private int user_id;
 

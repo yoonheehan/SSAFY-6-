@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/comment")
+@RequestMapping("/board/{board_id}/comment")
 public class CommentController {
 
     @Autowired
@@ -19,14 +19,14 @@ public class CommentController {
 
     @GetMapping("")
     public ResponseEntity<List<Comment>> CommentList(Comment comment) {
-        return new ResponseEntity<List<Comment>>(commentService.getList(), HttpStatus.OK);
+        return new ResponseEntity<List<Comment>>(commentService.getLike(), HttpStatus.OK);
     }
 
 
-    @GetMapping("/{idComment}")
-    public ResponseEntity<Comment> CommentList(@PathVariable int idComment){
-        return new ResponseEntity<Comment>(commentService.get(idComment), HttpStatus.OK);
-    }
+//    @GetMapping("/{idComment}")
+//    public ResponseEntity<Comment> CommentList(@PathVariable int idComment){
+//        return new ResponseEntity<Comment>(commentService.get(idComment), HttpStatus.OK);
+//    }
 
 
     @PostMapping("/save")

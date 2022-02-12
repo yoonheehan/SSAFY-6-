@@ -8,9 +8,11 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    List<Comment> getList();
+//    List<Comment> getList();
 
-    Comment get(int idcomment);
+//    Comment get(int idcomment);
+
+    List<Comment> getLike();
 
     int save(Comment comment);
 
