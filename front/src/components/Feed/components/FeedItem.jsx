@@ -154,6 +154,23 @@ export default function FeedItem({feed, onRemove}) {
       setDetailModalOpen(!detailModalOpen)
     }
 
+    const formatRelativeDate = (date) => {
+      
+      const TEN_SECOND = 10 * 1000;
+      const A_MINUTE = 60 * 1000;
+      const A_HOUR = 60 * A_MINUTE;
+      const A_DAY = 24 * A_HOUR;
+      
+      const diff = new Date() - date
+
+      if (diff < TEN_SECOND) return `방금 전`;
+      if (diff < A_MINUTE) return `${Math.floor(diff / 1000)}초 전`;
+      if (diff < A_HOUR) return `${Math.floor(diff / 1000 / 60)}분 전`;
+      if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 24)}시간 전`;
+      return new Intl.DateTimeFormat('ko-KR').format(date)
+    }
+    
+
   return (
       <>
         <FeedBox>
@@ -163,7 +180,7 @@ export default function FeedItem({feed, onRemove}) {
               {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
               <ProfileName onClick={() => history.push('/profile')}>{userName[feed.userId-1].user_name}</ProfileName>
               {/* <WriteTime>{feed.writetime}분 전</WriteTime> */}
-              <WriteTime>{feed.created_at}분 전</WriteTime>
+              <WriteTime>{formatRelativeDate(feed.created_at)}</WriteTime>
             </div>
             {/* {myId === feed.feedUserId ?  */}
             {myId === feed.userId ? 
@@ -182,7 +199,7 @@ export default function FeedItem({feed, onRemove}) {
           </ProfileBox>
           <ContentBox>
               {/* <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content> */}
-              <Content onClick={() => history.push(`/feed/${feed.idboard}`)}>{feed.content}</Content>
+              <Content>{feed.content}</Content>
               <button onClick={DetailModal}>ddd</button>
               <ContentImgBox>
                 {/* <ImgSlide imgUrl={feed.feedimg}/> */}
