@@ -21,4 +21,6 @@ public interface BoardMapper {
     boolean delete(int boardSeq);
 
     int due_date_id(int due_date_id);
+
+    String find_vote_list(int board_id);
 }

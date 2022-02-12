@@ -73,7 +73,7 @@ const Post = () => {
             vote_contents: vote_contents,
             board_image: JSON.stringify(imgUrl),
             hashArr: JSON.stringify(hashArr),
-			vote_user: JSON.stringify(voteUser),
+			vote_users : JSON.stringify(voteUser),
             due_date: dueDateSec,
             // due_date: dueDate
          },

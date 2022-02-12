@@ -51,5 +51,12 @@
 
     </select>
 
+    <select id="find_vote_list" parameterType="int" resultType="String">
+
+        SELECT vote_users FROM BOARD WHERE idboard = #{board_id}
+
+    </select>
+
+
 
 </mapper>

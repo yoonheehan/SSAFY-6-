@@ -3,6 +3,7 @@ package com.haejwoing.back.controller;
 
 import com.haejwoing.back.model.dto.Board;
 import com.haejwoing.back.model.dto.HashTag;
+import com.haejwoing.back.model.dto.VoteUsers;
 import com.haejwoing.back.model.service.BoardService;
 import com.haejwoing.back.model.service.HashTagService;
 import com.sun.net.httpserver.Authenticator;
@@ -48,6 +49,14 @@ public class BoardController {
     public ResponseEntity<List<Board>> HashTagList(@RequestBody Map<String, String> import_tag_name){
 
         return new ResponseEntity<List<Board>>(hashTagService.getList_hashtag(import_tag_name.get("tag_name")), HttpStatus.OK);
+    }
+
+
+    @PutMapping("/getvoteusers")
+    public ResponseEntity<VoteUsers> VoteUsersList(@RequestBody Map<String, Integer> vote_users){
+
+        return null;
+//        return new ResponseEntity<String>(boardService.get_vote_users(vote_users), HttpStatus.OK);
     }
 
 
