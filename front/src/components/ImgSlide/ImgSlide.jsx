@@ -6,12 +6,13 @@ import "slick-carousel/slick/slick-theme.css";
 export default function ImgSlide(props) {
 
     const settings = {
-    dots: true,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    vertical : false,
+      arrows: false,
+      dots: true,
+      infinite: true,
+      speed: 500,
+      slidesToShow: 1,
+      slidesToScroll: 1,
+      vertical : false,
     };
 
   return (
