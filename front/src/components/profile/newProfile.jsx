@@ -24,7 +24,7 @@ const _ = require('lodash');
 
 const NewProfile = props => {
   const histroy = useHistory();
-  const [nickName, setNickName] = useState('3팀 화이팅');
+  const [nickName, setNickName] = useState('');
   const [radioValue, setRadioValue] = useState('1');
   const radios = [
     { name: '남자', value: '1' },
@@ -50,6 +50,7 @@ const NewProfile = props => {
   const inputRef = useRef();
   const [img, setImg] = useState('');
   const imgRef = useRef(null);
+  const [duplicateCheck, setDuplicateCheck] = useState(false)
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
     credentials: new AWS.CognitoIdentityCredentials({
@@ -113,6 +114,7 @@ const NewProfile = props => {
 
   const onChangeNickName = e => {
     setNickName(e.target.value);
+    setDuplicateCheck(false)
   };
 
   return (
@@ -155,6 +157,7 @@ const NewProfile = props => {
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
                 value={nickName}
+                placeholder='닉네임을 입력해주세요'
                 onChange={onChangeNickName}
               />
               <Button
@@ -168,8 +171,10 @@ const NewProfile = props => {
                       console.log(res);
                       if (res.data === false) {
                         alert('사용가능한 닉네임입니다.');
+                        setDuplicateCheck(true)
                       } else {
                         alert('중복된 닉네임입니다.');
+                        setDuplicateCheck(false)
                       }
                     });
                 }}
@@ -258,13 +263,24 @@ const NewProfile = props => {
           </div>
         </div>
       </section>
-      <Button
-        onClick={submitData}
-        className={styles.button}
-        variant="secondary"
-      >
-        완료
-      </Button>
+      {duplicateCheck ? 
+    <Button
+      onClick={submitData}
+      className={styles.button}
+      variant="secondary"
+    >
+      완료
+    </Button> :
+    <Button
+      disabled
+      onClick={submitData}
+      className={styles.button}
+      variant="secondary"
+    >
+    완료
+    </Button>  
+    }
+      
     </>
   );
 };
