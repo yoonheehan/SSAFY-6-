@@ -157,7 +157,8 @@ const Login = props => {
           <Header />
           <section className={styles.section}>
             <div className={styles.login}>
-              <h1 className={styles.h1}>로그인</h1>
+              <div className={styles.loginWord}>SNS로 로그인하여 서비스를 이용할 수 있습니다.</div>
+              <div className={styles.loginWord}>원하는 SNS로 로그인 해 주세요.</div>
               <ul className={styles.list}>
                 <li className={styles.item}>
                   <GoogleLogin
@@ -220,7 +221,7 @@ const Login = props => {
               </ul>
             </div>
           </section>
-          <Footer />
+          {/* <Footer /> */}
         </div>
       </Portal>
     </>

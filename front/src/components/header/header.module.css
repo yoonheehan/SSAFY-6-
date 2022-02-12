@@ -2,9 +2,21 @@
   width: 100%;
   text-align: center;
   padding: 0.5em;
-  border-bottom: 2px solid black;
+
 }
 
 .logo {
-  width: 200px;
+  width: 220px;
+}
+
+.logoWord {
+  margin-top: 30px;
+}
+
+.logoboy {
+  width: 180px;
+}
+
+.logoboymargin {
+  margin: 25px 0 25px 0;
 }

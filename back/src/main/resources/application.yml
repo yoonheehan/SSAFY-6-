@@ -9,6 +9,7 @@ spring:
     url: jdbc:mysql://localhost:3306/haejwoing?serverTimezone=Asia/Seoul
     username: root
     password: root
+
 #    url: jdbc:mysql://i6c103.p.ssafy.io/haejwoing
 #    username: haejwoing
 #    password: 1234
