@@ -27,6 +27,8 @@ const Post = () => {
    const [revealType, setRevealType] = useState(null) // 공개범위
    const [voteContent, setVoteContent] = useState("") // 내용
    const [voteItems, setVoteItems] = useState(["", ""]) // 투표항목
+   const [voteUser, setVoteUser] = useState([[], []])
+
    const [img, setImg] = useState(null) // 이미지
    const [imgUrl, setImgUrl] = useState(null) // 이미지 url
    const [hashArr, setHashArr] = useState([]) // 해시태그
@@ -71,6 +73,7 @@ const Post = () => {
             vote_contents: vote_contents,
             board_image: JSON.stringify(imgUrl),
             hashArr: JSON.stringify(hashArr),
+			vote_user: JSON.stringify(voteUser),
             due_date: dueDateSec,
             // due_date: dueDate
          },
@@ -130,7 +133,7 @@ const Post = () => {
 
    const addVoteList = () => {
       setVoteItems(oldArray => [...oldArray, ""])
-      console.log(voteItems)
+	  setVoteUser(oldArray => [...oldArray, []])
    }
 
    const removeVoteList = (event, idx) => {
