@@ -19,6 +19,4 @@ public interface BoardService {
 
     boolean delete(int boardSeq);
 
-    List<String> get_vote_users(Map<String, Integer> vote_users);
-
 }

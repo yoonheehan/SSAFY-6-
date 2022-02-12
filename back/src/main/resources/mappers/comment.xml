@@ -4,6 +4,7 @@
 <mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
     <select id = 'getList' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
         SELECT * FROM COMMENT
+        WHERE board_idboard=#{board_idboard} AND user_id=#{user_id}
 
     </select>
 
@@ -19,6 +20,12 @@
         VALUES (#{content}, now(), #{board_idboard}, #{user_id})
 
     </insert>
+    <update id="getNum" parameterType="int">
+
+        UPDATE BOARD SET commentNum = commentNum + 1
+        WHERE idboard = #{boardId}
+
+    </update>
 
     <update id="update" parameterType="comment">
 

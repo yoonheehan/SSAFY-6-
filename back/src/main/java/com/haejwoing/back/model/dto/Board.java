@@ -33,6 +33,7 @@ public class Board {
     private String vote_users;
     private String hashArr;
     private int userId;
+    private int commentNum;
 
     private List hasArrList;
 

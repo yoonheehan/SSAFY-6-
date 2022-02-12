@@ -4,7 +4,9 @@ package com.haejwoing.back.controller;
 import com.haejwoing.back.model.dto.Board;
 import com.haejwoing.back.model.dto.HashTag;
 import com.haejwoing.back.model.dto.VoteUsers;
+import com.haejwoing.back.model.mapper.CommentMapper;
 import com.haejwoing.back.model.service.BoardService;
+import com.haejwoing.back.model.service.CommentService;
 import com.haejwoing.back.model.service.HashTagService;
 import com.sun.net.httpserver.Authenticator;
 import lombok.AllArgsConstructor;
@@ -44,6 +46,7 @@ public class BoardController {
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Board>> getUser(@PathVariable int userId){
         return new ResponseEntity<List<Board>>(boardService.getUser(userId), HttpStatus.OK);
+
     }
 
 
@@ -52,15 +55,6 @@ public class BoardController {
 
         return new ResponseEntity<List<Board>>(hashTagService.getList_hashtag(import_tag_name.get("tag_name")), HttpStatus.OK);
     }
-
-
-    @PutMapping("/getvoteusers")
-    public ResponseEntity<VoteUsers> VoteUsersList(@RequestBody Map<String, Integer> vote_users){
-
-        return null;
-//        return new ResponseEntity<String>(boardService.get_vote_users(vote_users), HttpStatus.OK);
-    }
-
 
 
     @PostMapping("/save")

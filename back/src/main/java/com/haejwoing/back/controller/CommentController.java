@@ -1,6 +1,7 @@
 package com.haejwoing.back.controller;
 
 import com.haejwoing.back.model.dto.Comment;
+import com.haejwoing.back.model.dto.User;
 import com.haejwoing.back.model.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -19,21 +20,28 @@ public class CommentController {
 
     @GetMapping("")
     public ResponseEntity<List<Comment>> CommentList(Comment comment) {
-        return new ResponseEntity<List<Comment>>(commentService.getLike(), HttpStatus.OK);
+        System.out.println(comment);
+        return new ResponseEntity<List<Comment>>(commentService.getList(), HttpStatus.OK);
     }
 
-
-//    @GetMapping("/{idComment}")
-//    public ResponseEntity<Comment> CommentList(@PathVariable int idComment){
-//        return new ResponseEntity<Comment>(commentService.get(idComment), HttpStatus.OK);
+//    @GetMapping("/getLikeUser")
+//    public ResponseEntity<List<Comment>> likeList(Comment comment) {
+//        return new ResponseEntity<List<Comment>>(commentService.getLike(), HttpStatus.OK);
 //    }
 
+//    @GetMapping("/getLike")
+//    public ResponseEntity<Comment> getLike(@PathVariable int userId){
+//        return new ResponseEntity<Comment>(commentService.getLike(userId), HttpStatus.OK);
+//    }
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Comment comment) throws Exception {
+        int boardId = comment.getBoard_idboard();
+        commentService.getNum(boardId);
         if(commentService.save(comment)){
             return new ResponseEntity<String>(HttpStatus.OK);
         }
+
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
 
