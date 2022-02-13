@@ -19,7 +19,7 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    //board_id 로 바꾸기
+
     @GetMapping("/{boardId}")
     public ResponseEntity<List<Comment>> CommentList(@PathVariable int boardId) {
         System.out.println(boardId);
@@ -31,6 +31,7 @@ public class CommentController {
 //        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
 //    }
 
+    // {commentId} 추가?
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
         System.out.println(heart);
@@ -40,7 +41,7 @@ public class CommentController {
 
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
-
+    //likeId, commentId 2개
     @DeleteMapping("/unlike/{userId}")
     public ResponseEntity<String> unlike(@PathVariable int userId){
         if(commentService.unlike(userId)){

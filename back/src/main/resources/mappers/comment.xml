@@ -2,9 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
-    <select id='getList' parameterType="int" resultType="com.haejwoing.back.model.dto.Comment">
+    <select id='getList' parameterType="int" resultType="Map">
         SELECT * FROM COMMENT
-        WHERE board_idboard=#{boardId}
+        LEFT OUTER JOIN USER
+        ON COMMENT.user_id=USER.id
+        WHERE board_idboard=#{board_idboard}
 
     </select>
 
@@ -16,7 +18,7 @@
 
     <delete id="unlike" parameterType="com.haejwoing.back.model.dto.Heart">
         DELETE FROM COMMENT_LIKES
-        where user_id=#{user_id}
+        where  user_id=#{user_id}
 
     </delete>
 
