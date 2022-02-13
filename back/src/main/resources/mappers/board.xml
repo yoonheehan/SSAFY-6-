@@ -24,8 +24,8 @@
     <insert id="save" parameterType="com.haejwoing.back.model.dto.Board" >
 
 
-    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, vote_users, userId, hashArr)
-    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, unix_timestamp(now()), #{due_date} , #{vote_contents}, #{vote_users}, #{userId}, #{hashArr})
+    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, userId, hashArr)
+    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, unix_timestamp(now()), #{due_date} , #{vote_contents}, #{userId}, #{hashArr})
 
 
     </insert>
