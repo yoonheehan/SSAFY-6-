@@ -1,6 +1,7 @@
 package com.haejwoing.back.model.mapper;
 
 import com.haejwoing.back.model.dto.Comment;
+import com.haejwoing.back.model.dto.Heart;
 import com.haejwoing.back.model.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 
@@ -13,9 +14,9 @@ public interface CommentMapper {
 
     Comment get(int idcomment);
 
-//    List<Comment> getLikeUser();
+    int like(Heart heart);
 
-    boolean getLike(int userId);
+    boolean unlike(int userId);
 
     int save(Comment comment);
 

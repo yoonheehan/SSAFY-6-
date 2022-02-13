@@ -1,6 +1,7 @@
 package com.haejwoing.back.model.service;
 
 import com.haejwoing.back.model.dto.Comment;
+import com.haejwoing.back.model.dto.Heart;
 import com.haejwoing.back.model.dto.User;
 
 import java.util.List;
@@ -11,9 +12,9 @@ public interface CommentService {
 
     Comment get(int idcomment);
 
-//    List<Comment> getLikeUser();
+    boolean like(Heart heart);
 
-    boolean getLike(User user);
+    boolean unlike(int userId);
 
     boolean save(Comment comment) throws Exception;
 

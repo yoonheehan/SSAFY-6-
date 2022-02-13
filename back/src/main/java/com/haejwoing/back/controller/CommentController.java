@@ -1,6 +1,7 @@
 package com.haejwoing.back.controller;
 
 import com.haejwoing.back.model.dto.Comment;
+import com.haejwoing.back.model.dto.Heart;
 import com.haejwoing.back.model.dto.User;
 import com.haejwoing.back.model.service.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/board/{board_id}/comment")
+@RequestMapping("/comment")
 public class CommentController {
 
     @Autowired
@@ -24,15 +25,28 @@ public class CommentController {
         return new ResponseEntity<List<Comment>>(commentService.getList(), HttpStatus.OK);
     }
 
-//    @GetMapping("/getLikeUser")
-//    public ResponseEntity<List<Comment>> likeList(Comment comment) {
-//        return new ResponseEntity<List<Comment>>(commentService.getLike(), HttpStatus.OK);
-//    }
+    @GetMapping("/{commentId}")
+    public ResponseEntity<Comment> getComment(@PathVariable int commentId) {
+        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
+    }
 
-//    @GetMapping("/getLike")
-//    public ResponseEntity<Comment> getLike(@PathVariable int userId){
-//        return new ResponseEntity<Comment>(commentService.getLike(userId), HttpStatus.OK);
-//    }
+    @PostMapping("/like")
+    public ResponseEntity<String> like(@RequestBody Heart heart) {
+        System.out.println(heart);
+        if(commentService.like(heart)){
+            return new ResponseEntity<String>(HttpStatus.OK);
+        }
+
+        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+    }
+
+    @DeleteMapping("/unlike/{userId}")
+    public ResponseEntity<String> unlike(@PathVariable int userId){
+        if(commentService.unlike(userId)){
+            return new ResponseEntity<String>(HttpStatus.OK);
+        }
+        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+    }
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Comment comment) throws Exception {
