@@ -1,74 +1,27 @@
-import React, { useEffect, useState, useRef } from 'react';
-import { Badge, Button, Card, Figure, ListGroup } from 'react-bootstrap';
-import styles from './postList.module.css';
-import { FaRegComment } from 'react-icons/fa';
-import { FcLike } from 'react-icons/fc';
-import Data from './data.js';
-import PostItem from './postItem';
-import { useHistory, useParams } from 'react-router-dom';
 import axios from 'axios';
-
-const NewPostList = [
-  {
-    id: 5,
-    title: '제목3 테스트입니다.',
-    comments: 0,
-    like: 0,
-    regDate: '2022-01-26',
-    exDate: '2022-01-27',
-  },
-  {
-    id: 6,
-    title: '제목3 테스트입니다.',
-    comments: 0,
-    like: 0,
-    regDate: '2022-01-26',
-    exDate: '2022-01-27',
-  },
-  {
-    id: 7,
-    title: '제목3 테스트입니다.',
-    comments: 0,
-    like: 0,
-    regDate: '2022-01-26',
-    exDate: '2022-01-27',
-  },
-];
+import styles from './postList.module.css';
+import React, { useEffect, useState } from 'react';
+import { Badge, ListGroup } from 'react-bootstrap';
+import { useHistory, useParams } from 'react-router-dom';
+import PostItem from './postItem';
 
 const PostList = props => {
-  const history = useHistory();
-  if (sessionStorage.getItem('loginedUser') === null) {
-    history.push('/')
-  }
-  let [post, setPost] = useState([...Data]);
-  const [data, setData] = useState([]);
-  let [commentBedge, setCommentBedge] = useState(true);
-  let [redDateBedge, setRegDateBedge] = useState(true);
-  let [exDateBedge, setExDateBedge] = useState(true);
   const { id } = useParams();
-
-  const scrollEvent = () => {
-    const scrollHeight = document.documentElement.scrollHeight;
-    const scrollTop = document.documentElement.scrollTop;
-    const clientHeight = document.documentElement.clientHeight;
-
-    if (scrollTop + clientHeight >= scrollHeight - 10) {
-      // 데이터받고 피드추가
-      // fetchdata() => newfeed
-
-      setPost(prevPost => [...prevPost, ...NewPostList]);
-    }
-  };
+  const history = useHistory();
+  const [data, setData] = useState([]);
+  const [voteBedge, setVoteBedge] = useState(true);
+  const [exDateBedge, setExDateBedge] = useState(true);
+  const [commentBedge, setCommentBedge] = useState(true);
+  const [redDateBedge, setRegDateBedge] = useState(true);
 
   useEffect(() => {
-    window.addEventListener('scroll', scrollEvent);
-  }, [scrollEvent]);
+    if (sessionStorage.getItem('loginedUser') === null) {
+      history.push('/');
+    }
+  });
 
   useEffect(() => {
     axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
-      console.log('???');
-      console.log(res);
-      console.log(res.data.length);
       const temp = [];
       res.data.forEach(value => {
         temp.push(value);
@@ -77,25 +30,58 @@ const PostList = props => {
     });
   }, []);
 
-  useEffect(() => {
-    console.log(data);
-  });
-
   return (
     <>
       <h1 style={{ marginTop: '90px' }}>
         <b>글 작성 목록</b>
       </h1>
       <div className={styles.search}>
+        {voteBedge ? (
+          <Badge
+            style={{ cursor: 'pointer', marginRight: '10px', fontSize: '15px' }}
+            pill
+            bg="secondary"
+            onClick={() => {
+              let newVote = [...data];
+              newVote.sort((a, b) => b.vote_users - a.vote_users);
+              setData(newVote);
+              setVoteBedge(false);
+            }}
+          >
+            #투표
+          </Badge>
+        ) : (
+          <Badge
+            style={{
+              cursor: 'pointer',
+              marginRight: '10px',
+              fontSize: '15px',
+            }}
+            pill
+            bg="dark"
+            onClick={() => {
+              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+                const temp = [];
+                res.data.forEach(value => {
+                  temp.push(value);
+                });
+                setData(temp);
+              });
+              setVoteBedge(true);
+            }}
+          >
+            #투표
+          </Badge>
+        )}
         {commentBedge ? (
           <Badge
             style={{ cursor: 'pointer', marginRight: '10px', fontSize: '15px' }}
             pill
             bg="secondary"
             onClick={() => {
-              let newComment = [...post];
-              newComment.sort((a, b) => b.comments - a.comments);
-              setPost(newComment);
+              let newComment = [...data];
+              newComment.sort((a, b) => b.commentNum - a.commentNum);
+              setData(newComment);
               setCommentBedge(false);
             }}
           >
@@ -111,7 +97,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              console.log('새로운 데이터');
+              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+                const temp = [];
+                res.data.forEach(value => {
+                  temp.push(value);
+                });
+                setData(temp);
+              });
               setCommentBedge(true);
             }}
           >
@@ -124,11 +116,11 @@ const PostList = props => {
             pill
             bg="secondary"
             onClick={() => {
-              let newRegDate = [...post];
+              let newRegDate = [...data];
               newRegDate.sort(
-                (a, b) => new Date(b.regDate) - new Date(a.regDate)
+                (a, b) => new Date(b.created_at) - new Date(a.created_at)
               );
-              setPost(newRegDate);
+              setData(newRegDate);
               setRegDateBedge(false);
             }}
           >
@@ -144,7 +136,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              console.log('새로운 데이터');
+              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+                const temp = [];
+                res.data.forEach(value => {
+                  temp.push(value);
+                });
+                setData(temp);
+              });
               setRegDateBedge(true);
             }}
           >
@@ -157,9 +155,11 @@ const PostList = props => {
             pill
             bg="secondary"
             onClick={() => {
-              let newExDate = [...post];
-              newExDate.sort((a, b) => new Date(b.exDate) - new Date(a.exDate));
-              setPost(newExDate);
+              let newExDate = [...data];
+              newExDate.sort(
+                (a, b) => new Date(b.due_date) - new Date(a.due_date)
+              );
+              setData(newExDate);
               setExDateBedge(false);
             }}
           >
@@ -175,7 +175,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              console.log('새로운 데이터');
+              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+                const temp = [];
+                res.data.forEach(value => {
+                  temp.push(value);
+                });
+                setData(temp);
+              });
               setExDateBedge(true);
             }}
           >
@@ -186,7 +192,7 @@ const PostList = props => {
       <div className={styles.body}>
         <ListGroup as="ol" numbered>
           {data.map((item, index) => {
-            return <PostItem post={data[index]} />;
+            return <PostItem key={index} post={data[index]} />;
           })}
         </ListGroup>
       </div>
