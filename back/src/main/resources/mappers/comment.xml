@@ -2,15 +2,9 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
-    <select id='getList' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
+    <select id='getList' parameterType="int" resultType="com.haejwoing.back.model.dto.Comment">
         SELECT * FROM COMMENT
-        WHERE board_idboard=#{board_idboard} AND user_id=#{user_id}
-
-    </select>
-
-    <select id='get' parameterType="com.haejwoing.back.model.dto.Comment" resultType="com.haejwoing.back.model.dto.Comment">
-        SELECT * FROM COMMENT
-        WHERE idcomment=#{commentId}
+        WHERE board_idboard=#{boardId}
 
     </select>
 

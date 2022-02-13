@@ -8,9 +8,9 @@ import java.util.List;
 
 public interface CommentService {
 
-    List<Comment> getList();
+    List<Comment> getList(int boardId);
 
-    Comment get(int idcomment);
+//    Comment get(int idcomment);
 
     boolean like(Heart heart);
 

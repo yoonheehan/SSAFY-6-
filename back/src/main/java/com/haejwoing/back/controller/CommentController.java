@@ -19,16 +19,17 @@ public class CommentController {
     @Autowired
     private CommentService commentService;
 
-    @GetMapping("")
-    public ResponseEntity<List<Comment>> CommentList(Comment comment) {
-        System.out.println(comment);
-        return new ResponseEntity<List<Comment>>(commentService.getList(), HttpStatus.OK);
+    //board_id 로 바꾸기
+    @GetMapping("/{boardId}")
+    public ResponseEntity<List<Comment>> CommentList(@PathVariable int boardId) {
+        System.out.println(boardId);
+        return new ResponseEntity<List<Comment>>(commentService.getList(boardId), HttpStatus.OK);
     }
-
-    @GetMapping("/{commentId}")
-    public ResponseEntity<Comment> getComment(@PathVariable int commentId) {
-        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
-    }
+//
+//    @GetMapping("/{commentId}")
+//    public ResponseEntity<Comment> getComment(@PathVariable int commentId) {
+//        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
+//    }
 
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {

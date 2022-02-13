@@ -21,15 +21,15 @@ public class CommentServiceImpl implements CommentService{
     private SqlSession sqlSession;
 
     @Override
-    public List<Comment> getList() {
-        return sqlSession.getMapper(CommentMapper.class).getList();
+    public List<Comment> getList(int boardId) {
+        return sqlSession.getMapper(CommentMapper.class).getList(boardId);
     }
 
-    @Override
-    public Comment get(int idcomment) {
-
-        return sqlSession.getMapper(CommentMapper.class).get(idcomment);
-    }
+//    @Override
+//    public Comment get(int idcomment) {
+//
+//        return sqlSession.getMapper(CommentMapper.class).get(idcomment);
+//    }
 
     @Override
     public boolean like(Heart heart) {

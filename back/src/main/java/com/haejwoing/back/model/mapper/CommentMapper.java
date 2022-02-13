@@ -10,9 +10,9 @@ import java.util.List;
 @Mapper
 public interface CommentMapper {
 
-    List<Comment> getList();
+    List<Comment> getList(int boardId);
 
-    Comment get(int idcomment);
+//    Comment get(int idcomment);
 
     int like(Heart heart);
 
