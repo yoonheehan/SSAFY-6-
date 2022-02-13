@@ -4,6 +4,7 @@ import com.haejwoing.back.model.dto.User;
 import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 public interface UserMapper {
@@ -12,7 +13,7 @@ public interface UserMapper {
     User searchByEmail(String email);
     List<User> listAllUser();
     void withdrawUser(int id);
-    void setPoint(String email);
+    void setPoint(Map<String, Object> map);
     List<User> listFollower(int id);
     List<User> listFollow(int id);
     int getUserId(String email);

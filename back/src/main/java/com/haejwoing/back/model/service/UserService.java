@@ -3,6 +3,7 @@ package com.haejwoing.back.model.service;
 import com.haejwoing.back.model.dto.User;
 
 import java.util.List;
+import java.util.Map;
 
 
 public interface UserService {
@@ -10,7 +11,7 @@ public interface UserService {
     List<User> listAllUser();
     User searchByEmail(String email);
     void withdrawUser(int id);
-    void setPoint(String email);
+    void setPoint(Map<String, Object> map);
     List<User> listFollower(int id);
     List<User> listFollow(int id);
     int getUserId(String email);

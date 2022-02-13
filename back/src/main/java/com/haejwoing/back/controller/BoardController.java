@@ -6,10 +6,7 @@ import com.haejwoing.back.model.dto.HashTag;
 import com.haejwoing.back.model.dto.VoteUsers;
 import com.haejwoing.back.model.dto.VoteUsersImport;
 import com.haejwoing.back.model.mapper.CommentMapper;
-import com.haejwoing.back.model.service.BoardService;
-import com.haejwoing.back.model.service.CommentService;
-import com.haejwoing.back.model.service.HashTagService;
-import com.haejwoing.back.model.service.VoteUsersService;
+import com.haejwoing.back.model.service.*;
 import com.sun.net.httpserver.Authenticator;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +26,9 @@ public class BoardController {
 
     @Autowired
     private BoardService boardService;
+
+    @Autowired
+    private UserService userService;
 
     @Autowired
     private HashTagService hashTagService;
@@ -85,6 +85,16 @@ public class BoardController {
    public ResponseEntity<String> save(@RequestBody Board board) throws Exception {
 
         if(boardService.save(board)){
+
+            Map<String, Object> map = new HashMap<>();
+            int userId = board.getUserId();
+            double score = 5;
+            map.put("userId", userId);
+            map.put("score", score);
+
+            // 글 등록한 유저아이디 가져와서
+            System.out.println(userId);
+            userService.setPoint(map);
 
             if(hashTagService.save(board)) {
 

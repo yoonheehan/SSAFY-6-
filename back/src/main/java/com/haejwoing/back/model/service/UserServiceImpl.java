@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Map;
 
 
 @Service
@@ -49,8 +50,8 @@ public class UserServiceImpl implements UserService{
     }
 
     @Override
-    public void setPoint(String email) {
-        sqlSession.getMapper(UserMapper.class).setPoint(email);
+    public void setPoint(Map<String, Object> map) {
+        sqlSession.getMapper(UserMapper.class).setPoint(map);
     }
 
     @Override

@@ -7,9 +7,15 @@
         values (#{nickname}, #{email}, #{gender}, #{role}, #{birth}, #{userStatus}, #{point}, #{image})
     </insert>
 
-<!--    <insert id="setPoint" parameterType="String">-->
-<!--        insert into point(email) values (#{email})-->
+<!--    <insert id="setPoint" parameterType="int">-->
+<!--        insert into user values (point) where id = #{id}-->
 <!--    </insert>-->
+
+    <update id="setPoint" parameterType="map">
+        update user
+        set point= point + #{score}
+        where id=#{userId}
+    </update>
 
     <select id="searchByEmail" parameterType="String" resultType="User">
         select * from user
