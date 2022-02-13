@@ -34,7 +34,7 @@ export default function TestFeed() {
     useEffect(() => {
         axios({
           method: 'get',
-          url: `http://localhost:8080/board/72`,
+          url: `http://localhost:8080/board/74`,
           // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         })
           .then(response => {
@@ -58,7 +58,7 @@ export default function TestFeed() {
     const loadcomment = () =>{
     axios({
       method: 'get',
-      url: `http://localhost:8080/comment/2`,
+      url: `http://localhost:8080/comment/74`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
@@ -137,6 +137,11 @@ export default function TestFeed() {
                 </CommentForm>
               </div>
               <button onClick={deletecomment}>삭제하기</button>
+              {commentData && commentData.map((comment) => 
+              <div>
+                내용 : {comment.content} 작성자 : {comment.user_id}
+              </div>
+              )}
         </div>
   )
 }

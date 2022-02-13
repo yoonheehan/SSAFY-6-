@@ -14,6 +14,7 @@ import Alarm from './components/Alarm/Alarm.jsx';
 import Feed from './components/Feed/Feed';
 import PostList from './components/postList/postList';
 import Post from './components/Post/Post.jsx';
+import FindFriend from './components/FindFriend/FindFriend';
 import { useEffect, useState } from 'react';
 
 import FeedTest from './components/TestFeed'
@@ -58,6 +59,7 @@ function App() {
           <Route exact path="/user/:id/withdraw" component={Withdraw} />
           <Route exact path="/board/user/:id/postList" component={PostList} />
           <Route exact path="/post" component={Post} />
+          <Route exact path="/user/find/:word" component={FindFriend} />
           <Route exact path="/feedtest" component={FeedTest} />
         </Switch>
       </BrowserRouter>
