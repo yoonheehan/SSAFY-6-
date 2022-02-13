@@ -88,9 +88,4 @@ public class UserServiceImpl implements UserService{
     public Boolean unFollow(int toUser, int fromUser) {
         return sqlSession.getMapper(UserMapper.class).unFollow(toUser, fromUser) == 1;
     }
-
-    @Override
-    public List<User> findByNickname(String nickname) {
-        return sqlSession.getMapper(UserMapper.class).findByNickname(nickname);
-    }
 }

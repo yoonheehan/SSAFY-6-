@@ -130,16 +130,4 @@ public class UserController {
 //        }else return new ResponseEntity<>(false, HttpStatus.OK);
 
     }
-
-    @ApiOperation(value = "해당 닉네임 유저 찾기")
-    @GetMapping("/find/{nickname}")
-    public ResponseEntity<List<User>> findUserByNickname(@PathVariable @ApiParam(value = "해당 닉네임의 유저를 찾아 반환") String nickname){
-        log.info("검색 닉네임 : {}", nickname);
-        List<User> list = userService.findByNickname(nickname);
-        if(list.isEmpty()){
-            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-        }else{
-            return new ResponseEntity<>(list, HttpStatus.OK);
-        }
-    }
 }

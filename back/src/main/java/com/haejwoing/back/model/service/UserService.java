@@ -21,5 +21,4 @@ public interface UserService {
     Boolean addFollow(int id, int toUser);
     Boolean checkFollow(int id, int loginedId);
     Boolean unFollow(int toUser, int fromUser);
-    List<User> findByNickname(String nickname);
 }

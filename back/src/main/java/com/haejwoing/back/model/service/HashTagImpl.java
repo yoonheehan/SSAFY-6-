@@ -121,6 +121,11 @@ public class HashTagImpl implements HashTagService{
     @Override
     public boolean save(Board board) {
 
+    // 빈리스트면
+    if(board.getHashArr().equals("[]")){
+        return true;
+    }else{
+
         String text = board.getHashArr().substring(1,board.getHashArr().length()-1);
 
         List<String> list_of_arr_string = List.of(text.split(","));
@@ -134,12 +139,6 @@ public class HashTagImpl implements HashTagService{
         int due_date_id = sqlSession.getMapper(BoardMapper.class).due_date_id(board.getDue_date());
 
 
-        // 빈리스트면
-        if(list_of_arr_string.isEmpty()) {
-
-            return true;
-
-        }else{
 
             for (int i = 0; i < list_of_arr_string.size(); i++) {
 

@@ -56,12 +56,23 @@ public class BoardImpl implements BoardService{
 
     @Override
     public List<Integer> getUserid(int boardId) {
-        return sqlSession.getMapper(BoardMapper.class).getUserId(boardId);
+
+        List<Integer> user_id = sqlSession.getMapper(BoardMapper.class).getUserId(boardId);
+        if(user_id.isEmpty()){
+            user_id.add(0);
+        }
+
+        return user_id;
     }
 
     @Override
     public List<Integer> getIdx(int boardId) {
-        return sqlSession.getMapper(BoardMapper.class).getIdx(boardId);
+
+        List<Integer> board_id=sqlSession.getMapper(BoardMapper.class).getIdx(boardId);
+        if(board_id.isEmpty()){
+            board_id.add(0);
+        }
+        return board_id;
     }
 
 

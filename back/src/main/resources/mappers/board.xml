@@ -65,6 +65,10 @@
         select idx from vote_users where board_idboard=#{boardId}
     </select>
 
+    <update id="update_board_vote_num" parameterType="Hashmap">
 
+    UPDATE BOARD SET voteNum = #{voteNum} WHERE idboard = #{idboard}
+
+    </update>
 
 </mapper>
