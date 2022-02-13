@@ -74,14 +74,14 @@ const NavBar = () => {
               setClicked(false);
             }}
           ></i>
-          <i
+          {/* <i
             style={{ cursor: 'pointer', color: "#fff" }}
             className="h1 px-4 bi bi-people-fill"
             onClick={() => {
               window.location.replace(`/user/${userId}/followlist`);
               setClicked(false);
             }}
-          ></i>
+          ></i> */}
           <i
             style={{ cursor: 'pointer', color: "#fff" }}
             className="h1 px-4 bi bi-person-fill"

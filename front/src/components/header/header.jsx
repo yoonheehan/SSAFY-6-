@@ -7,7 +7,7 @@ const Header = props => (
       <img className={styles.logo} src="images/login1.png" alt="logo" />
     </div>
     <div className={styles.logoboymargin}>
-      <img className={styles.logoboy} src="images/login2.png" alt="logo" />
+      <img className={styles.logoboy} src="images/logo3.png" alt="logo" />
     </div>
   </header>
 );

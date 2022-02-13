@@ -157,8 +157,6 @@ const Login = props => {
           <Header />
           <section className={styles.section}>
             <div className={styles.login}>
-              <div className={styles.loginWord}>SNS로 로그인하여 서비스를 이용할 수 있습니다.</div>
-              <div className={styles.loginWord}>원하는 SNS로 로그인 해 주세요.</div>
               <ul className={styles.list}>
                 <li className={styles.item}>
                   <GoogleLogin
@@ -171,7 +169,7 @@ const Login = props => {
                       >
                         <button className={styles.google}>
                           <FcGoogle className={styles.icon} />
-                          Google 계정으로 로그인
+                          Google 로그인
                         </button>
                       </div>
                     )}
@@ -191,7 +189,7 @@ const Login = props => {
                       >
                         <button className={styles.naver}>
                           <SiNaver className={styles.icon} />
-                          Naver 계정으로 로그인
+                          Naver 로그인
                         </button>
                       </div>
                     )}
@@ -209,7 +207,7 @@ const Login = props => {
                       >
                         <button className={styles.kakao}>
                           <RiKakaoTalkFill className={styles.icon} />
-                          Kakao 계정으로 로그인
+                          Kakao 로그인
                         </button>
                       </div>
                     )}
