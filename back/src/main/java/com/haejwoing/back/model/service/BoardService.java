@@ -19,4 +19,9 @@ public interface BoardService {
 
     boolean delete(int boardSeq);
 
+    List<Integer> getUserid(int boardId);
+
+    List<Integer> getIdx(int boardId);
+
+
 }

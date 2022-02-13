@@ -57,6 +57,14 @@
 
     </select>
 
+    <select id="getUserId" parameterType="int" resultType="int">
+        select user_id from vote_users where board_idboard=#{boardId}
+    </select>
+
+    <select id="getIdx" parameterType="int" resultType="int">
+        select idx from vote_users where board_idboard=#{boardId}
+    </select>
+
 
 
 </mapper>
