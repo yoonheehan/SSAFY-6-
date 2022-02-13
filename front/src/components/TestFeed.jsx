@@ -25,19 +25,24 @@ const SubmitBtn = styled.input`
 
 export default function TestFeed() {
     const [boardId, setBoardId] = useState('')
+    const [boardData, setBoardData] = useState('')
     const [commentData, setCommentData] = useState('')
     const [commentContent, setCommentContent] = useState("");
     const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
 
+
     useEffect(() => {
         axios({
           method: 'get',
-          url: `http://localhost:8080/board/71`,
+          url: `http://localhost:8080/board/75`,
           // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         })
           .then(response => {
             console.log(response.data);
             setBoardId(response.data.idboard);
+            console.log(response.data.vote_contents.split(' '))
+            setBoardData(response.data.vote_contents.split(' '))
+            console.log(response.data.vote_contents.split(' '))
           })
           .catch(error => {
             console.log('feed requset fail : ' + error);
@@ -47,22 +52,26 @@ export default function TestFeed() {
           });
         },[])
     console.log(boardId)
+    console.log('boardData : ', boardData)
+    boardData.map((board) => console.log(board))
+    console.log(['chick'].map((hi) => console.log(hi)))
 
         
 
     const loadcomment = () =>{
     axios({
       method: 'get',
-      url: `http://localhost:8080/comment/${boardId}`,
+      url: `http://localhost:8080/board/${boardId}/comment`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
-        console.log(response.data);
+        console.log('response : ' , response.data);
         setCommentData(response.data)
       })
-      console.log('commentData :' , commentData)
+
     }
 
+    
     function getcomment(event) {
         const commentContent = event.target.value
         setCommentContent(event.target.value)
@@ -70,31 +79,33 @@ export default function TestFeed() {
     }
     
     function handleSubmit(event) {
-        axios({
-            method: 'put',
-            url: `http://localhost:8080/comment/update`,
-            data: {
-                content : commentContent,
-                idComment : 2,
-                
-            }
-          })
-            .then(response => {
-              console.log('수정완료');
-            })
-
         // axios({
-        //     method: 'post',
-        //     url: `http://localhost:8080/comment/save`,
+        //     method: 'put',
+        //     url: `http://localhost:8080/board/${boardId}/comment/update`,
         //     data: {
         //         content : commentContent,
         //         board_idboard : boardId,
-        //         user_id : loginedId,
+        //         idComment : 18,
+        //         user_id: loginedId,
+                
         //     }
         //   })
         //     .then(response => {
-        //       console.log('작성완료');
+        //       console.log('수정완료');
         //     })
+
+        axios({
+            method: 'post',
+            url: `http://localhost:8080/board/${boardId}/comment/save`,
+            data: {
+                content : commentContent,
+                board_idboard : boardId,
+                user_id : loginedId,
+            }
+          })
+            .then(response => {
+              console.log('작성완료');
+            })
         setCommentContent('')
         event.preventDefault()
     }
@@ -103,7 +114,7 @@ export default function TestFeed() {
     const deletecomment = () => {
         axios({
             method: 'delete',
-            url: `http://localhost:8080/comment/delete/1`,
+            url: `http://localhost:8080/board/${boardId}/comment/delete/18`,
           })
             .then(response => {
               console.log('삭제완료');
