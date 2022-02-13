@@ -34,7 +34,7 @@ export default function TestFeed() {
     useEffect(() => {
         axios({
           method: 'get',
-          url: `http://localhost:8080/board/75`,
+          url: `http://localhost:8080/board/72`,
           // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         })
           .then(response => {
@@ -51,17 +51,14 @@ export default function TestFeed() {
             console.log('feed request end');
           });
         },[])
-    console.log(boardId)
-    console.log('boardData : ', boardData)
-    boardData.map((board) => console.log(board))
-    console.log(['chick'].map((hi) => console.log(hi)))
+
 
         
 
     const loadcomment = () =>{
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/${boardId}/comment`,
+      url: `http://localhost:8080/comment/2`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
@@ -77,6 +74,7 @@ export default function TestFeed() {
         setCommentContent(event.target.value)
 
     }
+    console.log(loginedId, boardId)
     
     function handleSubmit(event) {
         // axios({
@@ -93,10 +91,9 @@ export default function TestFeed() {
         //     .then(response => {
         //       console.log('수정완료');
         //     })
-
         axios({
             method: 'post',
-            url: `http://localhost:8080/board/${boardId}/comment/save`,
+            url: `http://localhost:8080/comment/save`,
             data: {
                 content : commentContent,
                 board_idboard : boardId,
@@ -114,7 +111,7 @@ export default function TestFeed() {
     const deletecomment = () => {
         axios({
             method: 'delete',
-            url: `http://localhost:8080/board/${boardId}/comment/delete/18`,
+            url: `http://localhost:8080/comment/delete/18`,
           })
             .then(response => {
               console.log('삭제완료');
