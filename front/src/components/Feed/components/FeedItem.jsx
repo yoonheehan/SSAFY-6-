@@ -6,6 +6,7 @@ import FeedEditModal from './FeedEditModal';
 import ImgSlide from '../../ImgSlide/ImgSlide';
 import CommentWrite from '../comments/CommentWrite';
 import DetailContent from './DetailContent';
+import axios from 'axios'
 
 const FeedBox = styled.div`
   border: 1px solid #bdcbdd;
@@ -103,11 +104,14 @@ const userName = [
 
 export default function FeedItem({feed, onRemove}) {
     const history = useHistory();
-    const myId = 1
+    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     const [selected, setSelected] = useState(false)
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [commentModalOpen, setCommentModalOpen] = useState(false)
     const [detailModalOpen, setDetailModalOpen] = useState(false)
+    const [userData ,setUserData] = useState(null);
+    const [firstNickName, setFirstNickName] = useState(null);
+    const [voteUsers, setVoteUsers] = useState(null);
 
     const ref = useRef(null)
     const ref2 = useRef(null)
@@ -121,9 +125,47 @@ export default function FeedItem({feed, onRemove}) {
     }
 
     useEffect(() => {
-      // console.log(feed.vote_contents[0])
-      console.log(ref.current, "ref1")
-      console.log(ref2.current, "ref2")
+      const ID = feed.userId
+      console.log(feed.vote_contents)
+
+      const tempArray = []
+      for (let i = 0; i < feed.vote_contents.length; i++) {
+        tempArray.push([])
+      }
+
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/user/${ID}`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      })
+        .then(res => {
+          console.log(res, "user데이터");
+          setUserData(res.data);
+          setFirstNickName(res.data.info.nickname)
+        })
+        .catch(err => {
+          console.log('에러났어요');
+        })
+        .finally(() => {
+          console.log('profile request end');
+        });
+      
+      axios({
+        method: 'get',
+        url: 'https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/list',
+      })
+        .then(res => {
+          console.log(res.data)
+          for (let i = 0; i < res.data.idx.length; i++) {
+            tempArray[res.data.idx[i]].push(res.data.userid[i])
+          }
+
+          setVoteUsers(tempArray)
+        })
+        .catch(err => {
+          console.log(err)
+        })
+
       const handleClickOutside = (event) => {
         if (selected && ref.current && !ref.current.contains(event.target)) {
           setSelected(false)
@@ -139,7 +181,7 @@ export default function FeedItem({feed, onRemove}) {
       return () => {
           document.removeEventListener("mousedown", handleClickOutside)
       }
-    }, [selected, modalIsOpen])
+    }, [selected, modalIsOpen, voteUsers])
 
     const handleCommentClick = (event) => {
       setCommentModalOpen(!commentModalOpen)
@@ -154,6 +196,22 @@ export default function FeedItem({feed, onRemove}) {
       setDetailModalOpen(!detailModalOpen)
     }
 
+    const typeButton = (type) => {
+      if (type === 1) {
+        return (
+          <div className="type_button" style={{background:"#1b59cc"}}>투표</div>
+        )
+      } else if (type === 2) {
+        return (
+          <div className="type_button" style={{background:"#6913b9"}}>대결</div>
+        )
+      } else if (type === 3) {
+        return (
+          <div className="type_button" style={{background:"#bb18a0"}}>찬반</div>
+        )
+      }
+    }
+
     const formatRelativeDate = (date) => {
       
       const TEN_SECOND = 10 * 1000;
@@ -161,12 +219,12 @@ export default function FeedItem({feed, onRemove}) {
       const A_HOUR = 60 * A_MINUTE;
       const A_DAY = 24 * A_HOUR;
       
-      const diff = new Date() - date
+      const diff = Date.now() - date
 
       if (diff < TEN_SECOND) return `방금 전`;
       if (diff < A_MINUTE) return `${Math.floor(diff / 1000)}초 전`;
       if (diff < A_HOUR) return `${Math.floor(diff / 1000 / 60)}분 전`;
-      if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 24)}시간 전`;
+      if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 60)}시간 전`;
       return new Intl.DateTimeFormat('ko-KR').format(date)
     }
     
@@ -175,12 +233,16 @@ export default function FeedItem({feed, onRemove}) {
       <>
         <FeedBox>
           <ProfileBox>
-            <ProfileImg src='/images/baseprofile.jpg' alt='프사' onClick={() => history.push('/profile')}/>
+            <ProfileImg
+              src={userData && userData.info.image.length > 0 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+              userData.info.image : '/images/baseprofile.jpg'}
+              alt='프사'
+              onClick={() => history.push('/profile')}/>
             <div>
               {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
-              <ProfileName onClick={() => history.push('/profile')}>{userName[feed.userId-1].user_name}</ProfileName>
+              <ProfileName onClick={() => history.push('/profile')}>{firstNickName}</ProfileName>
               {/* <WriteTime>{feed.writetime}분 전</WriteTime> */}
-              <WriteTime>{formatRelativeDate(feed.created_at)}</WriteTime>
+              <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>
             </div>
             {/* {myId === feed.feedUserId ?  */}
             {myId === feed.userId ? 
@@ -199,8 +261,11 @@ export default function FeedItem({feed, onRemove}) {
           </ProfileBox>
           <ContentBox>
               {/* <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content> */}
-              <Content>{feed.content}</Content>
-              <button onClick={DetailModal}>ddd</button>
+              <Content>
+                {typeButton(feed.type)}
+                {feed.content}
+              </Content>
+              <button onClick={DetailModal}>참여하기</button>
               <ContentImgBox>
                 {/* <ImgSlide imgUrl={feed.feedimg}/> */}
                 <ImgSlide imgUrl={feed.board_image}/>
@@ -209,12 +274,13 @@ export default function FeedItem({feed, onRemove}) {
           </ContentBox>
           <HashCommentBox>
             <HashTagBox>
-              { feed.hashArr.map((hashTag, index) => 
+              { feed.hashArr && feed.hashArr.map((hashTag, index) => 
                 <div key={index}>
                   <HashTag>{hashTag}</HashTag>
                 </div>
               )}
             </HashTagBox>
+            {/* <div>{voteUsers.idx.length}</div> */}
             <Comments onClick={handleCommentClick}>22개</Comments>
           </HashCommentBox>
         </FeedBox>
@@ -227,10 +293,14 @@ export default function FeedItem({feed, onRemove}) {
         </div>
 
         <div className={detailModalOpen ? "detail_modal active" : "detail_modal"}>
-          <DetailContent
-            feed={feed} 
-            onClose={DetailModal}
-          />
+          { voteUsers &&
+            <DetailContent
+              feed={feed}
+              votes={voteUsers}
+              onClose={DetailModal}
+            />
+          }
+          
         </div>
 
         <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>

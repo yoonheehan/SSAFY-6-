@@ -20,7 +20,8 @@
 }
 
 .title.active {
-    background-color: #e2e0e0;
+    background: linear-gradient(90deg, rgb(132, 118, 255) 0%, rgb(89, 80, 255) 100%);
+    color: white;
     transition: all 0.2s ease;
 }
 

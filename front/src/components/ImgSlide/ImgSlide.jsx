@@ -26,7 +26,7 @@ export default function ImgSlide(props) {
         <Slider {...settings}>
           {props.imgUrl.map(url => 
             <div >
-              <img alt="" style={{maxHeight: "300px", margin: "auto"}} src={url} />
+              <img alt="" style={{maxHeight: "300px", maxWidth: "100%", margin: "auto"}} src={url} />
             </div>
           )}
         </Slider>

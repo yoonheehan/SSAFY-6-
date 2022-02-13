@@ -22,7 +22,7 @@ const Post = () => {
    }
 
    //axios post 데이터
-   const [userId, setUserId] = useState(1) // 유저 id
+   const [userId, setUserId] = useState(JSON.parse(sessionStorage.getItem('loginedUser')).userId) // 유저 id
    const [type, setType] = useState(null)
    const [revealType, setRevealType] = useState(null) // 공개범위
    const [voteContent, setVoteContent] = useState("") // 내용
@@ -217,7 +217,7 @@ const Post = () => {
       const tempUrlArray = []
 
       for (let i = 0; i < file.length ; i++) {
-         const tempUrl = `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name + '.jpg'
+         const tempUrl = `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name
          tempUrlArray.push(tempUrl)
       }
       setImgUrl(tempUrlArray)
@@ -333,14 +333,15 @@ const Post = () => {
 								<div><i class="bi bi-card-checklist"></i></div>
 								<div>투표</div>
 							</div>
-							<div className="button_ox" onClick={() => {setType(2); contentReset("2")}}>
-								<div><i class="h6 bi bi-circle"></i><i class="h6 bi bi-x-lg"></i></div>
-								<div>찬반</div>
-							</div>
-							<div className="button_ox" onClick={() => {setType(3); contentReset("3")}}> 
+							<div className="button_ox" onClick={() => {setType(2); contentReset("2")}}> 
 								<div>VS</div>
 								<div>대결</div>
 							</div>
+							<div className="button_ox" onClick={() => {setType(3); contentReset("3")}}>
+								<div><i class="h6 bi bi-circle"></i><i class="h6 bi bi-x-lg"></i></div>
+								<div>찬반</div>
+							</div>
+							
 						</div>
 
 						{/* 투표 */}

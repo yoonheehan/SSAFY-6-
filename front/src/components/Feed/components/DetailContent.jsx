@@ -5,52 +5,60 @@ import "slick-carousel/slick/slick-theme.css";
 import "./DetailContent.css"
 
 
-const DetailContent = ({onClose, feed}) => {
-    const myId = 1
+const DetailContent = ({onClose, votes, feed}) => {
+    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     const [voteSelected ,setVoteSelected] = useState(null)
     const [selected, setSelected] = useState(null)
-    const [tempCount, setTempCount] = useState(feed.vote_count)
+    const [tempCount, setTempCount] = useState(votes)
     const [countAll, setCountAll] = useState()
 
     useEffect(() => {
-        let cnt = 0
+        
+        setTempCount(votes)
+        if (votes) {
+            console.log(votes, '!!!!!!!!')
+            let cnt = 0
 
-        for (let i = 0; i < feed.vote_count.length; i++) {
-            const votes = feed.vote_count[i]
-            cnt += votes.length
-            if ( votes.includes(myId) ) {
-                setVoteSelected(i)
-                setSelected(true)
+            for (let i = 0; i < votes.length; i++) {
+                const t = votes[i]
+                cnt += t.length
+                if ( t.includes(myId) ) {
+                    setVoteSelected(i)
+                    setSelected(true)
+                }
             }
-        }
-
-        setCountAll(cnt)
+            // console.log(tempCount, "!!!!!")
+            setCountAll(cnt)
+            
+        } 
     }, [])
 
     const voteCount = (key) => {
-        const tempArray = []
+        if (tempCount) {
+            const tempArray = []
         
-        for (let i = 0; i < tempCount.length; i++) {
-            tempArray.push(tempCount[i])
-        }
-
-    
-        if (!tempArray[key].includes(myId)) {
             for (let i = 0; i < tempCount.length; i++) {
-                const idx = tempArray[i].indexOf(myId)
-                if (idx !== -1) {
-                    tempArray[i].splice(idx, 1)
-                }
+                tempArray.push(tempCount[i])
             }
-            tempArray[key].push(myId)
-        }
-        
-        
 
-        setTempCount(tempArray)
+        
+            if (!tempArray[key].includes(myId)) {
+                for (let i = 0; i < tempCount.length; i++) {
+                    const idx = tempArray[i].indexOf(myId)
+                    if (idx !== -1) {
+                        tempArray[i].splice(idx, 1)
+                    }
+                }
+                tempArray[key].push(myId)
+            }
+            
+
+            setTempCount(tempArray)
+        }
     }
 
     const settings = {
+        arrows: false,
         dots: true,
         infinite: true,
         speed: 500,
@@ -61,7 +69,7 @@ const DetailContent = ({onClose, feed}) => {
     
     return (
         <>  
-            <div style={{ height: "100%", backgroundColor: "#4F9DDF", overflow: "scroll"}}>
+            <div className="detail_box">
                 <div>
                     <div className="detail_close" onClick={onClose}>
                         <i className="h4 bi bi-x-lg"></i>
@@ -69,7 +77,7 @@ const DetailContent = ({onClose, feed}) => {
                     <Slider {...settings}>
                         { feed.board_image.map((imgUrl, key) => 
                             <div key={key}>
-                                <img alt="img" style={{maxHeight: "300px", width: "auto", margin: "auto"}} src={imgUrl} />
+                                <img alt="img" style={{maxHeight: "300px", maxWidth: "100%", margin: "auto"}} src={imgUrl} />
                             </div>
                         )}
                     </Slider>
@@ -83,7 +91,7 @@ const DetailContent = ({onClose, feed}) => {
                         { feed.type === 1 &&
                             <>
                                 <div className="container mt-3">
-                                    {feed.vote_contents.map((vote, key) => 
+                                    {votes && votes.map((vote, key) => 
                                         <div
                                             key={key}
                                             className={key === voteSelected ? "detail_vote active" : "detail_vote"}
@@ -125,7 +133,8 @@ const DetailContent = ({onClose, feed}) => {
                                         <div>{feed.vote_contents[0]}</div>
                                         { selected && 
                                             <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                                                {Math.ceil(tempCount[0].length / countAll * 100)}%
+                                                {countAll === 0 ? 0 :
+                                                Math.ceil(tempCount[0].length / countAll * 100)}%
                                             </div>
                                         }
                                     </div>
@@ -142,7 +151,8 @@ const DetailContent = ({onClose, feed}) => {
                                         <div>{feed.vote_contents[1]}</div>
                                         { selected && 
                                             <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
-                                                {100 - Math.ceil(tempCount[0].length / countAll * 100)}%
+                                                {countAll === 0 ? 0 
+                                                : 100 - Math.ceil(tempCount[0].length / countAll * 100)}%
                                             </div>
                                         }
                                     </div>

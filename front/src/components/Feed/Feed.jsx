@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import Feeds from './components/Feeds'
 import { useHistory } from 'react-router-dom';
+import axios from 'axios'
 
 const imgList = [
     "https://haejwoing.s3.ap-northeast-2.amazonaws.com/0001.png",
@@ -32,7 +33,37 @@ export default function Feed() {
     if (sessionStorage.getItem('loginedUser') === null) {
         history.push('/')
     }
-    const [feeds, setFeeds] = useState(exampleList)
+    
+    const [feeds, setFeeds] = useState(null)
+    const [feedData, setFeedData] = useState(null)
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: `http://localhost:8080/board/`,
+            // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+        })
+            .then(response => {
+            console.log(response.data);
+
+            const res = response.data
+
+            for (let i = 0; i < res.length; i++) {
+                res[i].board_image = JSON.parse(res[i].board_image)
+                res[i].hashArr = JSON.parse(res[i].hashArr)
+                res[i].vote_contents = JSON.parse(res[i].vote_contents)
+                res[i].vote_users = JSON.parse(res[i].vote_users)
+            }
+
+            setFeedData(res)
+            })
+            .catch(error => {
+            console.log(error);
+            })
+            .finally(() => {
+            console.log('feed request end');
+            });
+    },[])
 
     const scrollEvent = () => {
         const scrollHeight = document.documentElement.scrollHeight;
@@ -66,7 +97,7 @@ export default function Feed() {
     return (
         <div>
             <div style={{marginTop:'75px'}}></div>
-            <Feeds feedList={feeds} onRemove={onRemove}/>
+            <Feeds feedList={feeds} feedData={feedData} onRemove={onRemove}/>
         </div>
     )
 }

@@ -1,14 +1,17 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import FeedItem from './FeedItem';
 import {useHistory} from 'react-router-dom'
 
-export default function Feeds({feedList, onRemove}) {
-  const [feeds, setFeeds] = useState(feedList)
+export default function Feeds({feedList, feedData, onRemove}) {
+  const [feeds, setFeeds] = useState(feedData)
 
+  useEffect(() => {
+    setFeeds(feedData)
+  }, [])
 
   return (
     <div>
-        {feedList.map((feed, index) =>
+        {feedData && feedData.map((feed, index) =>
             <FeedItem
               key={index}
               feed={feed}

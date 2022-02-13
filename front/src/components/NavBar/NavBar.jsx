@@ -42,6 +42,7 @@ const NavBar = () => {
         <div className="NavbarItems">
           <div className="navbar-arrow">
             <AiOutlineArrowLeft
+              style={{ color: "white" }}
               onClick={() => {
                 history.goBack();
                 setClicked(false);
@@ -52,7 +53,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer' }}
             width="100px"
             height="auto"
-            src="/images/logo(2).png"
+            src="/images/white_logo.png"
             alt="logo"
             onClick={() => {
               history.push('/feed');
@@ -60,13 +61,13 @@ const NavBar = () => {
             }}
           />
           <div className="" onClick={handleClick}>
-            <i className="h1 bi bi-list navbar-hamburger"></i>
+            <i style={{ color: "white" }} className="h1 bi bi-list navbar-hamburger"></i>
             {/* <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}></i> */}
           </div>
         </div>
         <div className={clicked ? 'nav-menu active' : 'nav-menu'}>
           <i
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: "#fff" }}
             className="h1 px-4 bi bi-house-door-fill"
             onClick={() => {
               history.push('/feed');
@@ -74,7 +75,7 @@ const NavBar = () => {
             }}
           ></i>
           <i
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: "#fff" }}
             className="h1 px-4 bi bi-people-fill"
             onClick={() => {
               window.location.replace(`/user/${userId}/followlist`);
@@ -82,7 +83,7 @@ const NavBar = () => {
             }}
           ></i>
           <i
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: "#fff" }}
             className="h1 px-4 bi bi-person-fill"
             onClick={() => {
               window.location.replace(`/user/${userId}/profile`);
@@ -91,7 +92,7 @@ const NavBar = () => {
           ></i>
 
           <i
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: "#fff" }}
             className="link h1 px-4 bi bi-pencil-fill"
             onClick={() => {
               history.push('/post');
@@ -99,7 +100,7 @@ const NavBar = () => {
             }}
           ></i>
           <i
-            style={{ cursor: 'pointer' }}
+            style={{ cursor: 'pointer', color: "#fff" }}
             className="link h1 px-4 bi bi-box-arrow-in-right"
             onClick={() => {
               sessionStorage.clear('loginedUser')

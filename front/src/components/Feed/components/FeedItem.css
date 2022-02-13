@@ -1,7 +1,8 @@
 .feed_drop {
     display: none;
     position: absolute;
-    background-color: #bdcbdd;
+    background-color: white;
+    border: rgb(211, 211, 211) solid 1px;
     right: 10px;
     width: 80px;
     padding: 8px;
@@ -63,4 +64,18 @@
     visibility: visible;
     height: 100%;
     /* transition: all ease 0.25s; */
+}
+
+.type_button {
+    margin-top: 5px;
+    border-radius: 5px;
+    padding: 3px 7px;
+    color: #ffffff;
+    display: inline-block;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.8rem;
+    line-height: 20px;
+    margin-right: 5px;
 }
