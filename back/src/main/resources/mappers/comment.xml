@@ -49,4 +49,10 @@
 
     </delete>
 
+    <select id="get_user_id" parameterType="int" resultType="int">
+
+    SELECT user_id FROM comment_likes WHERE comment_idcomment = #{comment_idcomment}
+
+    </select>
+
 </mapper>

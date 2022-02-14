@@ -26,4 +26,6 @@ public interface CommentMapper {
 
     boolean delete(int commentId);
 
+    List<Integer> get_user_id(int commentId);
+
 }

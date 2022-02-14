@@ -35,14 +35,28 @@ public class CommentController {
     // @RequestParam : loginId
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
-        int commentId = heart.getComment_idcomment();
+        int comment_idcomment = heart.getComment_idcomment();
+        int user_id = heart.getUser_id();
+        List<Integer> user_id_list = commentService.get_user_id(comment_idcomment);
 
-        if(commentService.like(heart)){
-
-            return new ResponseEntity<String>(HttpStatus.OK);
+        System.out.println(user_id_list);
+        //user_id가 user_id_list에 있다면 dislike, 아니면 like
+        if(user_id_list.contains(user_id)){
+            if (commentService.unlike(user_id, comment_idcomment)) {
+                System.out.println(commentService.unlike(user_id, comment_idcomment));
+                return new ResponseEntity<String>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+            }
         }
+        else {
+            if (commentService.like(heart)) {
 
-        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+                return new ResponseEntity<String>(HttpStatus.OK);
+            } else {
+                return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+            }
+        }
     }
 
     @DeleteMapping("{commentId}/unlike/{userId}")
