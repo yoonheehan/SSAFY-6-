@@ -72,7 +72,7 @@ public class BoardController {
         int userId = voteUsersImport.getUser_id();
         Map<String, Object> map1 = new HashMap<>();
 
-        double score = 5;
+        double score = 3;
         map1.put("userId", userId);
         map1.put("score", score);
 

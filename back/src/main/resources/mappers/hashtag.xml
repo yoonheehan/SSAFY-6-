@@ -4,7 +4,7 @@
 <mapper namespace="com.haejwoing.back.model.mapper.HashTagMapper">
 
     <select id = 'get_raw_data' parameterType="int" resultType="Board">
-        SELECT * FROM BOARD WHERE idboard=#{idboard}
+        SELECT * FROM BOARD WHERE idboard=#{idboard} ORDER BY due_date
 
     </select>
 

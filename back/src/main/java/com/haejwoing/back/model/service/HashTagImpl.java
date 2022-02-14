@@ -43,7 +43,7 @@ public class HashTagImpl implements HashTagService{
     @Override
     public List<Board> getList_hashtag(String tag_name) {
 
-        // due_date 리스트 꺼내기
+//         due_date 리스트 꺼내기
         String want_due_date_list =sqlSession.getMapper(HashTagMapper.class).get_due_date_from_tag(tag_name);
 
         if(want_due_date_list==null){
@@ -65,7 +65,7 @@ public class HashTagImpl implements HashTagService{
         List<String> want_board_array = string_change_to_list(want_board_list);
 
 
-        // 마감 시간 넘은것들은 거르는 프로그램
+//         마감 시간 넘은것들은 거르는 프로그램
         LocalDateTime localDateTime = LocalDateTime.now();
 
         int timestamp2 = Math.round((Timestamp.valueOf(localDateTime).getTime()/1000));
