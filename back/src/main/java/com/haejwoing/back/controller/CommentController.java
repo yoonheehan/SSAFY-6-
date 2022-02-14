@@ -42,6 +42,7 @@ public class CommentController {
         List<Integer> userList = commentService.get_user_id(commentId);
         if(commentService.like(heart)){
             if (userList.contains(userId)) {
+
                 commentService.unlike(userId, commentId);
                 userList.remove(Integer.valueOf(userId));
             } else {
