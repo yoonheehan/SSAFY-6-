@@ -25,6 +25,8 @@ public interface CommentService {
 
     boolean getNum(int boardId);
 
+    boolean minusNum(int boardId);
+
     boolean update(Comment comment);
 
     boolean delete(int commentId);

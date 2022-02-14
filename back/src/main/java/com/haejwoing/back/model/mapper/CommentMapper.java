@@ -26,6 +26,8 @@ public interface CommentMapper {
 
     boolean getNum(int boardId);
 
+    boolean minusNum(int boardId);
+
     boolean update(Comment comment);
 
     boolean delete(int commentId);
