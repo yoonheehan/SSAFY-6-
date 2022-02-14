@@ -77,4 +77,12 @@
     <delete id="unFollow" parameterType="int">
         delete from follower where to_user=#{toUser} and from_user=#{fromUser}
     </delete>
+
+    <select id="findByNickname" parameterType="String" resultType="map">
+        select id, email, nickname, gender, birth, image, point from user where nickname like #{nickname}
+    </select>
+
+    <select id="getFollowerId" parameterType="int" resultType="map">
+        select to_user from follower where from_user = #{id}
+    </select>
 </mapper>

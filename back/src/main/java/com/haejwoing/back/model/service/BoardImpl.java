@@ -80,5 +80,8 @@ public class BoardImpl implements BoardService{
         return sqlSession.getMapper(BoardMapper.class).get_user_id_from_board(boardid);
     }
 
-
+    @Override
+    public List<Board> getFollowerFeed(List<Integer> list) {
+        return sqlSession.getMapper(BoardMapper.class).getFollowerFeed(list);
+    }
 }

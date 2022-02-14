@@ -23,4 +23,6 @@ public interface UserMapper {
     int addFollow(int id, int toUser);
     int checkFollow(int id, int loginedId);
     int unFollow(int toUser, int fromUser);
+    List<User> findByNickname(String nickname);
+    List<Map<String, Object>> getFollowerId(int id);
 }

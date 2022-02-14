@@ -25,5 +25,5 @@ public interface BoardService {
 
     int get_user_id_from_board(int boardid);
 
-
+    List<Board> getFollowerFeed(List<Integer> list);
 }

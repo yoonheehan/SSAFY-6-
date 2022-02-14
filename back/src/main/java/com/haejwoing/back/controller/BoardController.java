@@ -1,14 +1,14 @@
 package com.haejwoing.back.controller;
 
 
-import com.haejwoing.back.model.dto.Board;
-import com.haejwoing.back.model.dto.HashTag;
-import com.haejwoing.back.model.dto.VoteUsers;
-import com.haejwoing.back.model.dto.VoteUsersImport;
+import com.haejwoing.back.model.dto.*;
 import com.haejwoing.back.model.mapper.CommentMapper;
 import com.haejwoing.back.model.service.*;
 import com.sun.net.httpserver.Authenticator;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/board")
 public class BoardController {
@@ -44,10 +45,10 @@ public class BoardController {
     }
 
 
-    @GetMapping("/{idboard}")
-    public ResponseEntity<Board> BoardList(@PathVariable int idboard){
-        return new ResponseEntity<Board>(boardService.get(idboard), HttpStatus.OK);
-    }
+//    @GetMapping("/{idboard}")
+//    public ResponseEntity<Board> BoardList(@PathVariable int idboard){
+//        return new ResponseEntity<Board>(boardService.get(idboard), HttpStatus.OK);
+//    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Board>> getUser(@PathVariable int userId){
@@ -143,6 +144,21 @@ public class BoardController {
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
 
+    @ApiOperation(value = "전체공개와 친구의 게시글을 가져온다")
+    @GetMapping("/{id}")
+    public ResponseEntity<Map<String, Object>> listRangeBoard(@PathVariable @ApiParam("해당 id의 친구와 전체공개 게시글가저온다") int id){
+        log.info("검색 대상 id : {}", id);
+        // 해당 id의 팔로워 목록가져온다
+        List<Map<String, Object>> result = userService.getfollowerId(id);
 
+        List<Integer> list = new ArrayList<>();
+        for(int i=0; i<result.size(); i++){
+            list.add(Integer.parseInt(String.valueOf(result.get(i).get("to_user"))));
+        }
+        System.out.println("list : "+list);
+        boardService.getFollowerFeed(list);
+        System.out.println(boardService.getFollowerFeed(list));
+        return null;
+    }
 
 }
