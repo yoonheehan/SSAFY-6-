@@ -23,7 +23,7 @@ const RemoveModal = ({onClose, onRemove, idboard}) => {
     return (
         <ModalContent>
             <button onClick={onClose}>x</button>
-            <button onClick={() => {onRemove(idboard)}}>삭제</button>
+            <button onClick={() => {onRemove(idboard); onClose();}}>삭제</button>
         </ModalContent>
     )
 }

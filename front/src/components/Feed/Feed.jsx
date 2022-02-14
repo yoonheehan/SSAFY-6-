@@ -127,7 +127,7 @@ export default function Feed() {
         history.push('/')
     }
     
-    const [feeds, setFeeds] = useState(null)
+    const [feeds, setFeeds] = useState(true)
     const [feedData, setFeedData] = useState(null)
     const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     
@@ -157,7 +157,7 @@ export default function Feed() {
             .finally(() => {
                 console.log('feed request end');
             });
-    },[])
+    }, [feeds])
 
     const scrollEvent = () => {
         const scrollHeight = document.documentElement.scrollHeight;
@@ -190,8 +190,8 @@ export default function Feed() {
         url: `http://localhost:8080/board/delete/${id}`,
         })
         .then(res => {
-            // setFeedData(feeds.filter(feed => feed.idboard !== id));
-            console.log(res);
+          setFeeds(!feeds)
+          console.log(res);
         })
         .catch(err => {
             console.log(err);

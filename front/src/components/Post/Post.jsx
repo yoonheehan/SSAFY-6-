@@ -24,8 +24,8 @@ const Post = () => {
    //axios post 데이터
    const [userId, setUserId] = useState(JSON.parse(sessionStorage.getItem('loginedUser')).userId) // 유저 id
    const [type, setType] = useState(1)
-   const [revealType, setRevealType] = useState("전체공개") // 공개범위
-   const [voteContent, setVoteContent] = useState("") // 내용
+   const [revealType, setRevealType] = useState(null) // 공개범위
+   const [voteContent, setVoteContent] = useState(null) // 내용
    const [voteItems, setVoteItems] = useState(["", ""]) // 투표항목
    const [voteUser, setVoteUser] = useState([[], []])
 
@@ -38,55 +38,63 @@ const Post = () => {
 
    // axios.post
 	function postAPI() {
-      // const url = "http://i6c103.p.ssafy.io/api/board/save"
-		const url = "http://localhost:8080/board/save"
-		const vote_contents = JSON.stringify(voteItems)
-
-		console.log(img)
-		if (img) {
-			for (let i = 0; i < img.length; i++) {
-				const upload = new AWS.S3.ManagedUpload({
-					params: {
-					Bucket: 'haejwoing', // 업로드할 대상 버킷명
-					Key: img[i].name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
-					Body: img[i], // 업로드할 파일 객체
-					},
-				});
-				
-				const promise = upload.promise();
-		
-				promise.then(
-				function (data) {
-				},
-				function (err) {
-					return alert('오류가 발생했습니다: ', err.message);
-				});
+		if (revealType && voteContent) {
+			for (let i = 0; i < voteItems.length; i++) {
+				if (voteItems[i].length === 0) {
+					return alert('공개범위, 글내용, 항목은 필수사항 입니다.')
+				}
 			}
-		}
-		
-      axios({
-         method: "post",
-         url: url,
-         data: {
-            userId: userId,
-            type: type,
-            view_range: revealType,
-            content: voteContent,
-            vote_contents: vote_contents,
-            board_image: JSON.stringify(imgUrl),
-            hashArr: JSON.stringify(hashArr),
-			// vote_users : JSON.stringify(voteUser),
-            due_date: dueDateSec,
-            // due_date: dueDate
-         },
-      })
-      .then(function (response) {
-         console.log(response.config.data)
-		 history.push('/feed')
-      })
-      .catch(function(error) {
-         console.log(error)
-      })
+			const url = "http://localhost:8080/board/save"
+			// const url = "http://i6c103.p.ssafy.io/api/board/save"
+			const vote_contents = JSON.stringify(voteItems)
+
+			if (img) {
+				for (let i = 0; i < img.length; i++) {
+					const upload = new AWS.S3.ManagedUpload({
+						params: {
+						Bucket: 'haejwoing', // 업로드할 대상 버킷명
+						Key: img[i].name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+						Body: img[i], // 업로드할 파일 객체
+						},
+					});
+					
+					const promise = upload.promise();
+			
+					promise.then(
+					function (data) {
+					},
+					function (err) {
+						return alert('오류가 발생했습니다: ', err.message);
+					});
+				}
+			}
+
+			axios({
+				method: "post",
+				url: url,
+				data: {
+					userId: userId,
+					type: type,
+					view_range: revealType,
+					content: voteContent,
+					vote_contents: vote_contents,
+					board_image: JSON.stringify(imgUrl),
+					hashArr: JSON.stringify(hashArr),
+					// vote_users : JSON.stringify(voteUser),
+					due_date: dueDateSec,
+					// due_date: dueDate
+				},
+			})
+			.then(function (response) {
+				console.log(response.config.data)
+				history.push('/feed')
+			})
+			.catch(function(error) {
+				console.log(error)
+			})
+		} else {
+			alert('공개범위, 글내용, 항목은 필수사항 입니다.')
+		}		
    }
 
    const [selected, setSelected] = useState(false)
@@ -338,7 +346,6 @@ const Post = () => {
 									id="reveal_all"
 									name="reveal_bounds"
 									value="reveal_all"
-									checked
 								/>
 								<label style={{marginLeft: "5px"}} for="reveal_all">전체공개</label>
 							</div>
