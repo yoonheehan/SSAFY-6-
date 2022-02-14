@@ -12,6 +12,7 @@ public class Comment {
     private LocalDateTime created_at;
     private LocalDateTime updated_at;
 
+    private int likeNum;
     private int board_idboard;
     private int user_id;
 

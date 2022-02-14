@@ -33,8 +33,10 @@ public class CommentController {
 
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
-        System.out.println(heart);
+        int commentId = heart.getComment_idcomment();
+
         if(commentService.like(heart)){
+
             return new ResponseEntity<String>(HttpStatus.OK);
         }
 

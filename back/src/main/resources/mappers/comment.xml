@@ -2,8 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
-    <select id='getList' parameterType="int" resultType="com.haejwoing.back.model.dto.Comment">
+    <select id='getList' parameterType="int" resultType="map">
         SELECT * FROM COMMENT
+        LEFT OUTER JOIN USER
+        ON COMMENT.user_id=user.id
         WHERE board_idboard=#{boardId}
 
     </select>
