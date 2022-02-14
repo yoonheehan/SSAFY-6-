@@ -1,6 +1,7 @@
 import React, {useState, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import Comments from './Comments'
+import axios from 'axios'
 import "./CommentItem.module.css"
 
 
@@ -30,11 +31,23 @@ const CommentList = [
     {id: 3, profilename: '홍길동', writetime: 2, content: 'ㄹㅇㅋㅋ', commentUserId:3 ,likes:5, clickedLike: false},
 ]
 
-function CommentWrite({onClose}) {
-
+function CommentWrite({onClose, feed}) {
     const [commentContent, setCommentContent] = useState("");
     const [comments, setComments] = useState(CommentList)
     
+
+    useEffect(() => {
+        axios({
+            method: 'get',
+            url: `http://localhost:8080/comment/${feed.idboard}`,
+            // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+          })
+            .then(response => {
+              console.log('response : ' , response.data);
+            //   setComments(response.data)
+            })
+    },[])
+
     function getcomment(event) {
         const commentContent = event.target.value
         setCommentContent(event.target.value)

@@ -63,7 +63,7 @@ const EditBtn = styled.input`
 `
 
 function CommentItem({comment, onRemove, clickLike}) {
-    const myId = 1;
+    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
 
     const [openEdit, setOpenEdit] = useState(false);
 
@@ -117,7 +117,7 @@ function CommentItem({comment, onRemove, clickLike}) {
               <div style={{textAlign:'start'}}>
                 <ProfileName>
                   {comment.profilename}
-                  <WriteTime>{comment.writetime}분 전</WriteTime>
+                  <WriteTime>{comment.created_at}분 전</WriteTime>
                 </ProfileName>
               </div>
             </CommentDiv>
@@ -127,7 +127,7 @@ function CommentItem({comment, onRemove, clickLike}) {
                   : <div><i style={{color:'red'}} class="bi bi-heart"></i> {comment.likes}</div>
               }
             </CommentLike>
-            {myId === comment.commentUserId ? 
+            {myId === comment.user_id ? 
               <CommentMenu>
                 <div style={{marginLeft:'auto', cursor: "pointer"}} ref={ref} onClick={() => setSelected(!selected)}>
                   <i className="bi bi-three-dots-vertical"></i>

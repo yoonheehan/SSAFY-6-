@@ -58,10 +58,10 @@ export default function Feed() {
             setFeedData(res)
             })
             .catch(error => {
-            console.log(error);
+                console.log(error);
             })
             .finally(() => {
-            console.log('feed request end');
+                console.log('feed request end');
             });
     },[])
 
@@ -93,7 +93,7 @@ export default function Feed() {
         setFeeds(feeds.filter(feed => feed.idboard !== id));
     
     };
-    
+
     return (
         <div>
             <div style={{marginTop:'75px'}}></div>

@@ -339,7 +339,6 @@ export default function FeedItem({feed, onRemove}) {
           <CommentWrite
             onClose={handleCommentClick}
             feed={feed} 
-            EditFeed={EditFeed}
           />
         </div>
       </>
