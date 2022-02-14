@@ -84,11 +84,4 @@ public class CommentServiceImpl implements CommentService{
         return sqlSession.getMapper(CommentMapper.class).delete(commentId);
     }
 
-    @Override
-    public List<Integer> get_user_id(int comment_idcomment) {
-
-        return sqlSession.getMapper(CommentMapper.class).get_user_id(comment_idcomment);
-
-
-    }
 }
