@@ -1,17 +1,11 @@
+import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import styled from 'styled-components';
-import { useHistory } from 'react-router-dom';
-import './FeedItem.css';
-import FeedEditModal from './FeedEditModal';
-import ImgSlide from '../../ImgSlide/ImgSlide';
-import CommentWrite from '../comments/CommentWrite';
-import DetailContent from './DetailContent';
-<<<<<<< Updated upstream
-import RemoveModal from './RemoveModal';
-import axios from 'axios'
-=======
-import axios from 'axios';
->>>>>>> Stashed changes
+import CommentWrite from '../Feed/comments/CommentWrite';
+import DetailContent from '../Feed/components/DetailContent';
+import FeedEditModal from '../Feed/components/FeedEditModal';
+import ImgSlide from '../ImgSlide/ImgSlide';
+import { useHistory, useParams } from 'react-router-dom';
 
 const FeedBox = styled.div`
   border: 1px solid #bdcbdd;
@@ -96,44 +90,7 @@ const Comments = styled.div`
   color: grey;
 `;
 
-const userName = [
-<<<<<<< Updated upstream
-  {id: 1, user_name: '정정채'},
-  {id: 2, user_name: '채성원'},
-  {id: 3, user_name: '허영민'},
-]
-
-export default function FeedItem({key, feed, onRemove}) {
-    const history = useHistory();
-    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
-    const [selected, setSelected] = useState(false)
-    const [modalIsOpen, setModalIsOpen] = useState(false)
-    const [commentModalOpen, setCommentModalOpen] = useState(false)
-    const [detailModalOpen, setDetailModalOpen] = useState(false)
-    const [userData ,setUserData] = useState(null);
-    const [firstNickName, setFirstNickName] = useState(null);
-    const [voteUsers, setVoteUsers] = useState(null);
-    const [voteCompleted, setVoteCompleted] = useState(false);
-    const [countAll, setCountAll] = useState(null)
-    const [removeModal, setRemoveModal] = useState(false)
-
-    const ref = useRef(null)
-    const ref2 = useRef(null)
-    const ref3 = useRef(null)
-
-    const [feedItem, setFeedItem] = useState(feed)
-
-    const EditFeed = (content) => {
-      // feedItem.feedcontent = content;
-      feedItem.content = content
-      setFeedItem(feedItem)
-=======
-  { id: 1, user_name: '정정채' },
-  { id: 2, user_name: '채성원' },
-  { id: 3, user_name: '허영민' },
-];
-
-export default function FeedItem({ feed, onRemove }) {
+const PostDetail = props => {
   const history = useHistory();
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
   const [selected, setSelected] = useState(false);
@@ -148,8 +105,9 @@ export default function FeedItem({ feed, onRemove }) {
 
   const ref = useRef(null);
   const ref2 = useRef(null);
-
+  const [feed, setFeed] = useState();
   const [feedItem, setFeedItem] = useState(feed);
+  const { idboard } = useParams();
 
   const EditFeed = content => {
     // feedItem.feedcontent = content;
@@ -158,13 +116,23 @@ export default function FeedItem({ feed, onRemove }) {
   };
 
   useEffect(() => {
+    console.log('디테일 페이지');
+    console.log(idboard);
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/board/${idboard}`,
+    }).then(res => {
+      console.log(res);
+    });
+  });
+
+  useEffect(() => {
     const ID = feed.userId;
     console.log(feed.vote_contents);
 
     const tempArray = [];
     for (let i = 0; i < feed.vote_contents.length; i++) {
       tempArray.push([]);
->>>>>>> Stashed changes
     }
 
     axios({
@@ -180,13 +148,6 @@ export default function FeedItem({ feed, onRemove }) {
       .catch(err => {
         console.log('에러났어요');
       })
-<<<<<<< Updated upstream
-        .then(res => {
-          console.log(res)
-          if (res.data.userid.includes(myId)) {
-            setVoteCompleted(true)
-          }
-=======
       .finally(() => {
         console.log('profile request end');
       });
@@ -201,7 +162,6 @@ export default function FeedItem({ feed, onRemove }) {
         if (res.data.userid.includes(myId)) {
           setVoteCompleted(true);
         }
->>>>>>> Stashed changes
 
         if (res.data.userid[0] === 0 && res.data.idx.length === 1) {
           setCountAll(0);
@@ -218,19 +178,9 @@ export default function FeedItem({ feed, onRemove }) {
         console.log(err);
       });
 
-<<<<<<< Updated upstream
-        if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
-          setModalIsOpen(false)
-        }
-
-        if (removeModal && ref3.current && !ref3.current.contains(event.target)) {
-          setRemoveModal(false)
-        }
-=======
     const handleClickOutside = event => {
       if (selected && ref.current && !ref.current.contains(event.target)) {
         setSelected(false);
->>>>>>> Stashed changes
       }
 
       if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
@@ -245,20 +195,10 @@ export default function FeedItem({ feed, onRemove }) {
     };
   }, [selected, modalIsOpen]);
 
-<<<<<<< Updated upstream
-    const handleRemoveClick = (event) => {
-      setRemoveModal(!removeModal)
-    }
-
-    const DetailModal = () => {
-      setDetailModalOpen(!detailModalOpen)
-    }
-=======
   const handleCommentClick = event => {
     setCommentModalOpen(!commentModalOpen);
     console.log(commentModalOpen);
   };
->>>>>>> Stashed changes
 
   const handleEditClick = event => {
     setModalIsOpen(!modalIsOpen);
@@ -267,6 +207,8 @@ export default function FeedItem({ feed, onRemove }) {
   const DetailModal = () => {
     setDetailModalOpen(!detailModalOpen);
   };
+
+  const onRemove = id => {};
 
   const typeButton = type => {
     if (type === 1) {
@@ -310,35 +252,6 @@ export default function FeedItem({ feed, onRemove }) {
   };
 
   return (
-<<<<<<< Updated upstream
-      <>
-        <FeedBox>
-          <ProfileBox>
-            {/* <ProfileImg
-              src={userData && userData.info.image.length > 0 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-              userData.info.image : '/images/baseprofile.jpg'}
-              alt='프사'
-              onClick={() => history.push('/profile')}/> */}
-            <div>
-              {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
-              <ProfileName onClick={() => history.push('/profile')}>{firstNickName}</ProfileName>
-              {/* <WriteTime>{feed.writetime}분 전</WriteTime> */}
-              <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>
-            </div>
-            {/* {myId === feed.feedUserId ?  */}
-            {myId === feed.userId ? 
-              <FeedMenu>
-                <div style={{marginLeft:'auto', cursor: "pointer" }} ref={ref} onClick={() => setSelected(!selected)}>
-                  <i className="bi bi-three-dots-vertical"></i>
-                  <div className={selected ? "feed_drop active" : "feed_drop" }>
-                    <div onClick={handleEditClick}>글수정</div>
-                    {/* <div onClick={() => onRemove(feed.id)}>글삭제</div> */}
-                    <div onClick={() => setRemoveModal(true)}>글삭제</div>
-                  </div>
-                </div>
-              </FeedMenu>
-              : null
-=======
     <>
       <FeedBox>
         <ProfileBox>
@@ -348,7 +261,6 @@ export default function FeedItem({ feed, onRemove }) {
                 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
                   userData.info.image
                 : '/images/baseprofile.jpg'
->>>>>>> Stashed changes
             }
             alt="프사"
             onClick={() => history.push('/profile')}
@@ -407,26 +319,6 @@ export default function FeedItem({ feed, onRemove }) {
                   <div key={index}>
                     <HashTag>{hashTag}</HashTag>
                   </div>
-<<<<<<< Updated upstream
-                )}
-              </HashTagBox>
-            </div>
-            <div style={{ color: "grey" }}>
-              <Comments>
-                <div>{countAll}명</div>
-                <div onClick={handleCommentClick}>22개</div>
-              </Comments>
-            </div>
-          </HashCommentBox>
-        </FeedBox>
-        <div ref={ref2} className={modalIsOpen ? 'edit_drop active' : 'edit_drop'}>
-          <FeedEditModal
-            onClose={handleEditClick} 
-            content={feed.content} 
-            radio={feed.view_range}
-            EditFeed={EditFeed}
-            idboard={feed.idboard}
-=======
                 ))}
             </HashTagBox>
           </div>
@@ -457,41 +349,10 @@ export default function FeedItem({ feed, onRemove }) {
             onClose={DetailModal}
             completed={voteCompleted}
             amend={handleVoteContent}
->>>>>>> Stashed changes
           />
         )}
       </div>
 
-<<<<<<< Updated upstream
-        <div className={detailModalOpen ? "detail_modal active" : "detail_modal"}>
-          { voteUsers &&
-            <DetailContent
-              feed={feed}
-              votes={voteUsers}
-              onClose={DetailModal}
-              completed={voteCompleted}
-              amend={handleVoteContent}
-            />
-          }
-        </div>
-
-        <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>
-          <CommentWrite
-            onClose={handleCommentClick}
-            feed={feed} 
-          />
-        </div>
-
-        <div ref={ref3} className={removeModal ? "edit_drop active" : "edit_drop"}>
-          <RemoveModal
-            onClose={handleRemoveClick}
-            onRemove={onRemove}
-            idboard={feed.idboard}
-          />
-        </div>
-      </>
-  )
-=======
       <div
         className={
           commentModalOpen ? 'comments_modal active' : 'comments_modal'
@@ -505,5 +366,5 @@ export default function FeedItem({ feed, onRemove }) {
       </div>
     </>
   );
->>>>>>> Stashed changes
-}
+};
+export default PostDetail;
