@@ -151,14 +151,18 @@ public class BoardController {
         // 해당 id의 팔로워 목록가져온다
         List<Map<String, Object>> result = userService.getfollowerId(id);
 
-        List<Integer> list = new ArrayList<>();
-        for(int i=0; i<result.size(); i++){
-            list.add(Integer.parseInt(String.valueOf(result.get(i).get("to_user"))));
+        if(result.isEmpty()){
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+        } else{
+            List<Integer> list = new ArrayList<>();
+            for(int i=0; i<result.size(); i++){
+                list.add(Integer.parseInt(String.valueOf(result.get(i).get("to_user"))));
+            }
+            list.add(id);
+            System.out.println("list : "+list);
+            boardService.getFollowerFeed(list);
+            System.out.println(boardService.getFollowerFeed(list));
+            return new ResponseEntity<List<Board>>(boardService.getFollowerFeed(list), HttpStatus.OK);
         }
-        System.out.println("list : "+list);
-        boardService.getFollowerFeed(list);
-        System.out.println(boardService.getFollowerFeed(list));
-        return new ResponseEntity<List<Board>>(boardService.getFollowerFeed(list), HttpStatus.OK);
     }
-
 }
