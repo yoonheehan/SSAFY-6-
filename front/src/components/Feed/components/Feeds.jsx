@@ -13,7 +13,7 @@ export default function Feeds({feedData, onRemove}) {
     <div>
         {feedData && feedData.map((feed, index) =>
             <FeedItem
-              key={index}
+              key={feed.id}
               feed={feed}
               onRemove={onRemove}
             />

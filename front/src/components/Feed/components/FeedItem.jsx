@@ -117,13 +117,14 @@ export default function FeedItem({key, feed, onRemove}) {
     const ref3 = useRef(null)
 
     const [feedItem, setFeedItem] = useState(feed)
-
+    
     const EditFeed = (content) => {
       // feedItem.feedcontent = content;
       feedItem.content = content
       setFeedItem(feedItem)
     }
     useEffect(() => {
+      console.log(feed, "!!!!!!!!!!!!!!!!!!!!!!!!")
       const ID = feed.userId
       console.log(feed.vote_contents)
 
@@ -258,11 +259,11 @@ export default function FeedItem({key, feed, onRemove}) {
       <>
         <FeedBox>
           <ProfileBox>
-            {/* <ProfileImg
+            <ProfileImg
               src={userData && userData.info.image.length > 0 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
               userData.info.image : '/images/baseprofile.jpg'}
               alt='프사'
-              onClick={() => history.push('/profile')}/> */}
+              onClick={() => history.push('/profile')}/>
             <div>
               {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
               <ProfileName onClick={() => history.push('/profile')}>{firstNickName}</ProfileName>
@@ -318,7 +319,7 @@ export default function FeedItem({key, feed, onRemove}) {
             <div style={{ color: "grey" }}>
               <Comments>
                 <div>{countAll}명</div>
-                <div onClick={handleCommentClick}>22개</div>
+                <div onClick={handleCommentClick}>{feed.commentNum}아이콘넣으셈</div>
               </Comments>
             </div>
           </HashCommentBox>

@@ -2,8 +2,11 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.CommentMapper">
-    <select id='getList' parameterType="int" resultType="map">
-        SELECT * FROM COMMENT
+
+    <select id='getList' parameterType="com.haejwoing.back.model.dto.Comment" resultType="map">
+
+        SELECT COMMENT.idcomment, COMMENT.content, COMMENT.created_at, COMMENT.updated_at, COMMENT.likeUserList,
+               COMMENT.board_idboard, COMMENT.user_id, USER.nickname, USER.image FROM COMMENT
         LEFT OUTER JOIN USER
         ON COMMENT.user_id=user.id
         WHERE board_idboard=#{boardId}
@@ -25,16 +28,10 @@
 
     </select>
 
-    <delete id="unlike" parameterType="com.haejwoing.back.model.dto.Heart">
-        DELETE FROM COMMENT_LIKES
-        where user_id=#{userId} and comment_idcomment=#{commentId}
-
-    </delete>
-
     <insert id="save" parameterType="com.haejwoing.back.model.dto.Comment">
 
-        INSERT INTO COMMENT(content, created_at, board_idboard, user_id)
-        VALUES (#{content}, now(), #{board_idboard}, #{user_id})
+        INSERT INTO COMMENT(content, created_at, board_idboard, user_id, likeUserList)
+        VALUES (#{content}, now(), #{board_idboard}, #{user_id}, '')
 
     </insert>
     <update id="getNum" parameterType="int">
@@ -43,11 +40,17 @@
         WHERE idboard = #{boardId}
 
     </update>
+    <update id="minusNum" parameterType="int">
+
+        UPDATE BOARD SET commentNum = commentNum - 1
+        WHERE idboard = #{boardId}
+
+    </update>
 
     <update id="update" parameterType="comment">
 
         UPDATE COMMENT SET content=#{content}, updated_at=now()
-        WHERE idComment = #{idComment}
+        WHERE idcomment = #{idComment}
 
     </update>
 

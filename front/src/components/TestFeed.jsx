@@ -79,7 +79,7 @@ export default function TestFeed() {
     function handleSubmit(event) {
         // axios({
         //     method: 'put',
-        //     url: `http://localhost:8080/board/${boardId}/comment/update`,
+        //     url: `http://localhost:8080/comment/update`,
         //     data: {
         //         content : commentContent,
         //         board_idboard : boardId,
@@ -111,13 +111,15 @@ export default function TestFeed() {
     const deletecomment = () => {
         axios({
             method: 'delete',
-            url: `http://localhost:8080/comment/delete/18`,
+            url: `http://localhost:8080/comment/delete/id`,
           })
             .then(response => {
               console.log('삭제완료');
             })
     }
-
+    // let url = `http://localhost:8080/comment/like`
+    // {data : commentId, loginedId}
+    
     
 
     return (

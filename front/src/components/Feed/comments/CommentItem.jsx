@@ -1,6 +1,7 @@
 import React, {Profiler, useState, useRef, useEffect, useCallback} from 'react';
 import styled from 'styled-components';
 import "./CommentItem.module.css"
+import axios from 'axios'
 
 const CommentWrapped = styled.div`
   width: 100%;
@@ -62,7 +63,7 @@ const EditBtn = styled.input`
     background-color: white;
 `
 
-function CommentItem({comment, onRemove, clickLike}) {
+function CommentItem({comment, onRemove}) {
     const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
 
     const [openEdit, setOpenEdit] = useState(false);
@@ -73,12 +74,38 @@ function CommentItem({comment, onRemove, clickLike}) {
 
     const [tempValue, setTempValue] = useState(editValue)
 
+    const [likeUsers, setLikeUsers] = useState(comment.likeUserList.slice(1,(comment.likeUserList).length-1).split(','))
+    const [likeClick, setLikeClick] = useState(false)
+    const [likeNum, setLikeNum] = useState('')
+    
+    
     const onChange = useCallback((e) => {
       setTempValue(e.target.value)
       // setEditValue(e.target.value);
     }, [])
-    
+    console.log('comment.likeUserList : ', comment.likeUserList)
     const ref = useRef(null)
+    useEffect(() => {
+
+
+      if (comment.likeUserList === '') {
+        setLikeNum(0)
+      }
+      else {
+        setLikeUsers(comment.likeUserList.slice(1,(comment.likeUserList).length-1).split(','))
+        if (likeUsers.includes(String(myId))) {
+          setLikeClick(true)
+          setLikeNum(likeUsers.length)
+
+        }
+        else {
+          setLikeClick(false)
+          setLikeNum(likeUsers.length)
+        }
+
+      }
+        
+    },[])
 
     useEffect(() => {
       const handleClickOutside = (event) => {
@@ -99,6 +126,20 @@ function CommentItem({comment, onRemove, clickLike}) {
 
     function handleSubmit(event) {
       setEditValue(tempValue)
+      axios({
+        method: 'put',
+        url: `http://localhost:8080/comment/update`,
+        data: {
+            content : tempValue,
+            board_idboard : comment.board_idboard,
+            idComment : comment.idcomment,
+            user_id: comment.user_id,
+            
+        }
+      })
+        .then(response => {
+          console.log('수정완료');
+        })
       setOpenEdit(false)
       event.preventDefault()
     }
@@ -107,24 +148,64 @@ function CommentItem({comment, onRemove, clickLike}) {
       setTempValue(editValue)
       setOpenEdit(false)
     }
+    const clickLike = data => {
+      if (data.likeClick === false) {
+        setLikeClick(true)
+        setLikeNum(data.likeNum + 1)
+      } else {
+        setLikeClick(false)
+        setLikeNum(data.likeNum - 1)
+      }
+    }
+
+
+    function like() {
+      axios({
+        method: 'post',
+        url: `http://localhost:8080/comment/like`,
+        data : {
+          commentId : comment.idcomment, 
+          userId : myId,
+        }
+
+        })
+        .then(response => {
+          console.log('좋아요완료');
+        })
+    }
+
+    const formatRelativeDate = date => {
+      const TEN_SECOND = 10 * 1000;
+      const A_MINUTE = 60 * 1000;
+      const A_HOUR = 60 * A_MINUTE;
+      const A_DAY = 24 * A_HOUR;
+  
+      const diff = Date.now() - date;
+  
+      if (diff < TEN_SECOND) return `방금 전`;
+      if (diff < A_MINUTE) return `${Math.floor(diff / 1000)}초 전`;
+      if (diff < A_HOUR) return `${Math.floor(diff / 1000 / 60)}분 전`;
+      if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 60)}시간 전`;
+      return new Intl.DateTimeFormat('ko-KR').format(date);
+    };
 
     return (
       <>
         <div className='container mb-4'>
-          <CommentWrapped>
-            <ProfileThumnail src="/images/tmpprofile2.jpg" alt="프로필사진" />
+          <CommentWrapped >
+            <ProfileThumnail src="/images/baseprofile.jpg" alt="프로필사진" />
             <CommentDiv>
               <div style={{textAlign:'start'}}>
                 <ProfileName>
-                  {comment.profilename}
-                  <WriteTime>{comment.created_at}분 전</WriteTime>
+                  {comment.nickname}
+                  <WriteTime>{formatRelativeDate(Date.parse(comment.created_at))}</WriteTime>
                 </ProfileName>
               </div>
             </CommentDiv>
-            <CommentLike onClick={() => clickLike(comment.id)}>
-              {comment.clickedLike ? 
-                <div><i style={{color:'red'}} class="bi bi-heart-fill"></i> {comment.likes}</div>
-                  : <div><i style={{color:'red'}} class="bi bi-heart"></i> {comment.likes}</div>
+            <CommentLike onClick={() => clickLike({likeClick, likeNum})}>
+              {likeClick ? 
+                <div onClick={like}><i style={{color:'red'}} class="bi bi-heart-fill"></i> {likeNum}</div>
+                  : <div onClick={like}><i style={{color:'red'}} class="bi bi-heart"></i> {likeNum}</div>
               }
             </CommentLike>
             {myId === comment.user_id ? 
@@ -132,8 +213,8 @@ function CommentItem({comment, onRemove, clickLike}) {
                 <div style={{marginLeft:'auto', cursor: "pointer"}} ref={ref} onClick={() => setSelected(!selected)}>
                   <i className="bi bi-three-dots-vertical"></i>
                   <div className={selected ? "feed_drop active" : "feed_drop" }>
-                    <div onClick={editButton}>댓글수정</div>
-                    <div onClick={() => onRemove(comment.id)}>댓글삭제</div>
+                    <div onClick={editButton}>수정</div>
+                    <div onClick={() => onRemove(comment.idcomment)}>삭제</div>
                   </div>
                 </div>
               </CommentMenu> : null

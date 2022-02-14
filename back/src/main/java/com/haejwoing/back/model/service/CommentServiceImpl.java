@@ -71,6 +71,12 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public boolean minusNum(int boardId) {
+
+        return sqlSession.getMapper(CommentMapper.class).minusNum(boardId);
+    }
+
+    @Override
     public boolean update(Comment comment) {
 
         return sqlSession.getMapper(CommentMapper.class).update(comment);
