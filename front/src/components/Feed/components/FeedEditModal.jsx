@@ -1,6 +1,8 @@
-import React, {useState, useCallback} from 'react';
+import React, {useState, useCallback, useEffect} from 'react';
 import styled from 'styled-components';
 import { createPortal } from 'react-dom';
+import axios from 'axios';
+
 
 const ModalContent = styled.div`
   box-sizing: border-box;
@@ -44,17 +46,40 @@ const Editbtn = styled.input`
 //   return createPortal(props.children, document.getElementById('commentModal'));
 // };
 
-const FeedEditModal = ({onClose, content, EditFeed}) => {
+const FeedEditModal = ({onClose, content, EditFeed, radio, idboard}) => {
   const [value, setValue] = useState(content)
-
+  const [revealType, setRevealType] = useState()
   
   const onChange = useCallback((e) => {
     setValue(e.target.value);
   }, [])
 
+  useEffect(() => {
+    setRevealType(radio)
+  }, [])
+
   function handleSubmit(event) {
     EditFeed(value)
+    
+    axios({
+      method: 'put',
+      url: 'http://localhost:8080/board/update',
+      data: {
+        idboard: idboard,
+        view_range: revealType,
+        content: value,
+      }
+    })
+    .then(res => {
+      console.log(res)
+    })
+    .catch(err => {
+      console.log(err)
+    })
+
+    
     onClose()
+
 
     event.preventDefault()
 }
@@ -70,6 +95,45 @@ const FeedEditModal = ({onClose, content, EditFeed}) => {
       </div>
       <div></div>
       <form onSubmit={handleSubmit}>
+        <div className='content show'>
+          <div className='content__radio' onClick={() => setRevealType("전체공개")}>
+            {revealType === "전체공개" ?
+              <input
+              type="radio"
+              id="reveal_all"
+              name="reveal_bounds"
+              value="reveal_all"
+              checked
+              /> :
+              <input
+              type="radio"
+              id="reveal_all"
+              name="reveal_bounds"
+              value="reveal_all"
+              />
+            } 
+            
+            <label style={{marginLeft: "5px"}} for="reveal_all">전체공개</label>
+          </div>
+          <div className="content__radio" onClick={() => setRevealType("친구공개")}>
+            {revealType === "친구공개" ?
+              <input
+              type="radio"
+              id="reveal_friend"
+              name="reveal_bounds"
+              value="reveal_friend"
+              checked
+              /> :
+              <input
+              type="radio"
+              id="reveal_friend"
+              name="reveal_bounds"
+              value="reveal_friend"
+              />
+            }
+            <label style={{marginLeft: "5px"}} for="reveal_friend">친구공개</label>
+          </div>
+        </div>
         <EditContent 
           placeholder='내용을 입력해주세요.'
           type='text' 

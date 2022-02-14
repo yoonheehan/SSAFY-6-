@@ -6,6 +6,7 @@ import FeedEditModal from './FeedEditModal';
 import ImgSlide from '../../ImgSlide/ImgSlide';
 import CommentWrite from '../comments/CommentWrite';
 import DetailContent from './DetailContent';
+import RemoveModal from './RemoveModal';
 import axios from 'axios'
 
 const FeedBox = styled.div`
@@ -101,7 +102,7 @@ const userName = [
   {id: 3, user_name: '허영민'},
 ]
 
-export default function FeedItem({feed, onRemove}) {
+export default function FeedItem({key, feed, onRemove}) {
     const history = useHistory();
     const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     const [selected, setSelected] = useState(false)
@@ -113,9 +114,11 @@ export default function FeedItem({feed, onRemove}) {
     const [voteUsers, setVoteUsers] = useState(null);
     const [voteCompleted, setVoteCompleted] = useState(false);
     const [countAll, setCountAll] = useState(null)
-    
+    const [removeModal, setRemoveModal] = useState(false)
+
     const ref = useRef(null)
     const ref2 = useRef(null)
+    const ref3 = useRef(null)
 
     const [feedItem, setFeedItem] = useState(feed)
 
@@ -157,9 +160,6 @@ export default function FeedItem({feed, onRemove}) {
       })
         .then(res => {
           console.log(res)
-
-          
-
           if (res.data.userid.includes(myId)) {
             setVoteCompleted(true)
           }
@@ -188,6 +188,10 @@ export default function FeedItem({feed, onRemove}) {
         if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
           setModalIsOpen(false)
         }
+
+        if (removeModal && ref3.current && !ref3.current.contains(event.target)) {
+          setRemoveModal(false)
+        }
       }
   
       document.addEventListener("mousedown", handleClickOutside)
@@ -204,6 +208,10 @@ export default function FeedItem({feed, onRemove}) {
 
     const handleEditClick = (event) => {
       setModalIsOpen(!modalIsOpen)
+    }
+
+    const handleRemoveClick = (event) => {
+      setRemoveModal(!removeModal)
     }
 
     const DetailModal = () => {
@@ -269,7 +277,7 @@ export default function FeedItem({feed, onRemove}) {
                   <div className={selected ? "feed_drop active" : "feed_drop" }>
                     <div onClick={handleEditClick}>글수정</div>
                     {/* <div onClick={() => onRemove(feed.id)}>글삭제</div> */}
-                    <div onClick={() => onRemove(feed.idboard)}>글삭제</div>
+                    <div onClick={() => setRemoveModal(true)}>글삭제</div>
                   </div>
                 </div>
               </FeedMenu>
@@ -318,7 +326,9 @@ export default function FeedItem({feed, onRemove}) {
           <FeedEditModal
             onClose={handleEditClick} 
             content={feed.content} 
+            radio={feed.view_range}
             EditFeed={EditFeed}
+            idboard={feed.idboard}
           />
         </div>
 
@@ -332,13 +342,20 @@ export default function FeedItem({feed, onRemove}) {
               amend={handleVoteContent}
             />
           }
-          
         </div>
 
         <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>
           <CommentWrite
             onClose={handleCommentClick}
             feed={feed} 
+          />
+        </div>
+
+        <div ref={ref3} className={removeModal ? "edit_drop active" : "edit_drop"}>
+          <RemoveModal
+            onClose={handleRemoveClick}
+            onRemove={onRemove}
+            idboard={feed.idboard}
           />
         </div>
       </>

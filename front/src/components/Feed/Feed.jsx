@@ -36,6 +36,7 @@ export default function Feed() {
     
     const [feeds, setFeeds] = useState(null)
     const [feedData, setFeedData] = useState(null)
+    
 
     useEffect(() => {
         axios({
@@ -52,7 +53,7 @@ export default function Feed() {
                 res[i].board_image = JSON.parse(res[i].board_image)
                 res[i].hashArr = JSON.parse(res[i].hashArr)
                 res[i].vote_contents = JSON.parse(res[i].vote_contents)
-                res[i].vote_users = JSON.parse(res[i].vote_users)
+                // res[i].vote_users = JSON.parse(res[i].vote_users)
             }
 
             setFeedData(res)
@@ -90,8 +91,19 @@ export default function Feed() {
 
 
     const onRemove = (id) => {
-        setFeeds(feeds.filter(feed => feed.idboard !== id));
-    
+        console.log(id)
+        
+        axios({
+        method: 'delete',
+        url: `http://localhost:8080/board/delete/${id}`,
+        })
+        .then(res => {
+            // setFeedData(feeds.filter(feed => feed.idboard !== id));
+            console.log(res);
+        })
+        .catch(err => {
+            console.log(err);
+        })
     };
 
     return (
