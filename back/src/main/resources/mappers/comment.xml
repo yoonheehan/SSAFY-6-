@@ -15,6 +15,15 @@
         VALUES (#{comment_idcomment}, #{user_id})
 
     </insert>
+    <update id="likeUserList" parameterType="com.haejwoing.back.model.dto.Comment">
+        UPDATE COMMENT SET likeUserList=#{userList}
+        WHERE idcomment = #{commentId}
+    </update>
+
+    <select id="get_user_id" parameterType="int" resultType="int">
+        SELECT user_id FROM comment_likes WHERE comment_idcomment=#{commentId}
+
+    </select>
 
     <delete id="unlike" parameterType="com.haejwoing.back.model.dto.Heart">
         DELETE FROM COMMENT_LIKES

@@ -53,6 +53,18 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
+    public boolean likeUserList(int commentId, String userList) {
+        return sqlSession.getMapper(CommentMapper.class).likeUserList(commentId, userList);
+    }
+
+    @Override
+    public List<Integer> get_user_id(int commentId) {
+        List<Integer> user_id_list = sqlSession.getMapper(CommentMapper.class).get_user_id(commentId);
+
+        return user_id_list;
+    }
+
+    @Override
     public boolean getNum(int boardId) {
 
         return sqlSession.getMapper(CommentMapper.class).getNum(boardId);

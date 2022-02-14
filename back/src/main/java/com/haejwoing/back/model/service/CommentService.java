@@ -19,6 +19,10 @@ public interface CommentService {
 
     boolean save(Comment comment) throws Exception;
 
+    boolean likeUserList(int commentId, String userList);
+
+    List<Integer> get_user_id(int commentId);
+
     boolean getNum(int boardId);
 
     boolean update(Comment comment);

@@ -10,6 +10,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+<<<<<<< Updated upstream
+=======
+import java.util.ArrayList;
+>>>>>>> Stashed changes
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -36,6 +40,7 @@ public class CommentController {
     // @RequestParam : loginId
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
+<<<<<<< Updated upstream
         int comment_idcomment = heart.getComment_idcomment();
         int user_id = heart.getUser_id();
         List<Integer> user_id_list = commentService.get_user_id(comment_idcomment);
@@ -50,6 +55,23 @@ public class CommentController {
             } else {
                 return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
             }
+=======
+        int commentId = heart.getComment_idcomment();
+        int userId = heart.getUser_id();
+
+        List<Integer> userList = commentService.get_user_id(commentId);
+        if(commentService.like(heart)){
+            if (userList.contains(userId)) {
+                commentService.unlike(userId, commentId);
+                userList.remove(Integer.valueOf(userId));
+            } else {
+                userList.add(userId);
+            }
+            String userList2 = Arrays.toString(userList.toArray());
+            commentService.likeUserList(commentId, userList2);
+
+            return new ResponseEntity<String>(HttpStatus.OK);
+>>>>>>> Stashed changes
         }
         else {
             if (commentService.like(heart)) {
@@ -61,14 +83,14 @@ public class CommentController {
         }
     }
 
-    @DeleteMapping("{commentId}/unlike/{userId}")
-    public ResponseEntity<String> unlike(@PathVariable int userId,
-                                         @PathVariable int commentId){
-        if(commentService.unlike(userId, commentId)){
-            return new ResponseEntity<String>(HttpStatus.OK);
-        }
-        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
-    }
+//    @DeleteMapping("{commentId}/unlike/{userId}")
+//    public ResponseEntity<String> unlike(@PathVariable int userId,
+//                                         @PathVariable int commentId){
+//        if(commentService.unlike(userId, commentId)){
+//            return new ResponseEntity<String>(HttpStatus.OK);
+//        }
+//        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
+//    }
 
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Comment comment) throws Exception {

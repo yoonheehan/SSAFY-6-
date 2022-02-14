@@ -73,12 +73,17 @@
 
     <select id="get_user_id_from_board" parameterType="int" resultType="int">
 
+<<<<<<< Updated upstream
     SELECT userId FROM BOARD WHERE idboard =#{idboard}
 
     </select>
 
 
     <select id="getFollowerFeed" parameterType="ArrayList" resultType="Board">
+=======
+        SELECT userId FROM BOARD WHERE idboard =#{idboard}
+    </select>
+>>>>>>> Stashed changes
 
         select * from board where userId
         in <foreach collection="list" item="value" index="idx" separator="," open="(" close=")">
