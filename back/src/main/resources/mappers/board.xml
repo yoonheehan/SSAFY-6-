@@ -75,6 +75,7 @@
 
     SELECT userId FROM BOARD WHERE idboard =#{idboard}
 
+    </select>
 
     <select id="getFollowerFeed" parameterType="int" resultType="Board">
         select * from board where userId
