@@ -15,18 +15,28 @@ const SearchDiv = styled.div`
     margin-top: 10px;
 `
 
-const SearchBox = styled.input`
-    width: 90%;
-    border: none;
-    border-bottom: 2px solid black;
-    height: 40px;
-    background-color: rgba(100,100,100,0);
-`
+
 
 const FriendList = styled.div`
 `
+const FindForm = styled.form`
+    width: 90%;
+    margin: 5%;
 
+`
 
+const FindInput = styled.input`
+    width: 88%;
+    border: none;
+    border-bottom: 1px solid rgb(190, 190, 190);
+`
+
+const SubmitBtn = styled.input`
+    width: 10%;
+    border: none;
+    border-bottom: 1px solid rgb(190, 190, 190);
+    background-color: white;
+`
 
 export default function SearchList(props) {
 
@@ -39,20 +49,40 @@ export default function SearchList(props) {
         setFindName(event.target.value)
         
     }
-    console.log(findName)
+    function findFriendList (event) {
+        axios({
+            method: 'get',
+            url: `http://localhost:8080/user/find/${findName}`,
+
+          })
+            .then(response => {
+              console.log('검색완료');
+              console.log(response.data);
+              setFriendList(response.data)
+            })
+        
+        event.preventDefault()
+    }
+    console.log(friendList)
+
+
 
     return (
         <>
-        <SearchForm>
+        <SearchForm onSubmit={findFriendList}>
             <SearchDiv>
-                <SearchBox 
-                placeholder='친구이름을 입력해주세요...'
+                <FindInput 
+                type="text"
+                placeholder='닉네임을 입력해주세요.'
                 onChange={getFriend}
+                name='comment'
+                value={findName}
                 />
+                <SubmitBtn type='submit' value="찾기" />
             </SearchDiv>
             <FriendList>
-                {!friendList.followerInfo || friendList.followerInfo.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
-                friendList.followerInfo && friendList.followerInfo.map((follow, index) => 
+                {!friendList || friendList.length === 0 ? <div>일치하는 친구가 없습니다.</div> :
+                friendList && friendList.map((follow, index) => 
                     <FriendItem 
                         key={index}
                         follow={follow}

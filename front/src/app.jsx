@@ -59,7 +59,7 @@ function App() {
           <Route exact path="/user/:id/withdraw" component={Withdraw} />
           <Route exact path="/board/user/:id/postList" component={PostList} />
           <Route exact path="/post" component={Post} />
-          <Route exact path="/user/find/:word" component={FindFriend} />
+          <Route exact path="/user/find" component={FindFriend} />
           <Route exact path="/feedtest" component={FeedTest} />
         </Switch>
       </BrowserRouter>
