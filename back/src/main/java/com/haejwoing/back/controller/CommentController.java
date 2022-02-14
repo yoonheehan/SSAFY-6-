@@ -9,11 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-<<<<<<< Updated upstream
-=======
 import java.util.ArrayList;
->>>>>>> Stashed changes
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -40,22 +36,6 @@ public class CommentController {
     // @RequestParam : loginId
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
-<<<<<<< Updated upstream
-        int comment_idcomment = heart.getComment_idcomment();
-        int user_id = heart.getUser_id();
-        List<Integer> user_id_list = commentService.get_user_id(comment_idcomment);
-        String wow= Arrays.toString(user_id_list.toArray());
-        
-        System.out.println(user_id_list);
-        //user_id가 user_id_list에 있다면 dislike, 아니면 like
-        if(user_id_list.contains(user_id)){
-            if (commentService.unlike(user_id, comment_idcomment)) {
-                System.out.println(commentService.unlike(user_id, comment_idcomment));
-                return new ResponseEntity<String>(HttpStatus.OK);
-            } else {
-                return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
-            }
-=======
         int commentId = heart.getComment_idcomment();
         int userId = heart.getUser_id();
 
@@ -71,7 +51,6 @@ public class CommentController {
             commentService.likeUserList(commentId, userList2);
 
             return new ResponseEntity<String>(HttpStatus.OK);
->>>>>>> Stashed changes
         }
         else {
             if (commentService.like(heart)) {
