@@ -164,8 +164,8 @@ function CommentItem({comment, onRemove}) {
         method: 'post',
         url: `http://localhost:8080/comment/like`,
         data : {
-          commentId : comment.idcomment, 
-          userId : myId,
+          comment_idcomment : comment.idcomment, 
+          user_id : myId,
         }
 
         })
