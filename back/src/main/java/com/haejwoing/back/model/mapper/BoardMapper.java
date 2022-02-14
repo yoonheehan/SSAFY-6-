@@ -27,10 +27,6 @@ public interface BoardMapper {
 
     List<Integer> getIdx(int boardId);
 
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
     void update_board_vote_num(HashMap temporary);
 
     int get_user_id_from_board(int boardid);

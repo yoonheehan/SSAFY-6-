@@ -77,11 +77,7 @@
 
     </select>
 
-
     <select id="getFollowerFeed" parameterType="ArrayList" resultType="Board">
-        SELECT userId FROM BOARD WHERE idboard =#{idboard}
-    </select>
-
         select * from board where userId
         in <foreach collection="list" item="value" index="idx" separator="," open="(" close=")">
         #{value}
