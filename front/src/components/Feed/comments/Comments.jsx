@@ -16,7 +16,7 @@ export default function Comments({commentList, onRemove, clickLike}) {
   };
 
   return (
-      <div>
+      <div >
         {commentList.map((comment, index) => 
         <CommentItem 
             key={index}

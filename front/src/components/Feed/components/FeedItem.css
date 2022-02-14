@@ -21,13 +21,15 @@
     align-items: center;
     justify-content: center;
     position: fixed;
+    padding-bottom: 10%;
     left: 0;
     bottom: 0;
     text-align: center;
-    background-color: rgb(34, 32, 32);
+    background-color: white;
     z-index: 1000;
     transition: all ease 0.25s;
     visibility: hidden;
+    overflow: scroll;
 }
 
 .comments_modal.active {

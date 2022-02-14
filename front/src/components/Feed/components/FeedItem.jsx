@@ -117,7 +117,7 @@ export default function FeedItem({key, feed, onRemove}) {
     const ref3 = useRef(null)
 
     const [feedItem, setFeedItem] = useState(feed)
-
+    
     const EditFeed = (content) => {
       // feedItem.feedcontent = content;
       feedItem.content = content
@@ -318,7 +318,7 @@ export default function FeedItem({key, feed, onRemove}) {
             <div style={{ color: "grey" }}>
               <Comments>
                 <div>{countAll}명</div>
-                <div onClick={handleCommentClick}>22개</div>
+                <div onClick={handleCommentClick}>{feed.commentNum}아이콘넣으셈</div>
               </Comments>
             </div>
           </HashCommentBox>

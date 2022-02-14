@@ -25,17 +25,12 @@ const SubmitBtn = styled.input`
     background-color: white;
 `
 
-const CommentList = [
-    {id: 1, profilename: '홍길동', writetime: 3, content: '치킨좋아 사주세여 치킨좋아 사주세여치킨좋아 사주세여치킨좋아 사주세여치킨좋아 사주세여', commentUserId:1, likes:2, clickedLike: false },
-    {id: 2, profilename: '홍길동', writetime: 5, content: 'ㄹㅇㅋㅋ',commentUserId:2 ,likes:1, clickedLike: true},
-    {id: 3, profilename: '홍길동', writetime: 2, content: 'ㄹㅇㅋㅋ', commentUserId:3 ,likes:5, clickedLike: false},
-]
+
 
 function CommentWrite({onClose, feed}) {
     const [commentContent, setCommentContent] = useState("");
-    const [comments, setComments] = useState(CommentList)
+    const [comments, setComments] = useState('')
     
-
     useEffect(() => {
         axios({
             method: 'get',
@@ -44,7 +39,7 @@ function CommentWrite({onClose, feed}) {
           })
             .then(response => {
               console.log('response : ' , response.data);
-            //   setComments(response.data)
+              setComments(response.data)
             })
     },[])
 
@@ -55,18 +50,35 @@ function CommentWrite({onClose, feed}) {
     }
     
     function handleSubmit(event) {
-        const lastValue = comments[comments.length - 1].id
-        setComments((prevComments) => [
-            ...prevComments,
-            {profilename: '허영민',id:(lastValue+1), writetime: 3, content:`${commentContent}`, likes:0, clickedLike:false, commentUserId:4}
-        ])
-        setCommentContent('')
+        console.log(commentContent)
+        axios({
+            method: 'post',
+            url: `http://localhost:8080/comment/save`,
+            data: {
+                content : commentContent,
+                board_idboard : feed.idboard,
+                user_id : feed.userId,
+            }
+          })
+            .then(response => {
+              console.log('작성완료');
+            })
+
         event.preventDefault()
     }
 
     const onRemove = (id) => {
-        setComments(comments.filter(comment => comment.id !== id));
-        
+        setComments(comments.filter(comment => comment.idcomment !== id));
+        axios({
+            method: 'delete',
+            url: `http://localhost:8080/comment/delete/${id}`,
+            params: {
+                boardId: feed.idboard,
+            }
+          })
+            .then(response => {
+              console.log('삭제완료');
+            })
     };
 
     const clickLike = (id) => {
@@ -84,6 +96,8 @@ function CommentWrite({onClose, feed}) {
         }
     }
 
+
+    
     return (
         <>  
             <div>
@@ -91,11 +105,15 @@ function CommentWrite({onClose, feed}) {
                     <i onClick={onClose} className="m-2 h4 bi bi-x-lg" style={{ cursor: 'pointer' }}></i>          
                 </div>
                 <div className="comment_box">
+                    {comments ? 
                     <Comments 
                     commentList={comments} 
                     onRemove={onRemove} 
                     clickLike={clickLike}
                     />
+                    :
+                    <div>로딩중입니다.</div>
+                }
                 </div>
                 <CommentForm onSubmit={handleSubmit}>
                     <CommentInput 

@@ -1,7 +1,13 @@
 server:
   port: 8080
 #  servlet:
-#    context-path: /haejwoing
+#    context-
+    #ㄹㅇㅋㅋ
+    #프로필사진
+    #홍길동
+    #분 전
+  # 5
+  #ㄹㅇㅋㅋpath: /haejwoing
 
 spring:
   datasource:
