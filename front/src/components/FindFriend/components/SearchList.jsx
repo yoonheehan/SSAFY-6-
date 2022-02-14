@@ -43,7 +43,7 @@ export default function SearchList(props) {
 
     const [findName, setFindName] = useState("");
     const [friendList, setFriendList] = useState([])
-
+    console.log(findName)
 
     function getFriend (event) {
         setFindName(event.target.value)
