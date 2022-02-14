@@ -115,7 +115,6 @@ public class BoardController {
             // 글 등록한 유저아이디 가져와서
             System.out.println(userId);
             userService.setPoint(map);
-
             if(hashTagService.save(board)) {
 
                 return new ResponseEntity<String>(HttpStatus.OK);

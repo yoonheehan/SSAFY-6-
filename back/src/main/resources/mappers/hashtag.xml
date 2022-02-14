@@ -44,7 +44,7 @@
 
     <select id="findtagname" parameterType="String" resultType="int">
 
-    SELECT EXISTS(SELECT * FROM TAG WHERE tag_name=#{tag_name} LIMIT 1);
+        SELECT EXISTS(SELECT * FROM TAG WHERE tag_name=#{tag_name} LIMIT 1);
 
     </select>
 
