@@ -3,20 +3,23 @@ import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import "./DetailContent.css"
+import axios from 'axios'
 
 
-const DetailContent = ({onClose, votes, feed}) => {
+const DetailContent = ({onClose, votes, feed, completed, amend}) => {
     const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     const [voteSelected ,setVoteSelected] = useState(null)
     const [selected, setSelected] = useState(null)
     const [tempCount, setTempCount] = useState(votes)
     const [countAll, setCountAll] = useState()
+    const [voteTemp, setVoteTemp] = useState()
+    const [voteCompleted, setVoteCompleted] = useState()
+
 
     useEffect(() => {
-        
+        setVoteCompleted(completed)
         setTempCount(votes)
-        if (votes) {
-            console.log(votes, '!!!!!!!!')
+        if (completed) {
             let cnt = 0
 
             for (let i = 0; i < votes.length; i++) {
@@ -27,33 +30,78 @@ const DetailContent = ({onClose, votes, feed}) => {
                     setSelected(true)
                 }
             }
-            // console.log(tempCount, "!!!!!")
+            console.log(tempCount, "!!!!!")
             setCountAll(cnt)
-            
         } 
     }, [])
 
-    const voteCount = (key) => {
-        if (tempCount) {
-            const tempArray = []
+    // const voteCount = (key) => {
+    //     if (tempCount) {
+    //         const tempArray = []
         
-            for (let i = 0; i < tempCount.length; i++) {
-                tempArray.push(tempCount[i])
-            }
+    //         for (let i = 0; i < tempCount.length; i++) {
+    //             tempArray.push(tempCount[i])
+    //         }
 
         
-            if (!tempArray[key].includes(myId)) {
-                for (let i = 0; i < tempCount.length; i++) {
-                    const idx = tempArray[i].indexOf(myId)
-                    if (idx !== -1) {
-                        tempArray[i].splice(idx, 1)
+    //         if (!tempArray[key].includes(myId)) {
+    //             for (let i = 0; i < tempCount.length; i++) {
+    //                 const idx = tempArray[i].indexOf(myId)
+    //                 if (idx !== -1) {
+    //                     tempArray[i].splice(idx, 1)
+    //                 }
+    //             }
+    //             tempArray[key].push(myId)
+    //         }
+
+    //         setTempCount(tempArray)
+    //     }
+    // }
+
+    const selectVote = (idboard, key, myId) => {
+        setVoteTemp({ board_idboard : idboard, idx: key, user_id: myId })
+    }
+
+    const postVote = () => {
+        const url = "http://localhost:8080/board/savevoteusers"
+        
+        if (voteTemp) {
+            axios({
+                method: "post",
+                url: url,
+                data: voteTemp
+            })
+            .then(function(res) {
+                console.log(res.config.data)
+                axios({
+                    method: 'get',
+                    url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+                })
+                .then(res => {
+                    console.log(res.data)
+                    const tempArray = []
+
+                    for (let i = 0; i < feed.vote_contents.length; i++) {
+                        tempArray.push([])
                     }
-                }
-                tempArray[key].push(myId)
-            }
-            
 
-            setTempCount(tempArray)
+                    for (let i = 0; i < res.data.idx.length; i++) {
+                        tempArray[res.data.idx[i]].push(res.data.userid[i])
+                    }
+                    
+                    setVoteCompleted(true)
+                    setTempCount(tempArray)
+                    setCountAll(res.data.idx.length)
+                    
+
+                })
+                .catch(err => {
+                console.log(err)
+                })
+            })
+            .catch(function(error) {
+                console.log(error)
+            })
         }
     }
 
@@ -91,11 +139,15 @@ const DetailContent = ({onClose, votes, feed}) => {
                         { feed.type === 1 &&
                             <>
                                 <div className="container mt-3">
-                                    {votes && votes.map((vote, key) => 
+                                    {feed.vote_contents.map((vote, key) => 
                                         <div
                                             key={key}
                                             className={key === voteSelected ? "detail_vote active" : "detail_vote"}
-                                            onClick={() => {setVoteSelected(key); setSelected(true); voteCount(key)}}
+                                            onClick={() => {
+                                                if (!voteCompleted) {setVoteSelected(key)};
+                                                setSelected(true);
+                                                selectVote(feed.idboard, key, myId)
+                                            }}
                                         >
                                             { key === voteSelected &&
                                                 <div style={{color: "green"}}>
@@ -105,14 +157,27 @@ const DetailContent = ({onClose, votes, feed}) => {
 
                                             <div>{vote}</div>
                                             
-                                            { selected && 
+                                            { selected && voteCompleted &&
                                                 <div style={{ marginLeft: "auto" }}>
                                                     {tempCount[key].length}
                                                 </div>
                                             }
                                         </div>
                                     )}
-                                    <div className='detail_button' onClick={onClose}>선택완료</div>
+                                    {
+                                        voteCompleted ?
+                                        <>
+                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                        </>
+                                        :
+                                        <>
+                                            <div onClick={amend}>
+                                                <div className='detail_button' onClick={postVote}>선택완료</div>
+                                            </div>
+                                            
+                                        </>
+                                        
+                                    }
                                 </div>
                             </>
                         }
@@ -123,7 +188,11 @@ const DetailContent = ({onClose, votes, feed}) => {
                                 <div className="container mt-3">
                                     <div
                                         className={voteSelected === 0 ? "detail_vs active" : "detail_vs"}
-                                        onClick={() => {setVoteSelected(0); setSelected(true); voteCount(0)}}
+                                        onClick={() => {
+                                            if (!voteCompleted) {setVoteSelected(0)};
+                                            setSelected(true);
+                                            selectVote(feed.idboard, 0, myId)
+                                        }}
                                     >
                                         { voteSelected === 0 &&
                                             <div className="my_check" style={{color: "green"}}>
@@ -131,7 +200,7 @@ const DetailContent = ({onClose, votes, feed}) => {
                                             </div>
                                         }
                                         <div>{feed.vote_contents[0]}</div>
-                                        { selected && 
+                                        { selected && voteCompleted &&
                                             <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
                                                 {countAll === 0 ? 0 :
                                                 Math.ceil(tempCount[0].length / countAll * 100)}%
@@ -141,7 +210,11 @@ const DetailContent = ({onClose, votes, feed}) => {
                                     <div style={{ fontWeight: "bold", fontSize: "2rem", color: '#DD5757' }}>VS</div>
                                     <div
                                         className={voteSelected === 1 ? "detail_vs active" : "detail_vs"}
-                                        onClick={() => {setVoteSelected(1); setSelected(true); voteCount(1)}}
+                                        onClick={() => {
+                                            if (!voteCompleted) {setVoteSelected(1)};
+                                            setSelected(true);
+                                            selectVote(feed.idboard, 1, myId)
+                                        }}
                                     >
                                         { voteSelected === 1 &&
                                             <div className="my_check" style={{color: "green"}}>
@@ -149,14 +222,27 @@ const DetailContent = ({onClose, votes, feed}) => {
                                             </div>
                                         }
                                         <div>{feed.vote_contents[1]}</div>
-                                        { selected && 
+                                        { selected && voteCompleted &&
                                             <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
                                                 {countAll === 0 ? 0 
                                                 : 100 - Math.ceil(tempCount[0].length / countAll * 100)}%
                                             </div>
                                         }
                                     </div>
-                                    <div className='detail_button' onClick={onClose}>선택완료</div>
+                                    {
+                                        voteCompleted ?
+                                        <>
+                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                        </>
+                                        :
+                                        <>
+                                            <div onClick={amend}>
+                                                <div className='detail_button' onClick={postVote}>선택완료</div>
+                                            </div>
+                                            
+                                        </>
+                                        
+                                    }
                                 </div>
                             </>
                         }
@@ -168,7 +254,11 @@ const DetailContent = ({onClose, votes, feed}) => {
                                     <div className="container mt-3 ox_container">
                                         <div 
                                             className={voteSelected === 0 ? "detail_ox active" : "detail_ox"}
-                                            onClick={() => {setVoteSelected(0); setSelected(true); voteCount(0)}}
+                                            onClick={() => {
+                                                if (!voteCompleted) {setVoteSelected(0)};
+                                                setSelected(true);
+                                                selectVote(feed.idboard, 0, myId)
+                                            }}
                                         >
                                             { voteSelected === 0 &&
                                                 <div className="my_check" style={{color: "green"}}>
@@ -176,7 +266,7 @@ const DetailContent = ({onClose, votes, feed}) => {
                                                 </div>
                                             }
                                             <img style={{ width: "65%" }} alt="o" src="/images/OOO.png" />
-                                            { selected && 
+                                            { selected && voteCompleted &&
                                                 <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
                                                     {Math.ceil(tempCount[0].length / countAll * 100)}%
                                                 </div>
@@ -184,7 +274,11 @@ const DetailContent = ({onClose, votes, feed}) => {
                                         </div>
                                         <div 
                                             className={voteSelected === 1 ? "detail_ox active" : "detail_ox"}
-                                            onClick={() => {setVoteSelected(1); setSelected(true); voteCount(1)}}
+                                            onClick={() => {
+                                                if (!voteCompleted) {setVoteSelected(1)};
+                                                setSelected(true);
+                                                selectVote(feed.idboard, 1, myId)
+                                            }}
                                         >
                                             { voteSelected === 1 &&
                                                 <div className="my_check" style={{color: "green"}}>
@@ -192,7 +286,7 @@ const DetailContent = ({onClose, votes, feed}) => {
                                                 </div>
                                             }
                                             <img style={{ width: "65%" }} alt="x" src="/images/XXX.png" />
-                                            { selected && 
+                                            { selected && voteCompleted &&
                                                 <div style={{ fontSize: "1.5rem", fontWeight: "bold" }}>
                                                     {100 - Math.ceil(tempCount[0].length / countAll * 100)}%
                                                 </div>
@@ -200,7 +294,18 @@ const DetailContent = ({onClose, votes, feed}) => {
                                             
                                         </div>
                                     </div>
-                                    <div className='detail_button' onClick={onClose}>선택완료</div>
+                                    {
+                                        voteCompleted ?
+                                        <>
+                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                        </>
+                                        :
+                                        <>
+                                            <div onClick={amend}>
+                                                <div className='detail_button' onClick={postVote}>선택완료</div>
+                                            </div>
+                                        </>
+                                    }
                                 </div>
                             </>
                         }

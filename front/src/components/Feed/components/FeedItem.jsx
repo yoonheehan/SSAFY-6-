@@ -70,8 +70,7 @@ const FeedMenu = styled.div`
 
 const HashCommentBox = styled.div`
   margin: 25px 10px 10px 10px;
-  display: flex;
-  justify-content: space-between;
+
 `
 
 const HashTagBox = styled.div`
@@ -112,7 +111,9 @@ export default function FeedItem({feed, onRemove}) {
     const [userData ,setUserData] = useState(null);
     const [firstNickName, setFirstNickName] = useState(null);
     const [voteUsers, setVoteUsers] = useState(null);
-
+    const [voteCompleted, setVoteCompleted] = useState(false);
+    const [countAll, setCountAll] = useState(null)
+    
     const ref = useRef(null)
     const ref2 = useRef(null)
 
@@ -152,20 +153,33 @@ export default function FeedItem({feed, onRemove}) {
       
       axios({
         method: 'get',
-        url: 'https://75e689af-277f-4239-8228-f14b051043ac.mock.pstmn.io/list',
+        url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
       })
         .then(res => {
-          console.log(res.data)
-          for (let i = 0; i < res.data.idx.length; i++) {
-            tempArray[res.data.idx[i]].push(res.data.userid[i])
+          console.log(res)
+
+          
+
+          if (res.data.userid.includes(myId)) {
+            setVoteCompleted(true)
           }
 
-          setVoteUsers(tempArray)
+          if (res.data.userid[0] === 0 && res.data.idx.length === 1) {
+            setCountAll(0)
+            setVoteUsers(tempArray)
+          } else {
+            for (let i = 0; i < res.data.idx.length; i++) {
+              tempArray[res.data.idx[i]].push(res.data.userid[i])
+            }
+            setCountAll(res.data.idx.length)
+            setVoteUsers(tempArray)
+          }
         })
         .catch(err => {
           console.log(err)
         })
 
+        
       const handleClickOutside = (event) => {
         if (selected && ref.current && !ref.current.contains(event.target)) {
           setSelected(false)
@@ -181,7 +195,7 @@ export default function FeedItem({feed, onRemove}) {
       return () => {
           document.removeEventListener("mousedown", handleClickOutside)
       }
-    }, [selected, modalIsOpen, voteUsers])
+    }, [selected, modalIsOpen])
 
     const handleCommentClick = (event) => {
       setCommentModalOpen(!commentModalOpen)
@@ -212,6 +226,10 @@ export default function FeedItem({feed, onRemove}) {
       }
     }
 
+    const handleVoteContent = () => {
+      setVoteCompleted(true)
+    }
+
     const formatRelativeDate = (date) => {
       
       const TEN_SECOND = 10 * 1000;
@@ -227,7 +245,6 @@ export default function FeedItem({feed, onRemove}) {
       if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 60)}시간 전`;
       return new Intl.DateTimeFormat('ko-KR').format(date)
     }
-    
 
   return (
       <>
@@ -265,23 +282,36 @@ export default function FeedItem({feed, onRemove}) {
                 {typeButton(feed.type)}
                 {feed.content}
               </Content>
-              <button onClick={DetailModal}>참여하기</button>
+              {
+                voteCompleted ?
+                <div onClick={DetailModal}>
+                  <i style={{color: "green"}} class="h1 bi bi-check2-circle"></i>
+                  <div>결과보기</div>
+                </div> : 
+                <button onClick={DetailModal}>참여하기</button>
+              }
+
+              {/* <button onClick={DetailModal}>참여하기</button> */}
               <ContentImgBox>
-                {/* <ImgSlide imgUrl={feed.feedimg}/> */}
                 <ImgSlide imgUrl={feed.board_image}/>
-                {/* <ContentImg src={feed.feedimg} alt='글 사진' /> */}
               </ContentImgBox>
           </ContentBox>
           <HashCommentBox>
-            <HashTagBox>
-              { feed.hashArr && feed.hashArr.map((hashTag, index) => 
-                <div key={index}>
-                  <HashTag>{hashTag}</HashTag>
-                </div>
-              )}
-            </HashTagBox>
-            {/* <div>{voteUsers.idx.length}</div> */}
-            <Comments onClick={handleCommentClick}>22개</Comments>
+            <div>
+              <HashTagBox>
+                { feed.hashArr && feed.hashArr.map((hashTag, index) => 
+                  <div key={index}>
+                    <HashTag>{hashTag}</HashTag>
+                  </div>
+                )}
+              </HashTagBox>
+            </div>
+            <div style={{ color: "grey" }}>
+              <Comments>
+                <div>{countAll}명</div>
+                <div onClick={handleCommentClick}>22개</div>
+              </Comments>
+            </div>
           </HashCommentBox>
         </FeedBox>
         <div ref={ref2} className={modalIsOpen ? 'edit_drop active' : 'edit_drop'}>
@@ -298,6 +328,8 @@ export default function FeedItem({feed, onRemove}) {
               feed={feed}
               votes={voteUsers}
               onClose={DetailModal}
+              completed={voteCompleted}
+              amend={handleVoteContent}
             />
           }
           

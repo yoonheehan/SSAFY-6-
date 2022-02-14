@@ -23,7 +23,7 @@ const Post = () => {
 
    //axios post 데이터
    const [userId, setUserId] = useState(JSON.parse(sessionStorage.getItem('loginedUser')).userId) // 유저 id
-   const [type, setType] = useState(null)
+   const [type, setType] = useState(1)
    const [revealType, setRevealType] = useState(null) // 공개범위
    const [voteContent, setVoteContent] = useState("") // 내용
    const [voteItems, setVoteItems] = useState(["", ""]) // 투표항목
@@ -33,7 +33,7 @@ const Post = () => {
    const [imgUrl, setImgUrl] = useState(null) // 이미지 url
    const [hashArr, setHashArr] = useState([]) // 해시태그
    const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
-   const [dueDateSec, SetDueDateSec] = useState(null)
+   const [dueDateSec, SetDueDateSec] = useState(Date.now() + 86400000)
    //
 
    // axios.post
@@ -55,7 +55,6 @@ const Post = () => {
    
          promise.then(
          function (data) {
-            alert('이미지 업로드에 성공했습니다.');
          },
          function (err) {
             return alert('오류가 발생했습니다: ', err.message);
@@ -73,7 +72,7 @@ const Post = () => {
             vote_contents: vote_contents,
             board_image: JSON.stringify(imgUrl),
             hashArr: JSON.stringify(hashArr),
-			vote_users : JSON.stringify(voteUser),
+			// vote_users : JSON.stringify(voteUser),
             due_date: dueDateSec,
             // due_date: dueDate
          },
@@ -87,13 +86,14 @@ const Post = () => {
    }
 
    const [selected, setSelected] = useState(false)
-   const [keySelected, setKeySelected] = useState(null)
+   const [keySelected, setKeySelected] = useState('1')
    const [hashtag, setHashtag] = useState('')
    const [isErrored, setIsErrored] = useState(false)
    const [votes, setVote] = useState([{id: 0, value: inputPlus()}, {id: 1, value: inputPlus()}])
    const [previewImg, setPreviewImg] = useState(null)
    const nextId = useRef(2)
    const ref = useRef(null)
+   const [userData ,setUserData] = useState(null);
 
    const addEvent = useCallback(
       (event) => {
@@ -170,7 +170,24 @@ const Post = () => {
       }       
    }
 
-   useEffect(() => {
+   useEffect(() => {	
+
+		axios({
+			method: 'get',
+			url: `http://localhost:8080/user/${userId}`,
+			// url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+		})
+			.then(res => {
+			console.log(res, "user데이터");
+			setUserData(res.data);
+			})
+			.catch(err => {
+			console.log('에러났어요');
+			})
+			.finally(() => {
+			console.log('profile request end');
+			});
+
       const handleClickOutside = (event) => {
          if (isErrored && ref.current && !ref.current.contains(event.target)) {
             setIsErrored(false)
@@ -292,10 +309,17 @@ const Post = () => {
 				</div>
 				<div className="mb-3 d-flex flex-row align-items-center">
 					<div>
-						<img src='' alt="Avatar" className="avatar"></img>
+						<img 
+						src={userData && userData.info.image.length > 0 ? 
+							'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' + userData.info.image :
+							'/images/baseprofile.jpg'
+						}
+						alt="Avatar"
+						className="avatar"
+						/>
 					</div>
 					<div className="m-1">
-						dfg
+						{userData && userData.info.nickname}
 					</div>
 				</div>
 				<div>
@@ -329,15 +353,24 @@ const Post = () => {
 							<div>글종류</div>
 						</div>
 						<div className="button_group">
-							<div className="button_vote" onClick={() => {setType(1); contentReset("1")}}>
+							<div 
+								className={type === 1 ? "button_vote active" : "button_vote"}
+								onClick={() => {setType(1); contentReset("1")}}
+							>
 								<div><i class="bi bi-card-checklist"></i></div>
 								<div>투표</div>
 							</div>
-							<div className="button_ox" onClick={() => {setType(2); contentReset("2")}}> 
+							<div
+								className={type === 2 ? "button_vote active" : "button_vote"}
+								onClick={() => {setType(2); contentReset("2")}}
+							> 
 								<div>VS</div>
 								<div>대결</div>
 							</div>
-							<div className="button_ox" onClick={() => {setType(3); contentReset("3")}}>
+							<div 
+								className={type === 3 ? "button_vote active" : "button_vote"} 
+								onClick={() => {setType(3); contentReset("3")}}
+							>
 								<div><i class="h6 bi bi-circle"></i><i class="h6 bi bi-x-lg"></i></div>
 								<div>찬반</div>
 							</div>
@@ -392,11 +425,7 @@ const Post = () => {
 
 						{/* OX */}
 						<div className="my_accordion">
-							{/* <div className={keySelected === '2' ? "title active" : "title"} onClick={() => {contentReset("2"); setVoteItems(["", ""]); setType(2)}}>
-								<div>OX</div>
-								<div className={keySelected === '2' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div> */}
-							<div className={keySelected === '2' ? "vote_content show" : "vote_content"}>
+							<div className={keySelected === '3' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className="img_box">
 									{img && previewImg.map((props, key) => (
@@ -419,11 +448,7 @@ const Post = () => {
 
 						{/* VS */}
 						<div className="my_accordion">
-							{/* <div className={keySelected === '3' ? "title active" : "title"} onClick={() => {contentReset("3"); setVoteItems(["", ""]); setType(3)}}>
-								<div>VS</div>
-								<div className={keySelected === '3' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div> */}
-							<div className={keySelected === '3' ? "vote_content show" : "vote_content"}>
+							<div className={keySelected === '2' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<input type="text" name="input_area" size="30" placeholder="항목을 입력하세요" onChange={(event) => {getVoteItems(event, 0)}}></input>
 								<input type="text" size="30" name="input_area" placeholder="항목을 입력하세요." onChange={(event) => {getVoteItems(event, 1)}}></input>
@@ -448,7 +473,7 @@ const Post = () => {
 					</div>				
 				</div>
 				<div className="title active mt-4 ">
-					<div>#태그 입력</div>
+					<div>태그 입력</div>
 				</div>
 				<div className="hashtag_outer">
 					{hashArr.map((value, key) => (
@@ -471,11 +496,10 @@ const Post = () => {
 					<input
 						type="text"
 						value={hashtag}
-						placeholder="해시태그를 입력하세요."
+						placeholder="입력 후 ENTER를 누르세요"
 						onChange={changeHashtag}
 						onKeyUp={inputHashtag}
 						className="hashtag_input"
-						autoFocus
 					/>
 					<button onClick={inputHashtag} className="input_button btn btn-primary btn-sm">+</button>
 				</div>
@@ -497,7 +521,7 @@ const Post = () => {
 				</div>
 				<div className="mt-4" align="right">
 					<form action="">
-						<Button variant="primary" onClick={postAPI}>작성</Button>
+						<Button variant="primary" onClick={() => {postAPI(); history.push('/feed');}}>작성</Button>
 					</form>
 				</div>
 			</div>

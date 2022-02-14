@@ -20,8 +20,9 @@
 }
 
 .title.active {
-    background: linear-gradient(90deg, rgb(132, 118, 255) 0%, rgb(89, 80, 255) 100%);
+    background: linear-gradient(90deg, rgb(119, 104, 255) 0%, rgb(89, 80, 255) 100%);
     color: white;
+    font-size: bold;
     transition: all 0.2s ease;
 }
 
@@ -219,7 +220,7 @@
 }
 
 .button_vote {
-    font-size: 1.1rem;
+    font-size: 1.0rem;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -227,7 +228,16 @@
     height: 30px;
     padding: 0px 5px;
     border-radius: 5px;
-    background-color: rgb(240, 240, 240);
+    font-weight: bold;
+    color: rgb(89, 80, 255);
+    background-color: white;
+    border: rgb(89, 80, 255) solid 1px;
+    
+}
+
+.button_vote.active {
+    color: white;
+    background: linear-gradient(90deg, rgb(119, 104, 255) 0%, rgb(89, 80, 255) 100%);
 }
 
 .button_ox {
