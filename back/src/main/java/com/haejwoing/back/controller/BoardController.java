@@ -72,9 +72,25 @@ public class BoardController {
     @GetMapping("/getvoteusers/{idboard}")
     public ResponseEntity<Map<String, Object>> GetVoteUsersList(@PathVariable int idboard){
 
+
         Map<String, Object> map = new HashMap<>();
         map.put("userid", boardService.getUserid(idboard));
         map.put("idx", boardService.getIdx(idboard));
+
+
+        Board board = new Board();
+        Map<String, Object> map1 = new HashMap<>();
+        int userId = board.getUserId();
+        double score = 5;
+        map1.put("userId", userId);
+        map1.put("score", score);
+
+        // 글 등록한 유저아이디 가져와서
+        System.out.println(userId);
+        userService.setPoint(map1);
+
+
+
 
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
