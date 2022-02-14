@@ -20,6 +20,7 @@
     </insert>
 
     <delete id="unlike" parameterType="Heart">
+
         DELETE FROM COMMENT_LIKES
         where user_id=#{userId} and comment_idcomment=#{commentId}
 
@@ -27,6 +28,8 @@
 
 
     <update id="likeUserList" parameterType="Comment">
+
+
         UPDATE COMMENT SET likeUserList=#{userList}
         WHERE idcomment = #{commentId}
     </update>

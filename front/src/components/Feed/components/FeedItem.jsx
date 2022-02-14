@@ -214,6 +214,7 @@ export default function FeedItem({key, feed, onRemove}) {
     setDetailModalOpen(!detailModalOpen);
   };
 
+
   const typeButton = type => {
     if (type === 1) {
       return (

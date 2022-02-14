@@ -30,19 +30,28 @@ const SubmitBtn = styled.input`
 function CommentWrite({onClose, feed}) {
     const [commentContent, setCommentContent] = useState("");
     const [comments, setComments] = useState('')
+    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
 
+    const [count, setCount] = useState(0);
 
-    useEffect(() => {
-        axios({
-            method: 'get',
-            url: `http://localhost:8080/comment/${feed.idboard}`,
-            // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-          })
-            .then(response => {
-              console.log('response : ' , response.data);
-              setComments(response.data)
-            })
-    },[])
+    useEffect(() =>{
+		async function fetchData(){
+		const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
+		,);
+		setComments(result.data)
+		}
+		fetchData();
+	},[count]);
+
+    setTimeout(() => {
+        async function fetchData(){
+            const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
+            ,);
+            setComments(result.data)
+            }
+            fetchData();
+    }, 1000)
+
 
     function getcomment(event) {
         const commentContent = event.target.value
@@ -58,16 +67,19 @@ function CommentWrite({onClose, feed}) {
             data: {
                 content : commentContent,
                 board_idboard : feed.idboard,
-                user_id : feed.userId,
+                user_id : myId,
             }
-          })
+            })
             .then(response => {
-              console.log('작성완료');
+                console.log('작성완료');
             })
 
+        setCount(count+1)
         setCommentContent('')
         event.preventDefault()
     }
+    
+
 
     
     const onRemove = (id) => {
@@ -82,9 +94,9 @@ function CommentWrite({onClose, feed}) {
             .then(response => {
               console.log('삭제완료');
             })
+            
     };
-
-
+    
 
     
     return (
@@ -112,7 +124,7 @@ function CommentWrite({onClose, feed}) {
                     name='comment'
                     value={commentContent}
                     />
-                    <SubmitBtn type='submit' value="작성" />
+                    <SubmitBtn type='submit' value="작성" onClick={() => setCount(count+1)} />
                 </CommentForm>
             </div>
         </>

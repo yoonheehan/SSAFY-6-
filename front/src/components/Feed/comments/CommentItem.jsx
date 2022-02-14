@@ -83,12 +83,12 @@ function CommentItem({comment, onRemove}) {
       setTempValue(e.target.value)
       // setEditValue(e.target.value);
     }, [])
-    console.log('comment.likeUserList : ', comment.likeUserList)
+
     const ref = useRef(null)
     useEffect(() => {
 
 
-      if (comment.likeUserList === '') {
+      if (comment.likeUserList === '' || comment.likeUserList === '[]') {
         setLikeNum(0)
       }
       else {
@@ -133,7 +133,7 @@ function CommentItem({comment, onRemove}) {
             content : tempValue,
             board_idboard : comment.board_idboard,
             idComment : comment.idcomment,
-            user_id: comment.user_id,
+            user_id: myId,
             
         }
       })
@@ -160,6 +160,7 @@ function CommentItem({comment, onRemove}) {
 
 
     function like() {
+      console.log(comment.idcomment, myId)
       axios({
         method: 'post',
         url: `http://localhost:8080/comment/like`,
@@ -188,6 +189,9 @@ function CommentItem({comment, onRemove}) {
       if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 60)}시간 전`;
       return new Intl.DateTimeFormat('ko-KR').format(date);
     };
+
+    
+
 
     return (
       <>
