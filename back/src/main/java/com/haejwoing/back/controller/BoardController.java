@@ -45,10 +45,10 @@ public class BoardController {
     }
 
 
-//    @GetMapping("/{idboard}")
-//    public ResponseEntity<Board> BoardList(@PathVariable int idboard){
-//        return new ResponseEntity<Board>(boardService.get(idboard), HttpStatus.OK);
-//    }
+    @GetMapping("/detail/{idboard}")
+    public ResponseEntity<Board> BoardList(@PathVariable int idboard){
+        return new ResponseEntity<Board>(boardService.get(idboard), HttpStatus.OK);
+    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<Board>> getUser(@PathVariable int userId){

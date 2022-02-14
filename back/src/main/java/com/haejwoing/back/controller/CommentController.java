@@ -4,15 +4,13 @@ import com.haejwoing.back.model.dto.Comment;
 import com.haejwoing.back.model.dto.Heart;
 import com.haejwoing.back.model.dto.User;
 import com.haejwoing.back.model.service.CommentService;
+import com.haejwoing.back.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("/comment")
@@ -20,6 +18,9 @@ public class CommentController {
 
     @Autowired
     private CommentService commentService;
+
+    @Autowired
+    private UserService userService;
 
     //board_id 로 바꾸기
     @GetMapping("/{boardId}")
@@ -76,6 +77,19 @@ public class CommentController {
         int boardId = comment.getBoard_idboard();
         commentService.getNum(boardId);
         if(commentService.save(comment)){
+
+            int userId = comment.getUser_id();
+            Map<String, Object> map1 = new HashMap<>();
+
+            double score = 2;
+            map1.put("userId", userId);
+            map1.put("score", score);
+
+            // 글 등록한 유저아이디 가져와서
+            System.out.println(userId);
+            userService.setPoint(map1);
+
+
             return new ResponseEntity<String>(HttpStatus.OK);
         }
 
