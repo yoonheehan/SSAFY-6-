@@ -18,6 +18,14 @@
         VALUES (#{comment_idcomment}, #{user_id})
 
     </insert>
+
+    <delete id="unlike" parameterType="com.haejwoing.back.model.dto.Heart">
+        DELETE FROM COMMENT_LIKES
+        where user_id=#{userId} and comment_idcomment=#{commentId}
+
+    </delete>
+
+
     <update id="likeUserList" parameterType="com.haejwoing.back.model.dto.Comment">
         UPDATE COMMENT SET likeUserList=#{userList}
         WHERE idcomment = #{commentId}
