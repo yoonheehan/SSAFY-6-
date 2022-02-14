@@ -77,11 +77,14 @@
 
     </select>
 
-    <select id="getFollowerFeed" parameterType="int" resultType="Board">
+
+    <select id="getFollowerFeed" parameterType="ArrayList" resultType="Board">
+
         select * from board where userId
         in <foreach collection="list" item="value" index="idx" separator="," open="(" close=")">
         #{value}
     </foreach> or board.view_range like "전체공개"
+        ORDER BY board.idboard desc
     </select>
 
 </mapper>

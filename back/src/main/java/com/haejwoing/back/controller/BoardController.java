@@ -146,7 +146,7 @@ public class BoardController {
 
     @ApiOperation(value = "전체공개와 친구의 게시글을 가져온다")
     @GetMapping("/{id}")
-    public ResponseEntity<Map<String, Object>> listRangeBoard(@PathVariable @ApiParam("해당 id의 친구와 전체공개 게시글가저온다") int id){
+    public ResponseEntity<List<Board>> listRangeBoard(@PathVariable @ApiParam("해당 id의 친구와 전체공개 게시글가저온다") int id){
         log.info("검색 대상 id : {}", id);
         // 해당 id의 팔로워 목록가져온다
         List<Map<String, Object>> result = userService.getfollowerId(id);
@@ -158,7 +158,7 @@ public class BoardController {
         System.out.println("list : "+list);
         boardService.getFollowerFeed(list);
         System.out.println(boardService.getFollowerFeed(list));
-        return null;
+        return new ResponseEntity<List<Board>>(boardService.getFollowerFeed(list), HttpStatus.OK);
     }
 
 }

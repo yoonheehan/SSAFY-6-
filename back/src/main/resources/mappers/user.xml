@@ -79,7 +79,7 @@
     </delete>
 
     <select id="findByNickname" parameterType="String" resultType="map">
-        select id, email, nickname, gender, birth, image, point from user where nickname like #{nickname}
+        select id, email, nickname, gender, birth, image, point from user where nickname like CONCAT('%',#{nickname},'%')
     </select>
 
     <select id="getFollowerId" parameterType="int" resultType="map">

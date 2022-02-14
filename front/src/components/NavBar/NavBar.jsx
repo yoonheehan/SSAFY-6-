@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './NavBar.css';
 // import Alarm from "../Alarm/Alarm.jsx"
 import { AiOutlineArrowLeft } from 'react-icons/ai';
+import { MdOutlinePersonSearch } from 'react-icons/md';
 
 const NavBar = () => {
   
@@ -99,6 +100,15 @@ const NavBar = () => {
               setClicked(false);
             }}
           ></i>
+          
+          <MdOutlinePersonSearch
+              size='40px'
+              style={{ color: "white", margin:'0 20px 8px 20px'}}
+              onClick={() => {
+                history.push('/user/find');
+                setClicked(false);
+              }}
+            />
           <i
             style={{ cursor: 'pointer', color: "#fff" }}
             className="link h1 px-4 bi bi-box-arrow-in-right"

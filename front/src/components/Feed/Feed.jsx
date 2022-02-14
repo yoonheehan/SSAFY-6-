@@ -129,12 +129,12 @@ export default function Feed() {
     
     const [feeds, setFeeds] = useState(null)
     const [feedData, setFeedData] = useState(null)
+    const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     
-
     useEffect(() => {
         axios({
             method: 'get',
-            url: `http://localhost:8080/board/`,
+            url: `http://localhost:8080/board/${loginedId}`,
             // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         })
             .then(response => {
@@ -173,7 +173,7 @@ export default function Feed() {
             ...prevFeed,
             ...NewFeedList
             ])
-
+        }
 
         }
 
