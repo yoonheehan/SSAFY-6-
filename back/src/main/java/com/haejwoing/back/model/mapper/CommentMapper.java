@@ -16,7 +16,7 @@ public interface CommentMapper {
 
     int like(Heart heart);
 
-    boolean unlike(int userId);
+    boolean unlike(int userId, int commentId);
 
     int save(Comment comment);
 

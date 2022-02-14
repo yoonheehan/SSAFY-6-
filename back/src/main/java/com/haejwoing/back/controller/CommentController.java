@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -31,6 +32,7 @@ public class CommentController {
 //        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
 //    }
 
+    // @RequestParam : loginId
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
         int commentId = heart.getComment_idcomment();
@@ -43,9 +45,10 @@ public class CommentController {
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/unlike/{userId}")
-    public ResponseEntity<String> unlike(@PathVariable int userId){
-        if(commentService.unlike(userId)){
+    @DeleteMapping("{commentId}/unlike/{userId}")
+    public ResponseEntity<String> unlike(@PathVariable int userId,
+                                         @PathVariable int commentId){
+        if(commentService.unlike(userId, commentId)){
             return new ResponseEntity<String>(HttpStatus.OK);
         }
         return new ResponseEntity<String>(HttpStatus.NO_CONTENT);

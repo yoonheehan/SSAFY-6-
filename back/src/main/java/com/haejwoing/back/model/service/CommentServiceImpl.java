@@ -37,10 +37,10 @@ public class CommentServiceImpl implements CommentService{
     }
 
     @Override
-    public boolean unlike(int userId) {
-        sqlSession.getMapper(CommentMapper.class).unlike(userId);
+    public boolean unlike(int userId, int commentId) {
+        sqlSession.getMapper(CommentMapper.class).unlike(userId, commentId);
 
-        return sqlSession.getMapper(CommentMapper.class).unlike(userId);
+        return sqlSession.getMapper(CommentMapper.class).unlike(userId, commentId);
     }
 
     @Override
