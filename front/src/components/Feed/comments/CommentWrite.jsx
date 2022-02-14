@@ -30,7 +30,8 @@ const SubmitBtn = styled.input`
 function CommentWrite({onClose, feed}) {
     const [commentContent, setCommentContent] = useState("");
     const [comments, setComments] = useState('')
-    
+
+
     useEffect(() => {
         axios({
             method: 'get',
@@ -50,7 +51,7 @@ function CommentWrite({onClose, feed}) {
     }
     
     function handleSubmit(event) {
-        console.log(commentContent)
+
         axios({
             method: 'post',
             url: `http://localhost:8080/comment/save`,
@@ -64,9 +65,11 @@ function CommentWrite({onClose, feed}) {
               console.log('작성완료');
             })
 
+        setCommentContent('')
         event.preventDefault()
     }
 
+    
     const onRemove = (id) => {
         setComments(comments.filter(comment => comment.idcomment !== id));
         axios({
@@ -81,20 +84,6 @@ function CommentWrite({onClose, feed}) {
             })
     };
 
-    const clickLike = (id) => {
-
-        if (comments[id-1].clickedLike === false) {
-            setComments(
-                comments.map(comment =>
-                    comment.id === id  && comment.clickedLike === false ? {...comment, clickedLike: !comment.clickedLike, likes: comment.likes + 1} : comment)
-            )
-        } else {
-            setComments(
-                comments.map(comment =>
-                    comment.id === id  && comment.clickedLike === true ? {...comment,clickedLike: !comment.clickedLike, likes: comment.likes - 1} : comment)
-            )
-        }
-    }
 
 
     
@@ -109,7 +98,7 @@ function CommentWrite({onClose, feed}) {
                     <Comments 
                     commentList={comments} 
                     onRemove={onRemove} 
-                    clickLike={clickLike}
+
                     />
                     :
                     <div>로딩중입니다.</div>

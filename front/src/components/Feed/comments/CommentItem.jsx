@@ -74,24 +74,35 @@ function CommentItem({comment, onRemove}) {
 
     const [tempValue, setTempValue] = useState(editValue)
 
-    const [likeUsers, setLikeUsers] = useState('')
-    const [clickLike, setclickLike] = useState(false)
-
-
+    const [likeUsers, setLikeUsers] = useState(comment.likeUserList.slice(1,(comment.likeUserList).length-1).split(','))
+    const [likeClick, setLikeClick] = useState(false)
+    const [likeNum, setLikeNum] = useState('')
+    
+    
     const onChange = useCallback((e) => {
       setTempValue(e.target.value)
       // setEditValue(e.target.value);
     }, [])
-    
+    console.log('comment.likeUserList : ', comment.likeUserList)
     const ref = useRef(null)
     useEffect(() => {
-      console.log(likeUsers)
-      setLikeUsers(comment.likeUserList.slice(1,(comment.likeUserList).length-1).split(','))
-      if (likeUsers.includes(String(myId))) {
-        setclickLike(true)
+
+
+      if (comment.likeUserList === '') {
+        setLikeNum(0)
       }
       else {
-      setclickLike(false)
+        setLikeUsers(comment.likeUserList.slice(1,(comment.likeUserList).length-1).split(','))
+        if (likeUsers.includes(String(myId))) {
+          setLikeClick(true)
+          setLikeNum(likeUsers.length)
+
+        }
+        else {
+          setLikeClick(false)
+          setLikeNum(likeUsers.length)
+        }
+
       }
         
     },[])
@@ -137,6 +148,31 @@ function CommentItem({comment, onRemove}) {
       setTempValue(editValue)
       setOpenEdit(false)
     }
+    const clickLike = data => {
+      if (data.likeClick === false) {
+        setLikeClick(true)
+        setLikeNum(data.likeNum + 1)
+      } else {
+        setLikeClick(false)
+        setLikeNum(data.likeNum - 1)
+      }
+    }
+
+
+    function like() {
+      axios({
+        method: 'post',
+        url: `http://localhost:8080/comment/like`,
+        data : {
+          commentId : comment.idcomment, 
+          userId : myId,
+        }
+
+        })
+        .then(response => {
+          console.log('좋아요완료');
+        })
+    }
 
     const formatRelativeDate = date => {
       const TEN_SECOND = 10 * 1000;
@@ -152,8 +188,7 @@ function CommentItem({comment, onRemove}) {
       if (diff < A_DAY) return `${Math.floor(diff / 1000 / 60 / 60)}시간 전`;
       return new Intl.DateTimeFormat('ko-KR').format(date);
     };
-    console.log('comment :', comment)
-    console.log('comment.id :', comment.idcomment)
+
     return (
       <>
         <div className='container mb-4'>
@@ -167,10 +202,10 @@ function CommentItem({comment, onRemove}) {
                 </ProfileName>
               </div>
             </CommentDiv>
-            <CommentLike onClick={() => clickLike(comment.idcomment)}>
-              {clickLike ? 
-                <div><i style={{color:'red'}} class="bi bi-heart-fill"></i> {likeUsers.length}</div>
-                  : <div><i style={{color:'red'}} class="bi bi-heart"></i> {likeUsers.length}</div>
+            <CommentLike onClick={() => clickLike({likeClick, likeNum})}>
+              {likeClick ? 
+                <div onClick={like}><i style={{color:'red'}} class="bi bi-heart-fill"></i> {likeNum}</div>
+                  : <div onClick={like}><i style={{color:'red'}} class="bi bi-heart"></i> {likeNum}</div>
               }
             </CommentLike>
             {myId === comment.user_id ? 
