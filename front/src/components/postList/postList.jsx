@@ -43,7 +43,7 @@ const PostList = props => {
             bg="secondary"
             onClick={() => {
               let newVote = [...data];
-              newVote.sort((a, b) => b.vote_users - a.vote_users);
+              newVote.sort((a, b) => b.voteNum - a.voteNum);
               setData(newVote);
               setVoteBedge(false);
             }}

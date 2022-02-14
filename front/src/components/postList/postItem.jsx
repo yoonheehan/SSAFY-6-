@@ -6,8 +6,10 @@ import styles from './postList.module.css';
 import { MdHowToVote } from 'react-icons/md';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import { useHistory, useParams } from 'react-router-dom';
 
 const PostItem = ({ post }) => {
+  const history = useHistory();
   const createDate = new Intl.DateTimeFormat('ko-KR').format(
     post.created_at * 1000
   );
@@ -15,6 +17,8 @@ const PostItem = ({ post }) => {
   const [type, setType] = useState('투표');
 
   useEffect(() => {
+    console.log('메메메메롱');
+    console.log(post);
     if (post.type === 1) {
       console.log(post.type);
       setType('투표');
@@ -32,6 +36,10 @@ const PostItem = ({ post }) => {
       <ListGroup.Item
         style={{ cursor: 'pointer' }}
         className="d-flex justify-content-between align-items-start"
+        onClick={() => {
+          console.log(post.idboard);
+          history.push(`/postDetail/${post.idboard}`);
+        }}
       >
         <div className={styles.figure}>
           <img
@@ -53,7 +61,7 @@ const PostItem = ({ post }) => {
           </div>
           <div style={{ textAlign: 'left' }}>
             <MdHowToVote />
-            <span style={{ marginRight: '10px' }}>{post.vote_users}</span>
+            <span style={{ marginRight: '10px' }}>{post.voteNum}</span>
             <FaRegComment />
             <span style={{ marginRight: '10px' }}>{post.commentNum}</span>
           </div>

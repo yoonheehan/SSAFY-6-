@@ -30,7 +30,11 @@ public class Board {
     private LocalDateTime updated_at;
     private int due_date;
     private String vote_contents;
+<<<<<<< Updated upstream
     private int voteNum;
+=======
+    private String voteNum;
+>>>>>>> Stashed changes
     private String hashArr;
     private int userId;
     private int commentNum;
