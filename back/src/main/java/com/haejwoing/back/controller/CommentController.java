@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 
@@ -38,7 +39,8 @@ public class CommentController {
         int comment_idcomment = heart.getComment_idcomment();
         int user_id = heart.getUser_id();
         List<Integer> user_id_list = commentService.get_user_id(comment_idcomment);
-
+        String wow= Arrays.toString(user_id_list.toArray());
+        
         System.out.println(user_id_list);
         //user_id가 user_id_list에 있다면 dislike, 아니면 like
         if(user_id_list.contains(user_id)){

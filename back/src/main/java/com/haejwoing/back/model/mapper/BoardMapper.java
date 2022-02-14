@@ -33,9 +33,5 @@ public interface BoardMapper {
     int get_user_id_from_board(int boardid);
 
     List<Board> getFollowerFeed(List<Integer> list);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 }
