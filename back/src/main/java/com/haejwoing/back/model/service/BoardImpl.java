@@ -75,6 +75,10 @@ public class BoardImpl implements BoardService{
         return board_id;
     }
 
+    @Override
+    public int get_user_id_from_board(int boardid) {
+        return sqlSession.getMapper(BoardMapper.class).get_user_id_from_board(boardid);
+    }
 
 
 }

@@ -66,6 +66,21 @@ public class BoardController {
     public ResponseEntity<String> VoteUsersList(@RequestBody VoteUsersImport voteUsersImport){
 
         voteUsersService.save_vote_users(voteUsersImport);
+
+
+        int userId = voteUsersImport.getUser_id();
+        Map<String, Object> map1 = new HashMap<>();
+
+        double score = 5;
+        map1.put("userId", userId);
+        map1.put("score", score);
+
+        // 글 등록한 유저아이디 가져와서
+        System.out.println(userId);
+        userService.setPoint(map1);
+
+
+
         return new ResponseEntity<String>(HttpStatus.OK);
     }
 
@@ -76,18 +91,6 @@ public class BoardController {
         Map<String, Object> map = new HashMap<>();
         map.put("userid", boardService.getUserid(idboard));
         map.put("idx", boardService.getIdx(idboard));
-
-
-        Board board = new Board();
-        Map<String, Object> map1 = new HashMap<>();
-        int userId = board.getUserId();
-        double score = 5;
-        map1.put("userId", userId);
-        map1.put("score", score);
-
-        // 글 등록한 유저아이디 가져와서
-        System.out.println(userId);
-        userService.setPoint(map1);
 
 
 

@@ -71,4 +71,11 @@
 
     </update>
 
+    <select id="get_user_id_from_board" parameterType="int" resultType="int">
+
+    SELECT userId FROM BOARD WHERE idboard =#{idboard}
+
+
+    </select>
+
 </mapper>

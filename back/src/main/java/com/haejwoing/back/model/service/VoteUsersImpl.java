@@ -25,17 +25,18 @@ public class VoteUsersImpl implements VoteUsersService{
         List<Integer> user_id = sqlSession.getMapper(BoardMapper.class).getUserId(idboard);
 
         HashMap<String, Integer> temporary = new HashMap<>();
+
         if(user_id.isEmpty()){
             int voteNum = 1;
             temporary.put("idboard", idboard);
             temporary.put("voteNum", voteNum);
             sqlSession.getMapper(BoardMapper.class).update_board_vote_num(temporary);
+        }else {
+            int voteNum = user_id.size() + 1;
+            temporary.put("idboard", idboard);
+            temporary.put("voteNum", voteNum);
+            sqlSession.getMapper(BoardMapper.class).update_board_vote_num(temporary);
         }
-        int voteNum = user_id.size()+1;
-        temporary.put("idboard", idboard);
-        temporary.put("voteNum", voteNum);
-        sqlSession.getMapper(BoardMapper.class).update_board_vote_num(temporary);
-
 
         sqlSession.getMapper(VoteUsersMapper.class).save_vote_users(voteUsersImport);
     }

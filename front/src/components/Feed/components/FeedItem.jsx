@@ -250,11 +250,11 @@ export default function FeedItem({feed, onRemove}) {
       <>
         <FeedBox>
           <ProfileBox>
-            <ProfileImg
+            {/* <ProfileImg
               src={userData && userData.info.image.length > 0 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
               userData.info.image : '/images/baseprofile.jpg'}
               alt='프사'
-              onClick={() => history.push('/profile')}/>
+              onClick={() => history.push('/profile')}/> */}
             <div>
               {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
               <ProfileName onClick={() => history.push('/profile')}>{firstNickName}</ProfileName>

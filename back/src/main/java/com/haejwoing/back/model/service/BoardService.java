@@ -23,5 +23,7 @@ public interface BoardService {
 
     List<Integer> getIdx(int boardId);
 
+    int get_user_id_from_board(int boardid);
+
 
 }

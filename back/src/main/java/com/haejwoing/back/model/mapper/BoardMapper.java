@@ -29,4 +29,6 @@ public interface BoardMapper {
 
     void update_board_vote_num(HashMap temporary);
 
+    int get_user_id_from_board(int boardid);
+
 }
