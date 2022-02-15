@@ -41,21 +41,29 @@ const PostItem = ({ post }) => {
         <div className={styles.figure}>
           <img
             className={styles.img}
-            src={
-              'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-              post.board_image +
-              '.jpg'
-            }
+            src={JSON.parse(post.board_image)}
             alt=""
           />
         </div>
         <div className="ms-3 me-auto">
-          <div className={styles.title}>
-            <span style={{ marginRight: '5px' }}>
-              [<span>{type}</span>]
+          <div>
+            <span style={{ marginRight: '5px', fontWeight: 'bold' }}>
+              [{type}]
             </span>
-            {post.content}
+            <span
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '200px',
+                display: 'inline-block',
+                textAlign: 'left',
+              }}
+            >
+              {post.content}
+            </span>
           </div>
+
           <div style={{ textAlign: 'left' }}>
             <MdHowToVote />
             <span style={{ marginRight: '10px' }}>{post.voteNum}</span>

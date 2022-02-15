@@ -10,7 +10,7 @@ const TestDetail = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/detail/${ID.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/detail/${ID.idboard}`,
     })
       .then(res => {
         res.data.board_image = JSON.parse(res.data.board_image);
@@ -29,7 +29,7 @@ const TestDetail = () => {
   const onRemove = () => {
     axios({
       method: 'delete',
-      url: `http://localhost:8080/board/delete/${ID.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/delete/${ID.idboard}`,
     })
       .then(res => {
         // setFeedData(feeds.filter(feed => feed.idboard !== id));

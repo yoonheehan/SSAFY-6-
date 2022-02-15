@@ -37,11 +37,22 @@ const HashTagItem = ({ item }) => {
           />
         </div>
         <div className="ms-3 me-auto">
-          <div className={styles.title}>
-            <span style={{ marginRight: '5px' }}>
-              [<span>{type}</span>]
+          <div>
+            <span style={{ marginRight: '5px', fontWeight: 'bold' }}>
+              [{type}]
             </span>
-            {item.content}
+            <span
+              style={{
+                overflow: 'hidden',
+                textOverflow: 'ellipsis',
+                whiteSpace: 'nowrap',
+                width: '200px',
+                display: 'inline-block',
+                textAlign: 'left',
+              }}
+            >
+              {item.content}
+            </span>
           </div>
           <div style={{ textAlign: 'left' }}>
             <MdHowToVote />

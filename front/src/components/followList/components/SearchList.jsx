@@ -7,19 +7,22 @@ const SearchForm = styled.form`
     margin:0 5% 0 5%;
 `
 const SearchDiv = styled.div`
-    background-color: rgba(100,100,100,0.4);
+    position: relative;
+    display: flex;
     width: 100%;
+    height: 40px;
     padding-bottom: 4px;
     margin-bottom: 10px;
     margin-top: 10px;
+    border: rgb(89, 80, 255) solid 2px;
+    border-radius: 10px;
 `
 
 const SearchBox = styled.input`
-    width: 90%;
+    width: 88%;
     border: none;
-    border-bottom: 2px solid black;
-    height: 40px;
-    background-color: rgba(100,100,100,0);
+    background-color:transparent;
+    outline: none;
 `
 
 const FriendList = styled.div`

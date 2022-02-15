@@ -65,26 +65,9 @@ const NavBar = () => {
               style={{ color: 'white' }}
               className="h1 bi bi-list navbar-hamburger"
             ></i>
-            {/* <i className={clicked ? 'fas fa-times' : 'fas fa-bars'}></i> */}
           </div>
         </div>
         <div className={clicked ? 'nav-menu active' : 'nav-menu'}>
-          <i
-            style={{ cursor: 'pointer', color: '#fff' }}
-            className="h1 px-3 bi bi-house-door-fill"
-            onClick={() => {
-              history.push('/feed');
-              setClicked(false);
-            }}
-          ></i>
-          {/* <i
-            style={{ cursor: 'pointer', color: "#fff" }}
-            className="h1 px-4 bi bi-people-fill"
-            onClick={() => {
-              window.location.replace(`/user/${userId}/followlist`);
-              setClicked(false);
-            }}
-          ></i> */}
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
             className="h1 px-3 bi bi-person-fill"
