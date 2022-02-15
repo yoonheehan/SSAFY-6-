@@ -120,8 +120,9 @@ const Profile = props => {
   const progressInstance = (
     <ProgressBar
       className={styles.progress}
-      now={userData.info.point}
-      label={`${userData.info.point}%`}
+      animated now={userData.info.point}
+
+
     />
   );
   return (
@@ -243,9 +244,32 @@ const Profile = props => {
               </div>
             </div>
             <div>
+
               <div className={styles.grade}>
-                <AiFillStar className={styles.start} />
-                <div>골드</div>
+                {(() => {
+                if (userData.info.point < 5)
+                return (
+                <AiFillStar className={styles.vip} />
+                );
+                else if (userData.info.point < 20)
+                return (
+                  <AiFillStar className={styles.red} />
+                  );
+                else if (userData.info.point < 50)
+                return (
+                  <AiFillStar className={styles.gold} />
+                  );
+                else if (userData.info.point < 85)
+                return (
+                  <AiFillStar className={styles.silver} />
+                  );
+                else
+                return (
+                  <AiFillStar className={styles.newbee} />
+                  );
+                  })()
+                }
+                <div>{userData.info.point}</div>
               </div>
               {progressInstance}
             </div>

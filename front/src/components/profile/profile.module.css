@@ -81,9 +81,25 @@
   margin-bottom: 10px;
 }
 
-.start {
+.vip {
+  font-size: 60px;
+  color: rgb(121,85,218);
+}
+.red {
+  font-size: 60px;
+  color: #FF0033;
+}
+.gold {
   font-size: 60px;
   color: gold;
+}
+.silver {
+  font-size: 60px;
+  color: silver;
+}
+.newbee {
+  font-size: 60px;
+  color: #99FF00;
 }
 
 .progress {
