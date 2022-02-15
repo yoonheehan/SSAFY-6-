@@ -42,8 +42,14 @@
   height: 50px;
   font-size: 21px;
   border-radius: 0;
-  background: linear-gradient(90deg, rgb(137, 124, 255) 0%, rgb(93, 85, 255) 100%);
+  background: linear-gradient(
+    90deg,
+    rgb(137, 124, 255) 0%,
+    rgb(93, 85, 255) 100%
+  );
   border: none;
+  position: absolute;
+  bottom: 0;
 }
 
 .button2 {
@@ -53,8 +59,9 @@
   border-radius: 0;
   background-color: #d9d9d9;
   border: none;
+  position: absolute;
+  bottom: 0;
 }
-
 
 .profilBody {
   text-align: center;

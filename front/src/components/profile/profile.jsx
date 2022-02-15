@@ -26,8 +26,6 @@ const Profile = props => {
   let { id } = useParams();
   const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
 
-  console.log('profile : ', id, 'loginedId : ', loginedId);
-
   const [userData, setUserData] = useState({
     info: {
       point: 0,
@@ -42,15 +40,10 @@ const Profile = props => {
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
-        console.log(response.data);
         setUserData(response.data);
       })
-      .catch(error => {
-        console.log('profile requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('profile request end');
-      });
+      .catch(error => {})
+      .finally(() => {});
 
     axios({
       method: 'get',
@@ -59,15 +52,10 @@ const Profile = props => {
       params: { loginedId: loginedId },
     })
       .then(response => {
-        console.log(response.data);
         setFollowCheck(response.data);
       })
-      .catch(error => {
-        console.log('profile requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('profile request end');
-      });
+      .catch(error => {})
+      .finally(() => {});
   }, []);
 
   const doFollow = () => {
@@ -78,15 +66,10 @@ const Profile = props => {
       data: { loginedId: loginedId, followId: id },
     })
       .then(response => {
-        console.log(response.data);
         setFollowCheck(true);
       })
-      .catch(error => {
-        console.log('follow requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('follow request end');
-      });
+      .catch(error => {})
+      .finally(() => {});
   };
 
   const unFollow = () => {
@@ -97,15 +80,10 @@ const Profile = props => {
       params: { loginedId: loginedId, followId: id },
     })
       .then(response => {
-        console.log(response.data);
         setFollowCheck(false);
       })
-      .catch(error => {
-        console.log('follow requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('follow request end');
-      });
+      .catch(error => {})
+      .finally(() => {});
   };
 
   AWS.config.update({
@@ -115,14 +93,12 @@ const Profile = props => {
     }),
   });
 
-  console.log(userData);
   const now = 60;
   const progressInstance = (
     <ProgressBar
       className={styles.progress}
-      animated now={100 - userData.info.point * 0.9}
-
-
+      animated
+      now={100 - userData.info.point * 0.9}
     />
   );
   return (
@@ -147,10 +123,12 @@ const Profile = props => {
                   height: '100%',
                   borderRadius: '50%',
                 }}
-                src={ userData.info.image ?
-                  'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-                  userData.info.image +
-                  '.jpg' : '/images/baseprofile.jpg'
+                src={
+                  userData.info.image
+                    ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+                      userData.info.image +
+                      '.jpg'
+                    : '/images/baseprofile.jpg'
                 }
                 alt=""
                 onError={() => {
@@ -170,7 +148,7 @@ const Profile = props => {
                   <Button
                     className={styles.button}
                     variant=""
-                    style={{ color: "white" }}
+                    style={{ color: 'white' }}
                     onClick={() => {
                       history.push(`/user/${id}/mdProfile`);
                     }}
@@ -182,7 +160,7 @@ const Profile = props => {
                 return (
                   <Button
                     className={styles.button}
-                    style={{ color: "white" }}
+                    style={{ color: 'white' }}
                     variant=""
                     onClick={doFollow}
                   >
@@ -193,7 +171,7 @@ const Profile = props => {
                 return (
                   <Button
                     className={styles.button2}
-                    style={{ color: "white" }}
+                    style={{ color: 'white' }}
                     variant=""
                     onClick={unFollow}
                   >
@@ -246,47 +224,44 @@ const Profile = props => {
               </div>
             </div>
             <div>
-
               <div className={styles.grade}>
                 {(() => {
-                if (userData.info.point < 5)
-                return (
-                  <>
-                    <AiFillStar className={styles.vip} />
-                    <div style={{fontWeight:'bold'}}>해줘신</div>
-                  </>
-                );
-                else if (userData.info.point < 20)
-                return (
-                  <>
-                    <AiFillStar className={styles.red} />
-                    <div style={{fontWeight:'bold'}}>해줘열</div>
-                  </>
-                  );
-                else if (userData.info.point < 50)
-                return (
-                  <>
-                    <AiFillStar className={styles.gold} />
-                    <div style={{fontWeight:'bold'}}>골드</div>
-                  </>
-                  );
-                else if (userData.info.point < 85)
-                return (
-                  <>
-                    <AiFillStar className={styles.silver} />
-                    <div style={{fontWeight:'bold'}}>실버</div>
-                  </>
-                  );
-                else
-                return (
-                  <>
-                    <AiFillStar className={styles.newbee} />
-                    <div style={{fontWeight:'bold'}}>뉴비</div>
-                  </>
-                  );
-                  })()
-                }
-                
+                  if (userData.info.point < 5)
+                    return (
+                      <>
+                        <AiFillStar className={styles.vip} />
+                        <div style={{ fontWeight: 'bold' }}>해줘신</div>
+                      </>
+                    );
+                  else if (userData.info.point < 20)
+                    return (
+                      <>
+                        <AiFillStar className={styles.red} />
+                        <div style={{ fontWeight: 'bold' }}>해줘열</div>
+                      </>
+                    );
+                  else if (userData.info.point < 50)
+                    return (
+                      <>
+                        <AiFillStar className={styles.gold} />
+                        <div style={{ fontWeight: 'bold' }}>골드</div>
+                      </>
+                    );
+                  else if (userData.info.point < 85)
+                    return (
+                      <>
+                        <AiFillStar className={styles.silver} />
+                        <div style={{ fontWeight: 'bold' }}>실버</div>
+                      </>
+                    );
+                  else
+                    return (
+                      <>
+                        <AiFillStar className={styles.newbee} />
+                        <div style={{ fontWeight: 'bold' }}>뉴비</div>
+                      </>
+                    );
+                })()}
               </div>
               {progressInstance}
             </div>
@@ -296,7 +271,7 @@ const Profile = props => {
               <Button
                 className={styles.button}
                 variant=""
-                style={{ color: "white" }}
+                style={{ color: 'white' }}
                 onClick={() => {
                   history.push(`/board/user/${id}/postList`);
                 }}
@@ -306,7 +281,7 @@ const Profile = props => {
               <Button
                 className={styles.button}
                 variant=""
-                style={{ color: "white" }}
+                style={{ color: 'white' }}
                 onClick={() => {
                   history.push(`/user/${id}/followlist`);
                 }}
@@ -316,7 +291,7 @@ const Profile = props => {
               <Button
                 className={styles.button}
                 variant=""
-                style={{ color: "white" }}
+                style={{ color: 'white' }}
                 onClick={() => {
                   history.push(`/user/${id}/followerlist`);
                 }}

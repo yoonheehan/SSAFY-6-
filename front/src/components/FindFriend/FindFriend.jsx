@@ -12,7 +12,6 @@ function FindFriend() {
     history.push('/');
   }
   let params = useParams();
-  console.log('word: ', params.word);
 
   const [followerData, setFollowerData] = useState([]);
 

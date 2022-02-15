@@ -18,14 +18,11 @@ const PostItem = ({ post }) => {
 
   useEffect(() => {
     if (post.type === 1) {
-      console.log(post.type);
       setType('투표');
     } else if (post.type === 2) {
-      console.log('type 2');
-      setType('OX');
+      setType('대결');
     } else {
-      console.log('type 3');
-      setType('VS');
+      setType('찬반');
     }
   }, []);
 
@@ -39,17 +36,22 @@ const PostItem = ({ post }) => {
         }}
       >
         <div className={styles.figure}>
-          <img
-            className={styles.img}
-            src={JSON.parse(post.board_image)}
-            alt=""
-          />
+          {JSON.parse(post.board_image) == '' ? (
+            <img
+              className={styles.img}
+              src="https://haejwoing.s3.ap-northeast-2.amazonaws.com/%EC%A0%9C%EB%AA%A9+%EC%97%86%EC%9D%8C.png"
+              alt=""
+            />
+          ) : (
+            <img
+              className={styles.img}
+              src={JSON.parse(post.board_image)}
+              alt=""
+            />
+          )}
         </div>
         <div className="ms-3 me-auto">
           <div>
-            <span style={{ marginRight: '5px', fontWeight: 'bold' }}>
-              [{type}]
-            </span>
             <span
               style={{
                 overflow: 'hidden',
@@ -65,9 +67,52 @@ const PostItem = ({ post }) => {
           </div>
 
           <div style={{ textAlign: 'left' }}>
-            <MdHowToVote />
+            {type === '투표' ? (
+              <span
+                style={{
+                  background: '#1b59cc',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            ) : type === '대결' ? (
+              <span
+                style={{
+                  background: '#6913b9',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            ) : (
+              <span
+                style={{
+                  background: '#bb18a0',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            )}
+            <MdHowToVote style={{ marginRight: '5px', fontSize: '20px' }} />
             <span style={{ marginRight: '10px' }}>{post.voteNum}</span>
-            <FaRegComment />
+            <FaRegComment style={{ marginRight: '5px', fontSize: '20px' }} />
             <span style={{ marginRight: '10px' }}>{post.commentNum}</span>
           </div>
         </div>

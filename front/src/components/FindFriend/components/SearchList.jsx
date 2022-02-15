@@ -28,7 +28,7 @@ const FindForm = styled.form`
 const FindInput = styled.input`
   width: 88%;
   border: none;
-  background-color:transparent;
+  background-color: transparent;
   outline: none;
 `;
 
@@ -43,7 +43,6 @@ const SubmitBtn = styled.input`
 export default function SearchList(props) {
   const [findName, setFindName] = useState('');
   const [friendList, setFriendList] = useState([]);
-  console.log(findName);
 
   function getFriend(event) {
     setFindName(event.target.value);
@@ -53,14 +52,11 @@ export default function SearchList(props) {
       method: 'get',
       url: `http://i6c103.p.ssafy.io/api/user/find/${findName}`,
     }).then(response => {
-      console.log('검색완료');
-      console.log(response.data);
       setFriendList(response.data);
     });
 
     event.preventDefault();
   }
-  console.log(friendList);
 
   return (
     <>
@@ -74,7 +70,15 @@ export default function SearchList(props) {
             value={findName}
           />
           <SubmitBtn type="submit" value="" />
-          <i style={{ position: "absolute", right: "5%", top: "5px", color: "rgb(89, 80, 255)" }} className="bi bi-search"></i>
+          <i
+            style={{
+              position: 'absolute',
+              right: '5%',
+              top: '5px',
+              color: 'rgb(89, 80, 255)',
+            }}
+            className="bi bi-search"
+          ></i>
         </SearchDiv>
         <FriendList>
           {!friendList || friendList.length === 0 ? (

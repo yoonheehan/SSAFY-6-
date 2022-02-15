@@ -18,12 +18,8 @@ const TestDetail = () => {
         res.data.vote_contents = JSON.parse(res.data.vote_contents);
         setFeed(res.data);
       })
-      .catch(error => {
-        console.log(error);
-      })
-      .finally(() => {
-        console.log(feed);
-      });
+      .catch(error => {})
+      .finally(() => {});
   }, []);
 
   const onRemove = () => {
@@ -33,11 +29,8 @@ const TestDetail = () => {
     })
       .then(res => {
         // setFeedData(feeds.filter(feed => feed.idboard !== id));
-        console.log(res);
       })
-      .catch(err => {
-        console.log(err);
-      });
+      .catch(err => {});
   };
 
   return (

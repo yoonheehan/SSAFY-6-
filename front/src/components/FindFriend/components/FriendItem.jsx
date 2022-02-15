@@ -28,8 +28,6 @@ const FriendMenu = styled.div`
 
 export default function FriendItem({ follow }) {
   const history = useHistory();
-  console.log(follow.id);
-  console.log(JSON.parse(sessionStorage.getItem('loginedUser')).userId);
 
   function clickProfile(ID) {
     window.location.replace(`/user/${ID}/profile`);

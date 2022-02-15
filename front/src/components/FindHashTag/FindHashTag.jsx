@@ -10,8 +10,6 @@ const FindHashTag = props => {
   const history = useHistory();
   const [data, setData] = useState([]);
 
-  console.log('word: ', params.word);
-
   useEffect(() => {
     if (sessionStorage.getItem('loginedUser') === null) {
       history.push('/');

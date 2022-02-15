@@ -15,9 +15,16 @@ const HashTagItem = ({ item }) => {
   );
   const dueDate = new Intl.DateTimeFormat('ko-KR').format(item.due_date * 1000);
   const [type, setType] = useState('투표');
+  useEffect(() => {}, []);
+
   useEffect(() => {
-    console.log('item');
-    console.log(item);
+    if (item.type === 1) {
+      setType('투표');
+    } else if (item.type === 2) {
+      setType('대결');
+    } else {
+      setType('찬반');
+    }
   }, []);
 
   return (
@@ -38,15 +45,12 @@ const HashTagItem = ({ item }) => {
         </div>
         <div className="ms-3 me-auto">
           <div>
-            <span style={{ marginRight: '5px', fontWeight: 'bold' }}>
-              [{type}]
-            </span>
             <span
               style={{
                 overflow: 'hidden',
                 textOverflow: 'ellipsis',
                 whiteSpace: 'nowrap',
-                width: '200px',
+                width: '150px',
                 display: 'inline-block',
                 textAlign: 'left',
               }}
@@ -55,9 +59,52 @@ const HashTagItem = ({ item }) => {
             </span>
           </div>
           <div style={{ textAlign: 'left' }}>
-            <MdHowToVote />
+            {type === '투표' ? (
+              <span
+                style={{
+                  background: '#1b59cc',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            ) : type === '대결' ? (
+              <span
+                style={{
+                  background: '#6913b9',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            ) : (
+              <span
+                style={{
+                  background: '#bb18a0',
+                  marginRight: '10px',
+                  color: '#ffffff',
+                  borderRadius: '5px',
+                  fontWeight: 'bold',
+                  padding: '3px 7px',
+                  fontSize: '0.8rem',
+                }}
+              >
+                {type}
+              </span>
+            )}
+            <MdHowToVote style={{ marginRight: '5px', fontSize: '20px' }} />
             <span style={{ marginRight: '10px' }}>{item.voteNum}</span>
-            <FaRegComment />
+            <FaRegComment style={{ marginRight: '5px', fontSize: '20px' }} />
             <span style={{ marginRight: '10px' }}>{item.commentNum}</span>
           </div>
         </div>

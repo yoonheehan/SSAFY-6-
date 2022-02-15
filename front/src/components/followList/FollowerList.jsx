@@ -1,21 +1,19 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import SearchList from './components/SearchList';
-import styles from './FollowList.module.css'
+import styles from './FollowList.module.css';
 import { useHistory } from 'react-router-dom';
-import axios from 'axios'
-import {useParams} from "react-router-dom";
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-
 
 function FollowerList() {
   const history = useHistory();
   if (sessionStorage.getItem('loginedUser') === null) {
-    history.push('/')
+    history.push('/');
   }
   let { id } = useParams();
-  console.log(id)
-  
-  const [followerData, setFollowerData] = useState([])
+
+  const [followerData, setFollowerData] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,23 +24,21 @@ function FollowerList() {
           `http://i6c103.p.ssafy.io/api/follower/${id}`
         );
         setFollowerData(response.data);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
       setLoading(false);
     };
     //async를 사용하는 함수 따로 선언
     fetchData();
   }, []);
 
-  console.log('followerData : ', followerData)
-
   return (
     <>
       {/* <FollowListHeader /> */}
-      <h1 align="left" className={styles.center} ><b>팔로워 목록</b></h1>
-      <SearchList friendList={followerData}/>
+      <h1 align="left" className={styles.center}>
+        <b>팔로워 목록</b>
+      </h1>
+      <SearchList friendList={followerData} />
     </>
-  )
+  );
 }
 export default FollowerList;

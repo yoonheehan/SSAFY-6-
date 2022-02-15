@@ -18,9 +18,9 @@ const MdProfile = props => {
   const history = useHistory();
   const inputRef = useRef();
   const [img, setImg] = useState('');
-  const [duplicateCheck, setDuplicateCheck] = useState(false)
-  const [firstNickName, setFirstNickName] = useState('')
-  const imgRef = useRef(null); 
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
+  const [firstNickName, setFirstNickName] = useState('');
+  const imgRef = useRef(null);
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
     credentials: new AWS.CognitoIdentityCredentials({
@@ -36,8 +36,6 @@ const MdProfile = props => {
   const handleFileInput = e => {
     // input 태그를 통해 선택한 파일 객체
     const file = e.target.files[0];
-    console.log('파일');
-    console.log(file);
     setUserData(pre => ({
       ...pre,
       info: {
@@ -79,16 +77,11 @@ const MdProfile = props => {
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(res => {
-        console.log(res);
         setUserData(res.data);
-        setFirstNickName(res.data.info.nickname)
+        setFirstNickName(res.data.info.nickname);
       })
-      .catch(err => {
-        console.log('에러났어요');
-      })
-      .finally(() => {
-        console.log('profile request end');
-      });
+      .catch(err => {})
+      .finally(() => {});
   }, []);
 
   AWS.config.update({
@@ -106,47 +99,40 @@ const MdProfile = props => {
         nickname: e.target.value,
       },
     }));
-    setDuplicateCheck(false)
+    setDuplicateCheck(false);
   };
 
   const checkData = () => {
-    console.log('보내지는 데이터');
-    console.log(userData);
     if (firstNickName === userData.info.nickname) {
-      alert('사용가능한 닉네임입니다.')
-      setDuplicateCheck(true)
+      alert('사용가능한 닉네임입니다.');
+      setDuplicateCheck(true);
     } else {
       axios
-        .get(`http://i6c103.p.ssafy.io/api/user/check/${userData.info.nickname}`)
+        .get(
+          `http://i6c103.p.ssafy.io/api/user/check/${userData.info.nickname}`
+        )
         .then(res => {
-          console.log(res);
           if (res.data === false) {
             alert('사용가능한 닉네임입니다.');
-            setDuplicateCheck(true)
+            setDuplicateCheck(true);
           } else {
             alert('중복된 닉네임입니다.');
-            setDuplicateCheck(false)
+            setDuplicateCheck(false);
           }
         });
     }
   };
 
   const submitData = () => {
-    console.log('데이터를 보내자');
     axios
       .put(`http://i6c103.p.ssafy.io/api/user/${id}`, {
         image: userData.info.image,
         nickname: userData.info.nickname,
       })
       .then(res => {
-        console.log('메메롤로');
-        console.log(res);
         history.goBack();
       })
-      .catch(err => {
-        console.log('에러났어요');
-        console.log(err);
-      });
+      .catch(err => {});
   };
 
   return (
@@ -222,17 +208,24 @@ const MdProfile = props => {
           </div>
         </div>
       </section>
-      {!duplicateCheck ?
-      <Button
-        disabled
-        className={styles.button2}
-        variant="secondary"
-        onClick={submitData}>완료</Button> :
+      {!duplicateCheck ? (
         <Button
-        className={styles.button1}
-        variant="secondary"
-        onClick={submitData}>완료</Button>
-        }
+          disabled
+          className={styles.button2}
+          variant="secondary"
+          onClick={submitData}
+        >
+          완료
+        </Button>
+      ) : (
+        <Button
+          className={styles.button1}
+          variant="secondary"
+          onClick={submitData}
+        >
+          완료
+        </Button>
+      )}
     </>
   );
 };

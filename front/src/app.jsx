@@ -31,7 +31,7 @@ function App() {
     if (sessionStorage.hasOwnProperty('loginedUser') === false) {
       setIsLogin(false);
     }
-  });
+  }, []);
 
   const loginCallback = login => {
     setIsLogin(login);

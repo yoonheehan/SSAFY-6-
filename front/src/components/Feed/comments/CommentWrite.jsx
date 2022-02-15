@@ -1,134 +1,122 @@
-import React, {useState, useEffect, useCallback} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import styled from 'styled-components';
-import Comments from './Comments'
-import axios from 'axios'
-import "./CommentItem.module.css"
-
+import Comments from './Comments';
+import axios from 'axios';
+import './CommentItem.module.css';
 
 const CommentForm = styled.form`
-    width: 90%;
-    margin: 5%;
-    bottom: 0;
-    position: fixed;
-`
+  width: 90%;
+  margin: 5%;
+  bottom: 0;
+  position: fixed;
+`;
 
 const CommentInput = styled.input`
-    width: 88%;
-    border: none;
-    border-bottom: 1px solid rgb(190, 190, 190);
-`
+  width: 88%;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+`;
 
 const SubmitBtn = styled.input`
-    width: 10%;
-    border: none;
-    border-bottom: 1px solid rgb(190, 190, 190);
-    background-color: white;
-`
+  width: 10%;
+  border: none;
+  border-bottom: 1px solid rgb(190, 190, 190);
+  background-color: white;
+`;
 
+function CommentWrite({ onClose, feed }) {
+  const [commentContent, setCommentContent] = useState('');
+  const [comments, setComments] = useState('');
+  const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
 
+  const [count, setCount] = useState(0);
 
-function CommentWrite({onClose, feed}) {
-    const [commentContent, setCommentContent] = useState("");
-    const [comments, setComments] = useState('')
-    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
-
-    const [count, setCount] = useState(0);
-
-    useEffect(() =>{
-		async function fetchData(){
-		const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-		,);
-		setComments(result.data)
-		}
-		fetchData();
-	},[count]);
-
-    setTimeout(() => {
-        async function fetchData(){
-            const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-            ,);
-            setComments(result.data)
-            }
-            fetchData();
-    }, 1000)
-
-
-    function getcomment(event) {
-        const commentContent = event.target.value
-        setCommentContent(event.target.value)
-
+  useEffect(() => {
+    async function fetchData() {
+      const result = await axios.get(
+        `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
+      );
+      setComments(result.data);
     }
-    
-    function handleSubmit(event) {
+    fetchData();
+  }, [count]);
 
-        axios({
-            method: 'post',
-            url: `http://i6c103.p.ssafy.io/api/comment/save`,
-            data: {
-                content : commentContent,
-                board_idboard : feed.idboard,
-                user_id : myId,
-            }
-            })
-            .then(response => {
-                console.log('작성완료');
-            })
-
-        setCount(count+1)
-        setCommentContent('')
-        event.preventDefault()
+  setTimeout(() => {
+    async function fetchData() {
+      const result = await axios.get(
+        `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
+      );
+      setComments(result.data);
     }
-    
+    fetchData();
+  }, 1000);
 
+  function getcomment(event) {
+    const commentContent = event.target.value;
+    setCommentContent(event.target.value);
+  }
 
-    
-    const onRemove = (id) => {
-        setComments(comments.filter(comment => comment.idcomment !== id));
-        axios({
-            method: 'delete',
-            url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
-            params: {
-                boardId: feed.idboard,
-            }
-          })
-            .then(response => {
-              console.log('삭제완료');
-            })
-            
-    };
-    
+  function handleSubmit(event) {
+    axios({
+      method: 'post',
+      url: `http://i6c103.p.ssafy.io/api/comment/save`,
+      data: {
+        content: commentContent,
+        board_idboard: feed.idboard,
+        user_id: myId,
+      },
+    }).then(response => {});
 
-    
-    return (
-        <>  
-            <div>
-                <div className="mt-2 mb-4" style={{ textAlign: "right" }}>
-                    <i onClick={onClose} className="m-2 h4 bi bi-x-lg" style={{ cursor: 'pointer' }}></i>          
-                </div>
-                <div className="comment_box">
-                    {comments ? 
-                    <Comments 
-                    commentList={comments} 
-                    onRemove={onRemove} 
+    setCount(count + 1);
+    setCommentContent('');
+    event.preventDefault();
+  }
 
-                    />
-                    :
-                    <div>로딩중입니다.</div>
-                }
-                </div>
-                <CommentForm onSubmit={handleSubmit}>
-                    <CommentInput 
-                    type="text"
-                    placeholder='댓글 달기...'
-                    onChange={getcomment}
-                    name='comment'
-                    value={commentContent}
-                    />
-                    <SubmitBtn type='submit' value="작성" onClick={() => setCount(count+1)} />
-                </CommentForm>
-            </div>
-        </>
-    )
+  const onRemove = id => {
+    setComments(comments.filter(comment => comment.idcomment !== id));
+    axios({
+      method: 'delete',
+      url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
+      params: {
+        boardId: feed.idboard,
+      },
+    }).then(response => {});
+  };
+
+  return (
+    <>
+      <div>
+        <div className="mt-2 mb-4" style={{ textAlign: 'right' }}>
+          <i
+            onClick={onClose}
+            className="m-2 h4 bi bi-x-lg"
+            style={{ cursor: 'pointer' }}
+          ></i>
+        </div>
+        <div className="comment_box">
+          {comments ? (
+            <Comments commentList={comments} onRemove={onRemove} />
+          ) : (
+            <div>로딩중입니다.</div>
+          )}
+        </div>
+        <CommentForm onSubmit={handleSubmit}>
+          <CommentInput
+            type="text"
+            placeholder="댓글 달기..."
+            onChange={getcomment}
+            name="comment"
+            value={commentContent}
+          />
+          <SubmitBtn
+            type="submit"
+            value="작성"
+            onClick={() => setCount(count + 1)}
+          />
+        </CommentForm>
+      </div>
+    </>
+  );
 }
 
-export default CommentWrite
+export default CommentWrite;

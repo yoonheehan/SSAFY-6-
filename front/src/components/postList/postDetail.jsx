@@ -114,11 +114,8 @@ const PostDetail = props => {
 
   useEffect(() => {
     axios.get(`http://i6c103.p.ssafy.io/api/board`).then(res => {
-      console.log(res);
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].idboard == idboard) {
-          console.log(res.data[i].idboard);
-          console.log(idboard);
           setFeed(res.data[i]);
         }
       }
@@ -126,10 +123,7 @@ const PostDetail = props => {
   }, []);
 
   useEffect(() => {
-    console.log(userId);
-    axios.get(`http://i6c103.p.ssafy.io/api/user/${userId}`).then(res => {
-      console.log(res);
-    });
+    axios.get(`http://i6c103.p.ssafy.io/api/user/${userId}`).then(res => {});
   });
 
   return (

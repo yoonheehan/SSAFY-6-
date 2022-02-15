@@ -27,8 +27,6 @@ const Login = props => {
     history.push('/feed');
   }
   const _clickSnsLoginGoogle = res => {
-    console.log(sessionStorage.getItem('loginedUser'));
-    console.log('구글 로그인:', res);
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
@@ -43,7 +41,6 @@ const Login = props => {
               props: { useremail: response.data.email },
             });
           } else {
-            console.log(response.data.id);
             const loginUser = { userId: response.data.id };
             window.sessionStorage.setItem(
               'loginedUser',
@@ -52,22 +49,16 @@ const Login = props => {
             window.location.replace('/feed');
           }
 
-          console.log('response.data.accessToken : ' + response.data.email);
           axios.defaults.headers.common['Authorization'] =
             'Bearer ' + response.data;
         })
-        .catch(error => {
-          console.log('login requset fail : ' + error);
-        })
-        .finally(() => {
-          console.log('login request end');
-        });
+        .catch(error => {})
+        .finally(() => {});
     } else {
       history.push('/feed');
     }
   };
   const _clickSnsLoginKakao = res => {
-    console.log('카카오 로그인:', res);
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
@@ -76,14 +67,12 @@ const Login = props => {
         data: res,
       })
         .then(response => {
-          console.log('kakao:', response);
           if (response.data.check === false) {
             history.push({
               pathname: '/newprofile',
               props: { useremail: response.data.email },
             });
           } else {
-            console.log(response.data.id);
             const loginUser = { userId: response.data.id };
             window.sessionStorage.setItem(
               'loginedUser',
@@ -92,22 +81,16 @@ const Login = props => {
             window.location.replace('/feed');
           }
 
-          console.log('response.data.accessToken : ' + response.data.email);
           axios.defaults.headers.common['Authorization'] =
             'Bearer ' + response.data;
         })
-        .catch(error => {
-          console.log('login requset fail : ' + error);
-        })
-        .finally(() => {
-          console.log('login request end');
-        });
+        .catch(error => {})
+        .finally(() => {});
     } else {
       history.push('/feed');
     }
   };
   const _clickSnsLoginNaver = res => {
-    console.log('네이버 로그인:', res);
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
@@ -122,7 +105,6 @@ const Login = props => {
               props: { useremail: response.data.email },
             });
           } else {
-            console.log(response.data.id);
             const loginUser = { userId: response.data.id };
             window.sessionStorage.setItem(
               'loginedUser',
@@ -131,24 +113,17 @@ const Login = props => {
             window.location.replace('/feed');
           }
 
-          console.log('response.data.accessToken : ' + response.data.email);
           axios.defaults.headers.common['Authorization'] =
             'Bearer ' + response.data;
         })
-        .catch(error => {
-          console.log('login requset fail : ' + error);
-        })
-        .finally(() => {
-          console.log('login request end');
-        });
+        .catch(error => {})
+        .finally(() => {});
     } else {
       history.push('/feed');
     }
   };
 
-  useEffect(() => {
-    console.log('Login Render...');
-  });
+  useEffect(() => {});
 
   return (
     <>
@@ -174,14 +149,13 @@ const Login = props => {
                       </div>
                     )}
                     onSuccess={e => _clickSnsLoginGoogle(e)}
-                    onFailure={console.log}
                     cookiePolicy={'single_host_origin'}
                   />
                 </li>
                 <li className={styles.item}>
                   <NaverLogin
                     clientId={process.env.REACT_APP_NAVER}
-                    callbackUrl="http://i6c103.p.ssafy.io/api/"
+                    callbackUrl="http://localhost:3000/"
                     render={renderProps => (
                       <div
                         onClick={renderProps.onClick}
@@ -194,7 +168,6 @@ const Login = props => {
                       </div>
                     )}
                     onSuccess={e => _clickSnsLoginNaver(e)}
-                    onFailure={result => console.error(result)}
                   />
                 </li>
                 <li>
@@ -212,8 +185,6 @@ const Login = props => {
                       </div>
                     )}
                     onSuccess={e => _clickSnsLoginKakao(e)}
-                    onFail={console.error}
-                    onLogout={console.info}
                   />
                 </li>
               </ul>

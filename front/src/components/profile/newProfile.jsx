@@ -50,7 +50,7 @@ const NewProfile = props => {
   const inputRef = useRef();
   const [img, setImg] = useState('');
   const imgRef = useRef(null);
-  const [duplicateCheck, setDuplicateCheck] = useState(false)
+  const [duplicateCheck, setDuplicateCheck] = useState(false);
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
     credentials: new AWS.CognitoIdentityCredentials({
@@ -59,7 +59,6 @@ const NewProfile = props => {
   });
   const handleFileInput = e => {
     const file = e.target.files[0];
-    console.log(file);
     setImg(file.name);
 
     // S3 SDK에 내장된 업로드 함수
@@ -84,9 +83,6 @@ const NewProfile = props => {
   };
 
   function submitData() {
-    console.log(img, radioValue, nickName, startDate.toLocaleDateString());
-    console.log(props.location.props.useremail);
-
     axios({
       method: 'post',
       url: `${process.env.REACT_APP_LOCALURL}user`,
@@ -99,22 +95,17 @@ const NewProfile = props => {
       },
     })
       .then(response => {
-        console.log(response.data);
         const loginUser = { userId: response.data.id };
         window.sessionStorage.setItem('loginedUser', JSON.stringify(loginUser));
         window.location.replace('/feed');
       })
-      .catch(error => {
-        console.log('signup requset fail : ' + error);
-      })
-      .finally(() => {
-        console.log('signup request end');
-      });
+      .catch(error => {})
+      .finally(() => {});
   }
 
   const onChangeNickName = e => {
     setNickName(e.target.value);
-    setDuplicateCheck(false)
+    setDuplicateCheck(false);
   };
 
   return (
@@ -157,24 +148,21 @@ const NewProfile = props => {
                 aria-label="Default"
                 aria-describedby="inputGroup-sizing-default"
                 value={nickName}
-                placeholder='닉네임을 입력해주세요'
+                placeholder="닉네임을 입력해주세요"
                 onChange={onChangeNickName}
               />
               <Button
                 variant="secondary"
                 onClick={() => {
-                  console.log('닉네임 중복 확인');
-                  console.log(nickName);
                   axios
                     .get(`http://i6c103.p.ssafy.io/api/user/check/${nickName}`)
                     .then(res => {
-                      console.log(res);
                       if (res.data === false) {
                         alert('사용가능한 닉네임입니다.');
-                        setDuplicateCheck(true)
+                        setDuplicateCheck(true);
                       } else {
                         alert('중복된 닉네임입니다.');
-                        setDuplicateCheck(false)
+                        setDuplicateCheck(false);
                       }
                     });
                 }}
@@ -262,25 +250,25 @@ const NewProfile = props => {
             />
           </div>
         </div>
+        {duplicateCheck ? (
+          <Button
+            onClick={submitData}
+            className={styles.button1}
+            variant="secondary"
+          >
+            완료
+          </Button>
+        ) : (
+          <Button
+            disabled
+            onClick={submitData}
+            className={styles.button2}
+            variant="secondary"
+          >
+            완료
+          </Button>
+        )}
       </section>
-      {duplicateCheck ? 
-    <Button
-      onClick={submitData}
-      className={styles.button1}
-      variant="secondary"
-    >
-      완료
-    </Button> :
-    <Button
-      disabled
-      onClick={submitData}
-      className={styles.button2}
-      variant="secondary"
-    >
-    완료
-    </Button>  
-    }
-      
     </>
   );
 };

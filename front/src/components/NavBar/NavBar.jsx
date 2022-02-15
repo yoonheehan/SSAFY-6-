@@ -42,7 +42,7 @@ const NavBar = () => {
           <div className="navbar-arrow">
             <AiOutlineArrowLeft
               size="30px"
-              style={{ color: 'white'}}
+              style={{ color: 'white' }}
               onClick={() => {
                 history.goBack();
                 setClicked(false);
@@ -72,7 +72,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer', color: '#fff' }}
             className="h1 px-3 bi bi-person-fill"
             onClick={() => {
-              window.location.replace(`/user/${userId}/profile`);
+              history.push(`/user/${userId}/profile`);
               setClicked(false);
             }}
           ></i>
@@ -95,7 +95,6 @@ const NavBar = () => {
               }}
             />
           </div>
-          
 
           <i
             style={{ cursor: 'pointer', color: '#fff' }}

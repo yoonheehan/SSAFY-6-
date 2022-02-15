@@ -34,8 +34,6 @@ const Withdraw = () => {
               label="위 내용을 숙지하였으며, 동의합니다."
               onClick={() => {
                 check ? setCheck(false) : setCheck(true);
-                console.log('check data');
-                console.log(check);
               }}
             />
           </div>
@@ -47,8 +45,6 @@ const Withdraw = () => {
             if (check) {
               alert('체크해주세요');
             } else {
-              console.log('회원탈퇴 가능');
-              console.log(sessionStorage.getItem('loginedUser'));
               axios
                 .put(`http://i6c103.p.ssafy.io/api/user/withdraw/${id}`)
                 .then(res => {
