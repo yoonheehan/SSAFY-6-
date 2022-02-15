@@ -1,23 +1,20 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import FeedItem from './FeedItem';
-import {useHistory} from 'react-router-dom'
+import { Badge } from 'react-bootstrap';
 
-export default function Feeds({feedData, onRemove}) {
-  const [feeds, setFeeds] = useState(feedData)
+export default function Feeds({ feedData, onRemove }) {
+  const [feeds, setFeeds] = useState(feedData);
 
   useEffect(() => {
-    setFeeds(feedData)
-  }, [])
+    setFeeds(feedData);
+  }, []);
 
   return (
     <div>
-        {feedData && feedData.map((feed, index) =>
-            <FeedItem
-              key={index}
-              feed={feed}
-              onRemove={onRemove}
-            />
-            )}
+      {feedData &&
+        feedData.map((feed, index) => (
+          <FeedItem key={index} feed={feed} onRemove={onRemove} />
+        ))}
     </div>
-  )
+  );
 }

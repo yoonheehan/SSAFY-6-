@@ -17,8 +17,6 @@ const PostItem = ({ post }) => {
   const [type, setType] = useState('투표');
 
   useEffect(() => {
-    console.log('메메메메롱');
-    console.log(post);
     if (post.type === 1) {
       console.log(post.type);
       setType('투표');
@@ -37,8 +35,7 @@ const PostItem = ({ post }) => {
         style={{ cursor: 'pointer' }}
         className="d-flex justify-content-between align-items-start"
         onClick={() => {
-          console.log(post.idboard);
-          history.push(`/postDetail/${post.idboard}`);
+          history.push(`/testDetail/${post.idboard}`);
         }}
       >
         <div className={styles.figure}>
