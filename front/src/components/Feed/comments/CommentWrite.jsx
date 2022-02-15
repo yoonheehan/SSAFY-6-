@@ -36,11 +36,7 @@ function CommentWrite({onClose, feed}) {
 
     useEffect(() =>{
 		async function fetchData(){
-<<<<<<< Updated upstream
 		const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-=======
-		const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
->>>>>>> Stashed changes
 		,);
 		setComments(result.data)
 		}
@@ -49,11 +45,7 @@ function CommentWrite({onClose, feed}) {
 
     setTimeout(() => {
         async function fetchData(){
-<<<<<<< Updated upstream
             const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-=======
-            const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
->>>>>>> Stashed changes
             ,);
             setComments(result.data)
             }

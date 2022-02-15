@@ -97,11 +97,7 @@ const Comments = styled.div`
   justify-content: end;
 `;
 
-const userName = [
-  {id: 1, user_name: '정정채'},
-  {id: 2, user_name: '채성원'},
-  {id: 3, user_name: '허영민'},
-]
+
 
 export default function FeedItem({key, feed, onRemove}) {
     const history = useHistory();

@@ -92,6 +92,7 @@ export default function Feed() {
     .then(res => {
 
       setFeeds(feeds.filter(feed => feed.idboard !== id))
+      window.location.replace('/feed');
       console.log(res);
     })
     .catch(err => {

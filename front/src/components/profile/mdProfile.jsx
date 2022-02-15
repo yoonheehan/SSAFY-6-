@@ -75,7 +75,7 @@ const MdProfile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(res => {
