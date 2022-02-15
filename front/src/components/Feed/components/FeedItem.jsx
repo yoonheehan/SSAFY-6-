@@ -162,7 +162,7 @@ export default function FeedItem({key, feed, onRemove}) {
       url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
     })
       .then(res => {
-        console.log(res);
+
 
         if (res.data.userid.includes(myId)) {
           setVoteCompleted(true);
