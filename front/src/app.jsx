@@ -15,10 +15,12 @@ import Feed from './components/Feed/Feed';
 import PostList from './components/postList/postList';
 import Post from './components/Post/Post.jsx';
 import FindFriend from './components/FindFriend/FindFriend';
-import PostDetail from './components/postList/postDetail';
+// import PostDetail from './components/postList/postDetail';
+import TestDetail from './components/postList/TestDetail';
 import { useEffect, useState } from 'react';
 
 import FeedTest from './components/TestFeed';
+import FindHashTag from './components/FindHashTag/FindHashTag';
 
 function App() {
   const [isLogin, setIsLogin] = useState(
@@ -61,9 +63,11 @@ function App() {
           <Route exact path="/alarm" component={Alarm} />
           <Route exact path="/user/:id/withdraw" component={Withdraw} />
           <Route exact path="/board/user/:id/postList" component={PostList} />
-          <Route exact path="/postDetail/:id" component={PostDetail} />
+          {/* <Route exact path="/postDetail/:idboard" component={PostDetail} /> */}
+          <Route exact path="/testDetail/:idboard" component={TestDetail} />
           <Route exact path="/post" component={Post} />
           <Route exact path="/user/find" component={FindFriend} />
+          <Route exact path="/board/hashtagsearch" component={FindHashTag} />
           <Route exact path="/feedtest" component={FeedTest} />
         </Switch>
       </BrowserRouter>

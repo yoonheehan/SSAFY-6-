@@ -149,10 +149,12 @@ public class BoardController {
                 list.add(Integer.parseInt(String.valueOf(result.get(i).get("to_user"))));
             }
             list.add(id);
-            boardService.getFollowerFeed(list);
-            if(boardService.getFollowerFeed(list).isEmpty()){
+            log.info("list : {} ",list);
+            List<Board> boardResult = boardService.getFollowerFeed(list);
+            log.info("boardResult : {}", boardResult);
+            if(boardResult.isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-            } else return new ResponseEntity<List<Board>>(boardService.getFollowerFeed(list), HttpStatus.OK);
+            } else return new ResponseEntity<List<Board>>(boardResult, HttpStatus.OK);
 
     }
 }

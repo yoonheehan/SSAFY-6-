@@ -17,4 +17,3 @@ spring:
 mybatis:
   type-aliases-package: com.haejwoing.back.model.dto
   mapper-locations: classpath:mappers/*.xml
-

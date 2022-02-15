@@ -24,5 +24,5 @@ public interface UserService {
     Boolean unFollow(int toUser, int fromUser);
     List<User> findByNickname(String nickname);
     List<Map<String, Object>> getfollowerId(int id);
-
+    double getPercentage(int id);
 }

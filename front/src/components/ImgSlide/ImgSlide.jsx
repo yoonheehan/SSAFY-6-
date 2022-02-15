@@ -17,12 +17,7 @@ export default function ImgSlide(props) {
 
   return (
     <div>
-        {/* {props.imgUrl.map(url => {
-            <div>
-              {url}
-              <img style={{width: 'inherit'}} src={url} />
-            </div>
-          })} */}
+      { props.imgUrl &&
         <Slider {...settings}>
           {props.imgUrl.map(url => 
             <div >
@@ -30,6 +25,7 @@ export default function ImgSlide(props) {
             </div>
           )}
         </Slider>
+      }
     </div>
   )
 }

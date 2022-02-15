@@ -7,8 +7,8 @@
 
         SELECT comment.idcomment, comment.content, comment.created_at, comment.updated_at, comment.likeUserList,
                comment.board_idboard, comment.user_id, user.nickname, user.image FROM comment
-                                                                                          LEFT OUTER JOIN user
-                                                                                                          ON comment.user_id=user.id
+                LEFT OUTER JOIN user
+                ON comment.user_id=user.id
         WHERE board_idboard=#{boardId}
 
     </select>
@@ -28,7 +28,6 @@
 
 
     <update id="likeUserList" parameterType="Comment">
-
 
         UPDATE comment SET likeUserList=#{userList}
         WHERE idcomment = #{commentId}

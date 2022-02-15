@@ -8,6 +8,9 @@ import CommentWrite from '../comments/CommentWrite';
 import DetailContent from './DetailContent';
 import RemoveModal from './RemoveModal';
 import axios from 'axios'
+import { FaRegComment } from 'react-icons/fa';
+import { MdHowToVote } from 'react-icons/md';
+
 
 const FeedBox = styled.div`
   border: 1px solid #bdcbdd;
@@ -90,6 +93,8 @@ const HashTag = styled.div`
 
 const Comments = styled.div`
   color: grey;
+  display: flex;
+  justify-content: end;
 `;
 
 const userName = [
@@ -111,6 +116,7 @@ export default function FeedItem({key, feed, onRemove}) {
     const [voteCompleted, setVoteCompleted] = useState(false);
     const [countAll, setCountAll] = useState(null)
     const [removeModal, setRemoveModal] = useState(false)
+    const [expiredVote, setExpiredVote] = useState()
 
     const ref = useRef(null)
     const ref2 = useRef(null)
@@ -123,10 +129,16 @@ export default function FeedItem({key, feed, onRemove}) {
       feedItem.content = content
       setFeedItem(feedItem)
     }
+
+
     useEffect(() => {
-      console.log(feed, "!!!!!!!!!!!!!!!!!!!!!!!!")
       const ID = feed.userId
-      console.log(feed.vote_contents)
+      
+      if (Date.now() - feed.due_date * 1000 > 0) {
+        setExpiredVote(true)
+      } else {
+        setExpiredVote(false)
+      }
 
       const tempArray = []
       for (let i = 0; i < feed.vote_contents.length; i ++) {
@@ -134,60 +146,57 @@ export default function FeedItem({key, feed, onRemove}) {
       }
       axios({
         method: 'get',
-        url: `http://localhost:8080/user/${ID}`,
+        url: `http://i6c103.p.ssafy.io/api/user/${ID}`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      }).then(response => {
+        setFirstNickName(response.data.info.nickname)
+      }
+      )
+      .catch(err => {
+        console.log('에러났어요');
       })
-        .then(res => {
-          console.log(res, 'user데이터');
-          setUserData(res.data);
-          setFirstNickName(res.data.info.nickname);
-        })
-        .catch(err => {
-          console.log('에러났어요');
-        })
-        .finally(() => {
-          console.log('profile request end');
-        });
+      .finally(() => {
+        console.log('profile request end');
+      });
 
-      axios({
-        method: 'get',
-        url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+    axios({
+      method: 'get',
+      url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
+    })
+      .then(res => {
+
+
+        if (res.data.userid.includes(myId)) {
+          setVoteCompleted(true);
+        }
+
+        if (res.data.userid[0] === 0 && res.data.idx.length === 1) {
+          setCountAll(0);
+          setVoteUsers(tempArray);
+        } else {
+          for (let i = 0; i < res.data.idx.length; i++) {
+            tempArray[res.data.idx[i]].push(res.data.userid[i]);
+          }
+          setCountAll(res.data.idx.length);
+          setVoteUsers(tempArray);
+        }
       })
-        .then(res => {
-          console.log(res);
+      .catch(err => {
+        console.log(err);
+      });
 
-          if (res.data.userid.includes(myId)) {
-            setVoteCompleted(true);
-          }
-
-          if (res.data.userid[0] === 0 && res.data.idx.length === 1) {
-            setCountAll(0);
-            setVoteUsers(tempArray);
-          } else {
-            for (let i = 0; i < res.data.idx.length; i++) {
-              tempArray[res.data.idx[i]].push(res.data.userid[i]);
-            }
-            setCountAll(res.data.idx.length);
-            setVoteUsers(tempArray);
-          }
-        })
-        .catch(err => {
-          console.log(err);
-        });
-
-      const handleClickOutside = event => {
-        if (selected && ref.current && !ref.current.contains(event.target)) {
-          setSelected(false);
-        }
-        if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
-          setModalIsOpen(false)
-        }
-  
-        if (removeModal && ref3.current && !ref3.current.contains(event.target)) {
-          setRemoveModal(false)
-        }
+    const handleClickOutside = event => {
+      if (selected && ref.current && !ref.current.contains(event.target)) {
+        setSelected(false);
+      }
+      if (modalIsOpen && ref2.current && !ref2.current.contains(event.target)) {
+        setModalIsOpen(false);
       }
 
+      if (removeModal && ref3.current && !ref3.current.contains(event.target)) {
+        setRemoveModal(false);
+      }
+    };
 
     document.addEventListener('mousedown', handleClickOutside);
 
@@ -195,17 +204,16 @@ export default function FeedItem({key, feed, onRemove}) {
       document.removeEventListener('mousedown', handleClickOutside);
     };
   }, [selected, modalIsOpen]);
-  
-  
+
   const handleCommentClick = event => {
     setCommentModalOpen(!commentModalOpen);
     console.log(commentModalOpen);
   };
-  
-  const handleRemoveClick = (event) => {
-    setRemoveModal(!removeModal)
-  }
-  
+
+  const handleRemoveClick = event => {
+    setRemoveModal(!removeModal);
+  };
+
   const handleEditClick = event => {
     setModalIsOpen(!modalIsOpen);
   };
@@ -214,6 +222,24 @@ export default function FeedItem({key, feed, onRemove}) {
     setDetailModalOpen(!detailModalOpen);
   };
 
+  const commentsubmit = (event) => {
+    event.preventDefault()
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/board/detail/${feed.idboard}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+    }).then(response => {
+      console.log(response)
+      setFeedItem(response.data)
+    }
+    )
+    .catch(err => {
+      console.log('에러났어요');
+    })
+    .finally(() => {
+      console.log('profile request end');
+    });
+  }
 
   const typeButton = type => {
     if (type === 1) {
@@ -241,6 +267,10 @@ export default function FeedItem({key, feed, onRemove}) {
     setVoteCompleted(true);
   };
 
+  const voteAllCount = (countAll) => {
+    setCountAll(countAll)
+  }
+
   const formatRelativeDate = date => {
     const TEN_SECOND = 10 * 1000;
     const A_MINUTE = 60 * 1000;
@@ -257,34 +287,41 @@ export default function FeedItem({key, feed, onRemove}) {
   };
 
   return (
-      <>
-        <FeedBox>
-          <ProfileBox>
-            <ProfileImg
-              src={userData && userData.info.image.length > 0 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-              userData.info.image : '/images/baseprofile.jpg'}
-              alt='프사'
-              onClick={() => history.push('/profile')}/>
-            <div>
-              {/* <ProfileName onClick={() => history.push('/profile')}>{feed.profilename}</ProfileName> */}
-              <ProfileName onClick={() => history.push('/profile')}>{firstNickName}</ProfileName>
-              {/* <WriteTime>{feed.writetime}분 전</WriteTime> */}
-              <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>
-            </div>
-            {/* {myId === feed.feedUserId ?  */}
-            {myId === feed.userId ? 
-              <FeedMenu>
-                <div style={{marginLeft:'auto', cursor: "pointer" }} ref={ref} onClick={() => setSelected(!selected)}>
-                  <i className="bi bi-three-dots-vertical"></i>
-                  <div className={selected ? "feed_drop active" : "feed_drop" }>
-                    <div onClick={handleEditClick}>글수정</div>
-                    {/* <div onClick={() => onRemove(feed.id)}>글삭제</div> */}
-                    <div onClick={() => setRemoveModal(true)}>글삭제</div>
-                  </div>
-                </div>
-              </FeedMenu>
-              : null
+    <>
+      <FeedBox>
+        <ProfileBox>
+          <ProfileImg
+            src={
+              userData && userData.info.image.length > 0
+                ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+                  userData.info.image
+                : '/images/baseprofile.jpg'
             }
+            alt="프사"
+            onClick={() => history.push(`/user/${feed.userId}/profile`)}
+          />
+          <div>
+            <ProfileName onClick={() => history.push(`/user/${feed.userId}/profile`)}>
+              {firstNickName}
+            </ProfileName>
+            <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>
+          </div>
+          {myId === feed.userId ? (
+            <FeedMenu>
+              <div
+                style={{ marginLeft: 'auto', cursor: 'pointer' }}
+                ref={ref}
+                onClick={() => setSelected(!selected)}
+              >
+                <i className="bi bi-three-dots-vertical"></i>
+                <div className={selected ? 'feed_drop active' : 'feed_drop'}>
+                  <div onClick={handleEditClick}>글수정</div>
+                  {/* <div onClick={() => onRemove(feed.id)}>글삭제</div> */}
+                  <div onClick={() => setRemoveModal(true)}>글삭제</div>
+                </div>
+              </div>
+            </FeedMenu>
+          ) : null}
         </ProfileBox>
         <ContentBox>
           {/* <Content onClick={() => history.push(`/feed/${feed.id}`)}>{feed.feedcontent}</Content> */}
@@ -292,13 +329,21 @@ export default function FeedItem({key, feed, onRemove}) {
             {typeButton(feed.type)}
             {feed.content}
           </Content>
-          {voteCompleted ? 
-            <div onClick={DetailModal}>
-              <i style={{ color: 'green' }} class="h1 bi bi-check2-circle"></i>
-              <div>결과보기</div>
+          {
+            feed.due_date * 1000 - Date.now() < 0 && 
+            <div style={{ color: "grey", fontWeight: "bold", fontSize: "1.2rem"}}>만료된 글입니다.</div>
+          }
+
+          {voteCompleted || feed.due_date * 1000 - Date.now() < 0 ? 
+            <div>
+              <i style={{ color: 'green', fontSize: "3rem" }} class="bi bi-check2-circle"></i>
+              <div onClick={DetailModal} className="feed_button1">결과보기</div>
             </div>
-           : 
-            <button onClick={DetailModal}>참여하기</button>
+           :
+            <div>
+              <div className="feed_button2" onClick={DetailModal}>참여하기</div>
+            </div>
+            
           }
 
           {/* <button onClick={DetailModal}>참여하기</button> */}
@@ -310,7 +355,7 @@ export default function FeedItem({key, feed, onRemove}) {
           <div>
             <HashTagBox>
               {feed.hashArr &&
-                feed.hashArr.map((hashTag, index) => 
+                feed.hashArr.map((hashTag, index) =>
                   <div key={index}>
                     <HashTag>{hashTag}</HashTag>
                   </div>
@@ -319,8 +364,8 @@ export default function FeedItem({key, feed, onRemove}) {
             </div>
             <div style={{ color: "grey" }}>
               <Comments>
-                <div>{countAll}명</div>
-                <div onClick={handleCommentClick}>{feed.commentNum}아이콘넣으셈</div>
+                <div style={{ marginRight: "12px" }}><MdHowToVote/>{countAll}</div>
+                <div onClick={handleCommentClick}><FaRegComment/>{feed.commentNum}</div>
               </Comments>
             </div>
           </HashCommentBox>
@@ -343,6 +388,8 @@ export default function FeedItem({key, feed, onRemove}) {
               onClose={DetailModal}
               completed={voteCompleted}
               amend={handleVoteContent}
+              count={voteAllCount}
+              expired={expiredVote}
             />
           }
         </div>
@@ -351,16 +398,28 @@ export default function FeedItem({key, feed, onRemove}) {
           <CommentWrite
             onClose={handleCommentClick}
             feed={feed} 
+            commentsubmit={commentsubmit}
           />
-        </div>
+      </div>
 
-        <div ref={ref3} className={removeModal ? "edit_drop active" : "edit_drop"}>
-          <RemoveModal
-            onClose={handleRemoveClick}
-            onRemove={onRemove}
-            idboard={feed.idboard}
-          />
-        </div>
-      </>
-  )
+      <div
+        className={
+          commentModalOpen ? 'comments_modal active' : 'comments_modal'
+        }
+      >
+        <CommentWrite onClose={handleCommentClick} feed={feed} />
+      </div>
+
+      <div
+        ref={ref3}
+        className={removeModal ? 'edit_drop active' : 'edit_drop'}
+      >
+        <RemoveModal
+          onClose={handleRemoveClick}
+          onRemove={onRemove}
+          idboard={feed.idboard}
+        />
+      </div>
+    </>
+  );
 }

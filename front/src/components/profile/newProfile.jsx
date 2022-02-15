@@ -166,7 +166,7 @@ const NewProfile = props => {
                   console.log('닉네임 중복 확인');
                   console.log(nickName);
                   axios
-                    .get(`http://localhost:8080/user/check/${nickName}`)
+                    .get(`http://i6c103.p.ssafy.io/api/user/check/${nickName}`)
                     .then(res => {
                       console.log(res);
                       if (res.data === false) {
@@ -266,7 +266,7 @@ const NewProfile = props => {
       {duplicateCheck ? 
     <Button
       onClick={submitData}
-      className={styles.button}
+      className={styles.button1}
       variant="secondary"
     >
       완료
@@ -274,7 +274,7 @@ const NewProfile = props => {
     <Button
       disabled
       onClick={submitData}
-      className={styles.button}
+      className={styles.button2}
       variant="secondary"
     >
     완료

@@ -192,11 +192,12 @@
 
 .img_box {
     display: flex;
-    align-items: center;
+    flex-wrap: wrap;
 }
 
 .thumbnail {
-    height: 100px;
+    height: 90px;
+    margin: 2px 3px;
     width: auto;
 }
 
@@ -206,12 +207,6 @@
 
 .imgDelete.show {
     display:flex;
-}
-
-.button2 {
-    width:auto;
-    height:auto;
-    background-color:rgb(185, 185, 185) ;
 }
 
 .button_group {
@@ -250,4 +245,14 @@
     padding: 0px 5px;
     border-radius: 5px;
     background-color: rgb(240, 240, 240);
+}
+
+.img_upload {
+    background-color: rgb(214, 214, 214);
+    padding: 0 3px;
+    border-radius: 10px;
+    width: 110px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

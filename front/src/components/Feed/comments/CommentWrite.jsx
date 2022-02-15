@@ -36,7 +36,11 @@ function CommentWrite({onClose, feed}) {
 
     useEffect(() =>{
 		async function fetchData(){
+<<<<<<< Updated upstream
+		const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
+=======
 		const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
+>>>>>>> Stashed changes
 		,);
 		setComments(result.data)
 		}
@@ -45,7 +49,11 @@ function CommentWrite({onClose, feed}) {
 
     setTimeout(() => {
         async function fetchData(){
+<<<<<<< Updated upstream
+            const result = await axios.get(`http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
+=======
             const result = await axios.get(`http://localhost:8080/comment/${feed.idboard}`
+>>>>>>> Stashed changes
             ,);
             setComments(result.data)
             }
@@ -63,7 +71,7 @@ function CommentWrite({onClose, feed}) {
 
         axios({
             method: 'post',
-            url: `http://localhost:8080/comment/save`,
+            url: `http://i6c103.p.ssafy.io/api/comment/save`,
             data: {
                 content : commentContent,
                 board_idboard : feed.idboard,
@@ -86,7 +94,7 @@ function CommentWrite({onClose, feed}) {
         setComments(comments.filter(comment => comment.idcomment !== id));
         axios({
             method: 'delete',
-            url: `http://localhost:8080/comment/delete/${id}`,
+            url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
             params: {
                 boardId: feed.idboard,
             }

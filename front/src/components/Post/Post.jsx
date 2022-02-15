@@ -39,13 +39,15 @@ const Post = () => {
    // axios.post
 	function postAPI() {
 		if (revealType && voteContent) {
-			for (let i = 0; i < voteItems.length; i++) {
-				if (voteItems[i].length === 0) {
-					return alert('공개범위, 글내용, 항목은 필수사항 입니다.')
+			if (type === 1 || type === 2) {
+				for (let i = 0; i < voteItems.length; i++) {
+					if (voteItems[i].length === 0) {
+						return alert('공개범위, 글내용, 항목은 필수사항 입니다.')
+					}
 				}
 			}
-			const url = "http://localhost:8080/board/save"
-			// const url = "http://i6c103.p.ssafy.io/api/board/save"
+			
+			const url = "http://i6c103.p.ssafy.io/api/board/save"
 			const vote_contents = JSON.stringify(voteItems)
 
 			if (img) {
@@ -186,8 +188,7 @@ const Post = () => {
 
 		axios({
 			method: 'get',
-			url: `http://localhost:8080/user/${userId}`,
-			// url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+			url: `http://i6c103.p.ssafy.io/api/user/${userId}`,
 		})
 			.then(res => {
 			console.log(res, "user데이터");
@@ -289,7 +290,7 @@ const Post = () => {
 			setVoteItems(["", ""])
 			setVote([{id: 0, value: inputPlus()}, {id: 1, value: inputPlus()}])
 			setImg(null)
-			setImgUrl(null)
+			setImgUrl([""])
 			const allTextArea = document.getElementsByName("text_area")
 			const allInputArea = document.getElementsByName("input_area")
 			console.log(allInputArea)
@@ -391,16 +392,12 @@ const Post = () => {
 
 						{/* 투표 */}
 						<div className="my_accordion"> 
-							{/* <div className={keySelected === '1' ? "title active" : "title"} onClick={() => {setType(1); contentReset("1")}}>
-								<div>투표</div>
-								<div className={keySelected === '1' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div> */}
 							<div className={keySelected === '1' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" cols="40" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className="d-flex flex-row">
 									<div className="mx-2">
-										<button type="button" className="btn btn-primary btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
-											<i className="bi bi-plus-lg"></i>
+										<button type="button" style={{ background: "#3acbf7" }} className="btn btn-sm" onClick={(event) => {addEvent(event); addVoteList();}}>
+											<i style={{ color: "white" }} className="bi bi-plus-lg"></i>
 										</button>
 									</div>
 									<div>
@@ -409,28 +406,36 @@ const Post = () => {
 												<div onChange={(event) => {getVoteItems(event, idx)}}>
 													{props.value}
 												</div>
-												<button type="button" className="m-1 btn btn-sm btn-danger" onClick={(event) => {removeEvent(event, props); removeVoteList(event, idx)}}>
-													<i className="bi bi-x-lg"></i>
-												</button>
+												{idx !== 0 && idx !== 1 &&
+													<div style={{ color: "rgb(180, 180, 180)", marginLeft: "6px" }} onClick={(event) => {removeEvent(event, props); removeVoteList(event, idx)}}>
+														<i class="bi bi-x-circle-fill"></i>
+													</div>
+												}
+												
 											</div>
 										))}
 									</div>	
 								</div>
 								<div className="img_box">
 									{img && previewImg.map((props, key) => (
-										<div key={key}>
-											<button onClick={(event) => deleteImg(event, key)}>x</button>
+										<div key={key} style={{ position: "relative" }}>
+											<div style={{ position: "absolute" }} onClick={(event) => deleteImg(event, key)}>
+												<i class="bi bi-x-lg"></i>
+											</div>
 											<img alt="sample"
 											src={props}
 											className="thumbnail"/> 
 										</div>
 									))}		
-									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
-										<label className="button2" for="imgFile">
-											사진 업로드
-										</label>
+								</div>
+								<div style={{ display: "flex", flexDirection: "start" }}>
+									<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
+									<label for="imgFile">
+									<div className="img_upload">
+										<i class="bi bi-camera m-1"></i> 
+										<div>사진업로드</div>
 									</div>
+									</label>
 								</div>
 							</div>
 						</div>
@@ -441,19 +446,24 @@ const Post = () => {
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className="img_box">
 									{img && previewImg.map((props, key) => (
-										<div key={key}>
-											<button onClick={(event) => deleteImg(event, key)}>x</button>
+										<div key={key} style={{ position: "relative" }}>
+											<div style={{ position: "absolute" }} onClick={(event) => deleteImg(event, key)}>
+												<i class="bi bi-x-lg"></i>
+											</div>
 											<img alt="sample"
 											src={props}
 											className="thumbnail"/> 
 										</div>
 									))}		
-									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
-										<label className="button2" for="imgFile">
-											사진 업로드
-										</label>
+								</div>
+								<div style={{ display: "flex", flexDirection: "start" }}>
+									<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
+									<label for="imgFile">
+									<div className="img_upload">
+										<i class="bi bi-camera m-1"></i> 
+										<div>사진업로드</div>
 									</div>
+									</label>
 								</div>
 							</div>
 						</div>
@@ -462,23 +472,28 @@ const Post = () => {
 						<div className="my_accordion">
 							<div className={keySelected === '2' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
-								<input type="text" name="input_area" size="30" placeholder="항목을 입력하세요" onChange={(event) => {getVoteItems(event, 0)}}></input>
-								<input type="text" size="30" name="input_area" placeholder="항목을 입력하세요." onChange={(event) => {getVoteItems(event, 1)}}></input>
+								<input type="text" style={{ marginTop: "8px"}} name="input_area" size="30" placeholder="항목을 입력하세요" onChange={(event) => {getVoteItems(event, 0)}}></input>
+								<input type="text" style={{ marginTop: "8px"}} size="30" name="input_area" placeholder="항목을 입력하세요." onChange={(event) => {getVoteItems(event, 1)}}></input>
 								<div className="img_box">
 									{img && previewImg.map((props, key) => (
-										<div key={key}>
-											<button onClick={(event) => deleteImg(event, key)}>x</button>
+										<div key={key} style={{ position: "relative" }}>
+											<div style={{ position: "absolute" }} onClick={(event) => deleteImg(event, key)}>
+												<i class="bi bi-x-lg"></i>
+											</div>
 											<img alt="sample"
 											src={props}
 											className="thumbnail"/> 
 										</div>
 									))}		
-									<div style={{ marginLeft: "10px" }}>
-										<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
-										<label className="button2" for="imgFile">
-											사진 업로드
-										</label>
+								</div>
+								<div style={{ display: "flex", flexDirection: "start" }}>
+									<input id="imgFile" name="imgUpload" type="file" accept="image/*" onChange={saveImg} style={{display:"none"}} multiple/>
+									<label for="imgFile">
+									<div className="img_upload">
+										<i class="bi bi-camera m-1"></i> 
+										<div>사진업로드</div>
 									</div>
+									</label>
 								</div>
 							</div>
 						</div>

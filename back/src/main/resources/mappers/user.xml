@@ -82,4 +82,11 @@
     <select id="getFollowerId" parameterType="int" resultType="map">
         select to_user from follower where from_user = #{id}
     </select>
+
+    <select id="getPercentage" parameterType="int" resultType="double">
+        select ranked/total*100 from(
+                 select id, rank() over (order by point desc) as 'ranked', (select count(id) from user) as total from user
+                 ) as rank_table
+        where id = #{id};
+    </select>
 </mapper>

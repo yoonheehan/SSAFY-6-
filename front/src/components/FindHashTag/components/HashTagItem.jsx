@@ -1,32 +1,23 @@
-import React from 'react';
-import { Badge, Button, Card, Figure, ListGroup } from 'react-bootstrap';
-import { FaRegComment } from 'react-icons/fa';
-import { FcLike } from 'react-icons/fc';
-import styles from './postList.module.css';
-import { MdHowToVote } from 'react-icons/md';
-import { useState } from 'react';
+import axios from 'axios';
+import React, { useState } from 'react';
 import { useEffect } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { ListGroup } from 'react-bootstrap';
+import { FaRegComment } from 'react-icons/fa';
+import { MdHowToVote } from 'react-icons/md';
+import { useHistory } from 'react-router-dom';
+import FeedItem from '../../Feed/components/FeedItem';
+import styles from './HashTagItem.module.css';
 
-const PostItem = ({ post }) => {
+const HashTagItem = ({ item }) => {
   const history = useHistory();
   const createDate = new Intl.DateTimeFormat('ko-KR').format(
-    post.created_at * 1000
+    item.created_at * 1000
   );
-  const dueDate = new Intl.DateTimeFormat('ko-KR').format(post.due_date * 1000);
+  const dueDate = new Intl.DateTimeFormat('ko-KR').format(item.due_date * 1000);
   const [type, setType] = useState('투표');
-
   useEffect(() => {
-    if (post.type === 1) {
-      console.log(post.type);
-      setType('투표');
-    } else if (post.type === 2) {
-      console.log('type 2');
-      setType('OX');
-    } else {
-      console.log('type 3');
-      setType('VS');
-    }
+    console.log('item');
+    console.log(item);
   }, []);
 
   return (
@@ -35,13 +26,13 @@ const PostItem = ({ post }) => {
         style={{ cursor: 'pointer' }}
         className="d-flex justify-content-between align-items-start"
         onClick={() => {
-          history.push(`/testDetail/${post.idboard}`);
+          history.push(`/testDetail/${item.idboard}`);
         }}
       >
-        <div className={styles.figure}>
+        <div style={{ width: '60px', height: '60px' }}>
           <img
-            className={styles.img}
-            src={JSON.parse(post.board_image)}
+            style={{ width: '100%', height: '100%' }}
+            src={JSON.parse(item.board_image)}
             alt=""
           />
         </div>
@@ -60,15 +51,14 @@ const PostItem = ({ post }) => {
                 textAlign: 'left',
               }}
             >
-              {post.content}
+              {item.content}
             </span>
           </div>
-
           <div style={{ textAlign: 'left' }}>
             <MdHowToVote />
-            <span style={{ marginRight: '10px' }}>{post.voteNum}</span>
+            <span style={{ marginRight: '10px' }}>{item.voteNum}</span>
             <FaRegComment />
-            <span style={{ marginRight: '10px' }}>{post.commentNum}</span>
+            <span style={{ marginRight: '10px' }}>{item.commentNum}</span>
           </div>
         </div>
 
@@ -87,4 +77,4 @@ const PostItem = ({ post }) => {
   );
 };
 
-export default PostItem;
+export default HashTagItem;

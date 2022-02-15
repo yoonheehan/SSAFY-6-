@@ -98,4 +98,9 @@ public class UserServiceImpl implements UserService{
     public List<Map<String, Object>> getfollowerId(int id) {
         return sqlSession.getMapper(UserMapper.class).getFollowerId(id);
     }
+
+    @Override
+    public double getPercentage(int id) {
+        return sqlSession.getMapper(UserMapper.class).getPercentage(id);
+    }
 }

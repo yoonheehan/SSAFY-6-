@@ -34,8 +34,7 @@ export default function TestFeed() {
     useEffect(() => {
         axios({
           method: 'get',
-          url: `http://localhost:8080/board/74`,
-          // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+          url: `http://i6c103.p.ssafy.io/api/board/74`,
         })
           .then(response => {
             console.log(response.data);
@@ -58,8 +57,7 @@ export default function TestFeed() {
     const loadcomment = () =>{
     axios({
       method: 'get',
-      url: `http://localhost:8080/comment/74`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      url: `http://i6c103.p.ssafy.io/api/comment/74`,
     })
       .then(response => {
         console.log('response : ' , response.data);
@@ -77,23 +75,9 @@ export default function TestFeed() {
     console.log(loginedId, boardId)
     
     function handleSubmit(event) {
-        // axios({
-        //     method: 'put',
-        //     url: `http://localhost:8080/comment/update`,
-        //     data: {
-        //         content : commentContent,
-        //         board_idboard : boardId,
-        //         idComment : 18,
-        //         user_id: loginedId,
-                
-        //     }
-        //   })
-        //     .then(response => {
-        //       console.log('수정완료');
-        //     })
         axios({
             method: 'post',
-            url: `http://localhost:8080/comment/save`,
+            url: `http://i6c103.p.ssafy.io/api/comment/save`,
             data: {
                 content : commentContent,
                 board_idboard : boardId,
@@ -111,16 +95,12 @@ export default function TestFeed() {
     const deletecomment = () => {
         axios({
             method: 'delete',
-            url: `http://localhost:8080/comment/delete/id`,
+            url: `http://i6c103.p.ssafy.io/api/comment/delete/id`,
           })
             .then(response => {
               console.log('삭제완료');
             })
     }
-    // let url = `http://localhost:8080/comment/like`
-    // {data : commentId, loginedId}
-    
-    
 
     return (
         <div style={{marginTop:'70px'}}>
