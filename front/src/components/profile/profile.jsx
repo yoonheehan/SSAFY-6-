@@ -12,20 +12,19 @@ import { BsPersonCircle } from 'react-icons/bs';
 import { useHistory } from 'react-router-dom';
 import styles from './profile.module.css';
 import { useParams } from 'react-router-dom';
+import ReactTooltip from 'react-tooltip';
 
 const Profile = props => {
   const history = useHistory();
 
-  const [followCheck, setFollowCheck] = useState(false)
-  const imgRef = useRef(null); 
-
+  const [followCheck, setFollowCheck] = useState(false);
+  const imgRef = useRef(null);
 
   if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
   let { id } = useParams();
-  const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
-
+  const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
 
   console.log('profile : ', id, 'loginedId : ', loginedId);
 
@@ -80,34 +79,34 @@ const Profile = props => {
     })
       .then(response => {
         console.log(response.data);
-        setFollowCheck(true)
+        setFollowCheck(true);
       })
       .catch(error => {
         console.log('follow requset fail : ' + error);
       })
       .finally(() => {
         console.log('follow request end');
-      });  
-  }
+      });
+  };
 
-  const unFollow = () =>{
+  const unFollow = () => {
     axios({
       method: 'delete',
       url: `http://localhost:8080/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-      params: {'loginedId' : loginedId, 'followId' : id},
+      params: { loginedId: loginedId, followId: id },
     })
       .then(response => {
         console.log(response.data);
-        setFollowCheck(false)
+        setFollowCheck(false);
       })
       .catch(error => {
         console.log('follow requset fail : ' + error);
       })
       .finally(() => {
         console.log('follow request end');
-      });  
-  }
+      });
+  };
 
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -127,7 +126,7 @@ const Profile = props => {
   );
   return (
     <>
-      <h1 style={{ marginTop: '20px' }}>
+      <h1 style={{ marginTop: '100px' }}>
         <b>프로필</b>
       </h1>
       <section className={styles.section}>
@@ -167,43 +166,80 @@ const Profile = props => {
           <div className={styles.box2}>
             {(() => {
               if (Number(id) === loginedId)
-              return (
-              <Button
-              className={styles.button}
-              variant="outline-secondary"
-              onClick={() => {
-                history.push(`/user/${id}/mdProfile`);
-              }}
-            >
-              프로필 수정
-            </Button>);
-            else if (Number(id) !== loginedId && followCheck === false)
-            return (
-              <Button
-              className={styles.button}
-              variant="outline-secondary"
-              onClick={doFollow}
-              >
-              팔로우 맺기
-            </Button>);
-            else if (Number(id) !== loginedId && followCheck == true)
-            return (
-              <Button
-              className={styles.button}
-              variant="outline-secondary"
-              onClick={unFollow}
-              >
-              팔로우 끊기
-            </Button>
-            )
-          })()
-          }
+                return (
+                  <Button
+                    className={styles.button}
+                    variant="outline-secondary"
+                    onClick={() => {
+                      history.push(`/user/${id}/mdProfile`);
+                    }}
+                  >
+                    프로필 수정
+                  </Button>
+                );
+              else if (Number(id) !== loginedId && followCheck === false)
+                return (
+                  <Button
+                    className={styles.button}
+                    variant="outline-secondary"
+                    onClick={doFollow}
+                  >
+                    팔로우 맺기
+                  </Button>
+                );
+              else if (Number(id) !== loginedId && followCheck == true)
+                return (
+                  <Button
+                    className={styles.button}
+                    variant="outline-secondary"
+                    onClick={unFollow}
+                  >
+                    팔로우 끊기
+                  </Button>
+                );
+            })()}
           </div>
           <div className={styles.box3}>
             <div>
               <div className={styles.title1}>
                 해줘지수
-                <AiOutlineInfoCircle className={styles.info} />
+                <span data-tip data-for="tooltip">
+                  <AiOutlineInfoCircle className={styles.info} />
+                </span>
+                <ReactTooltip
+                  id="tooltip"
+                  effect="solid"
+                  place="bottom"
+                  type="dark"
+                >
+                  <div>
+                    <p>
+                      해줘지수는 피드, 댓글, 투표 등을 종합해서 만든 지표입니다.
+                    </p>
+                    <div>
+                      <div>
+                        <span>뉴비 :</span>{' '}
+                        <AiFillStar style={{ color: 'green' }} />
+                      </div>
+                      <div>
+                        <span>실버 :</span>{' '}
+                        <AiFillStar style={{ color: 'silver' }} />
+                      </div>
+                      <div>
+                        <span>골드 : </span>{' '}
+                        <AiFillStar style={{ color: 'gold' }} />
+                      </div>
+                      <div>
+                        <span>해줘열 :</span>{' '}
+                        <AiFillStar style={{ color: 'red' }} />
+                      </div>
+                      <div>
+                        <span>해줘신 :</span>{' '}
+                        <AiFillStar style={{ color: 'purple' }} />
+                      </div>
+                    </div>
+                  </div>
+                </ReactTooltip>
               </div>
             </div>
             <div>
