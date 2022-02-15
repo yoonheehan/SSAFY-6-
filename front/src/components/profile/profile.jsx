@@ -38,7 +38,7 @@ const Profile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {
@@ -54,7 +54,7 @@ const Profile = props => {
 
     axios({
       method: 'get',
-      url: `http://localhost:8080/follow/check/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/follow/check/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       params: { loginedId: loginedId },
     })
@@ -73,7 +73,7 @@ const Profile = props => {
   const doFollow = () => {
     axios({
       method: 'post',
-      url: `http://localhost:8080/follow`,
+      url: `http://i6c103.p.ssafy.io/api/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       data: { loginedId: loginedId, followId: id },
     })
@@ -92,7 +92,7 @@ const Profile = props => {
   const unFollow = () => {
     axios({
       method: 'delete',
-      url: `http://localhost:8080/follow`,
+      url: `http://i6c103.p.ssafy.io/api/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       params: { loginedId: loginedId, followId: id },
     })
@@ -120,7 +120,7 @@ const Profile = props => {
   const progressInstance = (
     <ProgressBar
       className={styles.progress}
-      animated now={100 - userData.info.point}
+      animated now={100 - userData.info.point * 0.9}
 
 
     />
@@ -139,7 +139,6 @@ const Profile = props => {
                 height: '150px',
                 borderRadius: '50%',
                 margin: 'auto',
-                border: '1px solid black',
               }}
             >
               <img
@@ -148,10 +147,10 @@ const Profile = props => {
                   height: '100%',
                   borderRadius: '50%',
                 }}
-                src={
+                src={ userData.info.image ?
                   'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
                   userData.info.image +
-                  '.jpg'
+                  '.jpg' : '/images/baseprofile.jpg'
                 }
                 alt=""
                 onError={() => {
@@ -170,7 +169,8 @@ const Profile = props => {
                 return (
                   <Button
                     className={styles.button}
-                    variant="outline-secondary"
+                    variant=""
+                    style={{ color: "white" }}
                     onClick={() => {
                       history.push(`/user/${id}/mdProfile`);
                     }}
@@ -182,7 +182,8 @@ const Profile = props => {
                 return (
                   <Button
                     className={styles.button}
-                    variant="outline-secondary"
+                    style={{ color: "white" }}
+                    variant=""
                     onClick={doFollow}
                   >
                     팔로우 맺기
@@ -191,8 +192,9 @@ const Profile = props => {
               else if (Number(id) !== loginedId && followCheck == true)
                 return (
                   <Button
-                    className={styles.button}
-                    variant="outline-secondary"
+                    className={styles.button2}
+                    style={{ color: "white" }}
+                    variant=""
                     onClick={unFollow}
                   >
                     팔로우 끊기
@@ -292,8 +294,9 @@ const Profile = props => {
           <div className={styles.box4}>
             <div className="d-grid gap-2">
               <Button
-                variant="secondary"
-                size="md"
+                className={styles.button}
+                variant=""
+                style={{ color: "white" }}
                 onClick={() => {
                   history.push(`/board/user/${id}/postList`);
                 }}
@@ -301,8 +304,9 @@ const Profile = props => {
                 글 작성 목록
               </Button>
               <Button
-                variant="secondary"
-                size="md"
+                className={styles.button}
+                variant=""
+                style={{ color: "white" }}
                 onClick={() => {
                   history.push(`/user/${id}/followlist`);
                 }}
@@ -310,8 +314,9 @@ const Profile = props => {
                 팔로우 목록
               </Button>
               <Button
-                variant="secondary"
-                size="md"
+                className={styles.button}
+                variant=""
+                style={{ color: "white" }}
                 onClick={() => {
                   history.push(`/user/${id}/followerlist`);
                 }}

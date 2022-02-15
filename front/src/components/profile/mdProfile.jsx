@@ -117,7 +117,7 @@ const MdProfile = props => {
       setDuplicateCheck(true)
     } else {
       axios
-        .get(`http://localhost:8080/user/check/${userData.info.nickname}`)
+        .get(`http://i6c103.p.ssafy.io/api/user/check/${userData.info.nickname}`)
         .then(res => {
           console.log(res);
           if (res.data === false) {
@@ -134,7 +134,7 @@ const MdProfile = props => {
   const submitData = () => {
     console.log('데이터를 보내자');
     axios
-      .put(`http://localhost:8080/user/${id}`, {
+      .put(`http://i6c103.p.ssafy.io/api/user/${id}`, {
         image: userData.info.image,
         nickname: userData.info.nickname,
       })
@@ -225,11 +225,11 @@ const MdProfile = props => {
       {!duplicateCheck ?
       <Button
         disabled
-        className={styles.button}
+        className={styles.button2}
         variant="secondary"
         onClick={submitData}>완료</Button> :
         <Button
-        className={styles.button}
+        className={styles.button1}
         variant="secondary"
         onClick={submitData}>완료</Button>
         }

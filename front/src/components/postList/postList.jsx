@@ -21,7 +21,7 @@ const PostList = props => {
   });
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+    axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
       const temp = [];
       res.data.forEach(value => {
         temp.push(value);
@@ -60,7 +60,7 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -97,7 +97,7 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -136,7 +136,7 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -175,7 +175,7 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://localhost:8080/board/user/${id}`).then(res => {
+              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);

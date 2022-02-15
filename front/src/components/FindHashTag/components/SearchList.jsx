@@ -52,7 +52,7 @@ const SearchList = props => {
 
   const findHashTagList = e => {
     axios
-      .get(`http://localhost:8080/board/hashtagsearch/${findData}`)
+      .get(`http://i6c103.p.ssafy.io/api/board/hashtagsearch/${findData}`)
       .then(res => {
         setDataList(res.data);
       });

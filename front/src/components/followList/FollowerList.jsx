@@ -23,7 +23,7 @@ function FollowerList() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8080/follower/${id}`
+          `http://i6c103.p.ssafy.io/api/follower/${id}`
         );
         setFollowerData(response.data);
       } catch (e) {
@@ -36,28 +36,6 @@ function FollowerList() {
   }, []);
 
   console.log('followerData : ', followerData)
-
-  // useEffect(() => {
-
-  //   axios({
-  //     method: 'get',
-  //     url: `http://localhost:8080/follower/${id}`,
-  //     // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-  //   })
-  //     .then(response => {
-  //       console.log(response)
-  //       setFollowerData(response.data)
-  //     })
-  //     .catch(error => {
-  //       console.log('profile requset fail : ' + error);
-  //     })
-  //     .finally(() => {
-  //       console.log('profile request end');
-  //     });
-  // }, [])
-  // console.log('followerData : ',followerData)
-
-
 
   return (
     <>

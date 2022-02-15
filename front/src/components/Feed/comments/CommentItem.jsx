@@ -128,7 +128,8 @@ function CommentItem({comment, onRemove}) {
       setEditValue(tempValue)
       axios({
         method: 'put',
-        url: `http://localhost:8080/comment/update`,
+        url: `http://i6c103.p.ssafy.io/api/comment/update`,
+        // url: `http://localhost:8080/comment/update`,
         data: {
             content : tempValue,
             board_idboard : comment.board_idboard,
@@ -163,7 +164,7 @@ function CommentItem({comment, onRemove}) {
       console.log(comment.idcomment, myId)
       axios({
         method: 'post',
-        url: `http://localhost:8080/comment/like`,
+        url: `http://i6c103.p.ssafy.io/api/comment/like`,
         data : {
           comment_idcomment : comment.idcomment, 
           user_id : myId,

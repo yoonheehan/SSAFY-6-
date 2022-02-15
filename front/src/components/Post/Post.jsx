@@ -47,8 +47,7 @@ const Post = () => {
 				}
 			}
 			
-			const url = "http://localhost:8080/board/save"
-			// const url = "http://i6c103.p.ssafy.io/api/board/save"
+			const url = "http://i6c103.p.ssafy.io/api/board/save"
 			const vote_contents = JSON.stringify(voteItems)
 
 			if (img) {
@@ -189,8 +188,7 @@ const Post = () => {
 
 		axios({
 			method: 'get',
-			url: `http://localhost:8080/user/${userId}`,
-			// url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+			url: `http://i6c103.p.ssafy.io/api/user/${userId}`,
 		})
 			.then(res => {
 			console.log(res, "user데이터");
@@ -394,10 +392,6 @@ const Post = () => {
 
 						{/* 투표 */}
 						<div className="my_accordion"> 
-							{/* <div className={keySelected === '1' ? "title active" : "title"} onClick={() => {setType(1); contentReset("1")}}>
-								<div>투표</div>
-								<div className={keySelected === '1' ? "chevron active" : "chevron"}><i className="h4 bi bi-chevron-down"></i></div>
-							</div> */}
 							<div className={keySelected === '1' ? "vote_content show" : "vote_content"}>
 								<textarea className="textarea" name="text_area" id="" cols="40" rows="8" placeholder="내용을 입력하세요" onChange={inputTextArea}></textarea>
 								<div className="d-flex flex-row">

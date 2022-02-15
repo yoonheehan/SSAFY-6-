@@ -144,7 +144,7 @@ export default function FeedItem({key, feed, onRemove}) {
       }
       axios({
         method: 'get',
-        url: `http://localhost:8080/user/${ID}`,
+        url: `http://i6c103.p.ssafy.io/api/user/${ID}`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       }).then(response => {
         setFirstNickName(response.data.info.nickname)
@@ -159,7 +159,7 @@ export default function FeedItem({key, feed, onRemove}) {
 
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
     })
       .then(res => {
 

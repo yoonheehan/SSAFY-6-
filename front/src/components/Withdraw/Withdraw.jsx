@@ -50,7 +50,7 @@ const Withdraw = () => {
               console.log('회원탈퇴 가능');
               console.log(sessionStorage.getItem('loginedUser'));
               axios
-                .put(`http://localhost:8080/user/withdraw/${id}`)
+                .put(`http://i6c103.p.ssafy.io/api/user/withdraw/${id}`)
                 .then(res => {
                   sessionStorage.clear('loginedUser');
                   history.push('/');

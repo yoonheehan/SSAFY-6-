@@ -113,7 +113,7 @@ const PostDetail = props => {
   const ref3 = useRef(null);
 
   useEffect(() => {
-    axios.get(`http://localhost:8080/board`).then(res => {
+    axios.get(`http://i6c103.p.ssafy.io/api/board`).then(res => {
       console.log(res);
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].idboard == idboard) {
@@ -127,7 +127,7 @@ const PostDetail = props => {
 
   useEffect(() => {
     console.log(userId);
-    axios.get(`http://localhost:8080/user/${userId}`).then(res => {
+    axios.get(`http://i6c103.p.ssafy.io/api/user/${userId}`).then(res => {
       console.log(res);
     });
   });

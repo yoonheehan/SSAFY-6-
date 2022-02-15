@@ -27,8 +27,7 @@ export default function Feed() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/${loginedId}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      url: `http://i6c103.p.ssafy.io/api/board/${loginedId}`,
     })
       .then(response => {
         console.log(response.data);
@@ -88,7 +87,7 @@ export default function Feed() {
     
     axios({
     method: 'delete',
-    url: `http://localhost:8080/board/delete/${id}`,
+    url: `http://i6c103.p.ssafy.io/api/board/delete/${id}`,
     })
     .then(res => {
 

@@ -5,13 +5,6 @@ import { useHistory } from 'react-router-dom';
 import {useParams} from "react-router-dom";
 import axios from 'axios'
 
-
-const followList = [
-  {profileImg:'', name:'정정채'},
-  {profileImg:'', name:'채성원'},
-  {profileImg:'', name:'허영민'},
-]
-
 function FollowList() {
   const [followData, setFollowData] = useState([])
   const [loading, setLoading] = useState(false);
@@ -27,7 +20,7 @@ function FollowList() {
       setLoading(true);
       try {
         const response = await axios.get(
-          `http://localhost:8080/follow/${id}`
+          `http://i6c103.p.ssafy.io/api/follow/${id}`
         );
         setFollowData(response.data);
       } catch (e) {
