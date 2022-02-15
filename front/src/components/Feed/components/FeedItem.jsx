@@ -129,6 +129,8 @@ export default function FeedItem({key, feed, onRemove}) {
       feedItem.content = content
       setFeedItem(feedItem)
     }
+
+
     useEffect(() => {
       const ID = feed.userId
       
@@ -219,6 +221,25 @@ export default function FeedItem({key, feed, onRemove}) {
   const DetailModal = () => {
     setDetailModalOpen(!detailModalOpen);
   };
+
+  const commentsubmit = (event) => {
+    event.preventDefault()
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/board/detail/${feed.idboard}`,
+      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+    }).then(response => {
+      console.log(response)
+      setFeedItem(response.data)
+    }
+    )
+    .catch(err => {
+      console.log('에러났어요');
+    })
+    .finally(() => {
+      console.log('profile request end');
+    });
+  }
 
   const typeButton = type => {
     if (type === 1) {
@@ -377,6 +398,7 @@ export default function FeedItem({key, feed, onRemove}) {
           <CommentWrite
             onClose={handleCommentClick}
             feed={feed} 
+            commentsubmit={commentsubmit}
           />
       </div>
 
