@@ -3,7 +3,6 @@ package com.haejwoing.back.model.service;
 import com.haejwoing.back.model.dto.VoteUsersImport;
 import com.haejwoing.back.model.mapper.BoardMapper;
 import com.haejwoing.back.model.mapper.VoteUsersMapper;
-import io.swagger.models.auth.In;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,7 +11,7 @@ import java.util.HashMap;
 import java.util.List;
 
 @Service
-public class VoteUsersImpl implements VoteUsersService{
+public class VoteUsersServiceImpl implements VoteUsersService{
 
     @Autowired
     SqlSession sqlSession;
@@ -20,7 +19,7 @@ public class VoteUsersImpl implements VoteUsersService{
 
     @Override
     public void save_vote_users(VoteUsersImport voteUsersImport) {
-        System.out.println(voteUsersImport);
+
         int idboard = voteUsersImport.getBoard_idboard();
         List<Integer> user_id = sqlSession.getMapper(BoardMapper.class).getUserId(idboard);
 

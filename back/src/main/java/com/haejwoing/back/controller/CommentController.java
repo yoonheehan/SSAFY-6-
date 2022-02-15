@@ -2,7 +2,6 @@ package com.haejwoing.back.controller;
 
 import com.haejwoing.back.model.dto.Comment;
 import com.haejwoing.back.model.dto.Heart;
-import com.haejwoing.back.model.dto.User;
 import com.haejwoing.back.model.service.CommentService;
 import com.haejwoing.back.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,19 +21,12 @@ public class CommentController {
     @Autowired
     private UserService userService;
 
-    //board_id 로 바꾸기
     @GetMapping("/{boardId}")
     public ResponseEntity<List<Comment>> CommentList(@PathVariable int boardId) {
         System.out.println(boardId);
         return new ResponseEntity<List<Comment>>(commentService.getList(boardId), HttpStatus.OK);
     }
-//
-//    @GetMapping("/{commentId}")
-//    public ResponseEntity<Comment> getComment(@PathVariable int commentId) {
-//        return new ResponseEntity<Comment>(commentService.get(commentId), HttpStatus.OK);
-//    }
 
-    // @RequestParam : loginId
     @PostMapping("/like")
     public ResponseEntity<String> like(@RequestBody Heart heart) {
         int commentId = heart.getComment_idcomment();
@@ -64,15 +56,6 @@ public class CommentController {
         }
     }
 
-//    @DeleteMapping("{commentId}/unlike/{userId}")
-//    public ResponseEntity<String> unlike(@PathVariable int userId,
-//                                         @PathVariable int commentId){
-//        if(commentService.unlike(userId, commentId)){
-//            return new ResponseEntity<String>(HttpStatus.OK);
-//        }
-//        return new ResponseEntity<String>(HttpStatus.NO_CONTENT);
-//    }
-
     @PostMapping("/save")
     public ResponseEntity<String> save(@RequestBody Comment comment) throws Exception {
         int boardId = comment.getBoard_idboard();
@@ -87,7 +70,6 @@ public class CommentController {
             map1.put("score", score);
 
             // 글 등록한 유저아이디 가져와서
-            System.out.println(userId);
             userService.setPoint(map1);
 
 

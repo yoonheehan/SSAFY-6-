@@ -1,9 +1,7 @@
 package com.haejwoing.back.model.service;
 
-import com.haejwoing.back.model.dto.Board;
 import com.haejwoing.back.model.dto.Comment;
 import com.haejwoing.back.model.dto.Heart;
-import com.haejwoing.back.model.dto.User;
 import com.haejwoing.back.model.mapper.CommentMapper;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,12 +22,6 @@ public class CommentServiceImpl implements CommentService{
     public List<Comment> getList(int boardId) {
         return sqlSession.getMapper(CommentMapper.class).getList(boardId);
     }
-
-//    @Override
-//    public Comment get(int idcomment) {
-//
-//        return sqlSession.getMapper(CommentMapper.class).get(idcomment);
-//    }
 
     @Override
     public boolean like(Heart heart) {

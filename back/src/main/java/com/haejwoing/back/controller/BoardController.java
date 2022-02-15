@@ -2,19 +2,15 @@ package com.haejwoing.back.controller;
 
 
 import com.haejwoing.back.model.dto.*;
-import com.haejwoing.back.model.mapper.CommentMapper;
 import com.haejwoing.back.model.service.*;
-import com.sun.net.httpserver.Authenticator;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -77,7 +73,6 @@ public class BoardController {
         map1.put("score", score);
 
         // 글 등록한 유저아이디 가져와서
-        System.out.println(userId);
         userService.setPoint(map1);
 
 
@@ -113,7 +108,6 @@ public class BoardController {
             map.put("score", score);
 
             // 글 등록한 유저아이디 가져와서
-            System.out.println(userId);
             userService.setPoint(map);
             if(hashTagService.save(board)) {
 
@@ -127,7 +121,6 @@ public class BoardController {
     @PutMapping("/update")
 
     public ResponseEntity<String> update(@RequestBody Board board){
-        System.out.println(board);
         if(boardService.update(board)){
             return new ResponseEntity<String>(HttpStatus.OK);
         }
@@ -156,9 +149,7 @@ public class BoardController {
                 list.add(Integer.parseInt(String.valueOf(result.get(i).get("to_user"))));
             }
             list.add(id);
-            System.out.println("list : "+list);
             boardService.getFollowerFeed(list);
-            System.out.println(boardService.getFollowerFeed(list));
             if(boardService.getFollowerFeed(list).isEmpty()){
                 return new ResponseEntity<>(HttpStatus.NO_CONTENT);
             } else return new ResponseEntity<List<Board>>(boardService.getFollowerFeed(list), HttpStatus.OK);

@@ -5,7 +5,7 @@
 
     <insert id="save_vote_users" parameterType="int">
 
-        INSERT INTO VOTE_USERS (board_idboard, user_id, idx) VALUES(#{board_idboard}, #{user_id}, #{idx})
+        insert into vote_users (board_idboard, user_id, idx) values (#{board_idboard}, #{user_id}, #{idx})
 
     </insert>
 

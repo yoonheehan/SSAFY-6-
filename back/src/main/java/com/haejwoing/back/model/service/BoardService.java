@@ -3,7 +3,6 @@ package com.haejwoing.back.model.service;
 import com.haejwoing.back.model.dto.Board;
 
 import java.util.List;
-import java.util.Map;
 
 public interface BoardService {
 

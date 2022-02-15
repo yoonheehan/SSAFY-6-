@@ -5,23 +5,23 @@
 
     <select id='getList' parameterType="Comment" resultType="map">
 
-        SELECT COMMENT.idcomment, COMMENT.content, COMMENT.created_at, COMMENT.updated_at, COMMENT.likeUserList,
-               COMMENT.board_idboard, COMMENT.user_id, USER.nickname, USER.image FROM COMMENT
-        LEFT OUTER JOIN USER
-        ON COMMENT.user_id=user.id
+        SELECT comment.idcomment, comment.content, comment.created_at, comment.updated_at, comment.likeUserList,
+               comment.board_idboard, comment.user_id, user.nickname, user.image FROM comment
+                                                                                          LEFT OUTER JOIN user
+                                                                                                          ON comment.user_id=user.id
         WHERE board_idboard=#{boardId}
 
     </select>
 
     <insert id="like" parameterType="Heart">
-        INSERT INTO COMMENT_LIKES(comment_idcomment, user_id)
+        INSERT INTO comment_likes(comment_idcomment, user_id)
         VALUES (#{comment_idcomment}, #{user_id})
 
     </insert>
 
     <delete id="unlike" parameterType="Heart">
 
-        DELETE FROM COMMENT_LIKES
+        DELETE FROM comment_likes
         where user_id=#{userId} and comment_idcomment=#{commentId}
 
     </delete>
@@ -30,7 +30,7 @@
     <update id="likeUserList" parameterType="Comment">
 
 
-        UPDATE COMMENT SET likeUserList=#{userList}
+        UPDATE comment SET likeUserList=#{userList}
         WHERE idcomment = #{commentId}
     </update>
 
@@ -41,33 +41,33 @@
 
     <insert id="save" parameterType="Comment">
 
-        INSERT INTO COMMENT(content, created_at, board_idboard, user_id, likeUserList)
+        INSERT INTO comment(content, created_at, board_idboard, user_id, likeUserList)
         VALUES (#{content}, now(), #{board_idboard}, #{user_id}, '')
 
     </insert>
     <update id="getNum" parameterType="int">
 
-        UPDATE BOARD SET commentNum = commentNum + 1
+        UPDATE board SET commentNum = commentNum + 1
         WHERE idboard = #{boardId}
 
     </update>
     <update id="minusNum" parameterType="int">
 
-        UPDATE BOARD SET commentNum = commentNum - 1
+        UPDATE board SET commentNum = commentNum - 1
         WHERE idboard = #{boardId}
 
     </update>
 
     <update id="update" parameterType="comment">
 
-        UPDATE COMMENT SET content=#{content}, updated_at=now()
+        UPDATE comment SET content=#{content}, updated_at=now()
         WHERE idcomment = #{idComment}
 
     </update>
 
     <delete id="delete" parameterType="comment">
 
-        DELETE FROM COMMENT
+        DELETE FROM comment
         WHERE idcomment = #{commentId}
 
     </delete>

@@ -2,16 +2,12 @@ package com.haejwoing.back.model.service;
 
 import com.haejwoing.back.model.dto.Comment;
 import com.haejwoing.back.model.dto.Heart;
-import com.haejwoing.back.model.dto.User;
 
-import java.util.HashMap;
 import java.util.List;
 
 public interface CommentService {
 
     List<Comment> getList(int boardId);
-
-//    Comment get(int idcomment);
 
     boolean like(Heart heart);
 

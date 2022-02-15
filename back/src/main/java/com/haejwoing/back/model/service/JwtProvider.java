@@ -39,9 +39,6 @@ public class JwtProvider {
 
             claimMap = claims;
 
-            //Date expiration = claims.get("exp", Date.class);
-            //String data = claims.get("data", String.class);
-
         } catch (ExpiredJwtException e) { // 토큰이 만료되었을 경우
             System.out.println(e);
         } catch (Exception e) { // 그외 에러났을 경우
@@ -51,30 +48,3 @@ public class JwtProvider {
     }
 
 }
-
-//    public User getUserDtoOf(String authorizationHeader) {
-//        validationAuthorizationHeader(authorizationHeader);
-//
-//        String token = extractToken(authorizationHeader);
-//        Claims claims = parsingToken(token);
-//
-//        return new User(claims);
-//    }
-
-//    private Claims parsingToken(String token) {
-//        return Jwts.parser()
-//                .setSigningKey(JwtProperties.SECRET)
-//                .parseClaimsJws(token)
-//                .getBody();
-//    }
-//
-//    private void validationAuthorizationHeader(String header) {
-//        if (header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
-//            throw new IllegalArgumentException();
-//        }
-//    }
-//
-//    private String extractToken(String authorizationHeader) {
-//        return authorizationHeader.substring(JwtProperties.TOKEN_PREFIX.length());
-//    }
-

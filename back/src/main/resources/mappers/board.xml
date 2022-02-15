@@ -2,58 +2,57 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.haejwoing.back.model.mapper.BoardMapper">
-    <select id = 'getList' parameterType="com.haejwoing.back.model.dto.Board" resultType="com.haejwoing.back.model.dto.Board">
-        SELECT * FROM BOARD
+    <select id = 'getList' parameterType="Board" resultType="Board">
+        select * from board
 
     </select>
 
-    <select id="get" parameterType="int" resultType="com.haejwoing.back.model.dto.Board">
+    <select id="get" parameterType="int" resultType="Board">
 
-        SELECT * FROM BOARD WHERE idboard=#{idboard}
-
-
-    </select>
-
-    <select id="getUser" parameterType="int" resultType="com.haejwoing.back.model.dto.Board">
-
-        SELECT * FROM BOARD WHERE userId=#{userId} ORDER BY created_at DESC
+        select * from board where idboard=#{idboard}
 
 
     </select>
 
-    <insert id="save" parameterType="com.haejwoing.back.model.dto.Board" >
+    <select id="getUser" parameterType="int" resultType="Board">
+
+        select * from board where userId=#{userId} order by created_at DESC
+
+    </select>
+
+    <insert id="save" parameterType="Board" >
 
 
-    INSERT INTO BOARD(view_range, content, board_image, type, created_at, due_date, vote_contents, userId, hashArr)
-    VALUES (#{view_range}, #{content}, #{board_image}, #{type}, unix_timestamp(now()), #{due_date} , #{vote_contents}, #{userId}, #{hashArr})
+        insert into board(view_range, content, board_image, type, created_at, due_date, vote_contents, userId, hashArr)
+        values (#{view_range}, #{content}, #{board_image}, #{type}, unix_timestamp(now()), #{due_date} , #{vote_contents}, #{userId}, #{hashArr})
 
 
     </insert>
 
     <update id="update" parameterType="Board">
 
-    UPDATE BOARD SET view_range=#{view_range}, content=#{content}, updated_at= now()
-    WHERE idboard = #{idboard}
+        update board set view_range=#{view_range}, content=#{content}, updated_at= now()
+        where idboard = #{idboard}
 
     </update>
 
     <delete id="delete" parameterType="Board">
 
-    DELETE FROM BOARD
-    WHERE idboard = #{idboard}
+        delete from board
+        where idboard = #{idboard}
 
     </delete>
 
 
     <select id="due_date_id" parameterType="int" resultType="int">
 
-        SELECT due_date FROM BOARD ORDER BY idboard DESC LIMIT 1
+        select due_date from board order by idboard DESC LIMIT 1
 
     </select>
 
     <select id="find_vote_list" parameterType="int" resultType="String">
 
-        SELECT vote_users FROM BOARD WHERE idboard = #{board_id}
+        SELECT vote_users FROM board WHERE idboard = #{board_id}
 
     </select>
 
@@ -67,13 +66,13 @@
 
     <update id="update_board_vote_num" parameterType="Hashmap">
 
-    UPDATE BOARD SET voteNum = #{voteNum} WHERE idboard = #{idboard}
+        UPDATE board SET voteNum = #{voteNum} WHERE idboard = #{idboard}
 
     </update>
 
     <select id="get_user_id_from_board" parameterType="int" resultType="int">
 
-    SELECT userId FROM BOARD WHERE idboard =#{idboard}
+        SELECT userId FROM board WHERE idboard =#{idboard}
 
     </select>
 

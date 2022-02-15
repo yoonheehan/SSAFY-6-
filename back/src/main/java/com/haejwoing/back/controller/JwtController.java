@@ -25,14 +25,8 @@ public class JwtController {
     public ResponseEntity<Map<String, Object>> isGoogleUser(@RequestBody Map<String, Object> data){
         GoogleUser googleUser = new GoogleUser((Map<String, Object>) data.get("profileObj"));
         log.info("data : {}", data);
-//      log.info("Auth : {}", Auth);
         log.info("profileObj : {}", data.get("profileObj"));
         User userEntity = userServiceImpl.searchByEmail(googleUser.getEmail());
-
-//        Map<String, Object> tokenObj = (Map<String, Object>) data.get("tokenObj");
-//        log.info("tokenObj : {}", tokenObj);
-//        int expiresIn = Integer.parseInt(tokenObj.get("expires_in").toString());
-//        log.info("expires_in : {}", tokenObj.get("expires_in"));
 
         if(userEntity == null) {
             log.info("구글 로그인 첫 방문");
@@ -65,16 +59,9 @@ public class JwtController {
 
     @PostMapping("/naver")
     public ResponseEntity<Map<String, Object>> isNaverUser(@RequestBody Map<String, Object> data){
-//        NaverUser naverUser = new NaverUser((Map<String, Object>) data.get("data"));
         log.info("data : {}", data);
-//      log.info("Auth : {}", Auth);
         log.info("email : {}", data.get("email"));
         User userEntity = userServiceImpl.searchByEmail((String) data.get("email"));
-
-//        Map<String, Object> tokenObj = (Map<String, Object>) data.get("tokenObj");
-//        log.info("tokenObj : {}", tokenObj);
-//        int expiresIn = Integer.parseInt(tokenObj.get("expires_in").toString());
-//        log.info("expires_in : {}", tokenObj.get("expires_in"));
 
         if(userEntity == null) {
             log.info("네이버 로그인 첫 방문");
@@ -119,11 +106,6 @@ public class JwtController {
         System.out.println(str.get("email"));
 
         User userEntity = userServiceImpl.searchByEmail((String) str.get("email"));
-
-//        Map<String, Object> tokenObj = (Map<String, Object>) data.get("tokenObj");
-//        log.info("tokenObj : {}", tokenObj);
-//        int expiresIn = Integer.parseInt(tokenObj.get("expires_in").toString());
-//        log.info("expires_in : {}", tokenObj.get("expires_in"));
 
         if(userEntity == null) {
             log.info("카카오 로그인 첫 방문");

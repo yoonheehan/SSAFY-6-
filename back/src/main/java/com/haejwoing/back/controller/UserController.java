@@ -33,7 +33,6 @@ public class UserController {
         log.info("유저 정보 : {}", user);
 
         List<String> uploadImage = new ArrayList<>();
-//        uploadImage = fileService.fileInsert(file);
 
         log.info("업로드 파일 : {}", uploadImage);
 
@@ -73,6 +72,7 @@ public class UserController {
 
         Map<String, Object> result = new HashMap<>();
         User user = userService.searchById(id);
+
         log.info("user : {}", user);
         result.put("info", user);
 
@@ -96,7 +96,6 @@ public class UserController {
     @PutMapping("/withdraw/{id}")
     public ResponseEntity<String> withdrawUser(@PathVariable @ApiParam int id){
         // 인증 작업 필요
-        
         userService.withdrawUser(id);
 
         return new ResponseEntity<>("회원탈퇴 완료", HttpStatus.OK);
@@ -124,10 +123,6 @@ public class UserController {
         if(userService.checkNickname(nickname)){
             return new ResponseEntity<>(true, HttpStatus.OK);
         } else return new ResponseEntity<>(false, HttpStatus.OK); // 없으면 false
-
-//        if(userService.checkNickname(nickname)){
-//            return new ResponseEntity<Boolean>(true, HttpStatus.OK);
-//        }else return new ResponseEntity<>(false, HttpStatus.OK);
 
     }
 

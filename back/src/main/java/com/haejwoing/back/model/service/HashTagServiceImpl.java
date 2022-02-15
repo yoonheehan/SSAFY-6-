@@ -2,26 +2,18 @@ package com.haejwoing.back.model.service;
 
 
 import com.haejwoing.back.model.dto.Board;
-import com.haejwoing.back.model.dto.HashTag;
 import com.haejwoing.back.model.mapper.BoardMapper;
 import com.haejwoing.back.model.mapper.HashTagMapper;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
 import org.apache.ibatis.session.SqlSession;
-import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
-import springfox.documentation.spring.web.json.Json;
-import org.json.simple.parser.JSONParser;
 
-import java.lang.reflect.Array;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.*;
 
 @Service
-public class HashTagImpl implements HashTagService{
+public class HashTagServiceImpl implements HashTagService{
 
     // 문자화된 배열을 일반 배열로 변환시켜주는 함수
     public List<String> string_change_to_list(String putin){
