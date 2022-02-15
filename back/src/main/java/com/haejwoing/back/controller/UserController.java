@@ -68,16 +68,16 @@ public class UserController {
     public ResponseEntity<Map<String, Object>> userInfo(@PathVariable @ApiParam(value = "유저 id") int id){
         log.info("회원정보 ");
         log.info("{}",id);
-        HttpStatus status = HttpStatus.ACCEPTED;
-
 
         Map<String, Object> result = new HashMap<>();
         User user = userService.searchById(id);
+        double percentage = userService.getPercentage(id);
+        user.setPoint(percentage);
         log.info("user : {}", user);
         result.put("info", user);
 
 
-        return new ResponseEntity<Map<String, Object>>(result, status);
+        return new ResponseEntity<Map<String, Object>>(result, HttpStatus.OK);
     }
 
     @ApiOperation(value = "모든 사용자")
