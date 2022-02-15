@@ -146,7 +146,10 @@ export default function FeedItem({key, feed, onRemove}) {
         method: 'get',
         url: `http://localhost:8080/user/${ID}`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-      })
+      }).then(response => {
+        setFirstNickName(response.data.info.nickname)
+      }
+      )
       .catch(err => {
         console.log('에러났어요');
       })
@@ -274,10 +277,10 @@ export default function FeedItem({key, feed, onRemove}) {
                 : '/images/baseprofile.jpg'
             }
             alt="프사"
-            onClick={() => history.push('/profile')}
+            onClick={() => history.push(`/user/${feed.userId}/profile`)}
           />
           <div>
-            <ProfileName onClick={() => history.push('/profile')}>
+            <ProfileName onClick={() => history.push(`/user/${feed.userId}/profile`)}>
               {firstNickName}
             </ProfileName>
             <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>

@@ -55,7 +55,7 @@ const SearchList = props => {
         <SearchDiv>
           <FindInput
             type="text"
-            placeholder="닉네임을 입력해주세요."
+            placeholder="해시태그를 입력해주세요."
             onChange={getData}
             name="comment"
             value={findData}
