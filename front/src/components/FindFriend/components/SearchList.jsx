@@ -8,11 +8,15 @@ const SearchForm = styled.form`
   margin: 0 5% 0 5%;
 `;
 const SearchDiv = styled.div`
-  background-color: rgba(100, 100, 100, 0.4);
+  position: relative;
+  display: flex;
   width: 100%;
+  height: 40px;
   padding-bottom: 4px;
   margin-bottom: 10px;
   margin-top: 10px;
+  border: rgb(89, 80, 255) solid 2px;
+  border-radius: 10px;
 `;
 
 const FriendList = styled.div``;
@@ -24,14 +28,16 @@ const FindForm = styled.form`
 const FindInput = styled.input`
   width: 88%;
   border: none;
-  border-bottom: 1px solid rgb(190, 190, 190);
+  background-color:transparent;
+  outline: none;
 `;
 
 const SubmitBtn = styled.input`
-  width: 10%;
+  width: 20%;
   border: none;
-  border-bottom: 1px solid rgb(190, 190, 190);
-  background-color: white;
+  background-color: transparent;
+  font-weight: bold;
+  color: white;
 `;
 
 export default function SearchList(props) {
@@ -67,7 +73,8 @@ export default function SearchList(props) {
             name="comment"
             value={findName}
           />
-          <SubmitBtn type="submit" value="찾기" />
+          <SubmitBtn type="submit" value="" />
+          <i style={{ position: "absolute", right: "5%", top: "5px", color: "rgb(89, 80, 255)" }} className="bi bi-search"></i>
         </SearchDiv>
         <FriendList>
           {!friendList || friendList.length === 0 ? (

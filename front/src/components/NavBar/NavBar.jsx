@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import './NavBar.css';
 // import Alarm from "../Alarm/Alarm.jsx"
 import { AiOutlineArrowLeft } from 'react-icons/ai';
-import { MdOutlinePersonSearch } from 'react-icons/md';
+import { MdPersonSearch } from 'react-icons/md';
 
 const NavBar = () => {
   let userId = -1;
@@ -41,7 +41,8 @@ const NavBar = () => {
         <div className="NavbarItems">
           <div className="navbar-arrow">
             <AiOutlineArrowLeft
-              style={{ color: 'white' }}
+              size="30px"
+              style={{ color: 'white'}}
               onClick={() => {
                 history.goBack();
                 setClicked(false);
@@ -70,7 +71,7 @@ const NavBar = () => {
         <div className={clicked ? 'nav-menu active' : 'nav-menu'}>
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
-            className="h1 px-4 bi bi-house-door-fill"
+            className="h1 px-3 bi bi-house-door-fill"
             onClick={() => {
               history.push('/feed');
               setClicked(false);
@@ -86,7 +87,7 @@ const NavBar = () => {
           ></i> */}
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
-            className="h1 px-4 bi bi-person-fill"
+            className="h1 px-3 bi bi-person-fill"
             onClick={() => {
               window.location.replace(`/user/${userId}/profile`);
               setClicked(false);
@@ -95,25 +96,27 @@ const NavBar = () => {
 
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
-            className="link h1 px-4 bi bi-pencil-fill"
+            className="link h1 px-3 bi bi-pencil-fill"
             onClick={() => {
               history.push('/post');
               setClicked(false);
             }}
           ></i>
-
-          <MdOutlinePersonSearch
-            size="40px"
-            style={{ color: 'white', margin: '0 20px 8px 20px' }}
-            onClick={() => {
-              history.push('/user/find');
-              setClicked(false);
-            }}
-          />
+          <div>
+            <MdPersonSearch
+              size="33px"
+              style={{ color: 'white', margin: '0 17px 8px 17px' }}
+              onClick={() => {
+                history.push('/user/find');
+                setClicked(false);
+              }}
+            />
+          </div>
+          
 
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
-            className="link h1 px-4 bi bi-search"
+            className="link h1 px-3 bi bi-search"
             onClick={() => {
               history.push('/board/hashtagsearch');
               setClicked(false);
@@ -121,7 +124,7 @@ const NavBar = () => {
           ></i>
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
-            className="link h1 px-4 bi bi-box-arrow-in-right"
+            className="link h1 px-3 bi bi-box-arrow-in-right"
             onClick={() => {
               sessionStorage.clear('loginedUser');
               history.push('/');
