@@ -120,7 +120,7 @@ const Profile = props => {
   const progressInstance = (
     <ProgressBar
       className={styles.progress}
-      animated now={userData.info.point}
+      animated now={100 - userData.info.point}
 
 
     />
@@ -249,27 +249,42 @@ const Profile = props => {
                 {(() => {
                 if (userData.info.point < 5)
                 return (
-                <AiFillStar className={styles.vip} />
+                  <>
+                    <AiFillStar className={styles.vip} />
+                    <div style={{fontWeight:'bold'}}>해줘신</div>
+                  </>
                 );
                 else if (userData.info.point < 20)
                 return (
-                  <AiFillStar className={styles.red} />
+                  <>
+                    <AiFillStar className={styles.red} />
+                    <div style={{fontWeight:'bold'}}>해줘열</div>
+                  </>
                   );
                 else if (userData.info.point < 50)
                 return (
-                  <AiFillStar className={styles.gold} />
+                  <>
+                    <AiFillStar className={styles.gold} />
+                    <div style={{fontWeight:'bold'}}>골드</div>
+                  </>
                   );
                 else if (userData.info.point < 85)
                 return (
-                  <AiFillStar className={styles.silver} />
+                  <>
+                    <AiFillStar className={styles.silver} />
+                    <div style={{fontWeight:'bold'}}>실버</div>
+                  </>
                   );
                 else
                 return (
-                  <AiFillStar className={styles.newbee} />
+                  <>
+                    <AiFillStar className={styles.newbee} />
+                    <div style={{fontWeight:'bold'}}>뉴비</div>
+                  </>
                   );
                   })()
                 }
-                <div>{userData.info.point}</div>
+                
               </div>
               {progressInstance}
             </div>
