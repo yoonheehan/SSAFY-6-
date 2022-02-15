@@ -6,7 +6,7 @@ import "./DetailContent.css"
 import axios from 'axios'
 
 
-const DetailContent = ({onClose, votes, feed, completed, amend}) => {
+const DetailContent = ({onClose, votes, feed, completed, amend, count, expired}) => {
     const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
     const [voteSelected ,setVoteSelected] = useState(null)
     const [selected, setSelected] = useState(null)
@@ -18,6 +18,12 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
 
     useEffect(() => {
         setVoteCompleted(completed)
+
+        if (expired) {
+            setVoteCompleted(true)
+            setSelected(true)
+        }
+
         setTempCount(votes)
         if (completed) {
             let cnt = 0
@@ -34,29 +40,6 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
             setCountAll(cnt)
         } 
     }, [])
-
-    // const voteCount = (key) => {
-    //     if (tempCount) {
-    //         const tempArray = []
-        
-    //         for (let i = 0; i < tempCount.length; i++) {
-    //             tempArray.push(tempCount[i])
-    //         }
-
-        
-    //         if (!tempArray[key].includes(myId)) {
-    //             for (let i = 0; i < tempCount.length; i++) {
-    //                 const idx = tempArray[i].indexOf(myId)
-    //                 if (idx !== -1) {
-    //                     tempArray[i].splice(idx, 1)
-    //                 }
-    //             }
-    //             tempArray[key].push(myId)
-    //         }
-
-    //         setTempCount(tempArray)
-    //     }
-    // }
 
     const selectVote = (idboard, key, myId) => {
         setVoteTemp({ board_idboard : idboard, idx: key, user_id: myId })
@@ -122,13 +105,16 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
                     <div className="detail_close" onClick={onClose}>
                         <i className="h4 bi bi-x-lg"></i>
                     </div>
-                    <Slider {...settings}>
-                        { feed.board_image.map((imgUrl, key) => 
-                            <div key={key}>
-                                <img alt="img" style={{maxHeight: "300px", maxWidth: "100%", margin: "auto"}} src={imgUrl} />
-                            </div>
-                        )}
-                    </Slider>
+                    {feed.board_image !== null &&
+                        <Slider {...settings}>
+                            { feed.board_image.map((imgUrl, key) => 
+                                <div key={key}>
+                                    <img alt="" style={{maxHeight: "300px", maxWidth: "100%", margin: "auto"}} src={imgUrl} />
+                                </div>
+                            )}
+                        </Slider>
+                    }
+                    
                 </div>
                 <div className="mt-4">
                     <div className="detail_title">
@@ -167,7 +153,9 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
                                     {
                                         voteCompleted ?
                                         <>
-                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            <div onClick={count(countAll)}>
+                                                <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            </div>
                                         </>
                                         :
                                         <>
@@ -232,7 +220,9 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
                                     {
                                         voteCompleted ?
                                         <>
-                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            <div onClick={count(countAll)}>
+                                                <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            </div>
                                         </>
                                         :
                                         <>
@@ -297,7 +287,10 @@ const DetailContent = ({onClose, votes, feed, completed, amend}) => {
                                     {
                                         voteCompleted ?
                                         <>
-                                            <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            <div onClick={count(countAll)}>
+                                                <div className='detail_close_button' onClick={onClose}>닫기</div>
+                                            </div>
+                                            
                                         </>
                                         :
                                         <>

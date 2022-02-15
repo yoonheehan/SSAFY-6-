@@ -81,3 +81,23 @@
     line-height: 20px;
     margin-right: 5px;
 }
+
+.feed_button1 {
+    display: block;
+    background-color: #808080;
+    color: #ffffff;
+    font-weight: bold;
+    width: 80px;
+    margin: auto;
+    border-radius: 5px;
+}
+
+.feed_button2 {
+    display: block;
+    background: linear-gradient(90deg, rgb(110, 94, 254) 0%, rgba(73, 63, 252, 1) 100%);
+    color: #ffffff;
+    font-weight: bold;
+    width: 80px;
+    margin: auto;
+    border-radius: 5px;
+}

@@ -14,10 +14,9 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
 
-    url: jdbc:mysql://localhost:3306/haejwoing?serverTimezone=Asia/Seoul
+    url: jdbc:mysql://localhost:3305/haejwoing?serverTimezone=Asia/Seoul
     username: root
-    password: chae6343!@#
-
+    password: wkfkek3730**
 
 
 #    url: jdbc:mysql://i6c103.p.ssafy.io/haejwoing

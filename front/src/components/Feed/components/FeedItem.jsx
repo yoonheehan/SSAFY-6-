@@ -7,7 +7,10 @@ import ImgSlide from '../../ImgSlide/ImgSlide';
 import CommentWrite from '../comments/CommentWrite';
 import DetailContent from './DetailContent';
 import RemoveModal from './RemoveModal';
-import axios from 'axios';
+import axios from 'axios'
+import { FaRegComment } from 'react-icons/fa';
+import { MdHowToVote } from 'react-icons/md';
+
 
 const FeedBox = styled.div`
   border: 1px solid #bdcbdd;
@@ -90,57 +93,59 @@ const HashTag = styled.div`
 
 const Comments = styled.div`
   color: grey;
+  display: flex;
+  justify-content: end;
 `;
 
 const userName = [
-  { id: 1, user_name: '정정채' },
-  { id: 2, user_name: '채성원' },
-  { id: 3, user_name: '허영민' },
-];
+  {id: 1, user_name: '정정채'},
+  {id: 2, user_name: '채성원'},
+  {id: 3, user_name: '허영민'},
+]
 
-export default function FeedItem({ key, feed, onRemove }) {
-  const history = useHistory();
-  const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
-  const [selected, setSelected] = useState(false);
-  const [modalIsOpen, setModalIsOpen] = useState(false);
-  const [commentModalOpen, setCommentModalOpen] = useState(false);
-  const [detailModalOpen, setDetailModalOpen] = useState(false);
-  const [userData, setUserData] = useState(null);
-  const [firstNickName, setFirstNickName] = useState(null);
-  const [voteUsers, setVoteUsers] = useState(null);
-  const [voteCompleted, setVoteCompleted] = useState(false);
-  const [countAll, setCountAll] = useState(null);
-  const [removeModal, setRemoveModal] = useState(false);
+export default function FeedItem({key, feed, onRemove}) {
+    const history = useHistory();
+    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
+    const [selected, setSelected] = useState(false)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
+    const [commentModalOpen, setCommentModalOpen] = useState(false)
+    const [detailModalOpen, setDetailModalOpen] = useState(false)
+    const [userData ,setUserData] = useState(null);
+    const [firstNickName, setFirstNickName] = useState(null);
+    const [voteUsers, setVoteUsers] = useState(null);
+    const [voteCompleted, setVoteCompleted] = useState(false);
+    const [countAll, setCountAll] = useState(null)
+    const [removeModal, setRemoveModal] = useState(false)
+    const [expiredVote, setExpiredVote] = useState()
 
-  const ref = useRef(null);
-  const ref2 = useRef(null);
-  const ref3 = useRef(null);
+    const ref = useRef(null)
+    const ref2 = useRef(null)
+    const ref3 = useRef(null)
 
-  const [feedItem, setFeedItem] = useState(feed);
-
-  const EditFeed = content => {
-    // feedItem.feedcontent = content;
-    feedItem.content = content;
-    setFeedItem(feedItem);
-  };
-  useEffect(() => {
-    console.log(feed, '!!!!!!!!!!!!!!!!!!!!!!!!');
-    const ID = feed.userId;
-    console.log(feed.vote_contents);
-
-    const tempArray = [];
-    for (let i = 0; i < feed.vote_contents.length; i++) {
-      tempArray.push([]);
+    const [feedItem, setFeedItem] = useState(feed)
+    
+    const EditFeed = (content) => {
+      // feedItem.feedcontent = content;
+      feedItem.content = content
+      setFeedItem(feedItem)
     }
-    axios({
-      method: 'get',
-      url: `http://localhost:8080/user/${ID}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-    })
-      .then(res => {
-        console.log(res, 'user데이터');
-        setUserData(res.data);
-        setFirstNickName(res.data.info.nickname);
+    useEffect(() => {
+      const ID = feed.userId
+      
+      if (Date.now() - feed.due_date * 1000 > 0) {
+        setExpiredVote(true)
+      } else {
+        setExpiredVote(false)
+      }
+
+      const tempArray = []
+      for (let i = 0; i < feed.vote_contents.length; i ++) {
+        tempArray.push([])
+      }
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/user/${ID}`,
+        // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       })
       .catch(err => {
         console.log('에러났어요');
@@ -238,6 +243,10 @@ export default function FeedItem({ key, feed, onRemove }) {
     setVoteCompleted(true);
   };
 
+  const voteAllCount = (countAll) => {
+    setCountAll(countAll)
+  }
+
   const formatRelativeDate = date => {
     const TEN_SECOND = 10 * 1000;
     const A_MINUTE = 60 * 1000;
@@ -296,14 +305,22 @@ export default function FeedItem({ key, feed, onRemove }) {
             {typeButton(feed.type)}
             {feed.content}
           </Content>
-          {voteCompleted ? (
-            <div onClick={DetailModal}>
-              <i style={{ color: 'green' }} class="h1 bi bi-check2-circle"></i>
-              <div>결과보기</div>
+          {
+            feed.due_date * 1000 - Date.now() < 0 && 
+            <div style={{ color: "grey", fontWeight: "bold", fontSize: "1.2rem"}}>만료된 글입니다.</div>
+          }
+
+          {voteCompleted || feed.due_date * 1000 - Date.now() < 0 ? 
+            <div>
+              <i style={{ color: 'green', fontSize: "3rem" }} class="bi bi-check2-circle"></i>
+              <div onClick={DetailModal} className="feed_button1">결과보기</div>
             </div>
-          ) : (
-            <button onClick={DetailModal}>참여하기</button>
-          )}
+           :
+            <div>
+              <div className="feed_button2" onClick={DetailModal}>참여하기</div>
+            </div>
+            
+          }
 
           {/* <button onClick={DetailModal}>참여하기</button> */}
           <ContentImgBox>
@@ -314,46 +331,50 @@ export default function FeedItem({ key, feed, onRemove }) {
           <div>
             <HashTagBox>
               {feed.hashArr &&
-                feed.hashArr.map((hashTag, index) => (
+                feed.hashArr.map((hashTag, index) =>
                   <div key={index}>
                     <HashTag>{hashTag}</HashTag>
                   </div>
-                ))}
-            </HashTagBox>
-          </div>
-          <div style={{ color: 'grey' }}>
-            <Comments>
-              <div>{countAll}명</div>
-              <div onClick={handleCommentClick}>
-                {feed.commentNum}아이콘넣으셈
-              </div>
-            </Comments>
-          </div>
-        </HashCommentBox>
-      </FeedBox>
-      <div
-        ref={ref2}
-        className={modalIsOpen ? 'edit_drop active' : 'edit_drop'}
-      >
-        <FeedEditModal
-          onClose={handleEditClick}
-          content={feed.content}
-          radio={feed.view_range}
-          EditFeed={EditFeed}
-          idboard={feed.idboard}
-        />
+                )}
+              </HashTagBox>
+            </div>
+            <div style={{ color: "grey" }}>
+              <Comments>
+                <div style={{ marginRight: "12px" }}><MdHowToVote/>{countAll}</div>
+                <div onClick={handleCommentClick}><FaRegComment/>{feed.commentNum}</div>
+              </Comments>
+            </div>
+          </HashCommentBox>
+        </FeedBox>
+        <div ref={ref2} className={modalIsOpen ? 'edit_drop active' : 'edit_drop'}>
+          <FeedEditModal
+            onClose={handleEditClick} 
+            content={feed.content} 
+            radio={feed.view_range}
+            EditFeed={EditFeed}
+            idboard={feed.idboard}
+          />
       </div>
 
-      <div className={detailModalOpen ? 'detail_modal active' : 'detail_modal'}>
-        {voteUsers && (
-          <DetailContent
-            feed={feed}
-            votes={voteUsers}
-            onClose={DetailModal}
-            completed={voteCompleted}
-            amend={handleVoteContent}
+        <div className={detailModalOpen ? "detail_modal active" : "detail_modal"}>
+          { voteUsers &&
+            <DetailContent
+              feed={feed}
+              votes={voteUsers}
+              onClose={DetailModal}
+              completed={voteCompleted}
+              amend={handleVoteContent}
+              count={voteAllCount}
+              expired={expiredVote}
+            />
+          }
+        </div>
+
+        <div className={commentModalOpen ? "comments_modal active" : "comments_modal"}>
+          <CommentWrite
+            onClose={handleCommentClick}
+            feed={feed} 
           />
-        )}
       </div>
 
       <div

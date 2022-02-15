@@ -175,21 +175,22 @@ export default function Feed() {
   //     window.addEventListener("scroll", scrollEvent);
   // },[scrollEvent]);
 
-  const onRemove = id => {
-    console.log(id);
-
+  const onRemove = (id) => {
+    console.log(id)
+    
     axios({
-      method: 'delete',
-      url: `http://localhost:8080/board/delete/${id}`,
+    method: 'delete',
+    url: `http://localhost:8080/board/delete/${id}`,
     })
-      .then(res => {
-        // setFeedData(feeds.filter(feed => feed.idboard !== id));
-        console.log(res);
-      })
-      .catch(err => {
+    .then(res => {
+      setFeeds(!feeds)
+      setFeedData((feedData) => {feedData.filter(feed => feed.idboard !== id)})
+      console.log(res);
+    })
+    .catch(err => {
         console.log(err);
-      });
-  };
+    })
+};
 
   return (
     <div>
