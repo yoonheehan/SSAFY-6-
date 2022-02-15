@@ -46,12 +46,17 @@ const SearchList = props => {
   };
 
   const findHashTagList = e => {
-    axios.get(`http://localhost:8080/`);
+    axios
+      .get(`http://localhost:8080/board/hashtagsearch/${findData}`)
+      .then(res => {
+        setDataList(res.data);
+      });
+    e.preventDefault();
   };
 
   return (
     <>
-      <SearchForm>
+      <SearchForm onSubmit={findHashTagList}>
         <SearchDiv>
           <FindInput
             type="text"
