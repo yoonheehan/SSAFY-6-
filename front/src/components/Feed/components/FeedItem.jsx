@@ -112,7 +112,7 @@ export default function FeedItem({ key, feed, onRemove }) {
   const [removeModal, setRemoveModal] = useState(false);
   const [expiredVote, setExpiredVote] = useState();
 
-  const [test, setTest] = useState();
+  const [countComment, setCountComment] = useState(feed.commentNum);
 
   const ref = useRef(null);
   const ref2 = useRef(null);
@@ -267,8 +267,8 @@ export default function FeedItem({ key, feed, onRemove }) {
     return new Intl.DateTimeFormat('ko-KR').format(date);
   };
 
-  const testFunc = () => {
-    console.log("여기다!!!!")
+  const cntComment = (count) => {
+    setCountComment(count)
   }
 
   return (
@@ -374,7 +374,7 @@ export default function FeedItem({ key, feed, onRemove }) {
               </div>
               <div onClick={handleCommentClick}>
                 <FaRegComment />
-                {feed.commentNum}
+                {countComment ? countComment : feed.commentNum}
               </div>
             </Comments>
           </div>
@@ -416,17 +416,9 @@ export default function FeedItem({ key, feed, onRemove }) {
           onClose={handleCommentClick}
           feed={feed}
           commentsubmit={commentsubmit}
+          cntComment={cntComment} 
         />
       </div>
-
-      <div
-        className={
-          commentModalOpen ? 'comments_modal active' : 'comments_modal'
-        }
-      >
-        <CommentWrite onClose={handleCommentClick} feed={feed} />
-      </div>
-
       <div
         ref={ref3}
         className={removeModal ? 'edit_drop active' : 'edit_drop'}

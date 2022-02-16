@@ -24,11 +24,11 @@ const SubmitBtn = styled.input`
   background-color: white;
 `;
 
-function CommentWrite({ onClose, feed }) {
+function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   const [commentContent, setCommentContent] = useState('');
   const [comments, setComments] = useState('');
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
-
+  const [countComment, setCountComment] = useState()
   const [count, setCount] = useState(0);
 
   useEffect(() => {
@@ -37,6 +37,7 @@ function CommentWrite({ onClose, feed }) {
         `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
       );
       setComments(result.data);
+      
     }
     fetchData();
   }, [count]);
@@ -66,7 +67,14 @@ function CommentWrite({ onClose, feed }) {
         user_id: myId,
       },
     }).then(response => {});
-
+      axios({
+        method: 'get',
+        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+      })
+        .then(res => {
+          setCountComment(res.data.commentNum + 1)
+        })
+        .catch(err => {});
     setCount(count + 1);
     setCommentContent('');
     event.preventDefault();
@@ -86,7 +94,7 @@ function CommentWrite({ onClose, feed }) {
   return (
     <>
       <div>
-        <div className="mt-2 mb-4" style={{ textAlign: 'right' }}>
+        <div onClick={cntComment(countComment)} className="mt-2 mb-4" style={{ textAlign: 'right' }}>
           <i
             onClick={onClose}
             className="m-2 h4 bi bi-x-lg"
