@@ -2,12 +2,16 @@ import React, { useState, useEffect, useCallback, useRef } from 'react';
 import Feeds from './components/Feeds';
 import { useHistory } from 'react-router-dom';
 import axios from 'axios';
+import styled from 'styled-components';
 
-const imgList = [
-  'https://haejwoing.s3.ap-northeast-2.amazonaws.com/0001.png',
-  'https://haejwoing.s3.ap-northeast-2.amazonaws.com/0002.png',
-  'https://haejwoing.s3.ap-northeast-2.amazonaws.com/0003.png',
-];
+const PostButton = styled.div`
+  position: "fixed";
+  bottom: "15px";
+  right: "15px";
+  zIndex: "999";
+  width: "10px";
+  height: "10px";
+`;
 
 export default function Feed() {
   const history = useHistory();
@@ -95,7 +99,8 @@ export default function Feed() {
   return (
     <div>
       <div style={{ marginTop: '75px' }}></div>
-      <Feeds feedData={feeds} onRemove={onRemove} />
+      <Feeds  feedData={feeds} onRemove={onRemove} />
+      <PostButton onClick={() => history.push('/post')}>+</PostButton>
     </div>
   );
 }

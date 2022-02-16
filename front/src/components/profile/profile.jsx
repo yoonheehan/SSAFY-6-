@@ -48,7 +48,6 @@ const Profile = props => {
     axios({
       method: 'get',
       url: `http://i6c103.p.ssafy.io/api/follow/check/${id}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       params: { loginedId: loginedId },
     })
       .then(response => {
@@ -62,7 +61,6 @@ const Profile = props => {
     axios({
       method: 'post',
       url: `http://i6c103.p.ssafy.io/api/follow`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       data: { loginedId: loginedId, followId: id },
     })
       .then(response => {
@@ -137,7 +135,7 @@ const Profile = props => {
                 }}
               />
             </div>
-            <div style={{ marginTop: '10px' }}>
+            <div style={{ marginTop: '10px'}}>
               <div>{userData.info.nickname}</div>
             </div>
           </div>
@@ -170,9 +168,8 @@ const Profile = props => {
               else if (Number(id) !== loginedId && followCheck == true)
                 return (
                   <Button
-                    className={styles.button2}
-                    style={{ color: 'white' }}
-                    variant=""
+                    className={styles.button3}
+                    style={{ color: "white", backgroundColor: "rgb(100, 105, 111)" }}
                     onClick={unFollow}
                   >
                     팔로우 끊기

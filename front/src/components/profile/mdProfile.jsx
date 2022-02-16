@@ -73,7 +73,11 @@ const MdProfile = props => {
   useEffect(() => {
     axios({
       method: 'get',
+<<<<<<< Updated upstream
       url: `http://i6c103.p.ssafy.io/api/${id}`,
+=======
+      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
+>>>>>>> Stashed changes
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(res => {

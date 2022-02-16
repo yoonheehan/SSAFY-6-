@@ -10,6 +10,7 @@ import RemoveModal from './RemoveModal';
 import axios from 'axios';
 import { FaRegComment } from 'react-icons/fa';
 import { MdHowToVote } from 'react-icons/md';
+import { FcOvertime } from 'react-icons/fc';
 
 const FeedBox = styled.div`
   border: 1px solid #bdcbdd;
@@ -110,6 +111,8 @@ export default function FeedItem({ key, feed, onRemove }) {
   const [countAll, setCountAll] = useState(null);
   const [removeModal, setRemoveModal] = useState(false);
   const [expiredVote, setExpiredVote] = useState();
+
+  const [test, setTest] = useState();
 
   const ref = useRef(null);
   const ref2 = useRef(null);
@@ -264,6 +267,10 @@ export default function FeedItem({ key, feed, onRemove }) {
     return new Intl.DateTimeFormat('ko-KR').format(date);
   };
 
+  const testFunc = () => {
+    console.log("여기다!!!!")
+  }
+
   return (
     <>
       <FeedBox>
@@ -340,6 +347,14 @@ export default function FeedItem({ key, feed, onRemove }) {
             <ImgSlide imgUrl={feed.board_image} />
           </ContentImgBox>
         </ContentBox>
+        <div className="date_line">
+          <div style={{ fontSize: "1.2rem", display: "table-cell", verticalAlign: "middle" }}>
+            <FcOvertime/>
+          </div>
+          <div style={{ fontSize: "0.8rem", display: "table-cell",verticalAlign: "middle" }}>
+            {Intl.DateTimeFormat('ko-KR').format(feed.due_date * 1000)}
+          </div>
+        </div>
         <HashCommentBox>
           <div>
             <HashTagBox>

@@ -9,18 +9,18 @@ const FriendProfile = styled.div`
 `;
 
 const ProfileImg = styled.img`
-  height: 45px;
-  width: 45px;
-  border: 3px black;
-  border-radius: 70%;
-  margin-right: 5px;
-  margin-left: 10px;
-`;
+    height: 40px;
+    width:40px;
+    border: 3px black;
+    border-radius: 70%;
+    margin-right: 5px;
+    margin-left: 10px;
+`
 
 const ProfileName = styled.p`
-  font-size: 25px;
-  margin: auto 0 auto 20px;
-`;
+    font-size: 20px;
+    margin: auto 0 auto 20px;
+`
 const FriendMenu = styled.div`
   margin-left: auto;
   margin-right: 10px;
@@ -35,12 +35,9 @@ export default function FriendItem({ follow }) {
 
   return (
     <FriendProfile onClick={() => clickProfile(follow.id)}>
-      {follow.profileImg === '' ? (
-        <ProfileImg src="/images/img_avatar.png" alt="기본이미지" />
-      ) : (
-        <ProfileImg src={follow.image} alt={follow.image} />
-      )}
-      <ProfileName>{follow.nickname}</ProfileName>
+        {follow.image === '' ? 
+        <ProfileImg src='/images/baseprofile.jpg' alt='기본이미지' /> : <ProfileImg src={follow.image} alt={follow.image} />}
+        <ProfileName>{follow.nickname}</ProfileName>
     </FriendProfile>
   );
 }
