@@ -85,7 +85,7 @@ const NewProfile = props => {
   function submitData() {
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_LOCALURL}signup`,
+      url: `http://i6c103.p.ssafy.io/api/signup`,
       data: {
         image: img,
         gender: radioValue,
