@@ -29,13 +29,18 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   const [comments, setComments] = useState('');
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
   const [countComment, setCountComment] = useState()
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     async function fetchData() {
-      const result = await axios.get(
-        `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-      );
+      const result = await axios({
+          method: 'get',
+          url: `http://localhost:8080/comment/${feed.idboard}`,
+          headers: {
+            Authorization : 'Bearer ' + jwtToken,
+          }
+      })
       setComments(result.data);
       
     }
@@ -44,9 +49,13 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
 
   setTimeout(() => {
     async function fetchData() {
-      const result = await axios.get(
-        `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`
-      );
+      const result = await axios({
+          method: 'get',
+          url: `http://localhost:8080/comment/${feed.idboard}`,
+          headers: {
+            Authorization : 'Bearer ' + jwtToken,
+          }
+      })
       setComments(result.data);
     }
     fetchData();
@@ -60,16 +69,22 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   function handleSubmit(event) {
     axios({
       method: 'post',
-      url: `http://i6c103.p.ssafy.io/api/comment/save`,
+      url: `http://localhost:8080/comment/save`,
       data: {
         content: commentContent,
         board_idboard: feed.idboard,
         user_id: myId,
       },
+    headers: {
+    Authorization : 'Bearer ' + jwtToken,
+    }
     }).then(response => {});
       axios({
         method: 'get',
-        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+        url: `http://localhost:8080/board/detail/${feed.idboard}`,
+        headers: {
+          Authorization : 'Bearer ' + jwtToken,
+        }
       })
         .then(res => {
           setCountComment(res.data.commentNum + 1)
@@ -84,10 +99,13 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     setComments(comments.filter(comment => comment.idcomment !== id));
     axios({
       method: 'delete',
-      url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
+      url: `http://localhost:8080/comment/delete/${id}`,
       params: {
         boardId: feed.idboard,
       },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     }).then(response => {});
   };
 

@@ -43,14 +43,17 @@ const SubmitBtn = styled.input`
 export default function SearchList(props) {
   const [findName, setFindName] = useState('');
   const [friendList, setFriendList] = useState([]);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   function getFriend(event) {
     setFindName(event.target.value);
   }
   function findFriendList(event) {
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/user/find/${findName}`,
+      url: `http://localhost:8080/user/find/${findName}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     }).then(response => {
       setFriendList(response.data);
     });

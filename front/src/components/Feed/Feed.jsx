@@ -11,7 +11,7 @@ const PostButton = styled.div`
   align-items: center;
   justify-content: center;
   right: 35px;
-  zIndex: 999;
+  z-index: 999;
   width: 55px;
   height: 55px;
   background: linear-gradient(90deg, rgb(125, 107, 255) 0%, rgb(52, 42, 255) 100%);
@@ -32,13 +32,17 @@ export default function Feed() {
   const [pageInfo, setPageInfo] = useState('');
 
   const page = useRef(1);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/board/${loginedId}`,
+      url: `http://localhost:8080/board/${loginedId}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
+
         const res = response.data;
 
         for (let i = 0; i < res.length; i++) {
@@ -94,7 +98,10 @@ export default function Feed() {
   const onRemove = id => {
     axios({
       method: 'delete',
-      url: `http://i6c103.p.ssafy.io/api/board/delete/${id}`,
+      url: `http://localhost:8080/board/delete/${id}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(res => {
         setFeeds(feeds.filter(feed => feed.idboard !== id));

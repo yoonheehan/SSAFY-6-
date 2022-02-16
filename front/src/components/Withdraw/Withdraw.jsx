@@ -9,6 +9,7 @@ const Withdraw = () => {
   const history = useHistory();
   const [check, setCheck] = useState(true);
   const { id } = useParams();
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
   }
@@ -45,9 +46,13 @@ const Withdraw = () => {
             if (check) {
               alert('체크해주세요');
             } else {
-              axios
-                .put(`http://i6c103.p.ssafy.io/api/user/withdraw/${id}`)
-                .then(res => {
+              axios({
+                method: 'put',
+                url : `http://localhost:8080/user/withdraw/${id}`,
+                headers: {
+                  Authorization : 'Bearer ' + jwtToken,
+                }
+              }).then(res => {
                   sessionStorage.clear('loginedUser');
                   history.push('/');
                 });

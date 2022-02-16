@@ -5,15 +5,16 @@ import "slick-carousel/slick/slick-theme.css";
 import "./DetailContent.css"
 import axios from 'axios'
 
+const DetailContent = ({onClose, votes, feed, completed, amend, count, expired,}) => {
+  const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
+  const [voteSelected, setVoteSelected] = useState(null);
+  const [selected, setSelected] = useState(null);
+  const [tempCount, setTempCount] = useState(votes);
+  const [countAll, setCountAll] = useState();
+  const [voteTemp, setVoteTemp] = useState();
+  const [voteCompleted, setVoteCompleted] = useState();
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
 
-const DetailContent = ({onClose, votes, feed, completed, amend, count, expired}) => {
-    const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId
-    const [voteSelected ,setVoteSelected] = useState(null)
-    const [selected, setSelected] = useState(null)
-    const [tempCount, setTempCount] = useState(votes)
-    const [countAll, setCountAll] = useState()
-    const [voteTemp, setVoteTemp] = useState()
-    const [voteCompleted, setVoteCompleted] = useState()
 
 
     useEffect(() => {
@@ -45,19 +46,25 @@ const DetailContent = ({onClose, votes, feed, completed, amend, count, expired})
     }
 
     const postVote = () => {
-        const url = "http://i6c103.p.ssafy.io/api/board/savevoteusers"
+        const url = "http://localhost:8080/board/savevoteusers"
         
         if (voteTemp) {
             axios({
                 method: "post",
                 url: url,
-                data: voteTemp
+                data: voteTemp,
+                headers: {
+                Authorization : 'Bearer ' + jwtToken,
+                }
             })
             .then(function(res) {
                 console.log(res.config.data)
                 axios({
                     method: 'get',
-                    url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
+                    url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+                    headers: {
+                        Authorization : 'Bearer ' + jwtToken,
+                      }
                 })
                 .then(res => {
                     console.log(res.data)

@@ -21,6 +21,7 @@ const MdProfile = props => {
   const [duplicateCheck, setDuplicateCheck] = useState(false);
   const [firstNickName, setFirstNickName] = useState('');
   const imgRef = useRef(null);
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
     credentials: new AWS.CognitoIdentityCredentials({
@@ -73,7 +74,10 @@ const MdProfile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
+      url: `http://localhost:8080/user/${id}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(res => {
@@ -107,10 +111,13 @@ const MdProfile = props => {
       alert('사용가능한 닉네임입니다.');
       setDuplicateCheck(true);
     } else {
-      axios
-        .get(
-          `http://i6c103.p.ssafy.io/api/user/check/${userData.info.nickname}`
-        )
+      axios({
+        method: 'get',
+        url: `http://localhost:8080/signup/${userData.info.nickname}`,
+        headers: {
+          Authorization : 'Bearer ' + jwtToken,
+        }
+      })
         .then(res => {
           if (res.data === false) {
             alert('사용가능한 닉네임입니다.');
@@ -124,12 +131,23 @@ const MdProfile = props => {
   };
 
   const submitData = () => {
-    axios
-      .put(`http://i6c103.p.ssafy.io/api/user/${id}`, {
+    axios({
+      method: 'put',
+      url: `http://localhost:8080/user/${id}`,
+      data : {
         image: userData.info.image,
         nickname: userData.info.nickname,
-      })
-      .then(res => {
+      },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+    })
+      .then(response => {
+        const loginUser = { userId: id, jwtToken: response.data };
+            window.sessionStorage.setItem(
+              'loginedUser',
+              JSON.stringify(loginUser)
+            );
         history.goBack();
       })
       .catch(err => {});

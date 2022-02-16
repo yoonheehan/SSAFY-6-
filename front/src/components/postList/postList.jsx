@@ -13,7 +13,7 @@ const PostList = props => {
   const [exDateBedge, setExDateBedge] = useState(true);
   const [commentBedge, setCommentBedge] = useState(true);
   const [redDateBedge, setRegDateBedge] = useState(true);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   useEffect(() => {
     if (sessionStorage.getItem('loginedUser') === null) {
       history.push('/');
@@ -21,7 +21,13 @@ const PostList = props => {
   });
 
   useEffect(() => {
-    axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
+    axios({
+      method: 'get',
+      url : `http://localhost:8080/board/user/${id}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+    }).then(res => {
       const temp = [];
       res.data.forEach(value => {
         temp.push(value);
@@ -60,7 +66,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
+              axios({
+                method: 'get',
+                url: `http://localhost:8080/board/user/${id}`,
+                headers: {
+                  Authorization : 'Bearer ' + jwtToken,
+                }
+              }).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -97,7 +109,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
+              axios({
+                method: 'get',
+                url: `http://localhost:8080/board/user/${id}`,
+                headers: {
+                  Authorization : 'Bearer ' + jwtToken,
+                }
+              }).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -136,7 +154,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
+              axios({
+                method: 'get',
+                url: `http://localhost:8080/board/user/${id}`,
+                headers: {
+                  Authorization : 'Bearer ' + jwtToken,
+                }
+              }).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);
@@ -175,7 +199,13 @@ const PostList = props => {
             pill
             bg="dark"
             onClick={() => {
-              axios.get(`http://i6c103.p.ssafy.io/api/board/user/${id}`).then(res => {
+              axios({
+                method: 'get',
+                url: `http://localhost:8080/board/user/${id}`,
+                headers: {
+                  Authorization : 'Bearer ' + jwtToken,
+                }
+              }).then(res => {
                 const temp = [];
                 res.data.forEach(value => {
                   temp.push(value);

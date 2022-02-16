@@ -119,7 +119,7 @@ export default function FeedItem({ key, feed, onRemove }) {
   const ref3 = useRef(null);
 
   const [feedItem, setFeedItem] = useState(feed);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const EditFeed = content => {
     // feedItem.feedcontent = content;
     feedItem.content = content;
@@ -128,7 +128,6 @@ export default function FeedItem({ key, feed, onRemove }) {
 
   useEffect(() => {
     const ID = feed.userId;
-
     if (Date.now() - feed.due_date * 1000 > 0) {
       setExpiredVote(true);
     } else {
@@ -141,8 +140,10 @@ export default function FeedItem({ key, feed, onRemove }) {
     }
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/user/${ID}`,
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      url: `http://localhost:8080/user/${ID}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
         setFirstNickName(response.data.info.nickname);
@@ -152,7 +153,10 @@ export default function FeedItem({ key, feed, onRemove }) {
 
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
+      url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(res => {
         if (res.data.userid.includes(myId)) {
@@ -213,6 +217,9 @@ export default function FeedItem({ key, feed, onRemove }) {
     axios({
       method: 'get',
       url: `http://localhost:8080/board/detail/${feed.idboard}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
     })
       .then(response => {

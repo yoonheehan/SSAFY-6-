@@ -9,7 +9,7 @@ function FollowList() {
   const [followData, setFollowData] = useState([]);
   const [loading, setLoading] = useState(false);
   let { id } = useParams();
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const history = useHistory();
   if (sessionStorage.getItem('loginedUser') === null) {
     history.push('/');
@@ -19,9 +19,13 @@ function FollowList() {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `http://i6c103.p.ssafy.io/api/follow/${id}`
-        );
+        const response = await axios({
+          method: 'get',
+          url: `http://localhost:8080/follow/${id}`,
+          headers: {
+            Authorization : 'Bearer ' + jwtToken,
+          }
+        })
         setFollowData(response.data);
       } catch (e) {}
       setLoading(false);

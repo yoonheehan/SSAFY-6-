@@ -48,7 +48,7 @@ const Editbtn = styled.input`
 const FeedEditModal = ({ onClose, content, EditFeed, radio, idboard }) => {
   const [value, setValue] = useState(content);
   const [revealType, setRevealType] = useState();
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const onChange = useCallback(e => {
     setValue(e.target.value);
   }, []);
@@ -62,12 +62,15 @@ const FeedEditModal = ({ onClose, content, EditFeed, radio, idboard }) => {
 
     axios({
       method: 'put',
-      url: 'http://i6c103.p.ssafy.io/api/board/update',
+      url: 'http://localhost:8080/board/update',
       data: {
         idboard: idboard,
         view_range: revealType,
         content: value,
       },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(res => {})
       .catch(err => {});

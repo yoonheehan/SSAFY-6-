@@ -42,6 +42,7 @@ const Post = () => {
   const [dueDate, setDueDate] = useState(Date.now() + 86400000); // 마감시간
   const [dueDateSec, SetDueDateSec] = useState((Date.now() + 86400000) / 1000);
   //
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
 
   // axios.post
   function postAPI() {
@@ -53,8 +54,7 @@ const Post = () => {
           }
         }
       }
-
-      const url = 'http://i6c103.p.ssafy.io/api/board/save';
+      const url = 'http://localhost:8080/board/save';
       const vote_contents = JSON.stringify(voteItems);
 
       if (img) {
@@ -93,6 +93,10 @@ const Post = () => {
           due_date: dueDateSec,
           // due_date: dueDate
         },
+        headers: {
+          Authorization : 'Bearer ' + jwtToken,
+        }
+
       })
         .then(function (response) {
           history.push('/feed');
@@ -182,7 +186,11 @@ const Post = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/user/${userId}`,
+      url: `http://localhost:8080/user/${userId}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+
     })
       .then(res => {
         setUserData(res.data);

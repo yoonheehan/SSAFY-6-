@@ -45,15 +45,19 @@ const SubmitBtn = styled.input`
 const SearchList = props => {
   const [findData, setFindData] = useState('');
   const [dataList, setDataList] = useState([]);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const getData = e => {
     setFindData(e.target.value);
   };
 
   const findHashTagList = e => {
-    axios
-      .get(`http://i6c103.p.ssafy.io/api/board/hashtagsearch/${findData}`)
-      .then(res => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/board/hashtagsearch/${findData}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+    }).then(res => {
         setDataList(res.data);
       });
     e.preventDefault();

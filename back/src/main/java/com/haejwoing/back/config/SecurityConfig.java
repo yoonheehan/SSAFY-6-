@@ -30,7 +30,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .httpBasic().disable()
                 .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
                 .authorizeRequests()
-                .antMatchers("/user/**","/feed/**","/post/**")
+                .antMatchers("/user/**","/feed/**","/post/**","/follow/**","/board/**")
                 .access("hasRole('ROLE_USER')")
 //                .permitAll()
                 .anyRequest().permitAll();

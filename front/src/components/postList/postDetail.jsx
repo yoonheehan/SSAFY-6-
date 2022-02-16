@@ -107,13 +107,19 @@ const PostDetail = props => {
   const [feed, setFeed] = useState(null);
   const { idboard } = useParams();
   const [feedItem, setFeedItem] = useState(feed);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const ref = useRef(null);
   const ref2 = useRef(null);
   const ref3 = useRef(null);
 
   useEffect(() => {
-    axios.get(`http://i6c103.p.ssafy.io/api/board`).then(res => {
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/board`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+    }).then(res => {
       for (let i = 0; i < res.data.length; i++) {
         if (res.data[i].idboard == idboard) {
           setFeed(res.data[i]);
@@ -123,7 +129,13 @@ const PostDetail = props => {
   }, []);
 
   useEffect(() => {
-    axios.get(`http://i6c103.p.ssafy.io/api/user/${userId}`).then(res => {});
+    axios({
+      method: 'get',
+      url: `http://localhost:8080/user/${userId}`,
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+    }).then(res => {});
   });
 
   return (

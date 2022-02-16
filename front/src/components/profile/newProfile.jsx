@@ -85,7 +85,7 @@ const NewProfile = props => {
   function submitData() {
     axios({
       method: 'post',
-      url: `${process.env.REACT_APP_LOCALURL}user`,
+      url: `${process.env.REACT_APP_LOCALURL}signup`,
       data: {
         image: img,
         gender: radioValue,
@@ -93,9 +93,12 @@ const NewProfile = props => {
         birth: startDate.toLocaleDateString(),
         email: props.location.props.useremail,
       },
+      headers: {
+        Authorization : null,
+      }
     })
       .then(response => {
-        const loginUser = { userId: response.data.id };
+        const loginUser = { userId: response.data.id, jwtToken: response.data.jwtToken };
         window.sessionStorage.setItem('loginedUser', JSON.stringify(loginUser));
         window.location.replace('/feed');
       })
@@ -154,9 +157,13 @@ const NewProfile = props => {
               <Button
                 variant="secondary"
                 onClick={() => {
-                  axios
-                    .get(`http://i6c103.p.ssafy.io/api/user/check/${nickName}`)
-                    .then(res => {
+                  axios({
+                    method: 'get',
+                    url: `http://localhost:8080/signup/${nickName}`,
+                    headers: {
+                      Authorization : null,
+                    }
+                  }).then(res => {
                       if (res.data === false) {
                         alert('사용가능한 닉네임입니다.');
                         setDuplicateCheck(true);

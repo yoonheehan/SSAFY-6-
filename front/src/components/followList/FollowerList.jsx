@@ -15,14 +15,18 @@ function FollowerList() {
 
   const [followerData, setFollowerData] = useState([]);
   const [loading, setLoading] = useState(false);
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
       try {
-        const response = await axios.get(
-          `http://i6c103.p.ssafy.io/api/follower/${id}`
-        );
+        const response = await axios({
+          method: 'get',
+          url: `http://localhost:8080/follower/${id}`,
+          headers: {
+            Authorization : 'Bearer ' + jwtToken,
+          }
+        })
         setFollowerData(response.data);
       } catch (e) {}
       setLoading(false);

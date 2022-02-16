@@ -25,7 +25,7 @@ const Profile = props => {
   }
   let { id } = useParams();
   const loginedId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const [userData, setUserData] = useState({
     info: {
       point: 0,
@@ -36,8 +36,11 @@ const Profile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
+      url: `http://localhost:8080/user/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
         setUserData(response.data);
@@ -47,10 +50,14 @@ const Profile = props => {
 
     axios({
       method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/follow/check/${id}`,
+      url: `http://localhost:8080/follow/check/${id}`,
       params: { loginedId: loginedId },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
+        console.log(response)
         setFollowCheck(response.data);
       })
       .catch(error => {})
@@ -60,8 +67,11 @@ const Profile = props => {
   const doFollow = () => {
     axios({
       method: 'post',
-      url: `http://i6c103.p.ssafy.io/api/follow`,
+      url: `http://localhost:8080/follow`,
       data: { loginedId: loginedId, followId: id },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
         setFollowCheck(true);
@@ -73,9 +83,12 @@ const Profile = props => {
   const unFollow = () => {
     axios({
       method: 'delete',
-      url: `http://i6c103.p.ssafy.io/api/follow`,
+      url: `http://localhost:8080/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       params: { loginedId: loginedId, followId: id },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     })
       .then(response => {
         setFollowCheck(false);
@@ -141,7 +154,7 @@ const Profile = props => {
           </div>
           <div className={styles.box2}>
             {(() => {
-              if (Number(id) === loginedId)
+              if (id == loginedId)
                 return (
                   <Button
                     className={styles.button}
@@ -154,7 +167,7 @@ const Profile = props => {
                     프로필 수정
                   </Button>
                 );
-              else if (Number(id) !== loginedId && followCheck === false)
+              else if (id != loginedId && followCheck == false)
                 return (
                   <Button
                     className={styles.button}
@@ -165,7 +178,7 @@ const Profile = props => {
                     팔로우 맺기
                   </Button>
                 );
-              else if (Number(id) !== loginedId && followCheck == true)
+              else if (id != loginedId && followCheck == true)
                 return (
                   <Button
                     className={styles.button3}
@@ -295,7 +308,7 @@ const Profile = props => {
               >
                 팔로워 목록
               </Button>
-              {Number(id) === loginedId ? (
+              {id == loginedId ? (
                 <Button
                   variant="secondary"
                   size="md"

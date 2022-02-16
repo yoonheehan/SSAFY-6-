@@ -69,7 +69,7 @@ const EditBtn = styled.input`
 
 function CommentItem({ comment, onRemove }) {
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
-
+  const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const [openEdit, setOpenEdit] = useState(false);
 
   const [selected, setSelected] = useState(false);
@@ -130,13 +130,21 @@ function CommentItem({ comment, onRemove }) {
     setEditValue(tempValue);
     axios({
       method: 'put',
+<<<<<<< Updated upstream
       url: `http://i6c103.p.ssafy.io/api/comment/update`,
+=======
+      url: `http://localhost:8080/comment/update`,
+      // url: `http://localhost:8080/comment/update`,
+>>>>>>> Stashed changes
       data: {
         content: tempValue,
         board_idboard: comment.board_idboard,
         idComment: comment.idcomment,
         user_id: myId,
       },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
     }).then(response => {});
     setOpenEdit(false);
     event.preventDefault();
@@ -159,11 +167,15 @@ function CommentItem({ comment, onRemove }) {
   function like() {
     axios({
       method: 'post',
-      url: `http://i6c103.p.ssafy.io/api/comment/like`,
+      url: `http://localhost:8080/comment/like`,
       data: {
         comment_idcomment: comment.idcomment,
         user_id: myId,
       },
+      headers: {
+        Authorization : 'Bearer ' + jwtToken,
+      }
+
     }).then(response => {});
   }
 

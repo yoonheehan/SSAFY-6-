@@ -30,18 +30,23 @@ const Login = props => {
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `http://i6c103.p.ssafy.io/api/jwt/google`,
+        url: `http://localhost:8080/jwt/google`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         data: res,
+        headers: {
+          Authorization : null,
+        }
       })
         .then(response => {
+          console.log(response)
           if (response.data.check === false) {
             history.push({
               pathname: '/newprofile',
               props: { useremail: response.data.email },
             });
           } else {
-            const loginUser = { userId: response.data.id };
+            console.log(response.data)
+            const loginUser = { userId: response.data.id, jwtToken: response.data.jwtToken };
             window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
@@ -65,6 +70,9 @@ const Login = props => {
         url: `http://i6c103.p.ssafy.io/api/jwt/kakao`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/kakao',
         data: res,
+        headers: {
+          Authorization : null,
+        }
       })
         .then(response => {
           if (response.data.check === false) {
@@ -73,7 +81,7 @@ const Login = props => {
               props: { useremail: response.data.email },
             });
           } else {
-            const loginUser = { userId: response.data.id };
+            const loginUser = { userId: response.data.id, jwtToken: response.data.jwtToken };
             window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
@@ -94,18 +102,22 @@ const Login = props => {
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `http://i6c103.p.ssafy.io/api/jwt/naver`,
+        url: `http://localhost:8080/jwt/naver`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/naver',
         data: res,
+        headers: {
+          Authorization : null,
+        }
       })
         .then(response => {
           if (response.data.check === false) {
+            console.log(response.data)
             history.push({
               pathname: '/newprofile',
               props: { useremail: response.data.email },
             });
           } else {
-            const loginUser = { userId: response.data.id };
+            const loginUser = { userId: response.data.id, jwtToken: response.data.jwtToken };
             window.sessionStorage.setItem(
               'loginedUser',
               JSON.stringify(loginUser)
