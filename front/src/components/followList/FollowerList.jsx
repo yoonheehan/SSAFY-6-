@@ -28,6 +28,7 @@ function FollowerList() {
           }
         })
         setFollowerData(response.data);
+        console.log(response.data)
       } catch (e) {}
       setLoading(false);
     };

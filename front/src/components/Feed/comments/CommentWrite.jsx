@@ -99,7 +99,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     setComments(comments.filter(comment => comment.idcomment !== id));
     axios({
       method: 'delete',
-      url: `hhttp://i6c103.p.ssafy.io/api/comment/delete/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
       params: {
         boardId: feed.idboard,
       },

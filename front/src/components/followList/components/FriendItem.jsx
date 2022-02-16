@@ -29,6 +29,8 @@ const FriendMenu = styled.div`
 export default function FriendItem({ follow }) {
   const history = useHistory();
 
+  const profileImg = 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' + follow.image + '.jpg'
+
   function clickProfile(ID) {
     window.location.replace(`/user/${ID}/profile`);
   }
@@ -36,7 +38,7 @@ export default function FriendItem({ follow }) {
   return (
     <FriendProfile onClick={() => clickProfile(follow.id)}>
         {follow.image === '' ? 
-        <ProfileImg src='/images/baseprofile.jpg' alt='기본이미지' /> : <ProfileImg src={follow.image} alt={follow.image} />}
+        <ProfileImg src='/images/baseprofile.jpg' alt='기본이미지' /> : <ProfileImg src={profileImg} alt="profile" />}
         <ProfileName>{follow.nickname}</ProfileName>
     </FriendProfile>
   );

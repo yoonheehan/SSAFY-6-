@@ -33,16 +33,14 @@ export default function FriendItem({ follow }) {
     window.location.replace(`/user/${ID}/profile`);
   }
 
-  const testFunc = (follow) => {
-    console.log(follow, "!!!!")
-  }
+  const profileImg = 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' + follow.image + '.jpg'
 
   return (
     <FriendProfile onClick={() => clickProfile(follow.id)}>
       {follow.image === '' ? (
         <ProfileImg src="/images/baseprofile.jpg" alt="기본이미지" />
       ) : (
-        <ProfileImg src={follow.image} alt={follow.image} />
+        <ProfileImg src={profileImg} alt="" />
       )}
       <ProfileName>{follow.nickname}</ProfileName>
     </FriendProfile>

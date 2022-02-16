@@ -146,6 +146,7 @@ export default function FeedItem({ key, feed, onRemove }) {
       }
     })
       .then(response => {
+        setUserData(response.data)
         setFirstNickName(response.data.info.nickname);
       })
       .catch(err => {})
@@ -286,7 +287,7 @@ export default function FeedItem({ key, feed, onRemove }) {
             src={
               userData && userData.info.image.length > 0
                 ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-                  userData.info.image
+                  userData.info.image + '.jpg'
                 : '/images/baseprofile.jpg'
             }
             alt="프사"
