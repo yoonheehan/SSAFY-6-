@@ -200,7 +200,7 @@ function CommentItem({ comment, onRemove }) {
               <ProfileName>
                 {comment.nickname}
                 <WriteTime>
-                  {formatRelativeDate(Date.parse(comment.created_at))}
+                  {formatRelativeDate(Date.parse(comment.created_at) + 32400000)}
                 </WriteTime>
               </ProfileName>
             </div>
