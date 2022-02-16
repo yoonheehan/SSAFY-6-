@@ -72,7 +72,7 @@ const NavBar = () => {
             style={{ cursor: 'pointer', color: '#fff' }}
             className="h1 px-3 bi bi-person-fill"
             onClick={() => {
-              history.push(`/user/${userId}/profile`);
+              window.location.replace(`/user/${userId}/profile`);
               setClicked(false);
             }}
           ></i>

@@ -106,7 +106,19 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
-    }).then(response => {});
+    }).then(response => {
+      axios({
+        method: 'get',
+        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+        headers: {
+          Authorization : 'Bearer ' + jwtToken,
+        }
+      })
+        .then(res => {
+          setCountComment(res.data.commentNum)
+        })
+        .catch(err => {});
+    });
   };
 
   return (
