@@ -54,7 +54,7 @@ const Post = () => {
           }
         }
       }
-      const url = 'http://localhost:8080/board/save';
+      const url = 'http://i6c103.p.ssafy.io/api/board/save';
       const vote_contents = JSON.stringify(voteItems);
 
       if (img) {
@@ -186,7 +186,7 @@ const Post = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${userId}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${userId}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

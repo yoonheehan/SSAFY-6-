@@ -23,7 +23,7 @@ const PostList = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url : `http://localhost:8080/board/user/${id}`,
+      url : `http://i6c103.p.ssafy.io/api/board/user/${id}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -68,7 +68,7 @@ const PostList = props => {
             onClick={() => {
               axios({
                 method: 'get',
-                url: `http://localhost:8080/board/user/${id}`,
+                url: `http://i6c103.p.ssafy.io/api/board/user/${id}`,
                 headers: {
                   Authorization : 'Bearer ' + jwtToken,
                 }
@@ -111,7 +111,7 @@ const PostList = props => {
             onClick={() => {
               axios({
                 method: 'get',
-                url: `http://localhost:8080/board/user/${id}`,
+                url: `http://i6c103.p.ssafy.io/api/board/user/${id}`,
                 headers: {
                   Authorization : 'Bearer ' + jwtToken,
                 }
@@ -156,7 +156,7 @@ const PostList = props => {
             onClick={() => {
               axios({
                 method: 'get',
-                url: `http://localhost:8080/board/user/${id}`,
+                url: `http://i6c103.p.ssafy.io/api/board/user/${id}`,
                 headers: {
                   Authorization : 'Bearer ' + jwtToken,
                 }
@@ -201,7 +201,7 @@ const PostList = props => {
             onClick={() => {
               axios({
                 method: 'get',
-                url: `http://localhost:8080/board/user/${id}`,
+                url: `http://i6c103.p.ssafy.io/api/board/user/${id}`,
                 headers: {
                   Authorization : 'Bearer ' + jwtToken,
                 }

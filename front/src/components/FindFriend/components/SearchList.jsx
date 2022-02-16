@@ -50,7 +50,7 @@ export default function SearchList(props) {
   function findFriendList(event) {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/find/${findName}`,
+      url: `http://i6c103.p.ssafy.io/api/user/find/${findName}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

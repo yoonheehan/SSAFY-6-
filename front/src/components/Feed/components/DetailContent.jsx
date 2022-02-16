@@ -46,7 +46,7 @@ const DetailContent = ({onClose, votes, feed, completed, amend, count, expired,}
     }
 
     const postVote = () => {
-        const url = "http://localhost:8080/board/savevoteusers"
+        const url = "http://i6c103.p.ssafy.io/api/board/savevoteusers"
         
         if (voteTemp) {
             axios({
@@ -61,7 +61,7 @@ const DetailContent = ({onClose, votes, feed, completed, amend, count, expired,}
                 console.log(res.config.data)
                 axios({
                     method: 'get',
-                    url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+                    url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
                     headers: {
                         Authorization : 'Bearer ' + jwtToken,
                       }

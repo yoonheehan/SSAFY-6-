@@ -140,7 +140,7 @@ export default function FeedItem({ key, feed, onRemove }) {
     }
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${ID}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${ID}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -153,7 +153,7 @@ export default function FeedItem({ key, feed, onRemove }) {
 
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/getvoteusers/${feed.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/getvoteusers/${feed.idboard}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -216,7 +216,7 @@ export default function FeedItem({ key, feed, onRemove }) {
     event.preventDefault();
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/detail/${feed.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

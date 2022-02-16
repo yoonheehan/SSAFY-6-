@@ -36,7 +36,7 @@ export default function Feed() {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/${loginedId}`,
+      url: `http://i6c103.p.ssafy.io/api/board/${loginedId}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -98,7 +98,7 @@ export default function Feed() {
   const onRemove = id => {
     axios({
       method: 'delete',
-      url: `http://localhost:8080/board/delete/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/board/delete/${id}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

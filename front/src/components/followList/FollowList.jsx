@@ -21,7 +21,7 @@ function FollowList() {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://localhost:8080/follow/${id}`,
+          url: `http://i6c103.p.ssafy.io/api/follow/${id}`,
           headers: {
             Authorization : 'Bearer ' + jwtToken,
           }

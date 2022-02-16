@@ -115,7 +115,7 @@ const PostDetail = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board`,
+      url: `http://i6c103.p.ssafy.io/api/board`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -131,7 +131,7 @@ const PostDetail = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${userId}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${userId}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

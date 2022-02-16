@@ -22,7 +22,7 @@ function FollowerList() {
       try {
         const response = await axios({
           method: 'get',
-          url: `http://localhost:8080/follower/${id}`,
+          url: `http://i6c103.p.ssafy.io/api/follower/${id}`,
           headers: {
             Authorization : 'Bearer ' + jwtToken,
           }

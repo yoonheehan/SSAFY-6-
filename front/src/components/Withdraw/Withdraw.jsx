@@ -48,7 +48,7 @@ const Withdraw = () => {
             } else {
               axios({
                 method: 'put',
-                url : `http://localhost:8080/user/withdraw/${id}`,
+                url : `http://i6c103.p.ssafy.io/api/user/withdraw/${id}`,
                 headers: {
                   Authorization : 'Bearer ' + jwtToken,
                 }

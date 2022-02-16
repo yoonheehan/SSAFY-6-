@@ -36,7 +36,7 @@ const Profile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       headers: {
         Authorization : 'Bearer ' + jwtToken,
@@ -50,7 +50,7 @@ const Profile = props => {
 
     axios({
       method: 'get',
-      url: `http://localhost:8080/follow/check/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/follow/check/${id}`,
       params: { loginedId: loginedId },
       headers: {
         Authorization : 'Bearer ' + jwtToken,
@@ -67,7 +67,7 @@ const Profile = props => {
   const doFollow = () => {
     axios({
       method: 'post',
-      url: `http://localhost:8080/follow`,
+      url: `http://i6c103.p.ssafy.io/api/follow`,
       data: { loginedId: loginedId, followId: id },
       headers: {
         Authorization : 'Bearer ' + jwtToken,
@@ -83,7 +83,7 @@ const Profile = props => {
   const unFollow = () => {
     axios({
       method: 'delete',
-      url: `http://localhost:8080/follow`,
+      url: `http://i6c103.p.ssafy.io/api/follow`,
       // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
       params: { loginedId: loginedId, followId: id },
       headers: {

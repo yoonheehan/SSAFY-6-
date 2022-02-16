@@ -74,7 +74,7 @@ const MdProfile = props => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
@@ -113,7 +113,7 @@ const MdProfile = props => {
     } else {
       axios({
         method: 'get',
-        url: `http://localhost:8080/signup/${userData.info.nickname}`,
+        url: `http://i6c103.p.ssafy.io/api/signup/${userData.info.nickname}`,
         headers: {
           Authorization : 'Bearer ' + jwtToken,
         }
@@ -133,7 +133,7 @@ const MdProfile = props => {
   const submitData = () => {
     axios({
       method: 'put',
-      url: `http://localhost:8080/user/${id}`,
+      url: `http://i6c103.p.ssafy.io/api/user/${id}`,
       data : {
         image: userData.info.image,
         nickname: userData.info.nickname,

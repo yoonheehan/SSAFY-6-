@@ -159,7 +159,7 @@ const NewProfile = props => {
                 onClick={() => {
                   axios({
                     method: 'get',
-                    url: `http://localhost:8080/signup/${nickName}`,
+                    url: `http://i6c103.p.ssafy.io/api/signup/${nickName}`,
                     headers: {
                       Authorization : null,
                     }

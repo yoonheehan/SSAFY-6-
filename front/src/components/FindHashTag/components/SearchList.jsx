@@ -53,7 +53,7 @@ const SearchList = props => {
   const findHashTagList = e => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/hashtagsearch/${findData}`,
+      url: `http://i6c103.p.ssafy.io/api/board/hashtagsearch/${findData}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }

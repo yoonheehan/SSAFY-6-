@@ -62,7 +62,7 @@ const FeedEditModal = ({ onClose, content, EditFeed, radio, idboard }) => {
 
     axios({
       method: 'put',
-      url: 'http://localhost:8080/board/update',
+      url: 'http://i6c103.p.ssafy.io/api/board/update',
       data: {
         idboard: idboard,
         view_range: revealType,

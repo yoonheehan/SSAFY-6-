@@ -30,7 +30,7 @@ const Login = props => {
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `http://localhost:8080/jwt/google`,
+        url: `http://i6c103.p.ssafy.io/api/jwt/google`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
         data: res,
         headers: {
@@ -102,7 +102,7 @@ const Login = props => {
     if (sessionStorage.getItem('loginedUser') === null) {
       axios({
         method: 'post',
-        url: `http://localhost:8080/jwt/naver`,
+        url: `http://i6c103.p.ssafy.io/api/jwt/naver`,
         // url: 'http://i6c103.p.ssafy.io/api/jwt/naver',
         data: res,
         headers: {
@@ -167,7 +167,7 @@ const Login = props => {
                 <li className={styles.item}>
                   <NaverLogin
                     clientId={process.env.REACT_APP_NAVER}
-                    callbackUrl="http://localhost:3000/"
+                    callbackUrl="http://i6c103.p.ssafy.io/api/"
                     render={renderProps => (
                       <div
                         onClick={renderProps.onClick}

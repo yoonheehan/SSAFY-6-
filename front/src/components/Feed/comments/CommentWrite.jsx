@@ -36,7 +36,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     async function fetchData() {
       const result = await axios({
           method: 'get',
-          url: `http://localhost:8080/comment/${feed.idboard}`,
+          url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
           headers: {
             Authorization : 'Bearer ' + jwtToken,
           }
@@ -51,7 +51,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     async function fetchData() {
       const result = await axios({
           method: 'get',
-          url: `http://localhost:8080/comment/${feed.idboard}`,
+          url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
           headers: {
             Authorization : 'Bearer ' + jwtToken,
           }
@@ -69,7 +69,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   function handleSubmit(event) {
     axios({
       method: 'post',
-      url: `http://localhost:8080/comment/save`,
+      url: `http://i6c103.p.ssafy.io/api/comment/save`,
       data: {
         content: commentContent,
         board_idboard: feed.idboard,
@@ -81,7 +81,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     }).then(response => {});
       axios({
         method: 'get',
-        url: `http://localhost:8080/board/detail/${feed.idboard}`,
+        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
         headers: {
           Authorization : 'Bearer ' + jwtToken,
         }
@@ -99,7 +99,7 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     setComments(comments.filter(comment => comment.idcomment !== id));
     axios({
       method: 'delete',
-      url: `http://localhost:8080/comment/delete/${id}`,
+      url: `hhttp://i6c103.p.ssafy.io/api/comment/delete/${id}`,
       params: {
         boardId: feed.idboard,
       },

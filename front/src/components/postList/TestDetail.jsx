@@ -11,7 +11,7 @@ const TestDetail = () => {
   useEffect(() => {
     axios({
       method: 'get',
-      url: `http://localhost:8080/board/detail/${ID.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/detail/${ID.idboard}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       },
@@ -29,7 +29,7 @@ const TestDetail = () => {
   const onRemove = () => {
     axios({
       method: 'delete',
-      url: `http://localhost:8080/board/delete/${ID.idboard}`,
+      url: `http://i6c103.p.ssafy.io/api/board/delete/${ID.idboard}`,
       headers: {
         Authorization : 'Bearer ' + jwtToken,
       }
