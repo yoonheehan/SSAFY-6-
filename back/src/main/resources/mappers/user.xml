@@ -93,4 +93,8 @@
     <select id="getUserByNickname" parameterType="String" resultType="User">
         select * from user where nickname like #{nickname}
     </select>
+
+    <update id="updateByEmail" parameterType="map">
+        update user set user_status = 1, nickname = #{nickname} where id = #{id}
+    </update>
 </mapper>

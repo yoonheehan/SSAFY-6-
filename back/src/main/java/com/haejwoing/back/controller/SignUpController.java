@@ -12,9 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -36,39 +34,69 @@ public class SignUpController {
         } else return new ResponseEntity<>(false, HttpStatus.OK); // 없으면 false
 
     }
+
     @ApiOperation(value = "회원 가입")
     @PostMapping()
     public ResponseEntity<Map<String, Object>> userRegister(@RequestBody User user) throws IOException {
         log.info("회원 가입 호출");
         log.info("유저 정보 : {}", user);
 
-        List<String> uploadImage = new ArrayList<>();
+        User withdrawCheck = userService.searchByEmail(user.getEmail());
+        System.out.println("withdrawCheck"+withdrawCheck);
 
-        log.info("업로드 파일 : {}", uploadImage);
+        if (null == withdrawCheck) { // 처음으로 회원가입
+            User userRequest = User.builder()
+                    .email(user.getEmail())
+                    .birth(user.getBirth())
+                    .gender(user.getGender())
+                    .nickname(user.getNickname())
+                    .role("ROLE_USER")
+                    .point(0)
+                    .userStatus(1)
+                    .image(user.getImage())
+                    .build();
 
-        User userRequest = User.builder()
-                .email(user.getEmail())
-                .birth(user.getBirth())
-                .gender(user.getGender())
-                .nickname(user.getNickname())
-                .role("ROLE_USER")
-                .point(0)
-                .userStatus(1)
-                .image(user.getImage())
-                .build();
+            log.info("저장될 유저 정보 : {}", userRequest);
+            userService.insertUser(userRequest);
 
-        log.info("저장될 유저 정보 : {}", userRequest);
-        userService.insertUser(userRequest);
+            String jwtToken = new JwtProvider().createJwtToken(userRequest);
+            int responseId = userService.getUserId(userRequest.getEmail());
 
-        String jwtToken = new JwtProvider().createJwtToken(userRequest);
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", responseId);
+            map.put("jwtToken", jwtToken);
 
-        int responseId = userService.getUserId(userRequest.getEmail());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        } else if (withdrawCheck.getUserStatus() == 0) { // 탈퇴 했던 유저이면
+            log.info("탈퇴했던 회원가입");
+            User againUser = User.builder()
+                    .email(user.getEmail())
+                    .birth(user.getBirth())
+                    .gender(user.getGender())
+                    .nickname(user.getNickname())
+                    .role("ROLE_USER")
+                    .point(0)
+                    .userStatus(1)
+                    .image(user.getImage())
+                    .build();
 
-        Map<String, Object> map = new HashMap<>();
-        map.put("id", responseId);
-        map.put("jwtToken", jwtToken);
+            log.info("again user ; {}", againUser);
+            Map<String, Object> userMap = new HashMap<>();
+            userMap.put("nickname", againUser.getNickname());
+            userMap.put("id", withdrawCheck.getId());
+            log.info("userMap : {}", userMap);
+            userService.updateByEmail(userMap);
 
+            String jwtToken = new JwtProvider().createJwtToken(againUser);
+            int responseId = userService.getUserId(againUser.getEmail());
 
-        return new ResponseEntity<>(map, HttpStatus.OK);
+            Map<String, Object> map = new HashMap<>();
+            map.put("id", responseId);
+            map.put("jwtToken", jwtToken);
+
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

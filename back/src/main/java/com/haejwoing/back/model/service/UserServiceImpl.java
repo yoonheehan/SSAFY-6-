@@ -108,4 +108,9 @@ public class UserServiceImpl implements UserService{
     public User getUserByNickname(String nickname) {
         return sqlSession.getMapper(UserMapper.class).getUserByNickname(nickname);
     }
+
+    @Override
+    public void updateByEmail(Map<String, Object> userMap) {
+        sqlSession.getMapper(UserMapper.class).updateByEmail(userMap);
+    }
 }

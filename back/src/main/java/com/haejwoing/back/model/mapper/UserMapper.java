@@ -27,4 +27,5 @@ public interface UserMapper {
     List<Map<String, Object>> getFollowerId(int id);
     double getPercentage(int id);
     User getUserByNickname(String nickname);
+    void updateByEmail(Map<String, Object> userMap);
 }

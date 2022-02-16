@@ -26,4 +26,5 @@ public interface UserService {
     List<Map<String, Object>> getfollowerId(int id);
     double getPercentage(int id);
     User getUserByNickname(String nickname);
+    void updateByEmail(Map<String, Object> userMap);
 }
