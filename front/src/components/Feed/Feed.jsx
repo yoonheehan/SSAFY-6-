@@ -5,12 +5,19 @@ import axios from 'axios';
 import styled from 'styled-components';
 
 const PostButton = styled.div`
-  position: "fixed";
-  bottom: "15px";
-  right: "15px";
-  zIndex: "999";
-  width: "10px";
-  height: "10px";
+  position: fixed;
+  bottom: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  right: 35px;
+  zIndex: 999;
+  width: 55px;
+  height: 55px;
+  background: linear-gradient(90deg, rgb(125, 107, 255) 0%, rgb(52, 42, 255) 100%);
+  border-radius: 50%;
+  opacity: 0.9;
+  cursor: pointer;
 `;
 
 export default function Feed() {
@@ -100,7 +107,9 @@ export default function Feed() {
     <div>
       <div style={{ marginTop: '75px' }}></div>
       <Feeds  feedData={feeds} onRemove={onRemove} />
-      <PostButton onClick={() => history.push('/post')}>+</PostButton>
+      <PostButton onClick={() => history.push('/post')}>
+        <i style={{ color: 'white', fontSize: "1.6rem" }} className="bi bi-plus-lg"></i>
+      </PostButton>
     </div>
   );
 }

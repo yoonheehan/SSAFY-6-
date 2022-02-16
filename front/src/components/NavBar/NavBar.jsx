@@ -76,15 +76,6 @@ const NavBar = () => {
               setClicked(false);
             }}
           ></i>
-
-          <i
-            style={{ cursor: 'pointer', color: '#fff' }}
-            className="link h1 px-3 bi bi-pencil-fill"
-            onClick={() => {
-              history.push('/post');
-              setClicked(false);
-            }}
-          ></i>
           <div>
             <MdPersonSearch
               size="33px"
@@ -95,7 +86,14 @@ const NavBar = () => {
               }}
             />
           </div>
-
+          <i
+            style={{ cursor: 'pointer', color: '#fff' }}
+            className="h1 px-3 bi bi-house-door-fill"
+            onClick={() => {
+              history.push('/feed');
+              setClicked(false);
+            }}
+          ></i>
           <i
             style={{ cursor: 'pointer', color: '#fff' }}
             className="link h1 px-3 bi bi-search"
