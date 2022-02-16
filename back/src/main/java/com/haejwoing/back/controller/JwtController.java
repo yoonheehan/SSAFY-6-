@@ -36,7 +36,15 @@ public class JwtController {
             log.info(map.toString());
             return new ResponseEntity<>(map, HttpStatus.OK);
 
-        } else if(userEntity != null) {
+        } else if(userEntity.getUserStatus() == 0){ // 회원 탈퇴한 기록이 있는 위저가 들어오면 다시 회원가입해줘야함
+            log.info("구글 탈퇴 했던 회원");
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", false);
+            map.put("email", googleUser.getEmail());
+            log.info(map.toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        } else if(userEntity.getUserStatus() == 1) {
             log.info("구글 회원가입 완료 회원 ");
             User userRequest = User.builder()
                     .email(userEntity.getEmail())
@@ -72,6 +80,14 @@ public class JwtController {
             log.info(map.toString());
             return new ResponseEntity<>(map, HttpStatus.OK);
 
+        } else if(userEntity.getUserStatus() == 0){ // 회원 탈퇴한 기록이 있는 위저가 들어오면 다시 회원가입해줘야함
+            log.info("네이버 탈퇴 했던 회원");
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", false);
+            map.put("email", userEntity.getEmail());
+            log.info(map.toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
         } else if(userEntity != null) {
             log.info("네이버 회원가입 완료 회원 ");
             User userRequest = User.builder()
@@ -82,12 +98,13 @@ public class JwtController {
                     .userStatus(1)
                     .build();
 
+            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             Map<String, Object> map = new HashMap<>();
             map.put("check", true);
             map.put("id", userServiceImpl.getUserId(userEntity.getEmail()));
+            map.put("jwtToken",jwtToken);
             log.info("id : {}", map.get("id"));
 
-            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -116,7 +133,15 @@ public class JwtController {
             log.info(map.toString());
             return new ResponseEntity<>(map, HttpStatus.OK);
 
-        } else if(userEntity != null) {
+        } else if(userEntity.getUserStatus() == 0){ // 회원 탈퇴한 기록이 있는 위저가 들어오면 다시 회원가입해줘야함
+            log.info("탈퇴 했던 회원");
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", false);
+            map.put("email", userEntity.getEmail());
+            log.info(map.toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        }else if(userEntity != null) {
             log.info("카카오 회원가입 완료 회원 ");
             User userRequest = User.builder()
                     .email(userEntity.getEmail())
@@ -126,12 +151,13 @@ public class JwtController {
                     .userStatus(1)
                     .build();
 
+            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             Map<String, Object> map = new HashMap<>();
             map.put("check", true);
             map.put("id", userServiceImpl.getUserId(userEntity.getEmail()));
+            map.put("jwtToken",jwtToken);
             log.info("id : {}", map.get("id"));
 
-            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NO_CONTENT);

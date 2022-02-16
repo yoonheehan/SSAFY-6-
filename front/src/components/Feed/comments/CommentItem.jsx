@@ -130,12 +130,8 @@ function CommentItem({ comment, onRemove }) {
     setEditValue(tempValue);
     axios({
       method: 'put',
-<<<<<<< Updated upstream
-      url: `http://i6c103.p.ssafy.io/api/comment/update`,
-=======
       url: `http://localhost:8080/comment/update`,
       // url: `http://localhost:8080/comment/update`,
->>>>>>> Stashed changes
       data: {
         content: tempValue,
         board_idboard: comment.board_idboard,
