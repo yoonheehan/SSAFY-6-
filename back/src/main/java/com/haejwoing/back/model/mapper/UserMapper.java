@@ -26,4 +26,5 @@ public interface UserMapper {
     List<User> findByNickname(String nickname);
     List<Map<String, Object>> getFollowerId(int id);
     double getPercentage(int id);
+    User getUserByNickname(String nickname);
 }

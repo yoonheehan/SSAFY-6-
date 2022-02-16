@@ -1,5 +1,7 @@
 package com.haejwoing.back.config;
 
+import com.haejwoing.back.config.jwt.JwtAuthorizationFilter;
+import com.haejwoing.back.model.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +16,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     private CorsConfig corsConfig;
 
+    @Autowired
+    private UserService userService;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -24,9 +28,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .formLogin().disable()
                 .httpBasic().disable()
+                .addFilter(new JwtAuthorizationFilter(authenticationManager(), userService))
                 .authorizeRequests()
-//                .antMatchers("/user/**")
-//                .access("hasRole('ROLE_USER')")
+                .antMatchers("/user/**","/feed/**","/post/**")
+                .access("hasRole('ROLE_USER')")
 //                .permitAll()
                 .anyRequest().permitAll();
     }

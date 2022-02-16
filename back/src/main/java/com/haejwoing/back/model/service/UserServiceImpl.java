@@ -103,4 +103,9 @@ public class UserServiceImpl implements UserService{
     public double getPercentage(int id) {
         return sqlSession.getMapper(UserMapper.class).getPercentage(id);
     }
+
+    @Override
+    public User getUserByNickname(String nickname) {
+        return sqlSession.getMapper(UserMapper.class).getUserByNickname(nickname);
+    }
 }

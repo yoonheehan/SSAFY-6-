@@ -25,4 +25,5 @@ public interface UserService {
     List<User> findByNickname(String nickname);
     List<Map<String, Object>> getfollowerId(int id);
     double getPercentage(int id);
+    User getUserByNickname(String nickname);
 }

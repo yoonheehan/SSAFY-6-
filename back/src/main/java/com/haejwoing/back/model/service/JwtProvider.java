@@ -23,8 +23,8 @@ public class JwtProvider {
 
         String jwtToken = JWT.create()
                 .withSubject(user.getNickname())
-                .withExpiresAt(new Date(System.currentTimeMillis()))
-                .withClaim("email", user.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis()+JwtProperties.EXPIRATION_TIME))
+                .withClaim("nickname", user.getNickname())
                 .sign(Algorithm.HMAC512(JwtProperties.SECRET));
         return jwtToken;
     }

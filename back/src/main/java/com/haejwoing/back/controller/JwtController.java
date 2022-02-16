@@ -39,19 +39,20 @@ public class JwtController {
         } else if(userEntity != null) {
             log.info("구글 회원가입 완료 회원 ");
             User userRequest = User.builder()
-                    .email(googleUser.getEmail())
-                    .nickname(googleUser.getuserName())
+                    .email(userEntity.getEmail())
+                    .nickname(userEntity.getNickname())
                     .role("ROLE_USER")
-                    .image(googleUser.getImage())
+                    .image(userEntity.getImage())
                     .userStatus(1)
                     .build();
 
+            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             Map<String, Object> map = new HashMap<>();
             map.put("check", true);
             map.put("id", userServiceImpl.getUserId(userEntity.getEmail()));
-            log.info("id : {}", map.get("id"));
+            map.put("jwtToken", jwtToken);
+            log.info("id : {}", map.get("jwtToken"));
 
-            String jwtToken = new JwtProvider().createJwtToken(userRequest);
             return new ResponseEntity<>(map, HttpStatus.OK);
         }
         else return new ResponseEntity<>(HttpStatus.NO_CONTENT);

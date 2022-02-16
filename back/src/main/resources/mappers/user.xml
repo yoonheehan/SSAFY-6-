@@ -89,4 +89,8 @@
                  ) as rank_table
         where id = #{id};
     </select>
+
+    <select id="getUserByNickname" parameterType="String" resultType="User">
+        select * from user where nickname like #{nickname}
+    </select>
 </mapper>
