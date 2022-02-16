@@ -37,11 +37,19 @@ const HashTagItem = ({ item }) => {
         }}
       >
         <div style={{ width: '60px', height: '60px' }}>
-          <img
-            style={{ width: '100%', height: '100%' }}
-            src={JSON.parse(item.board_image)}
-            alt=""
-          />
+          {JSON.parse(item.board_image) == '' ? (
+            <img
+              style={{ width: '100%', height: '100%' }}
+              src="https://haejwoing.s3.ap-northeast-2.amazonaws.com/%EC%A0%9C%EB%AA%A9+%EC%97%86%EC%9D%8C.png"
+              alt=""
+            />
+          ) : (
+            <img
+              style={{ width: '100%', height: '100%' }}
+              src={JSON.parse(item.board_image)}
+              alt=""
+            />
+          )}
         </div>
         <div className="ms-3 me-auto">
           <div>
