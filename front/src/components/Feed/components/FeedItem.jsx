@@ -166,7 +166,7 @@ export default function FeedItem({ key, feed, onRemove }) {
           setVoteCompleted(true);
         }
 
-        if (res.data.userid[0] === 0 && res.data.idx.length === 1) {
+        if (res.data.userid[0] == 0 && res.data.idx.length == 1) {
           setCountAll(0);
           setVoteUsers(tempArray);
         } else {
@@ -234,19 +234,19 @@ export default function FeedItem({ key, feed, onRemove }) {
   // };
 
   const typeButton = type => {
-    if (type === 1) {
+    if (type == 1) {
       return (
         <div className="type_button" style={{ background: '#1b59cc' }}>
           투표
         </div>
       );
-    } else if (type === 2) {
+    } else if (type == 2) {
       return (
         <div className="type_button" style={{ background: '#6913b9' }}>
           대결
         </div>
       );
-    } else if (type === 3) {
+    } else if (type == 3) {
       return (
         <div className="type_button" style={{ background: '#bb18a0' }}>
           찬반
@@ -304,7 +304,7 @@ export default function FeedItem({ key, feed, onRemove }) {
             </ProfileName>
             <WriteTime>{formatRelativeDate(feed.created_at * 1000)}</WriteTime>
           </div>
-          {myId === feed.userId ? (
+          {myId == feed.userId ? (
             <FeedMenu>
               <div
                 style={{ marginLeft: 'auto', cursor: 'pointer' }}

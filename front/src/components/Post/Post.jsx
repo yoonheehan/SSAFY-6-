@@ -44,6 +44,15 @@ const Post = () => {
   //
   const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
 
+  //
+  AWS.config.update({
+    region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
+    credentials: new AWS.CognitoIdentityCredentials({
+      IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
+    }),
+  });
+  //
+
   // axios.post
   function postAPI() {
     if (revealType && voteContent) {
@@ -216,14 +225,7 @@ const Post = () => {
     return setHashArr(tempArr);
   };
 
-  //
-  AWS.config.update({
-    region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
-    credentials: new AWS.CognitoIdentityCredentials({
-      IdentityPoolId: process.env.REACT_APP_S3, // cognito 인증 풀에서 받아온 키를 문자열로 입력합니다. (Ex. "ap-northeast-2...")
-    }),
-  });
-  //
+  
 
   // 이미지 업로드
   const saveImg = event => {
@@ -243,7 +245,7 @@ const Post = () => {
 
     for (let i = 0; i < file.length; i++) {
       const tempUrl =
-        `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name;
+        `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name + 'jpg';
       tempUrlArray.push(tempUrl);
     }
     setImgUrl(tempUrlArray);
