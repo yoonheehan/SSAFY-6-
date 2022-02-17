@@ -148,7 +148,7 @@ const Profile = props => {
               />
             </div>
             <div style={{ marginTop: '10px'}}>
-              <div>{userData.info.nickname}</div>
+              <div style={{ fontWeight:'bold' }}>{userData.info.nickname}</div>
             </div>
           </div>
           <div className={styles.box2}>
