@@ -66,7 +66,6 @@ const Post = () => {
       const url = 'http://i6c103.p.ssafy.io/api/board/save';
       const vote_contents = JSON.stringify(voteItems);
 
-      if (img) {
         for (let i = 0; i < img.length; i++) {
           const upload = new AWS.S3.ManagedUpload({
             params: {
@@ -84,7 +83,6 @@ const Post = () => {
               return alert('오류가 발생했습니다: ', err.message);
             }
           );
-        }
       }
 
       axios({
