@@ -112,7 +112,7 @@ const Post = () => {
 
       })
         .then(function (response) {
-          // window.location.replace('/feed');
+          window.location.replace('/feed');
         })
         .catch(function (error) {});
     } else {
