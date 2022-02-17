@@ -29,7 +29,7 @@ const PostItem = ({ post }) => {
   return (
     <>
       <ListGroup.Item
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', padding: "0.5rem 0.4rem 0.5rem 0.6rem" }}
         className="d-flex justify-content-between align-items-start"
         onClick={() => {
           history.push(`/testDetail/${post.idboard}`);

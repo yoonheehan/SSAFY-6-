@@ -7,6 +7,9 @@ import { MdHowToVote } from 'react-icons/md';
 import { useHistory } from 'react-router-dom';
 import FeedItem from '../../Feed/components/FeedItem';
 import styles from './HashTagItem.module.css';
+import { HiPencil } from 'react-icons/hi';
+import { FcOvertime } from 'react-icons/fc';
+
 
 const HashTagItem = ({ item }) => {
   const history = useHistory();
@@ -30,7 +33,7 @@ const HashTagItem = ({ item }) => {
   return (
     <>
       <ListGroup.Item
-        style={{ cursor: 'pointer' }}
+        style={{ cursor: 'pointer', padding: "0.5rem 0.4rem 0.5rem 0.6rem" }}
         className="d-flex justify-content-between align-items-start"
         onClick={() => {
           history.push(`/testDetail/${item.idboard}`);
@@ -124,8 +127,8 @@ const HashTagItem = ({ item }) => {
             fontSize: '15px',
           }}
         >
-          <div>작성일 : {createDate}</div>
-          <div>마감일 : {dueDate}</div>
+          <div style={{ fontSize: "11px" }}><HiPencil/>{createDate}</div>
+          <div style={{ fontSize: "11px" }}><FcOvertime/>{dueDate}</div>
         </div>
       </ListGroup.Item>
     </>
