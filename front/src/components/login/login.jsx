@@ -167,7 +167,7 @@ const Login = props => {
                 <li className={styles.item}>
                   <NaverLogin
                     clientId={process.env.REACT_APP_NAVER}
-                    callbackUrl="http://i6c103.p.ssafy.io/api/"
+                    callbackUrl="http://i6c103.p.ssafy.io/"
                     render={renderProps => (
                       <div
                         onClick={renderProps.onClick}
