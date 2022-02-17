@@ -65,7 +65,7 @@ const Post = () => {
       }
       const url = 'http://i6c103.p.ssafy.io/api/board/save';
       const vote_contents = JSON.stringify(voteItems);
-      
+      let test = 0
       if (img) {
         for (let i = 0; i < img.length; i++) {
           console.log("!!!")
@@ -78,11 +78,12 @@ const Post = () => {
           });
 
           const promise = upload.promise();
-
+          
           promise.then(
             function (data) {
-              setImgCnt(prev => prev + 1)
-              if (imgCnt === img.length) {
+              test += 1
+              // console.log(imgCnt, img.length)
+              if (test === img.length) {
                 axios({
                   method: 'post',
                   url: url,
@@ -115,32 +116,32 @@ const Post = () => {
             }
           );
         }
-      }
-
-      axios({
-        method: 'post',
-        url: url,
-        data: {
-          userId: userId,
-          type: type,
-          view_range: revealType,
-          content: voteContent,
-          vote_contents: vote_contents,
-          board_image: JSON.stringify(imgUrl),
-          hashArr: JSON.stringify(hashArr),
-          // vote_users : JSON.stringify(voteUser),
-          due_date: dueDateSec,
-          // due_date: dueDate
-        },
-        headers: {
-          Authorization : 'Bearer ' + jwtToken,
-        }
-
-      })
-        .then(function (response) {
-          window.location.replace('/feed')
+      } else {
+        axios({
+          method: 'post',
+          url: url,
+          data: {
+            userId: userId,
+            type: type,
+            view_range: revealType,
+            content: voteContent,
+            vote_contents: vote_contents,
+            board_image: JSON.stringify(imgUrl),
+            hashArr: JSON.stringify(hashArr),
+            // vote_users : JSON.stringify(voteUser),
+            due_date: dueDateSec,
+            // due_date: dueDate
+          },
+          headers: {
+            Authorization : 'Bearer ' + jwtToken,
+          }
+  
         })
-        .catch(function (error) {});
+          .then(function (response) {
+            window.location.replace('/feed')
+          })
+          .catch(function (error) {});
+      }
     } else {
       alert('공개범위, 글내용, 항목은 필수사항 입니다.');
     }
