@@ -62,7 +62,7 @@ const Post = () => {
           const upload = new AWS.S3.ManagedUpload({
             params: {
               Bucket: 'haejwoing', // 업로드할 대상 버킷명
-              Key: img[i].name, // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
+              Key: img[i].name + '.jpg', // 업로드할 파일명 (* 확장자를 추가해야 합니다!)
               Body: img[i], // 업로드할 파일 객체
             },
           });
