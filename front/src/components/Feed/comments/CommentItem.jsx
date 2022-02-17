@@ -198,7 +198,10 @@ function CommentItem({ key, comment, onRemove }) {
     <>
       <div className="container mb-4">
         <CommentWrapped>
-          <ProfileThumnail src="/images/baseprofile.jpg" alt="프로필사진" />
+          <ProfileThumnail src={comment.image.length > 0 ? 
+                'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
+                  comment.image + '.jpg'
+                : "/images/baseprofile.jpg"} alt="프로필사진" />
           <CommentDiv>
             <div style={{ textAlign: 'start' }}>
               <ProfileName>

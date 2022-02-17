@@ -20,6 +20,16 @@ const PostButton = styled.div`
   cursor: pointer;
 `;
 
+const ArrowButton = styled.div`
+  color: grey;
+  position: fixed;
+  bottom: 28px;
+  right: 47%;
+  z-index: 999;
+  opacity: 0.6;
+  cursor: pointer;
+`
+
 export default function Feed() {
   const history = useHistory();
   if (sessionStorage.getItem('loginedUser') === null) {
@@ -115,8 +125,12 @@ export default function Feed() {
       <div style={{ marginTop: '75px' }}></div>
       <Feeds  feedData={feeds} onRemove={onRemove} />
       <PostButton onClick={() => history.push('/post')}>
-        <i style={{ color: 'white', fontSize: "1.6rem" }} className="bi bi-plus-lg"></i>
+        <i style={{ color: 'white', fontSize: "1.6rem" }} className="bi bi-pencil-fill"></i>
       </PostButton>
+      
+      <ArrowButton onClick={() => {document.documentElement.scrollTop = 0}}>
+        <i class="h2 bi bi-arrow-up-circle-fill"></i>
+      </ArrowButton>
     </div>
   );
 }

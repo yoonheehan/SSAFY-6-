@@ -307,7 +307,7 @@ const Profile = props => {
               >
                 팔로워 목록
               </Button>
-              {id === loginedId ? (
+              {id == loginedId ? (
                 <Button
                   variant="secondary"
                   size="md"

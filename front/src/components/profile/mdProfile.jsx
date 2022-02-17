@@ -37,6 +37,7 @@ const MdProfile = props => {
   const handleFileInput = e => {
     console.log(userData)
     // input 태그를 통해 선택한 파일 객체
+    console.log(userData)
     const file = e.target.files[0];
     setUserData(pre => ({
       info: {

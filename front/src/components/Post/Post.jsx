@@ -99,7 +99,7 @@ const Post = () => {
 
       })
         .then(function (response) {
-          history.push('/feed');
+          window.location.replace('/feed');
         })
         .catch(function (error) {});
     } else {
@@ -323,7 +323,7 @@ const Post = () => {
               src={
                 userData && userData.info.image.length > 0
                   ? 'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' +
-                    userData.info.image
+                    userData.info.image + '.jpg'
                   : '/images/baseprofile.jpg'
               }
               alt="Avatar"
