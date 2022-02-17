@@ -112,7 +112,7 @@ const Post = () => {
 
       })
         .then(function (response) {
-          window.location.replace('/feed');
+          // window.location.replace('/feed');
         })
         .catch(function (error) {});
     } else {
@@ -249,7 +249,7 @@ const Post = () => {
 
     for (let i = 0; i < file.length; i++) {
       const tempUrl =
-        `https://haejwoing.s3.ap-northeast-2.amazonaws.com/` + file[i].name + '.jpg';
+        'https://haejwoing.s3.ap-northeast-2.amazonaws.com/' + file[i].name + '.jpg';
       tempUrlArray.push(tempUrl);
     }
     setImgUrl(tempUrlArray);
