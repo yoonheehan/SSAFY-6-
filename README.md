@@ -6,7 +6,7 @@
 
 ![img](https://lh4.googleusercontent.com/oPums7AlHUAoK6ajOFOygc62xgh6lRZrGzsUsoixM0djSyu6Mo_fcWgYrVSYKzf6wcozV321rSlhQkBHPVjxWuGwuOEWBAi7sjlDdhszng2PubQYSITbpp_vfRpR4UgYii6JSNIYqJRw)
 
-- [해줘잉](https://i6c103.p.ssafy.io)
+- [해줘잉](http://i6c103.p.ssafy.io)
 
 
 
@@ -169,9 +169,269 @@
 
 # Back-End
 
-### Spring boot 기반 개발
+- Spring boot 기반 개발
 
-- controller
+## 프로젝트 구조
+
+```tex
+src
+	-main/java/come.haejwoing.back
+		-config
+			-jwt
+				-JwtAuthorizationFilter
+				-JwtProperties
+				-PrincipalDetails
+				-PrincipalDetailsService
+            -CorsConfig
+            -SecurityConfig
+        -controller
+        	-*Controller
+        -model
+        	-dto
+        	-mapper
+        	-service
+        BackApplication
+    -resource
+    	-mappers
+    		-*.xml
+    	-application.yml
+	
+```
 
 
+
+## JWT
+
+```java
+public class JwtAuthorizationFilter extends BasicAuthenticationFilter {
+
+	private UserService userService;
+
+	public JwtAuthorizationFilter(AuthenticationManager authenticationManager, UserService userService) {
+		super(authenticationManager);
+		this.userService = userService;
+	}
+
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
+			throws IOException, ServletException {
+
+		String header = request.getHeader(JwtProperties.HEADER_STRING);
+		System.out.println("header Authorization : " + header);
+
+		if (header == null || !header.startsWith(JwtProperties.TOKEN_PREFIX)) {
+			chain.doFilter(request, response);
+			return;
+		}
+		String token = request.getHeader(JwtProperties.HEADER_STRING).replace(JwtProperties.TOKEN_PREFIX, "");
+
+		// 토큰 검증 (이게 인증이기 때문에 AuthenticationManager도 필요 없음)
+		// 내가 SecurityContext에 집적접근해서 세션을 만들때 자동으로 UserDetailsService에 있는
+		// loadByUsername이 호출됨.
+		String nickname = JWT.require(Algorithm.HMAC512(JwtProperties.SECRET)).build().verify(token)
+				.getClaim("nickname").asString();
+		System.out.println("token : "+nickname);
+```
+
+
+
+## Controller
+
+```java
+@RestController
+@RequestMapping("/jwt")
+public class JwtController {
+
+    @Autowired
+    private UserServiceImpl userServiceImpl;
+
+    @PostMapping("/google")
+    public ResponseEntity<Map<String, Object>> isGoogleUser(@RequestBody Map<String, Object> data){
+        GoogleUser googleUser = new GoogleUser((Map<String, Object>) data.get("profileObj"));
+        log.info("data : {}", data);
+        log.info("profileObj : {}", data.get("profileObj"));
+        User userEntity = userServiceImpl.searchByEmail(googleUser.getEmail());
+
+        if(userEntity == null) {
+            log.info("구글 로그인 첫 방문");
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", false);
+            map.put("email", googleUser.getEmail());
+            log.info(map.toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        } else if(userEntity.getUserStatus() == 0){ // 회원 탈퇴한 기록이 있는 위저가 들어오면 다시 회원가입해줘야함
+            log.info("구글 탈퇴 했던 회원");
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", false);
+            map.put("email", googleUser.getEmail());
+            log.info(map.toString());
+            return new ResponseEntity<>(map, HttpStatus.OK);
+
+        } else if(userEntity.getUserStatus() == 1) {
+            log.info("구글 회원가입 완료 회원 ");
+            User userRequest = User.builder()
+                    .email(userEntity.getEmail())
+                    .nickname(userEntity.getNickname())
+                    .role("ROLE_USER")
+                    .image(userEntity.getImage())
+                    .userStatus(1)
+                    .build();
+
+            String jwtToken = new JwtProvider().createJwtToken(userRequest);
+            Map<String, Object> map = new HashMap<>();
+            map.put("check", true);
+            map.put("id", userServiceImpl.getUserId(userEntity.getEmail()));
+            map.put("jwtToken", jwtToken);
+            log.info("id : {}", map.get("jwtToken"));
+
+            return new ResponseEntity<>(map, HttpStatus.OK);
+        }
+        else return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+```
+
+
+
+## Model
+
+### Dto
+
+```java
+@Data
+@Builder
+public class User {
+
+    private int id;
+    private String email;
+    private String nickname;
+    private int gender;
+    private String birth;
+    private String image;
+    private String role;
+    private int userStatus;
+    private double point;
+
+    public List<String> getRoleList(){
+        if(this.role.length() > 0){
+            return Arrays.asList(this.role.split(","));
+        }
+        return new ArrayList<>();
+    }
+}
+```
+
+### Mapper
+
+```java
+@Mapper
+public interface UserMapper {
+
+    void insertUser(User user);
+    User searchByEmail(String email);
+    List<User> listAllUser();
+    void withdrawUser(int id);
+    void setPoint(Map<String, Object> map);
+    List<User> listFollower(int id);
+    List<User> listFollow(int id);
+    int getUserId(String email);
+    User userInfo(int id);
+    void updateProfile(User user);
+    int checkNickname(String nickname);
+    int addFollow(int id, int toUser);
+    int checkFollow(int id, int loginedId);
+    int unFollow(int toUser, int fromUser);
+    List<User> findByNickname(String nickname);
+    List<Map<String, Object>> getFollowerId(int id);
+    double getPercentage(int id);
+    User getUserByNickname(String nickname);
+    void updateByEmail(Map<String, Object> userMap);
+}
+```
+
+### Service
+
+```java
+public interface UserService {
+
+    void insertUser(User user);
+    List<User> listAllUser();
+    User searchByEmail(String email);
+    void withdrawUser(int id);
+    void setPoint(Map<String, Object> map);
+    List<User> listFollower(int id);
+    List<User> listFollow(int id);
+    int getUserId(String email);
+    User searchById(int id);
+    void updateProfile(User user);
+    Boolean checkNickname(String nickname);
+    Boolean addFollow(int id, int toUser);
+    Boolean checkFollow(int id, int loginedId);
+    Boolean unFollow(int toUser, int fromUser);
+    List<User> findByNickname(String nickname);
+    List<Map<String, Object>> getfollowerId(int id);
+    double getPercentage(int id);
+    User getUserByNickname(String nickname);
+    void updateByEmail(Map<String, Object> userMap);
+}
+```
+
+
+
+## Resources
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.haejwoing.back.model.mapper.UserMapper">
+
+    <insert id="insertUser" parameterType="User">
+        insert into user(nickname, email, gender, role, birth, user_status, point, image)
+        values (#{nickname}, #{email}, #{gender}, #{role}, #{birth}, #{userStatus}, #{point}, #{image})
+    </insert>
+
+    <update id="setPoint" parameterType="map">
+        update user
+        set point= point + #{score}
+        where id=#{userId}
+    </update>
+
+    <select id="searchByEmail" parameterType="String" resultType="User">
+        select * from user
+        where email = #{email}
+    </select>
+
+    <select id="listAllUser" resultType="map">
+        select nickname, email, gender, birth, image, role
+        from user
+    </select>
+
+    <update id="withdrawUser" parameterType="int">
+        update user
+        set user_status = 0
+        where id=#{id}
+
+    </update>
+```
+
+
+
+### Properties
+
+- application.yml
+
+```properties
+server:
+  port: 8080
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    
+mybatis:
+  type-aliases-package: com.haejwoing.back.model.dto
+  mapper-locations: classpath:mappers/*.xml
+```
 
