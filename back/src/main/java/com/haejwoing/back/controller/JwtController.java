@@ -123,7 +123,7 @@ public class JwtController {
 
         System.out.println(str.get("email"));
 
-        User userEntity = userServiceImpl.searchByEmail((String) str.get("email"));
+        User userEntity = userServiceImpl.searchByEmail((String) str.get("email")+"_kakao");
 
         if(userEntity == null) {
             log.info("카카오 로그인 첫 방문");
