@@ -66,7 +66,10 @@ const Post = () => {
       const url = 'http://i6c103.p.ssafy.io/api/board/save';
       const vote_contents = JSON.stringify(voteItems);
 
+      if (img) {
+        console.log(img)
         for (let i = 0; i < img.length; i++) {
+          console.log("!!!")
           const upload = new AWS.S3.ManagedUpload({
             params: {
               Bucket: 'haejwoing', // 업로드할 대상 버킷명
@@ -78,11 +81,14 @@ const Post = () => {
           const promise = upload.promise();
 
           promise.then(
-            function (data) {},
+            function (data) {
+              return alert('이미지 업로드 성공')
+            },
             function (err) {
               return alert('오류가 발생했습니다: ', err.message);
             }
           );
+        }
       }
 
       axios({
@@ -106,7 +112,7 @@ const Post = () => {
 
       })
         .then(function (response) {
-          window.location.replace('/feed');
+          // window.location.replace('/feed');
         })
         .catch(function (error) {});
     } else {
