@@ -143,9 +143,13 @@ const NewProfile = props => {
                   }}
                 />
               </label>
+              <div style={{ position: "absolute", bottom: "10px", right: "10px" }}>
+                <i className="h1 bi bi-camera-fill"></i>
+              </div>
             </div>
           </div>
           <div className={styles.data}>
+            <div style={{ textAlign: "left", marginBottom: "5px" }}>기본정보</div>
             <InputGroup className={styles.inputGroup}>
               <FormControl
                 aria-label="Default"
@@ -193,6 +197,7 @@ const NewProfile = props => {
                 </ToggleButton>
               ))}
             </ButtonGroup>
+            <div style={{ textAlign: "left", marginBottom: "5px" }}>생년월일</div>
             <ReactDatePicker
               className={styles.datePicker}
               renderCustomHeader={({

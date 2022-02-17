@@ -33,7 +33,6 @@ function CommentWrite({ onClose, feed, commentsubmit,cntComment  }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    console.log("!!")
     axios ({
         method: 'get',
         url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
