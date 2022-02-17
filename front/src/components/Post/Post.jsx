@@ -43,7 +43,7 @@ const Post = () => {
   const [dueDateSec, SetDueDateSec] = useState((Date.now() + 86400000) / 1000);
   //
   const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
-
+  const [imgCnt, setImgCnt] = useState(0)
   //
   AWS.config.update({
     region: 'ap-northeast-2', // 버킷이 존재하는 리전을 문자열로 입력합니다. (Ex. "ap-northeast-2")
@@ -65,9 +65,8 @@ const Post = () => {
       }
       const url = 'http://i6c103.p.ssafy.io/api/board/save';
       const vote_contents = JSON.stringify(voteItems);
-
+      
       if (img) {
-        console.log(img)
         for (let i = 0; i < img.length; i++) {
           console.log("!!!")
           const upload = new AWS.S3.ManagedUpload({
@@ -82,7 +81,34 @@ const Post = () => {
 
           promise.then(
             function (data) {
-              return alert('이미지 업로드 성공')
+              setImgCnt(prev => prev + 1)
+              if (imgCnt === img.length) {
+                axios({
+                  method: 'post',
+                  url: url,
+                  data: {
+                    userId: userId,
+                    type: type,
+                    view_range: revealType,
+                    content: voteContent,
+                    vote_contents: vote_contents,
+                    board_image: JSON.stringify(imgUrl),
+                    hashArr: JSON.stringify(hashArr),
+                    // vote_users : JSON.stringify(voteUser),
+                    due_date: dueDateSec,
+                    // due_date: dueDate
+                  },
+                  headers: {
+                    Authorization : 'Bearer ' + jwtToken,
+                  }
+          
+                })
+                  .then(function (response) {
+                    window.location.replace('/feed')
+                  })
+                  .catch(function (error) {});
+              }
+              // return alert('이미지 업로드 성공')
             },
             function (err) {
               return alert('오류가 발생했습니다: ', err.message);
@@ -112,7 +138,7 @@ const Post = () => {
 
       })
         .then(function (response) {
-          // window.location.replace('/feed');
+          window.location.replace('/feed')
         })
         .catch(function (error) {});
     } else {

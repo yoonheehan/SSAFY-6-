@@ -80,7 +80,7 @@ export default function Feed() {
 
     if (
       page.current < pageInfo[1] &&
-      scrollTop + clientHeight >= scrollHeight - 10
+      scrollTop + clientHeight >= scrollHeight - 20
     ) {
       const NewFeedList = feedData.slice(
         page.current * 4,
@@ -90,7 +90,7 @@ export default function Feed() {
       setFeeds(prevFeed => [...prevFeed, ...NewFeedList]);
     } else if (
       page.current === pageInfo[1] &&
-      scrollTop + clientHeight >= scrollHeight - 10
+      scrollTop + clientHeight >= scrollHeight - 20
     ) {
       const NewFeedList = feedData.slice(
         page.current * 4,
