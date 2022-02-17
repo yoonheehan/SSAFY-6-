@@ -4,7 +4,7 @@
 
 ### 프로젝트 주제
 
-![img](C:\Users\SSAFY\Desktop\2학기프로젝트\해줘잉_두잇.jpg)
+![해줘잉_두잇](/uploads/f93743def053541ce70656adb4d744d6/해줘잉_두잇.jpg)
 
 - [해줘잉](http://i6c103.p.ssafy.io)
 
