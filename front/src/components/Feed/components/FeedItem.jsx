@@ -112,7 +112,7 @@ export default function FeedItem({ key, feed, onRemove }) {
   const [removeModal, setRemoveModal] = useState(false);
   const [expiredVote, setExpiredVote] = useState();
 
-  const [countComment, setCountComment] = useState(feed.commentNum);
+  const [countComment, setCountComment] = useState(false);
 
   const ref = useRef(null);
   const ref2 = useRef(null);
@@ -176,7 +176,7 @@ export default function FeedItem({ key, feed, onRemove }) {
         }
       })
       .catch(err => {});
-
+  }, []);
     const handleClickOutside = event => {
       if (selected && ref.current && !ref.current.contains(event.target)) {
         setSelected(false);
@@ -189,7 +189,8 @@ export default function FeedItem({ key, feed, onRemove }) {
         setRemoveModal(false);
       }
     };
-
+  
+  useEffect(() => {
     document.addEventListener('mousedown', handleClickOutside);
 
     return () => {
@@ -213,22 +214,22 @@ export default function FeedItem({ key, feed, onRemove }) {
     setDetailModalOpen(!detailModalOpen);
   };
 
-  const commentsubmit = event => {
-    event.preventDefault();
-    axios({
-      method: 'get',
-      url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
-      headers: {
-        Authorization : 'Bearer ' + jwtToken,
-      }
-      // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
-    })
-      .then(response => {
-        setFeedItem(response.data);
-      })
-      .catch(err => {})
-      .finally(() => {});
-  };
+  // const commentsubmit = event => {
+  //   event.preventDefault();
+  //   axios({
+  //     method: 'get',
+  //     url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+  //     headers: {
+  //       Authorization : 'Bearer ' + jwtToken,
+  //     }
+  //     // url: 'http://i6c103.p.ssafy.io/api/jwt/google',
+  //   })
+  //     .then(response => {
+  //       setFeedItem(response.data);
+  //     })
+  //     .catch(err => {})
+  //     .finally(() => {});
+  // };
 
   const typeButton = type => {
     if (type === 1) {
@@ -423,7 +424,7 @@ export default function FeedItem({ key, feed, onRemove }) {
         <CommentWrite
           onClose={handleCommentClick}
           feed={feed}
-          commentsubmit={commentsubmit}
+          // commentsubmit={commentsubmit}
           cntComment={cntComment} 
         />
       </div>

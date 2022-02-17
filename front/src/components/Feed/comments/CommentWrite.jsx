@@ -24,7 +24,7 @@ const SubmitBtn = styled.input`
   background-color: white;
 `;
 
-function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
+function CommentWrite({ onClose, feed, commentsubmit,cntComment  }) {
   const [commentContent, setCommentContent] = useState('');
   const [comments, setComments] = useState('');
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
@@ -33,33 +33,32 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
-    async function fetchData() {
-      const result = await axios({
-          method: 'get',
-          url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
-          headers: {
-            Authorization : 'Bearer ' + jwtToken,
-          }
+    console.log("!!")
+    axios ({
+        method: 'get',
+        url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
+        headers: {
+          Authorization : 'Bearer ' + jwtToken,
+        }
+      }).then(res => {
+        setComments(res.data);
       })
-      setComments(result.data);
       
-    }
-    fetchData();
-  }, [count]);
+  }, [count])
 
-  setTimeout(() => {
-    async function fetchData() {
-      const result = await axios({
-          method: 'get',
-          url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
-          headers: {
-            Authorization : 'Bearer ' + jwtToken,
-          }
-      })
-      setComments(result.data);
-    }
-    fetchData();
-  }, 1000);
+  // setTimeout(() => {
+  //   async function fetchData() {
+  //     const result = await axios({
+  //         method: 'get',
+  //         url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
+  //         headers: {
+  //           Authorization : 'Bearer ' + jwtToken,
+  //         }
+  //     })
+  //     setComments(result.data);
+  //   }
+  //   fetchData();
+  // }, 1000);
 
   function getcomment(event) {
     const commentContent = event.target.value;
@@ -81,13 +80,14 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     }).then(response => {});
       axios({
         method: 'get',
-        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+        url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
         headers: {
           Authorization : 'Bearer ' + jwtToken,
         }
       })
         .then(res => {
-          setCountComment(res.data.commentNum + 1)
+          setCountComment(res.data.length)
+          setComments(res.data)
         })
         .catch(err => {});
     setCount(count + 1);
@@ -96,7 +96,6 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
   }
 
   const onRemove = id => {
-    setComments(comments.filter(comment => comment.idcomment !== id));
     axios({
       method: 'delete',
       url: `http://i6c103.p.ssafy.io/api/comment/delete/${id}`,
@@ -109,13 +108,14 @@ function CommentWrite({ onClose, feed, commentsubmit, cntComment }) {
     }).then(response => {
       axios({
         method: 'get',
-        url: `http://i6c103.p.ssafy.io/api/board/detail/${feed.idboard}`,
+        url: `http://i6c103.p.ssafy.io/api/comment/${feed.idboard}`,
         headers: {
           Authorization : 'Bearer ' + jwtToken,
         }
       })
         .then(res => {
-          setCountComment(res.data.commentNum)
+          setComments(res.data)
+          setCountComment(res.data.length)
         })
         .catch(err => {});
     });

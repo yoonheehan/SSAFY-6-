@@ -67,16 +67,19 @@ const EditBtn = styled.input`
   background-color: white;
 `;
 
-function CommentItem({ comment, onRemove }) {
+function CommentItem({ key, comment, onRemove }) {
+  
+
   const myId = JSON.parse(sessionStorage.getItem('loginedUser')).userId;
   const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
+  let commentContent = comment.content
   const [openEdit, setOpenEdit] = useState(false);
 
   const [selected, setSelected] = useState(false);
 
   const [editValue, setEditValue] = useState(comment.content);
 
-  const [tempValue, setTempValue] = useState(editValue);
+  const [tempValue, setTempValue] = useState(comment.content);
 
   const [likeUsers, setLikeUsers] = useState(
     comment.likeUserList.slice(1, comment.likeUserList.length - 1).split(',')
@@ -123,11 +126,12 @@ function CommentItem({ comment, onRemove }) {
 
   function editButton(event) {
     setOpenEdit(true);
+    setTempValue(comment.content)
     event.preventDefault();
   }
 
   function handleSubmit(event) {
-    setEditValue(tempValue);
+    // setEditValue(tempValue);
     axios({
       method: 'put',
       url: `http://i6c103.p.ssafy.io/api/comment/update`,
@@ -142,6 +146,7 @@ function CommentItem({ comment, onRemove }) {
       }
     }).then(response => {});
     setOpenEdit(false);
+    comment.content = tempValue
     event.preventDefault();
   }
 
@@ -235,7 +240,7 @@ function CommentItem({ comment, onRemove }) {
         {!openEdit ? (
           <div style={{ display: 'flex', justifyContent: 'start' }}>
             <div className="comment_box">
-              <CommentContent>{editValue}</CommentContent>
+              <CommentContent>{commentContent}</CommentContent>
             </div>
           </div>
         ) : (
