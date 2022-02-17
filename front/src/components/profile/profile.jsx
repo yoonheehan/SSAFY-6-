@@ -57,7 +57,6 @@ const Profile = props => {
       }
     })
       .then(response => {
-        console.log(response)
         setFollowCheck(response.data);
       })
       .catch(error => {})

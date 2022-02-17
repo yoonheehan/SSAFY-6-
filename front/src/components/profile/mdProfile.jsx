@@ -35,12 +35,13 @@ const MdProfile = props => {
     },
   });
   const handleFileInput = e => {
+    console.log(userData)
     // input 태그를 통해 선택한 파일 객체
     const file = e.target.files[0];
     setUserData(pre => ({
-      ...pre,
       info: {
-        ...pre.nickname,
+        id : userData.info.id,
+        nickname: userData.info.nickname,
         image: file.name,
       },
     }));
