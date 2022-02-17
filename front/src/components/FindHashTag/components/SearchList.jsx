@@ -58,6 +58,7 @@ const SearchList = props => {
         Authorization : 'Bearer ' + jwtToken,
       }
     }).then(res => {
+      console.log(res)
         setDataList(res.data);
       });
     e.preventDefault();

@@ -2,11 +2,13 @@ import axios from 'axios';
 import React, { useState, useRef, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import FeedItem from '../Feed/components/FeedItem';
+import { useHistory } from 'react-router-dom';
 
 const TestDetail = () => {
   const jwtToken = JSON.parse(sessionStorage.getItem('loginedUser')).jwtToken;
   const ID = useParams();
   const [feed, setFeed] = useState();
+  const history = useHistory();
 
   useEffect(() => {
     axios({
@@ -35,6 +37,7 @@ const TestDetail = () => {
       }
     })
       .then(res => {
+        history.goBack();
         // setFeedData(feeds.filter(feed => feed.idboard !== id));
       })
       .catch(err => {});

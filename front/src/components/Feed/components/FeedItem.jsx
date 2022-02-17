@@ -40,8 +40,6 @@ const ProfileImg = styled.img`
 const WriteTime = styled.div`
   font-size: 12px;
   margin: auto 5px 0 auto;
-  text-align: left;
-  padding-left: 5px;
 `;
 
 const ContentImgBox = styled.div`
