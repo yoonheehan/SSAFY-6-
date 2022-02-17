@@ -41,7 +41,7 @@ const PostItem = ({ post }) => {
           {JSON.parse(post.board_image) == '' ? (
             <img
               className={styles.img}
-              src="https://haejwoing.s3.ap-northeast-2.amazonaws.com/%EC%A0%9C%EB%AA%A9+%EC%97%86%EC%9D%8C.png"
+              src="https://haejwoing.s3.ap-northeast-2.amazonaws.com/%EB%9A%9C%EC%9E%87.jpg.jpg"
               alt=""
             />
           ) : (
