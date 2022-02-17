@@ -129,7 +129,7 @@ public class JwtController {
             log.info("카카오 로그인 첫 방문");
             Map<String, Object> map = new HashMap<>();
             map.put("check", false);
-            map.put("email", str.get("email"));
+            map.put("email", str.get("email")+"_kakao");
             log.info(map.toString());
             return new ResponseEntity<>(map, HttpStatus.OK);
 
