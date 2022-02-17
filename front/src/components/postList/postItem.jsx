@@ -7,6 +7,8 @@ import { MdHowToVote } from 'react-icons/md';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import { useHistory, useParams } from 'react-router-dom';
+import { HiPencil } from 'react-icons/hi';
+import { FcOvertime } from 'react-icons/fc';
 
 const PostItem = ({ post }) => {
   const history = useHistory();
@@ -45,7 +47,7 @@ const PostItem = ({ post }) => {
           ) : (
             <img
               className={styles.img}
-              src={JSON.parse(post.board_image)}
+              src={JSON.parse(post.board_image)[0]}
               alt=""
             />
           )}
@@ -124,8 +126,8 @@ const PostItem = ({ post }) => {
             fontSize: '15px',
           }}
         >
-          <div>작성일 : {createDate}</div>
-          <div>마감일 : {dueDate}</div>
+          <div style={{ fontSize: "11px" }}><HiPencil/>{createDate}</div>
+          <div style={{ fontSize: "11px" }}><FcOvertime/>{dueDate}</div>
         </div>
       </ListGroup.Item>
     </>

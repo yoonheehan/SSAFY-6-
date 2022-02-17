@@ -83,7 +83,7 @@ const SearchList = props => {
           ) : (
             dataList &&
             dataList.map((item, index) => (
-              <HashTagItem key={index} item={item} />
+              item !== null && <HashTagItem key={index} item={item} />
             ))
           )}
         </HashTagList>

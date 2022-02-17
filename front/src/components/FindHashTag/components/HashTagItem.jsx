@@ -49,7 +49,7 @@ const HashTagItem = ({ item }) => {
           ) : (
             <img
               style={{ width: '100%', height: '100%' }}
-              src={JSON.parse(item.board_image)}
+              src={JSON.parse(item.board_image)[0]}
               alt=""
             />
           )}
