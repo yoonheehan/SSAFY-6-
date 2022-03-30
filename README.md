@@ -36,7 +36,7 @@
 
 # Process
 
-![image](C:\Users\graym\Desktop\process.png)
+![image](..\process.png)
 
 # 기획
 
