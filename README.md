@@ -4,7 +4,7 @@
 
 ### 프로젝트 주제
 
-![해줘잉_두잇](/uploads/f93743def053541ce70656adb4d744d6/해줘잉_두잇.jpg)
+![해줘잉_두잇](C:\Users\graym\Desktop\haejwoing%20mascot.jpg)
 
 - [해줘잉](http://i6c103.p.ssafy.io)
 
@@ -36,7 +36,7 @@
 
 # Process
 
-![image](/uploads/1bca25d088e1606376695e2084a14fad/image.png)
+![image](C:\Users\graym\Desktop\process.png)
 
 # 기획
 
