@@ -6,7 +6,8 @@
 
 ![haejwoing mascot](https://user-images.githubusercontent.com/87460128/160726928-66bfa7bb-cd1e-46e1-baa2-fa42c68d8071.jpg)
 
-- [해줘잉](http://i6c103.p.ssafy.io)
+- [해줘잉](http://i6c103.p.ssafy.io) (현재는 접속 불가)
+- [해줘잉 제작 과정 및 소개 UCC](https://www.youtube.com/watch?v=-XDlikUwYs4)
 
 ### 팀원 및 역할
 
