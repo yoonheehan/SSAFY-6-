@@ -4,7 +4,7 @@
 
 ### 프로젝트 주제
 
-![해줘잉_두잇](C:\Users\graym\Desktop\haejwoing%20mascot.jpg)
+![해줘잉_두잇](..\haejwoing%20mascot.jpg)
 
 - [해줘잉](http://i6c103.p.ssafy.io)
 
