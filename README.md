@@ -4,7 +4,7 @@
 
 ### 프로젝트 주제
 
-![해줘잉_두잇](C:\Users\graym\Desktop\haejwoing%20mascot.jpg)
+![해줘잉_두잇](C:\Users\graym\Desktop\ssafy자료\공통프로젝트\SSAFY-6-common-project-Haejwoing\haejwoing%20mascot.jpg)
 
 - [해줘잉](http://i6c103.p.ssafy.io)
 
@@ -36,7 +36,7 @@
 
 # Process
 
-![image](C:\Users\graym\Desktop\process.png)
+![image](C:\Users\graym\Desktop\ssafy자료\공통프로젝트\SSAFY-6-common-project-Haejwoing\process.png)
 
 # 기획
 
@@ -45,21 +45,22 @@
 <ul>
   <li>E-R Diagram</li>
   <p align="center">
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/ERD.png?raw=true" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486122-db2ee568-dd16-4bc5-a7ed-5c32d76e8337.png"/>
   </p>
   <li>Wireframe</li>
   <p align="center">
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/wireframe.png?raw=true" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486153-6135bd23-8d54-48b7-9890-5944062ed92b.png" />
   </p>
   <li>Swagger API Document</li>
   <p align="center">
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/1.PNG?raw=true" />
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/2.PNG?raw=true" />
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/3.PNG?raw=true" />
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/5.PNG?raw=true" />
-    <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/6.PNG?raw=true" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486178-b0ea4df6-91b3-45bf-a74e-d1b2bc2e3d60.PNG" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486197-5c9d45da-1b3d-4ae7-a74f-24c330b937d2.PNG" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486204-57baaee8-de53-4c5b-918c-9c72fa87358b.PNG" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486253-0b088a24-f790-46c4-ba1e-405a7a4d9df8.PNG" />
+    <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486264-4171a375-9ea7-4180-85b3-4cea6224a9ea.PNG" />
   </p>
 </ul>
+
 
 ## 빌드 및 배포
 
@@ -76,7 +77,7 @@
   <li>
     <b>배포 아키텍쳐</b>
     <p align="center">
-      <img width="800px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/%EC%8B%9C%EC%8A%A4%ED%85%9C%20%EC%95%84%ED%82%A4%ED%85%8D%EC%B2%98.png?raw=true" />
+      <img width="800px", src="https://user-images.githubusercontent.com/87460128/174486394-8d58880d-568f-4244-9c63-7a312ab6713c.png" />
     </p>
   </li>
   <li>
@@ -96,17 +97,18 @@
     <p>Nginx</p>
     <p>nginx 설정(/etc/nginx/siteds-enabled/default</p>
     <p align="center">
-      <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/Nginx.PNG?raw=true" />
+      <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486306-049579b5-7d5e-47fe-b98b-537a0ded52b9.PNG" />
     </p>
   </li>
   <li>
     <b>서버 세팅</b>
     <p align="center">
-      <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/%EC%84%9C%EB%B2%84%EC%84%B8%ED%8C%85.PNG?raw=true" />
+      <img width="600px", src="https://user-images.githubusercontent.com/87460128/174486334-a881675d-b426-41e5-981a-139639ac2197.PNG" />
     </p>
   </li>
   <li>
     <b>Front-end</b>
+
 
     <p align="center">
       <img width="600px", src="https://github.com/swchae516/SSAFY_6th_Sub_PJT/blob/main/%ED%94%84%EB%A1%A0%ED%8A%B8.PNG?raw=true" />
