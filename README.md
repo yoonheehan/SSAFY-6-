@@ -4,11 +4,8 @@
 
 ### 프로젝트 주제
 
-<<<<<<< HEAD
-![해줘잉_두잇](C:\Users\graym\Desktop\ssafy자료\공통프로젝트\SSAFY-6-common-project-Haejwoing\haejwoing%20mascot.jpg)
-=======
+
 ![haejwoing mascot](https://user-images.githubusercontent.com/87460128/160726928-66bfa7bb-cd1e-46e1-baa2-fa42c68d8071.jpg)
->>>>>>> 9a0775bc349cffe62a1d4de89dfccd2099754072
 
 - [해줘잉](http://i6c103.p.ssafy.io) (현재는 접속 불가)
 - [해줘잉 제작 과정 및 소개 UCC](https://www.youtube.com/watch?v=-XDlikUwYs4)
@@ -41,11 +38,8 @@
 
 # Process
 
-<<<<<<< HEAD
-![image](C:\Users\graym\Desktop\ssafy자료\공통프로젝트\SSAFY-6-common-project-Haejwoing\process.png)
-=======
 ![process](https://user-images.githubusercontent.com/87460128/160726999-4c9ae0c1-581f-4d45-9f94-cfe5c15864c1.png)
->>>>>>> 9a0775bc349cffe62a1d4de89dfccd2099754072
+
 
 # 기획
 
